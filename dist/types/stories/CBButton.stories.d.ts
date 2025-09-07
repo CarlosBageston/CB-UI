@@ -1,0 +1,13 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import CBButton, { type CBButtonProps } from '../components/CBButton';
+declare const meta: Meta<typeof CBButton>;
+export default meta;
+type Story = StoryObj<CBButtonProps>;
+export declare const Primary: Story;
+export declare const Secondary: Story;
+export declare const Outline: Story;
+export declare const Rounded: Story;
+export declare const WithIcons: Story;
+export declare const Loading: Story;
+export declare const FullWidth: Story;
+export declare const Gradient: Story;

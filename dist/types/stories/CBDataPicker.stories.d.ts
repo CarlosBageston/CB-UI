@@ -1,0 +1,11 @@
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import CBDataPicker, { type CBDataPickerProps } from "../components/CBDataPicker";
+declare const meta: Meta<typeof CBDataPicker>;
+export default meta;
+type Story = StoryObj<CBDataPickerProps>;
+export declare const Default: Story;
+export declare const WithCalendar: Story;
+export declare const WithDropdown: Story;
+export declare const WithError: Story;
+export declare const MonthYear: Story;
+export declare const DateTime: Story;

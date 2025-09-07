@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { CBTextArea } from "..";
+declare const meta: Meta<typeof CBTextArea>;
+export default meta;
+type Story = StoryObj<typeof CBTextArea>;
+export declare const Default: Story;
+export declare const Filled: Story;
+export declare const Error: Story;
+export declare const CountCharacters: Story;
+export declare const Disabled: Story;

@@ -1,0 +1,11 @@
+import CBFilterBar from "../components/CBFilterBar";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+declare const meta: Meta<typeof CBFilterBar>;
+export default meta;
+type Story = StoryObj<typeof CBFilterBar>;
+export declare const Default: Story;
+export declare const WithoutColumns: Story;
+export declare const LimitedColumns: Story;
+export declare const CustomPlaceholder: Story;
+export declare const WithInitialQuery: Story;
+export declare const CustomClassNames: Story;

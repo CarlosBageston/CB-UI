@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { CBSelector } from "..";
+declare const meta: Meta<typeof CBSelector>;
+export default meta;
+type Story = StoryObj<typeof CBSelector>;
+export declare const Playground: Story;
+export declare const Checkbox: Story;
+export declare const Radio: Story;
+export declare const Switch: Story;
+export declare const Disabled: Story;

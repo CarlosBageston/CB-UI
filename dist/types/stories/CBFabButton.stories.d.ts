@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import CBFabButton, { type CBFabButtonProps } from "../components/CBFabButton";
+declare const meta: Meta<typeof CBFabButton>;
+export default meta;
+type Story = StoryObj<CBFabButtonProps>;
+export declare const Primary: Story;
+export declare const Loading: Story;
+export declare const Disabled: Story;
+export declare const WithCancel: Story;
+export declare const AllColors: Story;

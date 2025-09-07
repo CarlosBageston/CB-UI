@@ -3,10 +3,9 @@
   "compilerOptions": {
     "declaration": true,
     "emitDeclarationOnly": true,
-    "declarationDir": "./dist",
+    "declarationDir": "./dist/types",
     "outDir": "./dist",
-    "noEmit": false,
-    "skipLibCheck": true
+    "noEmit": false
   },
   "include": ["src"]
 }

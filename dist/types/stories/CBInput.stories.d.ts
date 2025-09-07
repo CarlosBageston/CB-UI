@@ -1,0 +1,11 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { CBInput } from '..';
+declare const meta: Meta<typeof CBInput>;
+export default meta;
+type Story = StoryObj<typeof CBInput>;
+export declare const Default: Story;
+export declare const WithError: Story;
+export declare const PasswordInput: Story;
+export declare const WithMaskTel: Story;
+export declare const WithMaskCurrency: Story;
+export declare const WithMaskCepAndColors: Story;
