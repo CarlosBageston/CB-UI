@@ -1,3 +1,5 @@
+import "./styles/tailwind.css";
+
 // Exporta todos os componentes
 export { default as CBCard } from "./components/CBCard";
 export { default as CBToast } from "./components/CBToast";

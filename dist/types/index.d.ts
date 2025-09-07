@@ -1,3 +1,4 @@
+import "./styles/tailwind.css";
 export { default as CBCard } from "./components/CBCard";
 export { default as CBToast } from "./components/CBToast";
 export { default as CBModal } from "./components/CBModal";
