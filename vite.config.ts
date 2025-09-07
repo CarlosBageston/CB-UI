@@ -19,7 +19,7 @@ export default defineConfig({
   // Build da biblioteca
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/components/index.ts"), // seu index.ts
+      entry: path.resolve(__dirname, "src/index.ts"), // seu index.ts
       name: "CBUI", // nome global para UMD
       fileName: (format) => `cb-ui.${format}.js`,
       formats: ["es", "cjs", "umd"], // diferentes formatos de módulo
