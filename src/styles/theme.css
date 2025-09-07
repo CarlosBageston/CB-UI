@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
+
+:root {
+  /* === Paleta Quente e Moderna === */
+  --ion-color-primary: #1e40af; /* Azul quente e forte */
+  --ion-color-secondary: #7c3aed; /* Roxo quente */
+  --ion-color-success: #16a34a; /* Verde quente */
+  --ion-color-warning: #fbbf24; /* Amarelo quente */
+  --ion-color-danger: #dc2626; /* Vermelho quente */
+  --ion-color-info: #60a5fa; /* Azul suave / informação */
+  --ion-color-neutral: #9ca3af; /* Cinza médio para alertas / neutro */
+
+  --ion-color-medium: #b8bdc7;
+
+  /* === Extended palette (light/dark usage) === */
+  --ion-color-light: #f8fafc; /* Very light gray */
+  --ion-color-dark: #0f172a; /* Almost black */
+  --font-main: "Baloo 2", sans-serif;
+}
+
+.dark {
+  /* Modo escuro ajustando neutros */
+  --ion-color-light: #1e293b; /* Dark gray */
+  --ion-color-dark: #f8fafc; /* Almost white */
+}
