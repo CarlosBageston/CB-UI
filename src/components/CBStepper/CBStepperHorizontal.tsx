@@ -18,7 +18,7 @@ interface CBStepperHorizontalProps {
     color?: CBColor;
 }
 
-export const CBStepperHorizontal: React.FC<CBStepperHorizontalProps> = ({
+const CBStepperHorizontal: React.FC<CBStepperHorizontalProps> = ({
     steps,
     initialStep = 0,
     color = "primary",
@@ -100,3 +100,5 @@ export const CBStepperHorizontal: React.FC<CBStepperHorizontalProps> = ({
         </div>
     );
 };
+
+export default CBStepperHorizontal;

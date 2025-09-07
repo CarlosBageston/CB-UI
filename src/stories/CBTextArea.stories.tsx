@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { CBTextArea } from "../components";
+import { CBTextArea } from "..";
 
 const meta: Meta<typeof CBTextArea> = {
     title: "Form/CBTextArea",

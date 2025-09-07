@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { CBButton, CBInput, CBModal, CBSelector, CBTextArea } from "../components";
+import { CBButton, CBInput, CBModal, CBSelector, CBTextArea } from "..";
 
 const meta: Meta<typeof CBModal> = {
     title: "Components/CBModal",

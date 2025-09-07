@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import { CBInput } from '../components';
+import { CBInput } from '..';
 
 const meta: Meta<typeof CBInput> = {
     title: 'Form/CBInput',

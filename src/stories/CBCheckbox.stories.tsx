@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { CBCheckbox } from "../components";
+import { CBCheckbox } from "..";
 
 const meta: Meta<typeof CBCheckbox> = {
     title: "Form/CBCheckbox",

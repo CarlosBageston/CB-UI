@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { FiHome, FiActivity, FiAirplay, FiAlertCircle, FiAlertOctagon, FiAlertTriangle } from "react-icons/fi";
-import { CBMultiView } from "../components";
+import { CBMultiView } from "..";
 
 const meta: Meta<typeof CBMultiView> = {
     title: "Components/CBStepper",

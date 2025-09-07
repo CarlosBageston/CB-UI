@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import CBToast from "../components/CBToast";
 import { showCBToast } from "../hooks/cbToastController";
-import { CBButton } from "../components";
+import { CBButton } from "..";
 
 
 const meta: Meta<typeof CBToast> = {

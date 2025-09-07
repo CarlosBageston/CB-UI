@@ -10,8 +10,8 @@ import {
 } from "@ionic/react";
 import type { IonSegmentCustomEvent } from "@ionic/core";
 import type { CBColor } from "../theme/CBColor";
-import { CBStepperHorizontal } from "./CBStepper/CBStepperHorizontal";
-import { CBStepperVertical } from "./CBStepper/CBStepperVertical";
+import CBStepperHorizontal from "./CBStepper/CBStepperHorizontal";
+import CBStepperVertical from "./CBStepper/CBStepperVertical";
 
 export type CBMultiViewVariant = "tabs" | "accordion" | "stepper";
 

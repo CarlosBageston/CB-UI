@@ -1,7 +1,7 @@
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { IoPencil, IoTrash } from "react-icons/io5";
-import { CBButton, CBCard } from "../components";
+import { CBButton, CBCard } from "..";
 
 const meta: Meta<typeof CBCard> = {
     title: "Components/CBCard",

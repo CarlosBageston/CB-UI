@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { CBColor } from "../theme/CBColor";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { CBSelector } from "../components";
+import { CBSelector } from "..";
 
 const meta: Meta<typeof CBSelector> = {
     title: "Components/CBSelector",

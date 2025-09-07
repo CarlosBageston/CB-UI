@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import CBLoading from "../components/CBLoading";
 import { hideCBLoading, showCBLoading } from "../hooks/CBLoadingController";
-import { CBButton } from "../components";
+import { CBButton } from "..";
 
 const meta: Meta<typeof CBLoading> = {
     title: "Feedback/CBLoading",

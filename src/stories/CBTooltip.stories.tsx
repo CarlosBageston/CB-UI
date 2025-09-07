@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { CBButton, CBTooltip } from "../components";
+import { CBButton, CBTooltip } from "..";
 
 
 const meta: Meta<typeof CBTooltip> = {

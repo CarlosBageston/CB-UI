@@ -16,7 +16,7 @@ interface CBStepperVerticalProps {
     color?: CBColor;
 }
 
-export const CBStepperVertical: React.FC<CBStepperVerticalProps> = ({
+const CBStepperVertical: React.FC<CBStepperVerticalProps> = ({
     steps,
     initialStep = 0,
     color = "primary",
@@ -102,3 +102,5 @@ export const CBStepperVertical: React.FC<CBStepperVerticalProps> = ({
         </div>
     );
 };
+
+export default CBStepperVertical;
