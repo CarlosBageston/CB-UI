@@ -1,7 +1,15 @@
+type ToastType = "success" | "error" | "warning" | "info";
 export interface ToastOptions {
     message: string;
     type?: "success" | "error" | "warning" | "info";
     duration?: number;
+}
+interface CBToastProps {
+    message: string;
+    type?: ToastType;
+    duration?: number;
+    show?: boolean;
+    onClose?: () => void;
 }
 /**
  * CBToast
@@ -26,5 +34,5 @@ export interface ToastOptions {
  * @property {"success" | "error" | "warning" | "info"} [type="info"] - Tipo do toast, determina cor e ícone.
  * @property {number} [duration=3000] - Duração em milissegundos antes do fechamento automático.
  */
-declare const CBToast: React.FC;
+declare const CBToast: React.FC<CBToastProps>;
 export default CBToast;

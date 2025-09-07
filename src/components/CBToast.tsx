@@ -80,20 +80,8 @@ const CBToast: React.FC<CBToastProps> = ({ message, type = "info", duration = 30
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 50 }}
                     transition={{ duration: 0.3 }}
-                    style={{
-                        position: "fixed",
-                        bottom: 16,
-                        width: "95vw",
-                        maxWidth: 400,
-                        borderRadius: 12,
-                        boxShadow: "0px 4px 12px rgba(0,0,0,0.15),0px 2px 4px rgba(0,0,0,0.08)",
-                        display: "flex",
-                        alignItems: "center",
-                        padding: "12px 16px",
-                        zIndex: 9999,
-                        backgroundColor: bg,
-                        color: color,
-                    }}
+                    className="fixed bottom-4 w-[95vw] max-w-[400px] !rounded-lg !p-4 flex items-center shadow-lg z-[9999]"
+                    style={{ backgroundColor: bg, color }}
                 >
                     <div className="flex items-center gap-2 flex-1">
                         {icon}
