@@ -5330,17 +5330,17 @@ function Me(e = "primary") {
   const t = Tp[e], i = CR[e];
   return { main: t, contrast: i };
 }
-const eB = ({ message: e, type: t = "info", duration: i = 3e3, show: s, onClose: o }) => {
-  const { main: n, contrast: r } = Me("success"), { main: a, contrast: l } = Me("danger"), { main: c, contrast: d } = Me("warning"), { main: u, contrast: h } = Me("info"), g = {
-    success: { bg: n, color: r, icon: /* @__PURE__ */ R.jsx(aR, { size: 20 }) },
-    error: { bg: a, color: l, icon: /* @__PURE__ */ R.jsx(dR, { size: 20 }) },
-    warning: { bg: c, color: d, icon: /* @__PURE__ */ R.jsx(uR, { size: 20 }) },
-    info: { bg: u, color: h, icon: /* @__PURE__ */ R.jsx(cR, { size: 20 }) }
-  }, { bg: p, color: f, icon: m } = g[t];
+const eB = ({ message: e, type: t = "info", duration: i = 3e3, show: s, onClose: o, className: n }) => {
+  const { main: r, contrast: a } = Me("success"), { main: l, contrast: c } = Me("danger"), { main: d, contrast: u } = Me("warning"), { main: h, contrast: g } = Me("info"), p = {
+    success: { bg: r, color: a, icon: /* @__PURE__ */ R.jsx(aR, { size: 20 }) },
+    error: { bg: l, color: c, icon: /* @__PURE__ */ R.jsx(dR, { size: 20 }) },
+    warning: { bg: d, color: u, icon: /* @__PURE__ */ R.jsx(uR, { size: 20 }) },
+    info: { bg: h, color: g, icon: /* @__PURE__ */ R.jsx(cR, { size: 20 }) }
+  }, { bg: f, color: m, icon: C } = p[t];
   return ve(() => {
     if (s && i) {
-      const C = setTimeout(() => o?.(), i);
-      return () => clearTimeout(C);
+      const v = setTimeout(() => o?.(), i);
+      return () => clearTimeout(v);
     }
   }, [s, i]), /* @__PURE__ */ R.jsx(ho, { children: s && /* @__PURE__ */ R.jsxs(
     Te.div,
@@ -5349,11 +5349,11 @@ const eB = ({ message: e, type: t = "info", duration: i = 3e3, show: s, onClose:
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: 50 },
       transition: { duration: 0.3 },
-      className: "fixed bottom-4 w-[95vw] max-w-[400px] !rounded-lg !p-4 flex items-center shadow-lg z-[9999]",
-      style: { backgroundColor: p, color: f },
+      className: `fixed bottom-4 w-[95vw] max-w-[360px] !rounded-lg !p-4 flex items-center shadow-lg z-[9999] ${n}`,
+      style: { backgroundColor: f, color: m },
       children: [
         /* @__PURE__ */ R.jsxs("div", { className: "flex items-center gap-2 flex-1", children: [
-          m,
+          C,
           /* @__PURE__ */ R.jsx(ZC, { className: "text-[14px] font-medium", children: e })
         ] }),
         /* @__PURE__ */ R.jsx(

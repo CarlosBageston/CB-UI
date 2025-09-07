@@ -10,6 +10,7 @@ interface CBToastProps {
     duration?: number;
     show?: boolean;
     onClose?: () => void;
+    className?: string;
 }
 /**
  * CBToast

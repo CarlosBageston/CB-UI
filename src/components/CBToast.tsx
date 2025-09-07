@@ -20,6 +20,7 @@ interface CBToastProps {
     duration?: number;
     show?: boolean;
     onClose?: () => void;
+    className?: string;
 }
 
 /**
@@ -47,7 +48,7 @@ interface CBToastProps {
  * @property {number} [duration=3000] - Duração em milissegundos antes do fechamento automático.
  */
 
-const CBToast: React.FC<CBToastProps> = ({ message, type = "info", duration = 3000, show, onClose }) => {
+const CBToast: React.FC<CBToastProps> = ({ message, type = "info", duration = 3000, show, onClose, className }) => {
 
     // Cores do design system
     const { main: successBg, contrast: successColor } = useCBColor("success");
@@ -80,7 +81,7 @@ const CBToast: React.FC<CBToastProps> = ({ message, type = "info", duration = 30
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 50 }}
                     transition={{ duration: 0.3 }}
-                    className="fixed bottom-4 w-[95vw] max-w-[400px] !rounded-lg !p-4 flex items-center shadow-lg z-[9999]"
+                    className={`fixed bottom-4 w-[95vw] max-w-[360px] !rounded-lg !p-4 flex items-center shadow-lg z-[9999] ${className}`}
                     style={{ backgroundColor: bg, color }}
                 >
                     <div className="flex items-center gap-2 flex-1">
