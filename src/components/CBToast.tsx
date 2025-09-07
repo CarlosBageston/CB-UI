@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { IonText } from "@ionic/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MdCheckCircle, MdError, MdWarning, MdInfo, MdClose } from "react-icons/md";
 import { useCBColor } from "../hooks/useCBColor";
-import { setCBToastHandler } from "../hooks/cbToastController";
 
 // Tipos
 type ToastType = "success" | "error" | "warning" | "info";
@@ -12,6 +11,15 @@ export interface ToastOptions {
     message: string;
     type?: "success" | "error" | "warning" | "info";
     duration?: number;
+}
+
+
+interface CBToastProps {
+    message: string;
+    type?: ToastType;
+    duration?: number;
+    show?: boolean;
+    onClose?: () => void;
 }
 
 /**
@@ -39,11 +47,7 @@ export interface ToastOptions {
  * @property {number} [duration=3000] - Duração em milissegundos antes do fechamento automático.
  */
 
-const CBToast: React.FC = () => {
-    const [show, setShow] = useState(false);
-    const [message, setMessage] = useState("");
-    const [type, setType] = useState<ToastType>("success");
-    const [duration, setDuration] = useState(3000);
+const CBToast: React.FC<CBToastProps> = ({ message, type = "info", duration = 3000, show, onClose }) => {
 
     // Cores do design system
     const { main: successBg, contrast: successColor } = useCBColor("success");
@@ -58,22 +62,12 @@ const CBToast: React.FC = () => {
         info: { bg: infoBg, color: infoColor, icon: <MdInfo size={20} /> },
     };
 
-    const { bg, color, icon } = colorMap[type] ?? colorMap.info;
-
-    // Registra o handler
-    useEffect(() => {
-        setCBToastHandler(({ message, type = "info", duration = 3000 }) => {
-            setMessage(message);
-            setType(type);
-            setDuration(duration);
-            setShow(true);
-        });
-    }, []);
+    const { bg, color, icon } = colorMap[type];
 
     // Auto close
     useEffect(() => {
         if (show && duration) {
-            const timer = setTimeout(() => setShow(false), duration);
+            const timer = setTimeout(() => onClose?.(), duration);
             return () => clearTimeout(timer);
         }
     }, [show, duration]);
@@ -106,7 +100,7 @@ const CBToast: React.FC = () => {
                         <IonText className="text-[14px] font-medium">{message}</IonText>
                     </div>
                     <button
-                        onClick={() => setShow(false)}
+                        onClick={() => onClose?.()}
                         style={{
                             marginLeft: 12,
                             padding: 6,
