@@ -31,6 +31,24 @@ export const Default: Story = {
             <CBTooltip content="Tooltip neutro" placement="right" color="neutral">
                 <CBButton label="Hover neutro" />
             </CBTooltip>
+            <CBTooltip content="Tooltip neutro" stopPropagation trigger="click">
+                <CBButton label="Hover neutro" />
+            </CBTooltip>
+            <CBTooltip
+                content={
+                    <div className="space-y-1 text-sm text-gray-800 dark:text-gray-300">
+                        <p>Este é um tooltip maior, com múltiplas linhas para testar largura.</p>
+                        <p>Você pode controlar a largura via tooltipStyle.</p>
+                    </div>
+                }
+                placement="bottom"
+                color="neutral"
+                trigger="click"
+                stopPropagation
+                tooltipStyle={{ width: 200, marginLeft: -100, padding: "1rem", backgroundColor: "#f3f4f6" }}
+            >
+                <CBButton label="Tooltip Custom" />
+            </CBTooltip>
         </div>
     ),
 };

@@ -282,3 +282,29 @@ export interface CBTooltipProps {
   color?: CBColor;
   placement?: "top" | "bottom" | "left" | "right";
 }
+
+/** ----------------- CBStateWrapper ----------------- */
+export interface CBStateWrapperProps {
+  isLoading?: boolean;
+  isEmpty?: boolean;
+  error?: string | null;
+  emptyTitle?: string;
+  emptyMessages?: string[];
+  emptyIcon?: React.ReactNode;
+  onRetry?: () => void;
+  children?: React.ReactNode;
+  minHeight?: string | number;
+  loadingLabel?: string;
+  theme?: {
+    container?: React.CSSProperties;
+    loading?: React.CSSProperties;
+    loadingLabel?: React.CSSProperties;
+
+    error?: React.CSSProperties;
+    errorTitle?: React.CSSProperties;
+    errorMessage?: React.CSSProperties;
+    retryButton?: React.CSSProperties;
+
+    content?: React.CSSProperties;
+  };
+}

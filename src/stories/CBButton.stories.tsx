@@ -61,6 +61,31 @@ export const WithIcons: Story = {
     },
 };
 
+export const CustomColors: Story = {
+    args: {
+        label: 'Custom Colors Button',
+        size: 'medium',
+        backgroundColor: '#f43f5e', // fundo
+        textColor: '#000000',       // texto
+        borderColor: '#968686',     // borda
+        hoverColor: '#cfc9cc',      // hover
+        activeColor: '#130c0f',     // ativo
+    },
+};
+
+export const IconAndClick: Story = {
+    args: {
+        label: 'Next',
+        iconEnd: <IonIcon icon={add} />,
+        backgroundColor: '#3b82f6',
+        textColor: '#ffffff',
+        borderColor: '#1d4ed8',
+        hoverColor: '#2563eb',
+        activeColor: '#1e40af',
+        onClick: () => alert('Botão clicado!'),
+    },
+};
+
 export const Loading: Story = {
     args: {
         label: 'Loading Button',

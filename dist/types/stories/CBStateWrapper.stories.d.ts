@@ -1,0 +1,11 @@
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import CBStateWrapper from "../components/CBStateWrapper/CBStateWrapper";
+declare const meta: Meta<typeof CBStateWrapper>;
+export default meta;
+type Story = StoryObj<typeof CBStateWrapper>;
+export declare const Loading: Story;
+export declare const Empty: Story;
+export declare const Error: Story;
+export declare const Content: Story;
+export declare const EmptyWithButton: Story;
+export declare const LoadingFlash: React.FC;

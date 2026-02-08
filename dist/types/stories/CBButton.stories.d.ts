@@ -8,6 +8,8 @@ export declare const Secondary: Story;
 export declare const Outline: Story;
 export declare const Rounded: Story;
 export declare const WithIcons: Story;
+export declare const CustomColors: Story;
+export declare const IconAndClick: Story;
 export declare const Loading: Story;
 export declare const FullWidth: Story;
 export declare const Gradient: Story;

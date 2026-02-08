@@ -99,3 +99,21 @@ export const Loading: Story = {
         label: 'Autocomplete Loading',
     },
 };
+
+// ===== CUSTOM STYLES =====
+export const FullyCustomized: Story = {
+    args: {
+        items: sampleOptions,
+        getLabel: (opt) => opt.name,
+        getValue: (opt) => opt.id,
+        placeholder: 'Estilo customizado...',
+        variant: 'select',
+        label: 'Autocomplete com Estilos Customizados',
+        className: 'border-2 border-dashed border-purple-500 p-4 rounded-xl bg-purple-50',
+        inputClass: '!bg-white !text-purple-900 !font-bold !border-purple-300',
+        labelClass: '!text-purple-700 !font-black !uppercase !tracking-widest',
+        dropdownClass: '!bg-purple-900 !border-purple-700',
+        itemClass: '!text-white hover:!bg-purple-700',
+        inputStyle: { boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' },
+    },
+};

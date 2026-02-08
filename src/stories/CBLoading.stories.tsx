@@ -18,8 +18,8 @@ export const Default: Story = {
                 type="circular"
                 isOpen
                 message="Carregando..."
-                withBg
-                withText
+                withBg={false}
+                withText={false}
             />
         </>
     ),

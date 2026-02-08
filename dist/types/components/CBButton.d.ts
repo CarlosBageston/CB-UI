@@ -43,6 +43,11 @@ export interface CBButtonProps extends Omit<React.ComponentProps<typeof IonButto
     iconEnd?: React.ReactNode;
     /** Cor do botão (usa CBColor) */
     color?: CBColor;
+    backgroundColor?: string;
+    textColor?: string;
+    borderColor?: string;
+    hoverColor?: string;
+    activeColor?: string;
 }
 /**
  * Componente de botão customizado com suporte a cores, variantes, tamanhos, ícones e loading.

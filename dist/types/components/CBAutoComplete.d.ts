@@ -33,6 +33,24 @@ export interface CBAutocompleteProps<T> {
     variant?: CBAutocompleteVariant;
     /** Label opcional exibida acima do input (somente para variant="select") */
     label?: string;
+    /** Classe CSS customizada para o container principal */
+    className?: string;
+    /** Estilos inline customizados para o container principal */
+    style?: React.CSSProperties;
+    /** Classe CSS customizada para o input/searchbar */
+    inputClass?: string;
+    /** Estilos inline customizados para o input/searchbar */
+    inputStyle?: React.CSSProperties;
+    /** Classe CSS customizada para o dropdown de resultados */
+    dropdownClass?: string;
+    /** Estilos inline customizados para o dropdown de resultados */
+    dropdownStyle?: React.CSSProperties;
+    /** Classe CSS customizada para cada item da lista */
+    itemClass?: string;
+    /** Estilos inline customizados para cada item da lista */
+    itemStyle?: React.CSSProperties;
+    /** Classe CSS customizada para a label (somente variant="select") */
+    labelClass?: string;
 }
 /**
  * Componente CBAutocomplete genérico que permite buscar ou selecionar itens de uma lista.
@@ -58,5 +76,5 @@ export interface CBAutocompleteProps<T> {
  * />
  * ```
  */
-declare function CBAutocomplete<T>({ items, getLabel, getValue, onSelect, placeholder, color, rounded, fullWidth, loading, variant, label }: CBAutocompleteProps<T>): import("react/jsx-runtime").JSX.Element;
+declare function CBAutocomplete<T>({ items, getLabel, getValue, onSelect, placeholder, color, rounded, fullWidth, loading, variant, label, className, style, inputClass, inputStyle, dropdownClass, dropdownStyle, itemClass, itemStyle, labelClass }: CBAutocompleteProps<T>): import("react/jsx-runtime").JSX.Element;
 export default CBAutocomplete;

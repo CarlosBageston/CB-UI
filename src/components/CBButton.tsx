@@ -47,6 +47,11 @@ export interface CBButtonProps extends Omit<React.ComponentProps<typeof IonButto
     iconEnd?: React.ReactNode;
     /** Cor do botão (usa CBColor) */
     color?: CBColor;
+    backgroundColor?: string;
+    textColor?: string;
+    borderColor?: string;
+    hoverColor?: string;
+    activeColor?: string;
 }
 
 /**
@@ -97,36 +102,45 @@ const CBButton: React.FC<CBButtonProps> = ({
     className = '',
     style,
     color = 'primary',
+    backgroundColor,
+    textColor,
+    borderColor,
+    hoverColor,
+    activeColor,
     ...rest
 }) => {
-    const { main: mainColor, contrast: contrastColor } = useCBColor(color);
+    const { main: mainColorDefault, contrast: contrastColorDefault } = useCBColor(color);
 
     const finalStyle: CSSVars = { ...style };
 
+    const bgColor = backgroundColor ?? gradient ?? mainColorDefault;
+    const txtColor = textColor ?? contrastColorDefault;
+    const borderCol = borderColor ?? mainColorDefault;
+    const hoverCol = hoverColor ?? txtColor;
+    const activeCol = activeColor ?? txtColor;
+
     // Cor de fundo e texto
     if (variant === 'solid') {
-        finalStyle['--background'] = gradient ?? mainColor;
-        finalStyle['--color'] = contrastColor;
-        finalStyle['--background-focused'] = mainColor;
-        finalStyle['--background-activated'] = mainColor;
-        finalStyle['--color-focused'] = contrastColor;
-        finalStyle['--color-hover'] = contrastColor;
-        finalStyle['--color-activated'] = contrastColor;
+        finalStyle['--background'] = bgColor;
+        finalStyle['--color'] = txtColor;
+        finalStyle['--background-focused'] = mainColorDefault;
+        finalStyle['--background-activated'] = mainColorDefault;
+        finalStyle['--color-focused'] = txtColor;
+        finalStyle['--color-hover'] = hoverCol;
+        finalStyle['--color-activated'] = activeCol;
     } else if (variant === 'outline') {
-        finalStyle['--color'] = mainColor;
-        finalStyle['--border-color'] = mainColor;
-
-        finalStyle['--border-color-focused'] = mainColor;
-        finalStyle['--border-color-activated'] = mainColor;
-        finalStyle['--color-focused'] = mainColor;
-        finalStyle['--color-hover'] = mainColor;
-        finalStyle['--color-activated'] = mainColor;
+        finalStyle['--color'] = txtColor;
+        finalStyle['--border-color'] = borderCol;
+        finalStyle['--border-color-focused'] = borderCol;
+        finalStyle['--border-color-activated'] = borderCol;
+        finalStyle['--color-focused'] = txtColor;
+        finalStyle['--color-hover'] = hoverCol;
+        finalStyle['--color-activated'] = activeCol;
     } else if (variant === 'clear') {
-        finalStyle['--color'] = mainColor;
-
-        finalStyle['--color-focused'] = mainColor;
-        finalStyle['--color-hover'] = mainColor;
-        finalStyle['--color-activated'] = mainColor;
+        finalStyle['--color'] = txtColor;
+        finalStyle['--color-focused'] = txtColor;
+        finalStyle['--color-hover'] = hoverCol;
+        finalStyle['--color-activated'] = activeCol;
     }
 
     // Bordas arredondadas

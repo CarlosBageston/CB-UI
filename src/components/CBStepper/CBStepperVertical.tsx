@@ -1,31 +1,62 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import type { CBColor } from "../../theme/CBColor";
-import { useCBColor } from "../../hooks/useCBColor";
 import CBButton from "../CBButton";
+import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { useCBColor } from "../../hooks/useCBColor";
+import type { CBStepperProps } from "./CBStepper.types";
 
-export interface Step {
-    title: string;
-    content: React.ReactNode;
-    icon?: React.ReactNode;
-}
-
-interface CBStepperVerticalProps {
-    steps: Step[];
-    initialStep?: number;
-    color?: CBColor;
-}
-
-const CBStepperVertical: React.FC<CBStepperVerticalProps> = ({
+const CBStepperVertical: React.FC<CBStepperProps> = ({
     steps,
     initialStep = 0,
     color = "primary",
+    className,
+    classNameContent,
+    style,
+    showButtonNext = true,
+    showButtonPrev = true,
+    nextLabel = "Próximo",
+    prevLabel = "Voltar",
+    disableNext,
+    disablePrev,
+    onNext,
+    onPrev,
+    theme
+
 }) => {
     const [activeIndex, setActiveIndex] = useState(initialStep);
-    const { main: mainColor, contrast: contrastColor } = useCBColor(color);
+    const { main: defaultMainColor, contrast: defaultContrastColor } = useCBColor(color);
 
+    const stepperTheme = theme?.stepper;
+    const mainColor = stepperTheme?.circle?.background ?? defaultMainColor;
+    const contrastColor = stepperTheme?.circle?.text ?? defaultContrastColor;
+    const lineColor = stepperTheme?.line ?? defaultMainColor;
+    const titleColor = stepperTheme?.titleColor ?? "#111827";
+
+    const handleNext = async () => {
+        console.log('canProceed')
+        if (onNext) {
+            const canProceed = await onNext(activeIndex);
+            console.log('canProceed', canProceed)
+            if (canProceed === false) return;
+        }
+
+        const nextIndex = activeIndex + 1;
+        if (nextIndex < steps.length) {
+            setActiveIndex(nextIndex);
+        }
+    };
+
+    const handlePrev = async () => {
+        if (onPrev) {
+            const canProceed = await onPrev(activeIndex);
+            if (canProceed === false) return;
+        }
+        const prevIndex = activeIndex - 1;
+        if (prevIndex >= 0) {
+            setActiveIndex(prevIndex);
+        }
+    };
     return (
-        <div className="flex flex-col gap-4">
+        <div className={`flex flex-col gap-4 ${className ?? ""}`} style={style}>
             {steps.map((step, idx) => {
                 const isActive = idx === activeIndex;
                 const isCompleted = idx < activeIndex;
@@ -56,7 +87,7 @@ const CBStepperVertical: React.FC<CBStepperVerticalProps> = ({
                             <motion.div
                                 style={{
                                     width: 2,
-                                    backgroundColor: isActive || isCompleted ? mainColor : "#d1d5db",
+                                    backgroundColor: isActive || isCompleted ? lineColor : "#d1d5db",
                                     position: "absolute",
                                     height: '100%',
                                     left: 18,
@@ -69,30 +100,57 @@ const CBStepperVertical: React.FC<CBStepperVerticalProps> = ({
                         <div
                             className="flex-1"
                         >
-                            <div className="font-semibold text-base">{step.title}</div>
+                            <div className="font-semibold text-base" style={{ color: titleColor }}>
+                                {step.title}
+                            </div>
                             <motion.div
                                 initial={{ height: 0, opacity: 0 }}
                                 animate={{ height: isActive ? "auto" : 0, opacity: isActive ? 1 : 0 }}
                                 transition={{ duration: 0.4, ease: "easeInOut" }}
                                 className="overflow-hidden mt-1"
                             >
-                                <div className="mb-2">{step.content}</div>
-                                <div className="flex w-full !mt-2">
-                                    <CBButton
-                                        disabled={idx === steps.length - 1}
-                                        onClick={() => setActiveIndex(idx + 1)}
-                                        label="Próximo"
-                                        color={color}
-                                        className="!text-[12px] !mr-2"
-                                    />
-                                    <CBButton
-                                        disabled={idx === 0}
-                                        onClick={() => setActiveIndex(idx - 1)}
-                                        label="Voltar"
-                                        color={color}
-                                        variant="clear"
-                                        className="!text-[12px]"
-                                    />
+                                <div className={`mb-2 ${classNameContent}`}>{step.content}</div>
+                                <div className="flex w-full !mt-2 !pb-2">
+                                    {showButtonNext &&
+                                        <CBButton
+                                            disabled={disableNext?.(activeIndex)}
+                                            onClick={handleNext}
+                                            label={
+                                                typeof nextLabel === "function"
+                                                    ? nextLabel(activeIndex, steps.length)
+                                                    : nextLabel
+                                            }
+                                            color={color}
+                                            className="!text-[12px] !mr-2"
+                                            variant={stepperTheme?.button?.next?.variant ?? 'solid'}
+                                            backgroundColor={stepperTheme?.button?.next?.background}
+                                            textColor={stepperTheme?.button?.next?.text}
+                                            borderColor={stepperTheme?.button?.next?.border}
+                                            hoverColor={stepperTheme?.button?.next?.hover}
+                                            rounded={stepperTheme?.button?.next?.rounded}
+                                            activeColor={stepperTheme?.button?.next?.active}
+                                        />
+                                    }
+                                    {showButtonPrev &&
+                                        <CBButton
+                                            disabled={disablePrev ? disablePrev(activeIndex) : activeIndex === 0}
+                                            onClick={handlePrev}
+                                            label={
+                                                typeof prevLabel === "function"
+                                                    ? prevLabel(activeIndex, steps.length)
+                                                    : prevLabel
+                                            }
+                                            color={color}
+                                            variant={stepperTheme?.button?.prev?.variant ?? "clear"}
+                                            className="!text-[12px]"
+                                            backgroundColor={stepperTheme?.button?.prev?.background}
+                                            textColor={stepperTheme?.button?.prev?.text}
+                                            borderColor={stepperTheme?.button?.prev?.border}
+                                            hoverColor={stepperTheme?.button?.prev?.hover}
+                                            rounded={stepperTheme?.button?.prev?.rounded}
+                                            activeColor={stepperTheme?.button?.prev?.active}
+                                        />
+                                    }
                                 </div>
                             </motion.div>
                         </div>

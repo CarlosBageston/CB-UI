@@ -11,3 +11,4 @@ export declare const SelectVariant: Story;
 export declare const SearchVariant: Story;
 export declare const WithDifferentWidths: Story;
 export declare const Loading: Story;
+export declare const FullyCustomized: Story;

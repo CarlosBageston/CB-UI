@@ -49,3 +49,32 @@ ul,
 ol {
   list-style: none;
 }
+ion-segment-button {
+  --ripple-color: transparent;
+}
+.cb-tabs-no-indicator ion-segment-button::part(indicator) {
+  display: none !important;
+}
+ion-segment ion-segment-button {
+  flex-shrink: 0;
+  min-width: 100px;
+  white-space: nowrap;
+}
+ion-accordion {
+  --ripple-color: transparent;
+}
+.cb-acc-no-indicator ion-accordion::part(expand-icon) {
+  display: none !important;
+}
+.cb-tabs-scroll-hider::-webkit-scrollbar {
+  height: 0;
+  background: transparent;
+}
+.cb-tabs-scroll-hider::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.cb-tabs-scroll-hider {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

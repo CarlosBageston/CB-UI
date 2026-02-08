@@ -1,14 +1,4 @@
 import React from "react";
-import type { CBColor } from "../../theme/CBColor";
-export interface Step {
-    title: string;
-    content: React.ReactNode;
-    icon?: React.ReactNode;
-}
-interface CBStepperVerticalProps {
-    steps: Step[];
-    initialStep?: number;
-    color?: CBColor;
-}
-declare const CBStepperVertical: React.FC<CBStepperVerticalProps>;
+import type { CBStepperProps } from "./CBStepper.types";
+declare const CBStepperVertical: React.FC<CBStepperProps>;
 export default CBStepperVertical;

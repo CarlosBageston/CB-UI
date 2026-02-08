@@ -39,6 +39,24 @@ export interface CBAutocompleteProps<T> {
     variant?: CBAutocompleteVariant;
     /** Label opcional exibida acima do input (somente para variant="select") */
     label?: string;
+    /** Classe CSS customizada para o container principal */
+    className?: string;
+    /** Estilos inline customizados para o container principal */
+    style?: React.CSSProperties;
+    /** Classe CSS customizada para o input/searchbar */
+    inputClass?: string;
+    /** Estilos inline customizados para o input/searchbar */
+    inputStyle?: React.CSSProperties;
+    /** Classe CSS customizada para o dropdown de resultados */
+    dropdownClass?: string;
+    /** Estilos inline customizados para o dropdown de resultados */
+    dropdownStyle?: React.CSSProperties;
+    /** Classe CSS customizada para cada item da lista */
+    itemClass?: string;
+    /** Estilos inline customizados para cada item da lista */
+    itemStyle?: React.CSSProperties;
+    /** Classe CSS customizada para a label (somente variant="select") */
+    labelClass?: string;
 }
 
 /**
@@ -76,7 +94,16 @@ function CBAutocomplete<T>({
     fullWidth = true,
     loading = false,
     variant = "search",
-    label
+    label,
+    className = "",
+    style = {},
+    inputClass = "",
+    inputStyle = {},
+    dropdownClass = "",
+    dropdownStyle = {},
+    itemClass = "",
+    itemStyle = {},
+    labelClass = ""
 }: CBAutocompleteProps<T>) {
     const [searchText, setSearchText] = useState("");
     const [isFocused, setIsFocused] = useState(false);
@@ -85,9 +112,9 @@ function CBAutocomplete<T>({
     const { main: borderColor, contrast: textColor } = useCBColor(color);
 
     const filteredItems = useMemo(() => {
-        return items.filter((item) =>
+        return items.length > 0 ? items.filter((item) =>
             getLabel(item).toLowerCase().includes(searchText.toLowerCase())
-        );
+        ) : [];
     }, [items, searchText, getLabel]);
 
     const borderRadius = rounded ? "12px" : "6px";
@@ -101,7 +128,7 @@ function CBAutocomplete<T>({
         else inputHeight += 10 // mais 10px para considerar o padding interno do searchbar
         return (
             <div
-                className="absolute z-50 overflow-hidden max-h-64 overflow-y-auto shadow-lg"
+                className={`absolute z-50 overflow-hidden max-h-64 overflow-y-auto shadow-lg ${dropdownClass}`}
                 style={{
                     width: fullWidth ? "100%" : "auto",
                     border: `1px solid ${borderColor}`,
@@ -109,6 +136,7 @@ function CBAutocomplete<T>({
                     backgroundColor: "var(--ion-color-light)",
                     top: inputHeight, // 16px de gap entre input e dropdown (ja contando com o padding interno dos inputs)
                     left: 0,
+                    ...dropdownStyle
                 }}
             >
                 {loading ? (
@@ -126,8 +154,8 @@ function CBAutocomplete<T>({
                                     setSearchText(getLabel(item));
                                     setIsFocused(false);
                                 }}
-                                style={{ color: textColor }}
-                                className="hover:bg-gray-100 transition-colors"
+                                style={{ color: textColor, ...itemStyle }}
+                                className={`hover:bg-gray-100 transition-colors ${itemClass}`}
                             >
                                 <IonLabel>{getLabel(item)}</IonLabel>
                             </IonItem>
@@ -150,20 +178,22 @@ function CBAutocomplete<T>({
         return (
             <div
                 ref={containerRef}
-                className={`relative ${fullWidth ? "w-full" : "w-auto"} flex flex-col`} style={{ minHeight: 72 }}
+                className={`relative ${fullWidth ? "w-full" : "w-auto"} flex flex-col ${className}`}
+                style={{ minHeight: 72, ...style }}
             >
-                {label && <label className="text-xs font-medium !pl-6">{label}</label>}
+                {label && <label className={`text-xs font-medium !pl-6 ${labelClass}`}>{label}</label>}
                 <input
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
                     placeholder={placeholder}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setTimeout(() => setIsFocused(false), 150)}
-                    className="w-full !pr-4 !pl-8 !py-4 border outline-none placeholder-[var(--ion-color-medium)]"
+                    className={`w-full !pr-4 !pl-8 !py-4 border outline-none placeholder-[var(--ion-color-medium)] ${inputClass}`}
                     style={{
                         borderColor,
                         borderRadius: borderRadiusInput,
                         color: textColor,
+                        ...inputStyle
                     }}
                 />
                 {isFocused && renderSelectDropdown()}
@@ -175,7 +205,8 @@ function CBAutocomplete<T>({
     return (
         <div
             ref={containerRef}
-            className={`relative ${fullWidth ? "w-full" : "w-auto"}`}
+            className={`relative ${fullWidth ? "w-full" : "w-auto"} ${className}`}
+            style={style}
         >
             <IonSearchbar
                 value={searchText}
@@ -187,12 +218,14 @@ function CBAutocomplete<T>({
                     setSearchText("");
                     onSelect(undefined);
                 }}
+                className={inputClass}
                 style={{
                     "--background": "var(--ion-color-light)",
                     "--border-color": borderColor,
                     "--border-radius": borderRadiusInput,
                     color: textColor,
-                }}
+                    ...inputStyle
+                } as any}
             />
             {isFocused && renderSelectDropdown()}
         </div>

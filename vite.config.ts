@@ -25,7 +25,15 @@ export default defineConfig({
       formats: ["es", "cjs", "umd"], // diferentes formatos de módulo
     },
     rollupOptions: {
-      external: ["react", "react-dom", "@ionic/react"], // evita bundlar dependências externas
+      external: [
+        "react",
+        "react-dom",
+        "react/jsx-runtime",
+        "@ionic/react",
+        "@ionic/core",
+        "tailwindcss",
+        "clsx",
+      ],
       output: {
         globals: {
           react: "React",

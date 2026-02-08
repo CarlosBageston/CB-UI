@@ -12,123 +12,301 @@ import type { IonSegmentCustomEvent } from "@ionic/core";
 import type { CBColor } from "../theme/CBColor";
 import CBStepperHorizontal from "./CBStepper/CBStepperHorizontal";
 import CBStepperVertical from "./CBStepper/CBStepperVertical";
+import type { CBStepperProps } from "./CBStepper/CBStepper.types";
 
 export type CBMultiViewVariant = "tabs" | "accordion" | "stepper";
+export interface Step {
+    title: string;
+    content: React.ReactNode;
+    icon?: React.ReactNode
+}
 
 export interface CBMultiViewIonicProps {
-    steps: { title: string; content: React.ReactNode; icon?: React.ReactNode; }[];
+    steps: Step[];
     variant?: CBMultiViewVariant;
     initialStep?: number;
     orientation?: "horizontal" | "vertical";
     color?: CBColor;
+
 }
 /**
  * CBMultiView
  *
- * Componente que permite exibir múltiplas views de forma organizada, podendo ser em formato de abas (tabs), acordeão (accordion) ou stepper (horizontal/vertical).
+ * Componente que permite exibir múltiplas visualizações (views) em três formatos:
+ * - **Tabs (abas)** usando `IonSegment`
+ * - **Accordion (acordeão)** usando `IonAccordionGroup`
+ * - **Stepper (etapas)** usando `CBStepperHorizontal` ou `CBStepperVertical`
+ *
+ * É utilizado para navegação entre diferentes seções ou etapas de um processo, com suporte a:
+ * - Tema e cores personalizáveis
+ * - Controle de botões de navegação
+ * - Callbacks de navegação (`onNext`, `onPrev`)
  *
  * @component
  *
- * @param {Object} props - Propriedades do componente
- * @param {Array<{title: string; content: React.ReactNode; icon?: React.ReactNode}>} props.steps - Lista de etapas/views. Cada etapa deve ter título, conteúdo e opcionalmente um ícone.
- * @param {"tabs" | "accordion" | "stepper"} [props.variant="tabs"] - Tipo de visualização do multi-view: abas, acordeão ou stepper.
- * @param {number} [props.initialStep=0] - Índice inicial da etapa ativa.
- * @param {"horizontal" | "vertical"} [props.orientation="horizontal"] - Direção do stepper, caso o variant seja "stepper".
- * @param {CBColor} [props.color="primary"] - Cor principal usada para destacar a etapa ativa.
+ * @param {Object} props - Propriedades do componente.
  *
+ * @param {Step[]} props.steps - Lista de etapas/views. Cada etapa deve conter:
+ *   - `title` (**string**): Título do passo.
+ *   - `content` (**ReactNode**): Conteúdo exibido dentro do passo.
+ *   - `icon` (**ReactNode**, opcional): Ícone exibido ao lado do título.
+ *
+ * @param {"tabs" | "accordion" | "stepper"} [props.variant="tabs"]
+ * Define o tipo de visualização a ser usada.
+ *
+ * @param {number} [props.initialStep=0]
+ * Índice do passo inicial.
+ *
+ * @param {"horizontal" | "vertical"} [props.orientation="horizontal"]
+ * Direção do stepper quando `variant="stepper"`.
+ *
+ * @param {CBColor} [props.color="primary"]
+ * Cor principal usada para destacar o passo ativo.
+ *
+ * @param {string} [props.className]
+ * Classe CSS aplicada ao container principal.
+ *
+ * @param {string} [props.classNameContent]
+ * Classe CSS aplicada ao conteúdo interno de cada passo.
+ *
+ * @param {React.CSSProperties} [props.style]
+ * Estilo inline aplicado ao container principal.
+ *
+ * ---
+ * 🧭 **Navegação e Botões**
+ *
+ * @param {boolean} [props.showButtonPrev=true]
+ * Define se o botão "Voltar" será exibido no stepper.
+ *
+ * @param {boolean} [props.showButtonNext=true]
+ * Define se o botão "Próximo" será exibido no stepper.
+ *
+ * @param {string | ((stepIndex: number, stepsLength: number) => string)} [props.nextLabel="Próximo"]
+ * Define o texto do botão "Próximo" (ou uma função dinâmica baseada no índice e total de etapas).
+ *
+ * @param {string | ((stepIndex: number, stepsLength: number) => string)} [props.prevLabel="Voltar"]
+ * Define o texto do botão "Voltar" (ou uma função dinâmica baseada no índice e total de etapas).
+ *
+ * @param {(stepIndex: number) => boolean} [props.disableNext]
+ * Função que retorna se o botão "Próximo" deve estar desabilitado.
+ *
+ * @param {(stepIndex: number) => boolean} [props.disablePrev]
+ * Função que retorna se o botão "Voltar" deve estar desabilitado.
+ *
+ * @param {(currentStep: number) => boolean | Promise<boolean> | void} [props.onNext]
+ * Callback executado ao clicar em "Próximo".
+ * - Retorne `false` ou `Promise<false>` para impedir o avanço.
+ * - Retorne `true` (ou nada) para permitir o avanço.
+ *
+ * @param {(currentStep: number) => boolean | Promise<boolean> | void} [props.onPrev]
+ * Callback executado ao clicar em "Voltar".
+ * - Retorne `false` para impedir o retrocesso.
+ *
+ * ---
+ * 🎨 **Tema (theme)**
+ *
+ * @param {Object} [props.theme]
+ * Objeto que personaliza as cores e o estilo visual do stepper.
+ *
+ * @param {string} [props.theme.titleColor]
+ * Cor do título de cada passo.
+ *
+ * @param {Object} [props.theme.circle]
+ * Cores do círculo do step ativo.
+ *   - `background`: Cor de fundo.
+ *   - `text`: Cor do texto.
+ *
+ * @param {string} [props.theme.line]
+ * Cor da linha que conecta os passos.
+ *
+ * @param {Object} [props.theme.button]
+ * Personalização dos botões de navegação.
+ *
+ * @param {Object} [props.theme.button.next]
+ * Estilo do botão "Próximo":
+ *   - `background`, `text`, `border`, `hover`, `active`
+ *   - `variant`: `"solid" | "clear" | "outline"`
+ *   - `rounded`: Define se o botão é arredondado.
+ *
+ * @param {Object} [props.theme.button.prev]
+ * Estilo do botão "Voltar":
+ *   - `background`, `text`, `border`, `hover`, `active`
+ *   - `variant`: `"solid" | "clear" | "outline"`
+ *   - `rounded`: Define se o botão é arredondado.
+ *
+ * ---
  * @example
- * // Tabs com 3 etapas
+ * // Exemplo: Tabs com 3 etapas
  * <CBMultiView
- *    steps={[
- *      { title: "Etapa 1", content: <p>Conteúdo 1</p> },
- *      { title: "Etapa 2", content: <p>Conteúdo 2</p> },
- *      { title: "Etapa 3", content: <p>Conteúdo 3</p> },
- *    ]}
- *    variant="tabs"
- *    initialStep={0}
+ *   steps={[
+ *     { title: "Etapa 1", content: <p>Conteúdo 1</p> },
+ *     { title: "Etapa 2", content: <p>Conteúdo 2</p> },
+ *     { title: "Etapa 3", content: <p>Conteúdo 3</p> },
+ *   ]}
+ *   variant="tabs"
  * />
  *
  * @example
- * // Accordion com 2 seções
+ * // Exemplo: Accordion
  * <CBMultiView
- *    steps={[
- *      { title: "Seção 1", content: <p>Conteúdo 1</p> },
- *      { title: "Seção 2", content: <p>Conteúdo 2</p> },
- *    ]}
- *    variant="accordion"
+ *   variant="accordion"
+ *   steps={[
+ *     { title: "Seção 1", content: <p>Conteúdo 1</p> },
+ *     { title: "Seção 2", content: <p>Conteúdo 2</p> },
+ *   ]}
  * />
  *
  * @example
- * // Stepper horizontal com cores personalizadas
+ * // Exemplo: Stepper com tema customizado
  * <CBMultiView
- *    steps={[
- *      { title: "Passo 1", content: <p>Conteúdo 1</p> },
- *      { title: "Passo 2", content: <p>Conteúdo 2</p> },
- *    ]}
- *    variant="stepper"
- *    orientation="horizontal"
- *    color="secondary"
+ *   variant="stepper"
+ *   orientation="horizontal"
+ *   color="secondary"
+ *   steps={[
+ *     { title: "Passo 1", content: <p>Conteúdo 1</p> },
+ *     { title: "Passo 2", content: <p>Conteúdo 2</p> },
+ *   ]}
+ *   theme={{
+ *     circle: { background: "#4ade80", text: "#fff" },
+ *     line: "#22d3ee",
+ *     titleColor: "#111827",
+ *     button: {
+ *       next: { background: "#f43f5e", text: "#fff", variant: "solid" },
+ *       prev: { variant: "outline", border: "#ccc" },
+ *     },
+ *   }}
+ *   onNext={(step) => console.log("Avançou do passo:", step)}
+ *   onPrev={(step) => console.log("Voltou do passo:", step)}
  * />
  *
  * @remarks
- * - Quando `variant` é "tabs", utiliza `IonSegment` para alternar entre etapas.
- * - Quando `variant` é "accordion", utiliza `IonAccordionGroup` e `IonAccordion`.
- * - Quando `variant` é "stepper", usa os componentes `CBStepperHorizontal` ou `CBStepperVertical` dependendo da `orientation`.
- * - Permite personalizar cor, passo inicial e orientação do stepper.
+ * - Usa componentes do Ionic (`IonSegment`, `IonAccordionGroup`) internamente.
+ * - O modo `stepper` utiliza os componentes `CBStepperHorizontal` ou `CBStepperVertical`.
+ * - Suporta callbacks assíncronos para controle de avanço/retrocesso.
  */
 
-const CBMultiView: React.FC<CBMultiViewIonicProps> = ({
+const CBMultiView: React.FC<CBMultiViewIonicProps & CBStepperProps> = ({
     steps,
     variant = "tabs",
     initialStep = 0,
     orientation = "horizontal",
     color = 'primary',
+    className,
+    style,
+    classNameContent,
+    showButtonPrev = true,
+    showButtonNext = true,
+    nextLabel,
+    prevLabel,
+    disableNext,
+    disablePrev,
+    onNext,
+    onPrev,
+    theme
 }) => {
     const [activeIndex, setActiveIndex] = useState(initialStep);
 
     // ---------------------- Tabs ----------------------
     if (variant === "tabs") {
+        const tabsTheme = theme?.tabs;
+
         return (
-            <div>
+            <div style={style}>
+
+                {/* Estilização do Segment */}
                 <IonSegment
+                    scrollable={tabsTheme?.segment?.scrollable}
                     value={activeIndex.toString()}
                     onIonChange={(e: IonSegmentCustomEvent<SegmentChangeEventDetail>) => {
-                        const val = e.detail.value; // val: SegmentValue | undefined
+                        const val = e.detail.value;
                         if (val !== undefined && val !== null) {
                             setActiveIndex(parseInt(val.toString(), 10));
                         }
                     }}
+                    style={{
+                        background: tabsTheme?.segment?.background,
+                        borderRadius: tabsTheme?.segment?.borderRadius,
+                        padding: tabsTheme?.segment?.padding,
+                        border: tabsTheme?.segment?.border,
+                    }}
+                    className={`w-full ${className} ${tabsTheme?.segment?.hideIndicator ? "cb-tabs-no-indicator" : ""}`}
                 >
-                    {steps.map((step, idx) => (
-                        <IonSegmentButton key={idx} value={idx.toString()}>
-                            <IonLabel>{step.title}</IonLabel>
-                        </IonSegmentButton>
-                    ))}
+                    {steps.map((step, idx) => {
+                        const isActive = idx === activeIndex;
+
+                        return (
+                            <IonSegmentButton
+                                key={idx}
+                                value={idx.toString()}
+                                style={{
+                                    background: isActive
+                                        ? tabsTheme?.button?.activeBackground
+                                        : tabsTheme?.button?.background,
+                                    color: isActive
+                                        ? tabsTheme?.button?.activeText
+                                        : tabsTheme?.button?.text,
+                                    border: tabsTheme?.button?.border,
+                                    borderRadius:
+                                        tabsTheme?.button?.rounded !== false
+                                            ? "9999px"
+                                            : undefined,
+                                }}
+                            >
+                                <IonLabel>
+                                    {step.title}
+                                </IonLabel>
+                            </IonSegmentButton>
+                        );
+                    })}
                 </IonSegment>
-                <div className="p-4">{steps[activeIndex].content}</div>
+
+                <div className={classNameContent ?? "p-4"}>
+                    {steps[activeIndex].content}
+                </div>
             </div>
         );
     }
 
     // ---------------------- Accordion ----------------------
     if (variant === "accordion") {
+        const accordionTheme = theme?.accordion;
+
         return (
             <IonAccordionGroup
                 value={activeIndex.toString()}
                 onIonChange={(e: any) => {
-                    // e.detail.value contém o value do accordion aberto
                     setActiveIndex(parseInt(e.detail.value ?? "-1", 10));
                 }}
+                className={`${className ?? ""} ${accordionTheme?.indicator?.hide ? "cb-acc-no-indicator" : ""}`}
+                style={style}
             >
                 {steps.map((step, idx) => (
                     <IonAccordion
                         key={idx}
                         value={idx.toString()}
                     >
-                        <IonItem slot="header">
+                        <IonItem
+                            slot="header"
+                            style={{
+                                background: accordionTheme?.header?.background,
+                                color: accordionTheme?.header?.color,
+                                border: accordionTheme?.header?.border,
+                                borderRadius: accordionTheme?.header?.borderRadius,
+                                padding: accordionTheme?.header?.padding,
+                                ['--ripple-color' as any]: "transparent"
+                            }}
+                        >
                             <IonLabel>{step.title}</IonLabel>
                         </IonItem>
-                        <div slot="content" className="p-4">
+
+                        <div
+                            slot="content"
+                            style={{
+                                background: accordionTheme?.content?.background,
+                                color: accordionTheme?.content?.color,
+                                padding: accordionTheme?.content?.padding ?? "16px"
+                            }}
+                        >
                             {step.content}
                         </div>
                     </IonAccordion>
@@ -139,13 +317,28 @@ const CBMultiView: React.FC<CBMultiViewIonicProps> = ({
 
     // ---------------------- Stepper ----------------------
     if (variant === "stepper") {
-        if (orientation === "horizontal") {
-            return <CBStepperHorizontal steps={steps} initialStep={initialStep} color={color} />;
-        } else {
-            return <CBStepperVertical steps={steps} initialStep={initialStep} color={color} />;
-        }
+        const stepperProps = {
+            steps,
+            initialStep,
+            color,
+            className,
+            style,
+            classNameContent,
+            showButtonPrev,
+            showButtonNext,
+            nextLabel,
+            prevLabel,
+            disableNext,
+            disablePrev,
+            onNext,
+            onPrev,
+            theme
+        };
 
-    };
+        return orientation === "horizontal"
+            ? <CBStepperHorizontal {...stepperProps} />
+            : <CBStepperVertical {...stepperProps} />;
+    }
 
     return null;
 };

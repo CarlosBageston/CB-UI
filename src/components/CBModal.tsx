@@ -12,7 +12,7 @@ import {
 import { IoClose } from "react-icons/io5";
 import clsx from "clsx";
 
-export interface CBModalProps {
+export interface CBModalProps extends React.ComponentProps<typeof IonModal> {
     isOpen: boolean;
     onDismiss: () => void;
     title?: string;
@@ -84,13 +84,15 @@ const CBModal: React.FC<CBModalProps> = ({
     className,
     headerClassName,
     contentClassName,
-    footerClassName
+    footerClassName,
+    ...props
 }) => {
     return (
         <IonModal
             isOpen={isOpen}
             onDidDismiss={onDismiss}
             className={clsx("rounded-lg overflow-hidden modal-height-full", className)}
+            {...props}
         >
             {(title || subtitle || showCloseButton) && (
                 <IonHeader className={clsx("ion-no-border", headerClassName)}>

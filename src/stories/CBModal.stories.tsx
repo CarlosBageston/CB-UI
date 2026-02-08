@@ -37,6 +37,10 @@ export const UserEditModal: Story = {
                             <CBButton label="Salvar" onClick={handleSave} />
                         </div>
                     }
+
+                    initialBreakpoint={0.5}
+                    breakpoints={[0, 0.5, 0.8]}
+                    handleBehavior="cycle"
                 >
                     <div className="flex flex-col gap-4">
                         <div className="!mt-2">

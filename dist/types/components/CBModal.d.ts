@@ -1,5 +1,6 @@
 import React from "react";
-export interface CBModalProps {
+import { IonModal } from "@ionic/react";
+export interface CBModalProps extends React.ComponentProps<typeof IonModal> {
     isOpen: boolean;
     onDismiss: () => void;
     title?: string;

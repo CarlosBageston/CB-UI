@@ -1,42 +1,51 @@
 {
-  "name": "cb-ui",
+  "name": "@carlosbageston/cb-ui",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.1.19",
   "type": "module",
   "description": "Biblioteca de componentes React/Ionic customizados",
   "main": "dist/cb-ui.cjs.js",
   "module": "dist/cb-ui.es.js",
   "unpkg": "./dist/cb-ui.umd.js",
-  "types": "dist/types/index.d.ts", 
+  "types": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "scripts": {
-  "dev": "vite",
-  "prepare": "npm run build",
-  "build": "vite build && tsc -p tsconfig.build.json",
-  "lint": "eslint .",
-  "preview": "vite preview",
-  "storybook": "storybook dev -p 6006",
-  "build-storybook": "storybook build"
-},
+    "dev": "vite",
+    "prepare": "npm run build",
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish"
+  },
   "peerDependencies": {
-  "react": "^19.0.0",
-  "react-dom": "^19.0.0",
-  "@ionic/react": "^8.0.0",
-  "@ionic/core": "^8.0.0",
-  "tailwindcss": "^4.0.0"
-},
-"dependencies": {
-  "@tailwindcss/vite": "^4.1.12",
-  "ag-grid-community": "^34.1.2",
-  "ag-grid-react": "^34.1.2",
-  "firebase": "^12.2.1",
-  "dayjs": "^1.11.18",
-  "framer-motion": "^12.23.12",
-  "react-icons": "^5.5.0",
-  "tailwind-ionic-utils": "^1.0.4"
-},
+    "@ionic/core": "^8.0.0",
+    "@ionic/react": "^8.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "tailwindcss": "^4.0.0",
+    "clsx": "^2.1.0",
+    "framer-motion": "^12.15.0",
+    "react-icons": "^4.8.0"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.12",
+    "ag-grid-community": "^34.1.2",
+    "ag-grid-react": "^34.1.2",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.18",
+    "firebase": "^12.2.1",
+    "tailwind-ionic-utils": "^1.0.4"
+  },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.1",
     "@eslint/js": "^9.33.0",
