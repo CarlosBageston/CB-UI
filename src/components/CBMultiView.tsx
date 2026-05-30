@@ -6,9 +6,7 @@ import {
     IonAccordionGroup,
     IonAccordion,
     IonItem,
-    type SegmentChangeEventDetail,
 } from "@ionic/react";
-import type { IonSegmentCustomEvent } from "@ionic/core";
 import type { CBColor } from "../theme/CBColor";
 import CBStepperHorizontal from "./CBStepper/CBStepperHorizontal";
 import CBStepperVertical from "./CBStepper/CBStepperVertical";
@@ -27,7 +25,7 @@ export interface CBMultiViewIonicProps {
     initialStep?: number;
     orientation?: "horizontal" | "vertical";
     color?: CBColor;
-
+    onTabChange?: (index: number) => void;
 }
 /**
  * CBMultiView
@@ -202,6 +200,7 @@ const CBMultiView: React.FC<CBMultiViewIonicProps & CBStepperProps> = ({
     disablePrev,
     onNext,
     onPrev,
+    onTabChange,
     theme
 }) => {
     const [activeIndex, setActiveIndex] = useState(initialStep);
@@ -217,10 +216,12 @@ const CBMultiView: React.FC<CBMultiViewIonicProps & CBStepperProps> = ({
                 <IonSegment
                     scrollable={tabsTheme?.segment?.scrollable}
                     value={activeIndex.toString()}
-                    onIonChange={(e: IonSegmentCustomEvent<SegmentChangeEventDetail>) => {
+                    onIonChange={(e) => {
                         const val = e.detail.value;
                         if (val !== undefined && val !== null) {
-                            setActiveIndex(parseInt(val.toString(), 10));
+                            const idx = parseInt(val.toString(), 10);
+                            setActiveIndex(idx);
+                            onTabChange?.(idx);
                         }
                     }}
                     style={{

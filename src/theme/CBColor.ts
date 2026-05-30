@@ -10,6 +10,9 @@ export type CBColor =
   | "light"
   | "dark";
 
+// Aceita CBColor tipado OU qualquer string (var CSS, hex, etc)
+export type CBColorOrString = CBColor | (string & {});
+
 export interface CSSVars extends React.CSSProperties {
   [key: `--${string}`]: string | number;
 }

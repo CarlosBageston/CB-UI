@@ -31,63 +31,43 @@ interface CBStateWrapperProps<T> {
         retryButton?: React.CSSProperties;
         content?: React.CSSProperties;
     };
+    /** Array de dados a ser renderizado. Deve começar `null` ou `undefined` para que o loading funcione corretamente. */
     data?: T[] | null;
 }
 /**
  * CBStateWrapper
  *
- * Componente responsável por gerenciar automaticamente os principais estados
- * de uma tela: **loading**, **erro**, **vazio** e **conteúdo real**.
+ * Componente wrapper para gerenciar automaticamente os principais estados de uma tela:
+ * - **Loading**
+ * - **Erro**
+ * - **Vazio**
+ * - **Conteúdo**
  *
- * Ele também suporta:
- * - Tema visual customizável (via `theme`)
- * - Mensagem de carregamento customizada
- * - Ícone e mensagens personalizadas para o estado vazio
- * - Botão de retry quando há erro ou vazio
+ * A prioridade de exibição é sempre: `loading > error > empty > content`.
  *
- * ## Estados Prioritários
- * A ordem de exibição segue esta prioridade:
- * 1. **Loading**
- * 2. **Erro**
- * 3. **Empty**
- * 4. **Content**
+ * Para funcionar corretamente com o estado de loading inicial, o `data` deve começar
+ * como `null` ou `undefined`. Se você passar `isLoading`, ele será usado como prioridade.
  *
- * Isso garante que apenas um estado esteja visível por vez.
+ * Suporta:
+ * - Tema customizável (`theme`)
+ * - Mensagem de loading personalizada
+ * - Ícone e mensagens customizadas para o empty state
+ * - Botão de retry
  *
- * @component
- *
+ * @template T Tipo dos itens do array `data`
  * @param {object} props
- * @param {boolean} [props.isLoading=false] Indica se o estado de carregamento deve ser exibido.
- * @param {boolean} [props.isEmpty=false] Indica se o estado vazio deve ser exibido.
- *
- * @param {string|null} [props.error=null] Mensagem de erro que ativa o estado de erro.
- *
- * @param {string} [props.emptyTitle="Nada encontrado"] Título do componente de Empty State.
- * @param {string[]} [props.emptyMessages] Lista opcional de mensagens detalhadas para o empty.
- * @param {React.ReactNode} [props.emptyIcon] Ícone customizado exibido no empty state.
- *
- * @param {() => void} [props.onRetry] Callback executado ao clicar no botão de retry ou "Adicionar".
- *
- * @param {React.ReactNode} [props.children] Conteúdo real exibido quando nenhum outro estado está ativo.
- *
- * @param {string|number} [props.minHeight="250px"] Altura mínima do wrapper.
- *
- * @param {string} [props.loadingLabel="Carregando..."] Texto customizado exibido durante o loading.
- *
- * @param {object} [props.theme] Tema customizável usado para sobrescrever estilos internos.
- *
- * @param {React.CSSProperties} [props.theme.container] Estilo aplicado ao container principal.
- * @param {React.CSSProperties} [props.theme.loading] Estilo aplicado ao wrapper do loading.
- * @param {React.CSSProperties} [props.theme.loadingLabel] Estilo do texto durante o loading.
- *
- * @param {React.CSSProperties} [props.theme.error] Estilo aplicado ao container do erro.
- * @param {React.CSSProperties} [props.theme.errorTitle] Estilo aplicado ao título do erro.
- * @param {React.CSSProperties} [props.theme.errorMessage] Estilo aplicado à mensagem detalhada do erro.
- * @param {React.CSSProperties} [props.theme.retryButton] Estilo aplicado ao botão de retry.
- *
- * @param {React.CSSProperties} [props.theme.content] Estilo aplicado ao wrapper do conteúdo real.
- *
- * @returns {JSX.Element} O componente renderizado.
+ * @param {T[] | null} [props.data] Array de dados a ser renderizado. Deve começar `null` ou `undefined` para que o loading funcione corretamente.
+ * @param {boolean} [props.isLoading=false] Força o estado de loading.
+ * @param {string | null} [props.error=null] Mensagem de erro para exibir o estado de erro.
+ * @param {string} [props.emptyTitle="Nada encontrado"] Título do estado vazio.
+ * @param {string[]} [props.emptyMessages] Mensagens detalhadas do estado vazio.
+ * @param {React.ReactNode} [props.emptyIcon] Ícone customizado para o estado vazio.
+ * @param {() => void} [props.onRetry] Callback do botão de retry/Adicionar.
+ * @param {React.ReactNode} [props.children] Conteúdo real quando nenhum outro estado está ativo.
+ * @param {string | number} [props.minHeight="250px"] Altura mínima do wrapper.
+ * @param {string} [props.loadingLabel="Carregando..."] Texto do estado de loading.
+ * @param {object} [props.theme] Objeto para customização de estilos internos.
+ * @returns {JSX.Element} Componente renderizado com os estados adequados.
  */
 declare const CBStateWrapper: <T>({ data, isLoading: propLoading, error, emptyTitle, emptyMessages, emptyIcon, onRetry, children, minHeight, loadingLabel, theme, }: CBStateWrapperProps<T>) => JSX.Element;
 export default CBStateWrapper;

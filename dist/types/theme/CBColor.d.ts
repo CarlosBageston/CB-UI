@@ -1,4 +1,5 @@
 export type CBColor = "primary" | "secondary" | "success" | "warning" | "danger" | "info" | "neutral" | "light" | "dark";
+export type CBColorOrString = CBColor | (string & {});
 export interface CSSVars extends React.CSSProperties {
     [key: `--${string}`]: string | number;
 }

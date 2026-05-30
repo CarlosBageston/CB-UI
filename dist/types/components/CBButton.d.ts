@@ -1,85 +1,198 @@
-import { IonButton } from '@ionic/react';
-import React from 'react';
-import type { CBColor } from '../theme/CBColor';
+import { IonButton } from "@ionic/react";
+import React from "react";
+import type { CBColorOrString } from "../theme/CBColor";
 /**
- * Tamanhos disponíveis para o CBButton.
- * - `'small'`: botão compacto
- * - `'medium'`: tamanho padrão
- * - `'large'`: botão maior
+ * Tamanhos disponíveis para o botão.
  */
-export type CBButtonSize = 'small' | 'medium' | 'large';
+export type CBButtonSize = "small" | "medium" | "large";
 /**
- * Variantes visuais do botão.
- * - `'solid'`: fundo sólido colorido
- * - `'outline'`: contorno colorido com fundo transparente
- * - `'clear'`: apenas texto colorido, sem borda ou fundo
+ * Variantes visuais suportadas.
+ *
+ * - `solid`: botão com fundo preenchido
+ * - `outline`: botão com borda e fundo transparente
+ * - `clear`: botão sem fundo e sem borda
  */
-export type CBButtonVariant = 'solid' | 'outline' | 'clear';
+export type CBButtonVariant = "solid" | "outline" | "clear";
 /**
- * Props do componente CBButton.
+ * Props nativas expostas do IonButton.
+ *
+ * Apenas props consideradas úteis e seguras para a API pública
+ * do componente são reexportadas.
  */
-export interface CBButtonProps extends Omit<React.ComponentProps<typeof IonButton>, 'size'> {
-    /** Texto exibido no botão */
-    label?: string;
-    /** Tamanho do botão */
+type NativeButtonProps = Pick<React.ComponentProps<typeof IonButton>, "onClick" | "type" | "routerLink" | "href" | "target" | "expand" | "className" | "style">;
+/**
+ * Props do componente `CBButton`.
+ */
+export interface CBButtonProps extends NativeButtonProps {
+    /**
+     * Conteúdo renderizado dentro do botão.
+     *
+     * Pode receber texto, ícones, badges ou qualquer nó React.
+     *
+     * @example
+     * <CBButton>Salvar</CBButton>
+     *
+     * @example
+     * <CBButton>
+     *   <SaveIcon />
+     *   Salvar
+     * </CBButton>
+     */
+    children?: React.ReactNode;
+    /**
+     * Tamanho visual do botão.
+     *
+     * @default "medium"
+     */
     size?: CBButtonSize;
-    /** Variante visual */
+    /**
+     * Variante visual do botão.
+     *
+     * @default "solid"
+     */
     variant?: CBButtonVariant;
-    /** Borda arredondada */
+    /**
+     * Aplica bordas totalmente arredondadas.
+     *
+     * @default false
+     */
     rounded?: boolean;
-    /** Ocupa toda a largura disponível */
+    /**
+     * Faz o botão ocupar 100% da largura disponível.
+     *
+     * @default false
+     */
     fullWidth?: boolean;
-    /** Estado de loading */
+    /**
+     * Estado de carregamento.
+     *
+     * Quando ativo:
+     * - o botão é desabilitado
+     * - exibe spinner
+     * - renderiza `loadingText` se informado
+     *
+     * @default false
+     */
     loading?: boolean;
-    /** Texto exibido quando estiver em loading */
-    loadingText?: string;
-    /** Desabilita o botão */
+    /**
+     * Conteúdo exibido durante o loading.
+     *
+     * Se não informado, utiliza `children`.
+     */
+    loadingText?: React.ReactNode;
+    /**
+     * Desabilita interação do botão.
+     *
+     * @default false
+     */
     disabled?: boolean;
-    /** Gradiente de fundo customizado */
+    /**
+     * Gradiente customizado para o fundo do botão.
+     *
+     * Possui prioridade sobre `color`.
+     *
+     * @example
+     * gradient="linear-gradient(90deg, #ff8a00, #e52e71)"
+     */
     gradient?: string;
-    /** Ícone inicial */
+    /**
+     * Ícone renderizado antes do conteúdo principal.
+     */
     iconStart?: React.ReactNode;
-    /** Ícone final */
+    /**
+     * Ícone renderizado após o conteúdo principal.
+     */
     iconEnd?: React.ReactNode;
-    /** Cor do botão (usa CBColor) */
-    color?: CBColor;
+    /**
+     * Cor principal do botão.
+     *
+     * Aceita:
+     * - tokens internos (`primary`, `success`, etc)
+     * - CSS variables (`var(--my-color)`)
+     * - nomes de variáveis CSS (`--my-color`)
+     * - valores HEX/RGB/HSL
+     *
+     * @default "primary"
+     *
+     * @example
+     * color="primary"
+     *
+     * @example
+     * color="var(--summary-yellow-bg)"
+     *
+     * @example
+     * color="--summary-yellow-bg"
+     *
+     * @example
+     * color="#ca8a04"
+     */
+    color?: CBColorOrString;
+    /**
+     * Sobrescreve a cor de fundo do botão.
+     */
     backgroundColor?: string;
+    /**
+     * Sobrescreve a cor do texto.
+     */
     textColor?: string;
+    /**
+     * Sobrescreve a cor da borda.
+     */
     borderColor?: string;
+    /**
+     * Sobrescreve a cor aplicada no estado hover.
+     */
     hoverColor?: string;
+    /**
+     * Sobrescreve a cor aplicada no estado ativo.
+     */
     activeColor?: string;
 }
 /**
- * Componente de botão customizado com suporte a cores, variantes, tamanhos, ícones e loading.
+ * Botão customizado baseado em Ionic com suporte a:
  *
- * Suporta:
- * - Botão sólido (`solid`)
- * - Botão com contorno (`outline`)
- * - Botão transparente apenas com texto (`clear`)
+ * - Variantes visuais
+ * - Tokens de tema
+ * - CSS variables
+ * - Loading state
+ * - Ícones
+ * - Gradientes
+ * - Tamanhos
+ * - Customização avançada via CSS vars
  *
- * @param props Propriedades do botão
- * @returns JSX.Element
+ * O componente prioriza flexibilidade visual mantendo
+ * uma API consistente para design systems.
  *
  * @example
  * ```tsx
  * <CBButton
- *   label="Salvar"
  *   color="primary"
  *   size="large"
- *   variant="solid"
  *   rounded
- *   iconStart={<SaveIcon />}
- *   loading={isSaving}
- * />
+ * >
+ *   Salvar
+ * </CBButton>
  * ```
  *
  * @example
  * ```tsx
  * <CBButton
- *   label="Cancelar"
  *   variant="outline"
- *   fullWidth
- * />
+ *   color="--summary-yellow-bg"
+ *   iconStart={<WarningIcon />}
+ * >
+ *   Atenção
+ * </CBButton>
+ * ```
+ *
+ * @example
+ * ```tsx
+ * <CBButton
+ *   loading={isSaving}
+ *   loadingText="Salvando..."
+ * >
+ *   Salvar alterações
+ * </CBButton>
  * ```
  */
 declare const CBButton: React.FC<CBButtonProps>;

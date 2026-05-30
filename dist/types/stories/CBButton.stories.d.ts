@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import CBButton, { type CBButtonProps } from '../components/CBButton';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import CBButton, { type CBButtonProps } from "../components/CBButton";
 declare const meta: Meta<typeof CBButton>;
 export default meta;
 type Story = StoryObj<CBButtonProps>;

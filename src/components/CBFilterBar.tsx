@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IonInput, IonSelect, IonSelectOption } from "@ionic/react";
 import { FiSearch, FiFilter } from "react-icons/fi";
 
@@ -68,10 +68,12 @@ function CBFilterBar<T>({
 }: CBFilterBarProps<T>) {
     const [query, setQuery] = useState(initialQuery ?? "");
     const [selectedColumn, setSelectedColumn] = useState<string | undefined>();
+    const onChangeRef = useRef(onChange);
+    onChangeRef.current = onChange;
 
     useEffect(() => {
         if (!query) {
-            onChange(data);
+            onChangeRef.current(data);
             return;
         }
 
@@ -88,8 +90,8 @@ function CBFilterBar<T>({
             );
         });
 
-        onChange(filtered);
-    }, [query, selectedColumn, data, onChange]);
+        onChangeRef.current(filtered);
+    }, [query, selectedColumn, JSON.stringify(data)]); // JSON.stringify estabiliza: só reexecuta quando o conteúdo muda, não a referência
 
     return (
         <div

@@ -13,6 +13,7 @@ export interface CBMultiViewIonicProps {
     initialStep?: number;
     orientation?: "horizontal" | "vertical";
     color?: CBColor;
+    onTabChange?: (index: number) => void;
 }
 /**
  * CBMultiView
