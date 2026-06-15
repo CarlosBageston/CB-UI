@@ -76,5 +76,5 @@ export interface CBAutocompleteProps<T> {
  * />
  * ```
  */
-declare function CBAutocomplete<T>({ items, getLabel, getValue, onSelect, placeholder, color, rounded, fullWidth, loading, variant, label, className, style, inputClass, inputStyle, dropdownClass, dropdownStyle, itemClass, itemStyle, labelClass }: CBAutocompleteProps<T>): import("react/jsx-runtime").JSX.Element;
+declare function CBAutocomplete<T>({ items, getLabel, getValue, onSelect, placeholder, color, rounded, fullWidth, loading, variant, label, className, style, inputClass, inputStyle, dropdownClass, dropdownStyle, itemClass, itemStyle, labelClass }: CBAutocompleteProps<T>): import("react").JSX.Element;
 export default CBAutocomplete;

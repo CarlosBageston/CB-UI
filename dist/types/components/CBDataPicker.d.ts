@@ -1,7 +1,9 @@
-import 'dayjs/locale/pt-br';
-import type { CBColor } from '../theme/CBColor';
-import React from 'react';
-import type { Timestamp } from 'firebase/firestore';
+import "dayjs/locale/pt-br";
+import type { CBColor } from "../theme/CBColor";
+import React from "react";
+export interface DateLike {
+    toDate(): Date;
+}
 /**
  * Define os modos de exibição do date picker.
  * - `"modal"`: exibe em modal.
@@ -13,13 +15,13 @@ type PickerMode = "modal" | "dropdown";
  */
 export interface CBDataPickerProps {
     /** Valor atual do date picker (Date ou Timestamp do Firestore) */
-    value: Date | Timestamp | null;
+    value: Date | null;
     /** Callback chamado ao selecionar uma data */
     onChange: (date: Date) => void;
     /** Label exibido acima do input */
     label: string;
     /** Formato de exibição da data */
-    format?: 'day' | 'month-year' | 'date' | 'datetime' | 'MMMM/YYYY';
+    format?: "day" | "month-year" | "date" | "datetime" | "MMMM/YYYY";
     /** Desabilita o date picker */
     disabled?: boolean;
     /** Texto de erro exibido abaixo do input */
@@ -51,7 +53,6 @@ export interface CBDataPickerProps {
  * - Datas mínimas e máximas
  * - Modal ou dropdown
  * - Icone de calendário
- * - Integração com Firebase Timestamp
  *
  * @param props Propriedades do date picker
  * @returns JSX.Element

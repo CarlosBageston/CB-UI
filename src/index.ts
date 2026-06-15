@@ -12,7 +12,6 @@ export { default as CBTooltip } from "./components/CBTooltip";
 export { default as CBCheckbox } from "./components/CBCheckbox";
 export { default as CBTextArea } from "./components/CBTextArea";
 export { default as CBSelector } from "./components/CBSelector";
-export { default as CBDataTable } from "./components/CBDataTable";
 export { default as CBFabButton } from "./components/CBFabButton";
 export { default as CBFilterBar } from "./components/CBFilterBar";
 export { default as CBMultiView } from "./components/CBMultiView";
@@ -27,5 +26,4 @@ export { default as CBStepperHorizontal } from "./components/CBStepper/CBStepper
 // Exporta hooks e tipos principais
 export * from "./theme/CBColor";
 export * from "./hooks/useCBColor";
-export * from "./hooks/useAGGridTheme";
 export * from "./types/components";

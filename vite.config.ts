@@ -12,17 +12,26 @@ const dirname =
     : path.dirname(fileURLToPath(import.meta.url));
 
 import tailwindcss from "@tailwindcss/vite";
-
+import visualizer from "rollup-plugin-visualizer";
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    visualizer({
+      open: true,
+      gzipSize: true,
+    }),
+  ],
   // Build da biblioteca
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/index.ts"), // seu index.ts
-      name: "CBUI", // nome global para UMD
-      fileName: (format) => `cb-ui.${format}.js`,
-      formats: ["es", "cjs", "umd"], // diferentes formatos de módulo
+      entry: {
+        "cb-ui": path.resolve(__dirname, "src/index.ts"),
+        "datatable": path.resolve(__dirname, "src/datatable.ts"),
+      },
+      formats: ["es", "cjs"], // diferentes formatos de módulo (umd não suporta múltiplos pontos de entrada de forma simples)
+      fileName: (format, entryName) => `${entryName}.${format}.js`,
     },
     rollupOptions: {
       external: [
@@ -33,6 +42,8 @@ export default defineConfig({
         "@ionic/core",
         "tailwindcss",
         "clsx",
+        "ag-grid-community",
+        "ag-grid-react",
       ],
       output: {
         globals: {

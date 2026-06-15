@@ -1,7 +1,8 @@
 // CBDataTable.stories.tsx
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { CBDataTable, CBFilterBar } from "..";
+import { CBFilterBar } from "..";
+import CBDataTable from "../components/CBDataTable";
 
 interface User {
   id: number;
@@ -80,7 +81,7 @@ export const WithData: Story = {
       data={mockData}
       pageSize={4}
       emptyMessage="Nenhum usuário encontrado"
-      onEdit={(e) => { console.log(e) }}
+      onEdit={(e: User) => { console.log(e) }}
       onDelete={() => { console.log("onDelete") }}
     />;
   },

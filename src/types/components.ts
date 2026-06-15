@@ -1,6 +1,5 @@
 /* components.d.ts */
 import type { ReactNode, CSSProperties } from "react";
-import type { Timestamp } from "firebase/firestore";
 import type { ColDef } from "ag-grid-community";
 import type { CBColor } from "../theme/CBColor";
 import type { IconType } from "react-icons";
@@ -79,7 +78,7 @@ export interface CBCheckboxProps extends CBBaseProps {
 export type PickerMode = "modal" | "dropdown";
 
 export interface CBDataPickerProps extends CBBaseProps {
-  value: Date | Timestamp | null;
+  value: Date | null;
   onChange: (date: Date) => void;
   label: string;
   format?: "day" | "month-year" | "date" | "datetime" | "MMMM/YYYY";
@@ -222,11 +221,10 @@ export interface CBMultiViewIonicProps {
 }
 
 /** ----------------- CBSelect ----------------- */
-export interface CBSelectProps<T>
-  extends Omit<
-    React.ComponentProps<typeof IonSelect>,
-    "value" | "onIonChange"
-  > {
+export interface CBSelectProps<T> extends Omit<
+  React.ComponentProps<typeof IonSelect>,
+  "value" | "onIonChange"
+> {
   label?: string;
   value: T | string | number;
   items: T[];
@@ -253,8 +251,9 @@ export interface CBSelectorProps {
 }
 
 /** ----------------- CBTextArea ----------------- */
-export interface CBTextAreaProps
-  extends React.ComponentProps<typeof IonTextarea> {
+export interface CBTextAreaProps extends React.ComponentProps<
+  typeof IonTextarea
+> {
   label?: string;
   value: string;
   placeholder?: string;
@@ -268,11 +267,20 @@ export interface CBTextAreaProps
 
 /** ----------------- CBToast ----------------- */
 export type ToastType = "success" | "error" | "warning" | "info";
+export type ToastPosition =
+  | "top-left"
+  | "top-center"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-center"
+  | "bottom-right"
+  | "center";
 
 export interface ToastOptions {
   message: string;
   type?: ToastType;
   duration?: number;
+  position?: ToastPosition;
 }
 
 /** ----------------- CBTooltip ----------------- */

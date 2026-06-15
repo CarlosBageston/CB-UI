@@ -4,7 +4,7 @@ import type { ColDef } from "ag-grid-community";
  *
  * @template T Tipo de dado da linha.
  */
-export interface CBTableColumn<T> extends Omit<ColDef<T>, 'children'> {
+export interface CBTableColumn<T> extends Omit<ColDef<T>, "children"> {
     /** Número de colunas que esta coluna ocupa (flex) */
     col?: number;
     /** Renderiza conteúdo customizado para a célula */
@@ -12,7 +12,7 @@ export interface CBTableColumn<T> extends Omit<ColDef<T>, 'children'> {
     /** Colunas filhas para agrupamento */
     children?: CBTableColumn<T>[];
     /** Alinhamento do texto da célula */
-    align?: 'left' | 'center' | 'right';
+    align?: "left" | "center" | "right";
 }
 /**
  * Props do componente CBDataTable
@@ -75,5 +75,5 @@ export interface CBDataTableProps<T> {
  * />
  * ```
  */
-declare function CBDataTable<T>({ columns, data, pageSize, emptyMessage, onEdit, onDelete, }: CBDataTableProps<T>): import("react/jsx-runtime").JSX.Element;
+declare function CBDataTable<T>({ columns, data, pageSize, emptyMessage, onEdit, onDelete, }: CBDataTableProps<T>): import("react").JSX.Element;
 export default CBDataTable;

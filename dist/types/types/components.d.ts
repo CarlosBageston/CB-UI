@@ -1,5 +1,4 @@
 import type { ReactNode, CSSProperties } from "react";
-import type { Timestamp } from "firebase/firestore";
 import type { ColDef } from "ag-grid-community";
 import type { CBColor } from "../theme/CBColor";
 import type { IconType } from "react-icons";
@@ -69,7 +68,7 @@ export interface CBCheckboxProps extends CBBaseProps {
 /** ----------------- CBDataPicker ----------------- */
 export type PickerMode = "modal" | "dropdown";
 export interface CBDataPickerProps extends CBBaseProps {
-    value: Date | Timestamp | null;
+    value: Date | null;
     onChange: (date: Date) => void;
     label: string;
     format?: "day" | "month-year" | "date" | "datetime" | "MMMM/YYYY";
@@ -234,10 +233,12 @@ export interface CBTextAreaProps extends React.ComponentProps<typeof IonTextarea
 }
 /** ----------------- CBToast ----------------- */
 export type ToastType = "success" | "error" | "warning" | "info";
+export type ToastPosition = "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right" | "center";
 export interface ToastOptions {
     message: string;
     type?: ToastType;
     duration?: number;
+    position?: ToastPosition;
 }
 /** ----------------- CBTooltip ----------------- */
 export interface CBTooltipProps {

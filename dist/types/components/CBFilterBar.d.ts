@@ -49,5 +49,5 @@ interface CBFilterBarProps<T> {
  * />
  * ```
  */
-declare function CBFilterBar<T>({ data, columns, placeholder, onChange, initialQuery, className, inputClassName, selectClassName, style, }: CBFilterBarProps<T>): import("react/jsx-runtime").JSX.Element;
+declare function CBFilterBar<T>({ data, columns, placeholder, onChange, initialQuery, className, inputClassName, selectClassName, style, }: CBFilterBarProps<T>): import("react").JSX.Element;
 export default CBFilterBar;

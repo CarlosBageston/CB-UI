@@ -38,7 +38,7 @@ export interface CBButtonProps extends NativeButtonProps {
      *   Salvar
      * </CBButton>
      */
-    children?: React.ReactNode;
+    children: React.ReactNode;
     /**
      * Tamanho visual do botão.
      *

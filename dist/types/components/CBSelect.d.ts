@@ -61,5 +61,5 @@ export interface CBSelectProps<T> extends Omit<React.ComponentProps<typeof IonSe
  * - Suporta estado de erro e exibe helperText quando `error` é true.
  * - Suporta cores personalizadas através da prop `color` usando o mapa `CB_COLOR_MAP`.
  */
-declare function CBSelect<T>({ label, value, items, getLabel, getValue, onValueChange, placeholder, error, helperText, disabled, loading, color, style, fill, shape, ...rest }: CBSelectProps<T>): import("react/jsx-runtime").JSX.Element;
+declare function CBSelect<T>({ label, value, items, getLabel, getValue, onValueChange, placeholder, error, helperText, disabled, loading, color, style, fill, shape, ...rest }: CBSelectProps<T>): React.JSX.Element;
 export default CBSelect;

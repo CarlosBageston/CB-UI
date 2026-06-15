@@ -4,16 +4,19 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { useAGGridTheme } from "../hooks/useAGGridTheme";
 import type { ColDef, ColGroupDef } from "ag-grid-community";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+import {
+  ModuleRegistry,
+  ClientSideRowModelModule,
+  PaginationModule,
+} from "ag-grid-community";
 
-
-ModuleRegistry.registerModules([AllCommunityModule]);
+ModuleRegistry.registerModules([ClientSideRowModelModule, PaginationModule]);
 /**
  * Representa uma coluna da tabela personalizada.
  *
  * @template T Tipo de dado da linha.
  */
-export interface CBTableColumn<T> extends Omit<ColDef<T>, 'children'> {
+export interface CBTableColumn<T> extends Omit<ColDef<T>, "children"> {
   /** Número de colunas que esta coluna ocupa (flex) */
   col?: number;
   /** Renderiza conteúdo customizado para a célula */
@@ -21,7 +24,7 @@ export interface CBTableColumn<T> extends Omit<ColDef<T>, 'children'> {
   /** Colunas filhas para agrupamento */
   children?: CBTableColumn<T>[];
   /** Alinhamento do texto da célula */
-  align?: 'left' | 'center' | 'right';
+  align?: "left" | "center" | "right";
 }
 
 /**
@@ -94,7 +97,7 @@ function CBDataTable<T>({
   onEdit,
   onDelete,
 }: CBDataTableProps<T>) {
-  const themeTable = useAGGridTheme('dark');
+  const themeTable = useAGGridTheme("dark");
   const [selectedRow, setSelectedRow] = useState<T | null>(null);
 
   // referência do grid
@@ -105,7 +108,6 @@ function CBDataTable<T>({
     const selectedNodes = gridRef.current?.api.getSelectedNodes();
     setSelectedRow(selectedNodes?.[0]?.data ?? null);
   };
-
 
   const mapColumn = <T,>(col: CBTableColumn<T>): ColDef<T> | ColGroupDef<T> => {
     const totalCol = columns.reduce((sum, col) => sum + (col.col ?? 1), 0);
@@ -121,7 +123,9 @@ function CBDataTable<T>({
       field: col.field,
       headerName: col.headerName,
       flex: ((col.col ?? 1) / totalCol) * 12, // 12 colunas
-      cellRenderer: col.render ? (params: any) => col.render!(params.data) : undefined,
+      cellRenderer: col.render
+        ? (params: any) => col.render!(params.data)
+        : undefined,
       valueGetter: col.valueGetter,
       colId: col.colId,
       sortable: col.sortable,
@@ -134,11 +138,17 @@ function CBDataTable<T>({
     };
   };
 
-  const columnDefs: (ColDef<T> | ColGroupDef<T>)[] = useMemo(() => columns.map(mapColumn), [columns]);
+  const columnDefs: (ColDef<T> | ColGroupDef<T>)[] = useMemo(
+    () => columns.map(mapColumn),
+    [columns],
+  );
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (gridWrapperRef.current && !gridWrapperRef.current.contains(event.target as Node)) {
+      if (
+        gridWrapperRef.current &&
+        !gridWrapperRef.current.contains(event.target as Node)
+      ) {
         setSelectedRow(null);
         gridRef.current?.api.deselectAll();
       }
@@ -177,8 +187,24 @@ function CBDataTable<T>({
       />
       {/* Botões flutuantes */}
       <div className="absolute -top-2 right-2 -translate-y-1/2 flex gap-2 z-10">
-        {onEdit && <CBButton iconStart={<FiEdit size={18} />} color="primary" disabled={!selectedRow} onClick={() => selectedRow && onEdit?.(selectedRow)} />}
-        {onDelete && <CBButton iconStart={<FiTrash2 size={18} />} color="danger" disabled={!selectedRow} onClick={() => selectedRow && onDelete?.(selectedRow)} />}
+        {onEdit && (
+          <CBButton
+            children=""
+            iconStart={<FiEdit size={18} />}
+            color="primary"
+            disabled={!selectedRow}
+            onClick={() => selectedRow && onEdit?.(selectedRow)}
+          />
+        )}
+        {onDelete && (
+          <CBButton
+            children=""
+            iconStart={<FiTrash2 size={18} />}
+            color="danger"
+            disabled={!selectedRow}
+            onClick={() => selectedRow && onDelete?.(selectedRow)}
+          />
+        )}
       </div>
     </div>
   );

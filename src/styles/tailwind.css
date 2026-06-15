@@ -2,7 +2,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
 
 /* Agora os outros imports */
-@import "tailwind-ionic-utils/index.css";
 @import "./theme.css";
 @import "./base.css";
 @import "./utilities.css";
