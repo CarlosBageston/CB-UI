@@ -46,6 +46,7 @@ export const Playground: Story = {
           label="Nome"
           placeholder="Carlos Bageston"
           value={form.nome}
+          radius="full"
           onChange={(nome) => setForm((prev) => ({ ...prev, nome }))}
         />
 

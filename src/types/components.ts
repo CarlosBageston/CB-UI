@@ -196,6 +196,7 @@ export type CBInputProps = {
   color?: CBColor;
 
   mask?: CBInputMask | CBInputMaskFn;
+  radius?: "none" | "sm" | "md" | "lg" | "full";
 
   onChange: (value: string) => void;
   onRawChange?: (raw: string) => void;

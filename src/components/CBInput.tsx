@@ -33,6 +33,7 @@ const CBInput: React.FC<CBInputProps> = ({
   onRawChange,
   onBlur,
   onFocus,
+  radius = "md",
   ...props
 }) => {
   const [focused, setFocused] = useState(false);
@@ -68,7 +69,13 @@ const CBInput: React.FC<CBInputProps> = ({
     },
     [onBlur],
   );
-
+  const borderRadiusMap = {
+    none: "0px",
+    sm: "8px",
+    md: "12px",
+    lg: "16px",
+    full: "9999px",
+  };
   return (
     <div className={`relative flex flex-col h-[72px] pt-2 ${className}`}>
       <IonInput
@@ -87,6 +94,7 @@ const CBInput: React.FC<CBInputProps> = ({
         style={{
           "--border-color": borderColor,
           "--highlight-color-focused": mainColor,
+          "--border-radius": borderRadiusMap[radius || "md"],
           color: "var(--ion-color-dark)",
           ...style,
         }}
