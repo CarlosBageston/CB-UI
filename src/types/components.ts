@@ -163,6 +163,7 @@ export interface CBFilterBarProps<T> extends CBBaseProps {
 }
 
 /** ----------------- CBInput ----------------- */
+
 export type CBInputMask = "tel" | "cep" | "currency";
 
 export type CBInputMaskResult = {
@@ -172,7 +173,7 @@ export type CBInputMaskResult = {
 
 export type CBInputMaskFn = (value: string) => CBInputMaskResult;
 
-export type CBInputProps = {
+export interface CBInputProps {
   name?: string;
   value: string;
 
@@ -188,21 +189,63 @@ export type CBInputProps = {
   labelPlacement?: "stacked" | "floating" | "fixed";
 
   className?: string;
+  classNameIcon?: string;
+  classNameContainerIcon?: string;
   style?: React.CSSProperties;
 
   error?: string;
   maxLength?: number;
 
   color?: CBColor;
-
+  /**
+   * Máscaras nativas do CBInput.
+   *
+   * tel
+   * ```txt
+   * Entrada: 41999998888
+   * Saída:   (41) 99999-8888
+   * Raw:     41999998888
+   * ```
+   *
+   * cep
+   * ```txt
+   * Entrada: 84000000
+   * Saída:   84000-000
+   * Raw:     84000000
+   * ```
+   *
+   * currency
+   * ```txt
+   * Entrada: 123456
+   * Saída:   R$ 1.234,56
+   * Raw:     1234.56
+   * ```
+   */
   mask?: CBInputMask | CBInputMaskFn;
   radius?: "none" | "sm" | "md" | "lg" | "full";
 
+  /**
+   * Valor formatado exibido ao usuário.
+   *
+   * Ex:
+   * "(41) 99999-8888"
+   * "84000-000"
+   * "R$ 1.234,56"
+   */
   onChange: (value: string) => void;
+
+  /**
+   * Valor bruto sem formatação.
+   *
+   * Ex:
+   * "(41) 99999-8888" -> "41999998888"
+   * "84000-000" -> "84000000"
+   * "R$ 1.234,56" -> "1234.56"
+   */
   onRawChange?: (raw: string) => void;
   onBlur?: (value: string) => void;
   onFocus?: () => void;
-};
+}
 
 /** ----------------- CBLoading ----------------- */
 export type LoadingType = "circular" | "dots" | "linear";
