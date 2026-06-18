@@ -312,3 +312,24 @@ export const FillVariants: Story = {
     );
   },
 };
+export const BlurTest: Story = {
+  render: () => {
+    const [blurred, setBlurred] = useState(false);
+
+    return (
+      <div style={{ padding: 24 }}>
+        <CBInput
+          label="Teste"
+          value=""
+          onChange={() => {}}
+          onBlur={() => {
+            console.log("BLUR FUNCIONOU");
+            setBlurred(true);
+          }}
+        />
+
+        <p>Touched: {String(blurred)}</p>
+      </div>
+    );
+  },
+};

@@ -1,6 +1,5 @@
 /* components.d.ts */
 import type { ReactNode, CSSProperties } from "react";
-import type { ColDef } from "ag-grid-community";
 import type { CBColor } from "../theme/CBColor";
 import type { IconType } from "react-icons";
 import type { IonSelect, IonTextarea } from "@ionic/react";
@@ -92,23 +91,6 @@ export interface CBDataPickerProps extends CBBaseProps {
   rounded?: boolean;
   color?: CBColor;
   pickerMode?: PickerMode;
-}
-
-/** ----------------- CBDataTable ----------------- */
-export interface CBTableColumn<T> extends Omit<ColDef<T>, "children"> {
-  col?: number;
-  render?: (item: T) => ReactNode;
-  children?: CBTableColumn<T>[];
-  align?: "left" | "center" | "right";
-}
-
-export interface CBDataTableProps<T> extends CBBaseProps {
-  columns: CBTableColumn<T>[];
-  data: T[];
-  pageSize?: number;
-  emptyMessage?: string;
-  onEdit?: (item: T) => void;
-  onDelete?: (item: T) => void;
 }
 
 /** ----------------- CBEmptyState ----------------- */
@@ -243,7 +225,7 @@ export interface CBInputProps {
    * "R$ 1.234,56" -> "1234.56"
    */
   onRawChange?: (raw: string) => void;
-  onBlur?: (value: string) => void;
+  onBlur?: () => void;
   onFocus?: () => void;
 }
 

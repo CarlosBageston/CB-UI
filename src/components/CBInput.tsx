@@ -119,13 +119,11 @@ const CBInput: React.FC<CBInputProps> = ({
     [handleChange],
   );
 
-  const handleBlur = useCallback(
-    (e: any) => {
-      setFocused(false);
-      onBlur?.(toStringValue(e.target.value));
-    },
-    [onBlur],
-  );
+  const handleBlur = useCallback(() => {
+    setFocused(false);
+    onBlur?.();
+  }, [onBlur]);
+
   const borderRadiusMap = {
     none: "0px",
     sm: "8px",
@@ -134,7 +132,7 @@ const CBInput: React.FC<CBInputProps> = ({
     full: "9999px",
   };
   return (
-    <div className={`relative flex flex-col h-[72px] pt-2 ${className}`}>
+    <div className={`relative flex flex-col h-[72px] pt-2 mb-3! ${className}`}>
       <IonInput
         {...props}
         value={stringValue}

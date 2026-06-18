@@ -29,6 +29,7 @@ export default defineConfig({
       entry: {
         "cb-ui": path.resolve(__dirname, "src/index.ts"),
         "datatable": path.resolve(__dirname, "src/datatable.ts"),
+        "formikInput": path.resolve(__dirname, "src/formikInput.ts"),
       },
       formats: ["es", "cjs"], // diferentes formatos de módulo (umd não suporta múltiplos pontos de entrada de forma simples)
       fileName: (format, entryName) => `${entryName}.${format}.js`,

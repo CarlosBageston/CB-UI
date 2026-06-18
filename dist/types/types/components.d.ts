@@ -1,5 +1,4 @@
 import type { ReactNode, CSSProperties } from "react";
-import type { ColDef } from "ag-grid-community";
 import type { CBColor } from "../theme/CBColor";
 import type { IconType } from "react-icons";
 import type { IonSelect, IonTextarea } from "@ionic/react";
@@ -83,21 +82,6 @@ export interface CBDataPickerProps extends CBBaseProps {
     color?: CBColor;
     pickerMode?: PickerMode;
 }
-/** ----------------- CBDataTable ----------------- */
-export interface CBTableColumn<T> extends Omit<ColDef<T>, "children"> {
-    col?: number;
-    render?: (item: T) => ReactNode;
-    children?: CBTableColumn<T>[];
-    align?: "left" | "center" | "right";
-}
-export interface CBDataTableProps<T> extends CBBaseProps {
-    columns: CBTableColumn<T>[];
-    data: T[];
-    pageSize?: number;
-    emptyMessage?: string;
-    onEdit?: (item: T) => void;
-    onDelete?: (item: T) => void;
-}
 /** ----------------- CBEmptyState ----------------- */
 export interface CBEmptyStateProps extends CBBaseProps {
     messages?: string[];
@@ -151,7 +135,7 @@ export type CBInputMaskResult = {
     raw: string;
 };
 export type CBInputMaskFn = (value: string) => CBInputMaskResult;
-export type CBInputProps = {
+export interface CBInputProps {
     name?: string;
     value: string;
     label: string;
@@ -162,17 +146,59 @@ export type CBInputProps = {
     shape?: "round";
     labelPlacement?: "stacked" | "floating" | "fixed";
     className?: string;
+    classNameIcon?: string;
+    classNameContainerIcon?: string;
     style?: React.CSSProperties;
     error?: string;
     maxLength?: number;
     color?: CBColor;
+    /**
+     * Máscaras nativas do CBInput.
+     *
+     * tel
+     * ```txt
+     * Entrada: 41999998888
+     * Saída:   (41) 99999-8888
+     * Raw:     41999998888
+     * ```
+     *
+     * cep
+     * ```txt
+     * Entrada: 84000000
+     * Saída:   84000-000
+     * Raw:     84000000
+     * ```
+     *
+     * currency
+     * ```txt
+     * Entrada: 123456
+     * Saída:   R$ 1.234,56
+     * Raw:     1234.56
+     * ```
+     */
     mask?: CBInputMask | CBInputMaskFn;
     radius?: "none" | "sm" | "md" | "lg" | "full";
+    /**
+     * Valor formatado exibido ao usuário.
+     *
+     * Ex:
+     * "(41) 99999-8888"
+     * "84000-000"
+     * "R$ 1.234,56"
+     */
     onChange: (value: string) => void;
+    /**
+     * Valor bruto sem formatação.
+     *
+     * Ex:
+     * "(41) 99999-8888" -> "41999998888"
+     * "84000-000" -> "84000000"
+     * "R$ 1.234,56" -> "1234.56"
+     */
     onRawChange?: (raw: string) => void;
-    onBlur?: (value: string) => void;
+    onBlur?: () => void;
     onFocus?: () => void;
-};
+}
 /** ----------------- CBLoading ----------------- */
 export type LoadingType = "circular" | "dots" | "linear";
 export interface CBLoadingProps extends CBBaseProps {
