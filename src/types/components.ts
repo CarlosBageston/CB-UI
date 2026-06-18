@@ -3,7 +3,6 @@ import type { ReactNode, CSSProperties } from "react";
 import type { ColDef } from "ag-grid-community";
 import type { CBColor } from "../theme/CBColor";
 import type { IconType } from "react-icons";
-import type { IonInputCustomEvent } from "@ionic/core";
 import type { IonSelect, IonTextarea } from "@ionic/react";
 
 /** Base para componentes que aceitam className e style */
@@ -166,16 +165,43 @@ export interface CBFilterBarProps<T> extends CBBaseProps {
 /** ----------------- CBInput ----------------- */
 export type CBInputMask = "tel" | "cep" | "currency";
 
-export interface CBInputProps extends CBBaseProps {
+export type CBInputMaskResult = {
+  formatted: string;
+  raw: string;
+};
+
+export type CBInputMaskFn = (value: string) => CBInputMaskResult;
+
+export type CBInputProps = {
+  name?: string;
+  value: string;
+
   label: string;
-  value: string | number;
+  placeholder?: string;
+
+  disabled?: boolean;
+
+  type?: "text" | "password" | "email" | "number";
+
+  fill?: "outline" | "solid";
+  shape?: "round";
+  labelPlacement?: "stacked" | "floating" | "fixed";
+
+  className?: string;
+  style?: React.CSSProperties;
+
   error?: string;
-  mask?: CBInputMask;
   maxLength?: number;
-  onChangeValue: (val: string) => void;
-  handleBlur?: (e: IonInputCustomEvent<FocusEvent>) => void;
+
   color?: CBColor;
-}
+
+  mask?: CBInputMask | CBInputMaskFn;
+
+  onChange: (value: string) => void;
+  onRawChange?: (raw: string) => void;
+  onBlur?: (value: string) => void;
+  onFocus?: () => void;
+};
 
 /** ----------------- CBLoading ----------------- */
 export type LoadingType = "circular" | "dots" | "linear";

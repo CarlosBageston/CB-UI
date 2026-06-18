@@ -1,171 +1,128 @@
-import type { IonInputCustomEvent } from '@ionic/core';
-import { IonGrid, IonInput, IonNote } from '@ionic/react';
-import { useState, useEffect } from 'react';
-import { IoEye, IoEyeOff } from 'react-icons/io5';
-import { useCBColor } from '../hooks/useCBColor';
-import type { CBColor } from '../theme/CBColor';
+import { IonInput, IonNote } from "@ionic/react";
+import { useCallback, useMemo, useState } from "react";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 
-/**
- * Tipos de máscara suportados pelo CBInput
- */
-export type CBInputMask = 'tel' | 'cep' | 'currency';
+import { useCBColor } from "../hooks/useCBColor";
+import { useInputMask } from "../hooks/useInputMask";
+import { usePasswordToggle } from "../hooks/usePasswordToggle";
+import type { CBInputProps } from "../types/components";
+import type { InputInputEventDetail, IonInputCustomEvent } from "@ionic/core";
 
-
-/**
- * Props do CBInput
- */
-export interface CBInputProps extends React.ComponentProps<typeof IonInput> {
-    label: string;
-    value: string | number;
-    error?: string;
-    mask?: CBInputMask;
-    maxLength?: number;
-    onChangeValue: (val: string) => void;
-    handleBlur?: (e: IonInputCustomEvent<FocusEvent>) => void;
-    color?: CBColor
+function toStringValue(value: unknown): string {
+  if (value === null || value === undefined) return "";
+  return String(value);
 }
 
-
-/**
- * Máscaras de entrada
- */
-const masks = {
-    tel: (value: string) => {
-        const digits = value.replace(/\D/g, '').slice(0, 11);
-        if (!digits) return '';
-        let formatted = '(' + digits.substring(0, 2) + ') ';
-        formatted += digits.length > 6
-            ? digits.substring(2, 7) + '-' + digits.substring(7)
-            : digits.substring(2);
-        return formatted;
-    },
-    cep: (value: string) => {
-        const digits = value.replace(/\D/g, '').slice(0, 8);
-        return digits.length > 5 ? digits.substring(0, 5) + '-' + digits.substring(5) : digits;
-    },
-    currency: (value: string) => {
-        const inputText = value.replace(/\D/g, "");
-        const numericValue = parseFloat(inputText) / 100;
-        if (isNaN(numericValue)) return '';
-        return Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        }).format(numericValue);
-    },
-};
-
-/**
- * Componente CBInput
- * Input customizado baseado no IonInput, com suporte a:
- * - Máscaras (telefone, CEP, moeda)
- * - Toggle de visibilidade para senha
- * - Indicação de erro e cores dinâmicas
- */
 const CBInput: React.FC<CBInputProps> = ({
-    label,
-    value,
-    name,
-    type = 'text',
-    placeholder = '',
-    className = '',
-    error,
-    maxLength,
-    mask,
-    disabled,
-    onChangeValue,
-    handleBlur,
-    fill = 'outline',
-    shape = 'round',
-    color = 'neutral',
-    ...rest
+  value = "",
+  label,
+  placeholder,
+  disabled,
+  type = "text",
+  fill = "outline",
+  shape = "round",
+  labelPlacement = "stacked",
+  className = "",
+  style,
+  error,
+  maxLength,
+  color = "neutral",
+  mask,
+
+  onChange,
+  onRawChange,
+  onBlur,
+  onFocus,
+  ...props
 }) => {
-    const [focused, setFocused] = useState(false);
-    const [filled, setFilled] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
-    const { main: mainColor } = useCBColor(color);          // cor principal
-    const { main: errorColorVar } = useCBColor('danger');   // cor de erro
+  const [focused, setFocused] = useState(false);
 
-    useEffect(() => setFilled(!!value), [value]);
+  const { main: mainColor } = useCBColor(color);
+  const { main: errorColor } = useCBColor("danger");
+  const { show, toggle, inputType } = usePasswordToggle();
 
-    function getInputHandlers(mask?: CBInputMask) {
-        if (mask && masks[mask]) {
-            return {
-                onIonInput: (e: CustomEvent) => {
-                    const raw = (e.target as HTMLInputElement).value;
-                    onChangeValue(masks[mask](raw));
-                },
-            };
-        } else {
-            return {
-                onIonChange: (e: CustomEvent) => {
-                    onChangeValue(e.detail.value ?? '');
-                },
-            };
-        }
-    }
+  const { handleChange, inputMode } = useInputMask(mask, onChange, onRawChange);
 
+  const stringValue = useMemo(() => toStringValue(value), [value]);
 
-    const borderColor = error
-        ? errorColorVar
-        : focused || filled
-            ? mainColor
-            : 'var(--ion-color-medium)';
+  const isPassword = type === "password";
+  const filled = !!stringValue;
 
-    return (
-        <div className={`relative flex flex-col h-[72px] !pt-2 ${className}`}>
-            <IonInput
-                type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
-                value={value}
-                label={label}
-                placeholder={placeholder}
-                fill={fill}
-                shape={shape === 'round' ? 'round' : undefined}
-                labelPlacement="stacked"
-                maxlength={maxLength}
-                disabled={disabled}
-                style={{
-                    '--border-color': borderColor,
-                    '--highlight-color-focused': mainColor,
-                    color: 'var(--ion-color-dark)',
-                }}
-                onKeyDown={(e) => {
-                    if (mask) {
-                        // Permite apenas números, backspace, delete, setas
-                        if (!/[0-9]|Backspace|Delete|ArrowLeft|ArrowRight/.test(e.key)) {
-                            e.preventDefault();
-                        }
-                    }
-                }}
-                {...getInputHandlers(mask)}
-                onIonBlur={() => {
-                    setFocused(false);
-                    if (handleBlur && name) handleBlur({ target: { name, value } } as IonInputCustomEvent<FocusEvent>);
-                }}
-                onIonFocus={() => setFocused(true)}
-                {...rest}
-            />
+  const borderColor = error
+    ? errorColor
+    : focused || filled
+      ? mainColor
+      : "var(--ion-color-medium)";
 
-            {type === 'password' && (
-                <IonGrid
-                    className="absolute top-4 right-4 z-10 cursor-pointer p-1"
-                    onClick={() => setShowPassword(!showPassword)}
-                >
-                    {showPassword
-                        ? <IoEye className="text-2xl text-[var(--ion-color-text)]" />
-                        : <IoEyeOff className="text-2xl text-[var(--ion-color-text)]" />
-                    }
-                </IonGrid>
-            )}
+  const handleInput = useCallback(
+    (e: IonInputCustomEvent<InputInputEventDetail>) => {
+      handleChange(toStringValue(e.target.value));
+    },
+    [handleChange],
+  );
 
-            {error && (
-                <IonNote className="text-[12px] !pl-6 text-[var(--ion-color-danger)]">
-                    {error}
-                </IonNote>
-            )}
-        </div>
-    );
+  const handleBlur = useCallback(
+    (e: any) => {
+      setFocused(false);
+      onBlur?.(toStringValue(e.target.value));
+    },
+    [onBlur],
+  );
+
+  return (
+    <div className={`relative flex flex-col h-[72px] pt-2 ${className}`}>
+      <IonInput
+        {...props}
+        value={stringValue}
+        label={label}
+        placeholder={placeholder}
+        disabled={disabled}
+        type={isPassword ? inputType : type}
+        fill={fill}
+        shape={shape}
+        labelPlacement={labelPlacement}
+        maxlength={maxLength}
+        inputmode={inputMode}
+        aria-invalid={!!error}
+        style={{
+          "--border-color": borderColor,
+          "--highlight-color-focused": mainColor,
+          color: "var(--ion-color-dark)",
+          ...style,
+        }}
+        onIonInput={handleInput}
+        onIonFocus={() => {
+          setFocused(true);
+          onFocus?.();
+        }}
+        onIonBlur={handleBlur}
+      />
+
+      {isPassword && (
+        <button
+          type="button"
+          aria-label={show ? "Ocultar senha" : "Mostrar senha"}
+          onClick={toggle}
+          className="absolute top-4 right-4 z-10 p-1"
+        >
+          {show ? (
+            <IoEye className="text-2xl" />
+          ) : (
+            <IoEyeOff className="text-2xl" />
+          )}
+        </button>
+      )}
+
+      {error && (
+        <IonNote
+          role="alert"
+          className="text-[12px] pl-6! text-(--ion-color-danger)"
+        >
+          {error}
+        </IonNote>
+      )}
+    </div>
+  );
 };
 
 export default CBInput;

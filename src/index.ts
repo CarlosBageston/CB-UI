@@ -27,3 +27,5 @@ export { default as CBStepperHorizontal } from "./components/CBStepper/CBStepper
 export * from "./theme/CBColor";
 export * from "./hooks/useCBColor";
 export * from "./types/components";
+export * from "./hooks/useInputMask";
+export * from "./hooks/usePasswordToggle";
