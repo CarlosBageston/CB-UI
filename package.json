@@ -1,7 +1,7 @@
 {
   "name": "@carlosbageston/cb-ui",
   "private": false,
-  "version": "1.2.01",
+  "version": "1.2.3",
   "type": "module",
   "description": "Biblioteca de componentes React/Ionic customizados",
   "main": "dist/cb-ui.cjs.js",
@@ -18,11 +18,18 @@
       "import": "./dist/datatable.es.js",
       "require": "./dist/datatable.cjs.js"
     },
-    "./dist/cb-ui.css": "./dist/cb-ui.css",
     "./formik": {
       "types": "./dist/types/formikInput.d.ts",
       "import": "./dist/formikInput.es.js",
       "require": "./dist/formikInput.cjs.js"
+    },
+    "./dist/cb-ui.css": "./dist/cb-ui.css"
+  },
+  "typesVersions": {
+    "*": {
+      ".": ["./dist/types/index.d.ts"],
+      "datatable": ["./dist/types/datatable.d.ts"],
+      "formik": ["./dist/types/formikInput.d.ts"]
     }
   },
   "files": [
