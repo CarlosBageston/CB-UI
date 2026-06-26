@@ -150,6 +150,7 @@ function CBFormikInput({
   onChange,
   onRawChange,
   onBlur,
+  textColor,
   ...props
 }: CBFormikInputProps) {
   const formikContext = useFormikContext();
@@ -230,6 +231,7 @@ function CBFormikInput({
       onRawChange={handleRawChange}
       onBlur={handleBlur}
       error={meta.touched ? meta.error : undefined}
+      textColor={textColor}
     />
   );
 }

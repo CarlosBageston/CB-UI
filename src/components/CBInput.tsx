@@ -82,8 +82,9 @@ const CBInput: React.FC<CBInputProps> = ({
   error,
   maxLength,
   color = "neutral",
+  colorContrast,
   mask,
-
+  textColor,
   onChange,
   onRawChange,
   onBlur,
@@ -95,7 +96,7 @@ const CBInput: React.FC<CBInputProps> = ({
 }) => {
   const [focused, setFocused] = useState(false);
 
-  const { main: mainColor } = useCBColor(color);
+  const { main: mainColor } = useCBColor(color, colorContrast);
   const { main: errorColor } = useCBColor("danger");
   const { show, toggle, inputType } = usePasswordToggle();
 
@@ -150,7 +151,7 @@ const CBInput: React.FC<CBInputProps> = ({
           "--border-color": borderColor,
           "--highlight-color-focused": mainColor,
           "--border-radius": borderRadiusMap[radius || "md"],
-          color: "var(--ion-color-dark)",
+          color: textColor ?? "var(--ion-color-dark)",
           ...style,
         }}
         onIonInput={handleInput}
@@ -169,11 +170,11 @@ const CBInput: React.FC<CBInputProps> = ({
         >
           {show ? (
             <IoEye
-              className={`text-2xl text-(--ion-color-text) ${classNameIcon}`}
+              className={`text-2xl text-(--ion-color-dark) ${classNameIcon}`}
             />
           ) : (
             <IoEyeOff
-              className={`text-2xl text-(--ion-color-text) ${classNameIcon}`}
+              className={`text-2xl text-(--ion-color-dark) ${classNameIcon}`}
             />
           )}
         </IonGrid>

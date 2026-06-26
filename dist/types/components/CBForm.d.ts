@@ -1,7 +1,13 @@
 import { type FormikProps } from "formik";
-interface CBFormProps<T extends Record<string, unknown>> {
+import type { ReactNode, FormEventHandler } from "react";
+interface CBFormProps<T extends object> {
     formik: FormikProps<T>;
-    children: React.ReactNode;
+    children: ReactNode;
+    action?: string;
+    method?: "post" | "get";
+    activeOnSubmit?: boolean;
+    className?: string;
+    onSubmit?: FormEventHandler<HTMLFormElement>;
 }
-declare function CBForm<T extends Record<string, unknown>>({ formik, children, }: CBFormProps<T>): import("react").JSX.Element;
+declare function CBForm<T extends object>({ formik, children, action, method, activeOnSubmit, className, onSubmit, }: CBFormProps<T>): import("react").JSX.Element;
 export default CBForm;

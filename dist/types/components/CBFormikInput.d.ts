@@ -139,5 +139,5 @@ import type { CBFormikInputProps } from "../types/componentsFormikInput";
  * Os callbacks não substituem o comportamento do Formik.
  * Eles são executados após a atualização interna do campo.
  */
-declare function CBFormikInput({ name, valueSource, transformValue, onChange, onRawChange, onBlur, ...props }: CBFormikInputProps): import("react").JSX.Element;
+declare function CBFormikInput({ name, valueSource, transformValue, onChange, onRawChange, onBlur, textColor, ...props }: CBFormikInputProps): import("react").JSX.Element;
 export default CBFormikInput;

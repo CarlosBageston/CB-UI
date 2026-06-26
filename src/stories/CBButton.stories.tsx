@@ -147,6 +147,7 @@ export const FullWidth: Story = {
 
     fullWidth: true,
     size: "medium",
+    routerLink: "/register",
   },
 };
 

@@ -6,7 +6,10 @@ import {
   type CBColorOrString,
 } from "../theme/CBColor";
 
-export function useCBColor(color: CBColorOrString = "primary") {
+export function useCBColor(
+  color: CBColorOrString = "primary",
+  fallbackContrast?: string,
+) {
   const isKnown = color in CB_COLOR_MAP;
 
   const main = isKnown
@@ -17,7 +20,7 @@ export function useCBColor(color: CBColorOrString = "primary") {
 
   const contrast = isKnown
     ? CB_COLOR_CONTRAST_MAP[color as CBColor]
-    : "var(--ion-color-light)";
+    : (fallbackContrast ?? "var(--ion-color-light)");
 
   return { main, contrast };
 }

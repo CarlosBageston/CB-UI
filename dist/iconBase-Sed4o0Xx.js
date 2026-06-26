@@ -29,9 +29,9 @@ const u = {
   dark: "var(--ion-color-light)"
   // texto claro sobre escuro
 };
-function C(r = "primary") {
-  const t = r in u, e = t ? u[r] : r.startsWith("--") ? `var(${r})` : r, n = t ? g[r] : "var(--ion-color-light)";
-  return { main: e, contrast: n };
+function C(r = "primary", t) {
+  const e = r in u, n = e ? u[r] : r.startsWith("--") ? `var(${r})` : r, a = e ? g[r] : t ?? "var(--ion-color-light)";
+  return { main: n, contrast: a };
 }
 var f = {
   color: void 0,

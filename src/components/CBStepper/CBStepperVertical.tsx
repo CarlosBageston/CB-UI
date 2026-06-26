@@ -113,7 +113,7 @@ const CBStepperVertical: React.FC<CBStepperProps> = ({
                 className="overflow-hidden mt-1"
               >
                 <div className={`mb-2 ${classNameContent}`}>{step.content}</div>
-                <div className="flex w-full !mt-2 !pb-2">
+                <div className="flex w-full mt-2 pb-2">
                   {showButtonNext && (
                     <CBButton
                       disabled={disableNext?.(activeIndex)}
@@ -124,7 +124,7 @@ const CBStepperVertical: React.FC<CBStepperProps> = ({
                           : nextLabel
                       }
                       color={color}
-                      className="!text-[12px] !mr-2"
+                      className="text-[12px]! mr-2"
                       variant={stepperTheme?.button?.next?.variant ?? "solid"}
                       backgroundColor={stepperTheme?.button?.next?.background}
                       textColor={stepperTheme?.button?.next?.text}
@@ -149,7 +149,7 @@ const CBStepperVertical: React.FC<CBStepperProps> = ({
                       }
                       color={color}
                       variant={stepperTheme?.button?.prev?.variant ?? "clear"}
-                      className="!text-[12px]"
+                      className="text-[12px]!"
                       backgroundColor={stepperTheme?.button?.prev?.background}
                       textColor={stepperTheme?.button?.prev?.text}
                       borderColor={stepperTheme?.button?.prev?.border}

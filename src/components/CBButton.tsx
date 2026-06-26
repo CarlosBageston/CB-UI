@@ -246,6 +246,7 @@ const CBButton: React.FC<CBButtonProps> = ({
   textColor,
   borderColor,
   hoverColor,
+  routerLink,
   activeColor,
   ...rest
 }) => {
@@ -324,6 +325,7 @@ const CBButton: React.FC<CBButtonProps> = ({
       disabled={disabled || loading}
       style={finalStyle}
       className={className}
+      routerLink={routerLink}
       {...rest}
     >
       {loading ? (

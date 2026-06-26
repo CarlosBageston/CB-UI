@@ -1,6 +1,6 @@
 /* components.d.ts */
 import type { ReactNode, CSSProperties } from "react";
-import type { CBColor } from "../theme/CBColor";
+import type { CBColor, CBColorOrString } from "../theme/CBColor";
 import type { IconType } from "react-icons";
 import type { IonSelect, IonTextarea } from "@ionic/react";
 
@@ -178,7 +178,9 @@ export interface CBInputProps {
   error?: string;
   maxLength?: number;
 
-  color?: CBColor;
+  color?: CBColorOrString;
+  colorContrast?: CBColorOrString;
+  textColor?: string;
   /**
    * Máscaras nativas do CBInput.
    *
