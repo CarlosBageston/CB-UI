@@ -11,6 +11,7 @@ import type { CBColor } from "../theme/CBColor";
 import CBStepperHorizontal from "./CBStepper/CBStepperHorizontal";
 import CBStepperVertical from "./CBStepper/CBStepperVertical";
 import type { CBStepperProps } from "./CBStepper/CBStepper.types";
+import { CBStepperProvider } from "./CBStepper/CBStepperProvider";
 
 export type CBMultiViewVariant = "tabs" | "accordion" | "stepper";
 export interface Step {
@@ -336,9 +337,19 @@ const CBMultiView: React.FC<CBMultiViewIonicProps & CBStepperProps> = ({
             theme
         };
 
-        return orientation === "horizontal"
-            ? <CBStepperHorizontal {...stepperProps} />
-            : <CBStepperVertical {...stepperProps} />;
+        return (
+            <CBStepperProvider
+                initialStep={initialStep}
+                totalSteps={steps.length}
+                onNext={onNext}
+                onPrev={onPrev}
+            >
+                {orientation === "horizontal"
+                    ? <CBStepperHorizontal {...stepperProps} />
+                    : <CBStepperVertical {...stepperProps} />
+                }
+            </CBStepperProvider>
+        );
     }
 
     return null;

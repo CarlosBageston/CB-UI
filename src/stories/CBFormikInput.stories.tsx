@@ -42,6 +42,8 @@ export const Playground: Story = {
             flexDirection: "column",
             gap: 20,
             padding: 24,
+            height: "100vh",
+            overflowY: "scroll",
           }}
         >
           <h2>CBFormikInput</h2>
@@ -66,6 +68,22 @@ export const Playground: Story = {
             mask="currency"
             valueSource="raw"
             transformValue={(value) => Number(value)}
+          />
+          <CBFormikInput
+            name="telefone"
+            label="Telefone"
+            placeholder="(00) 00000-0000"
+            mask="tel"
+            valueSource="raw"
+            maxLength={15}
+          />
+          <CBFormikInput
+            name="cnpj"
+            label="CNPJ"
+            placeholder="(00) 00000-0000"
+            mask="cnpj"
+            valueSource="raw"
+            maxLength={18}
           />
 
           <button type="submit">Salvar</button>

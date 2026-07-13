@@ -1,265 +1,274 @@
+// CBStepper.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { FiHome, FiActivity, FiAirplay } from "react-icons/fi";
+import {
+  FiUser,
+  FiMapPin,
+  FiCreditCard,
+  FiCheckCircle,
+  FiFileText,
+  FiSettings,
+  FiLock,
+} from "react-icons/fi";
 import { CBMultiView } from "..";
 import type { Step } from "../components/CBMultiView";
 
 const meta: Meta<typeof CBMultiView> = {
   title: "Components/CBStepper",
   component: CBMultiView,
+  parameters: {
+    layout: "padded",
+  },
 };
 export default meta;
 
 type Story = StoryObj<typeof CBMultiView>;
 
-const steps: Step[] = [
+// ─── Steps realistas ──────────────────────────────────────────────────────────
+
+const checkoutSteps: Step[] = [
   {
-    title: "Passo 1",
+    title: "Dados pessoais",
+    icon: <FiUser />,
     content: (
-      <>
-        <p>Conteúdo do passo 1</p> <p>Conteúdo do passo 1</p>
-      </>
+      <div className="flex flex-col gap-2">
+        <input
+          className="border rounded px-3 py-2 text-sm"
+          placeholder="Nome completo"
+        />
+        <input className="border rounded px-3 py-2 text-sm" placeholder="CPF" />
+        <input
+          className="border rounded px-3 py-2 text-sm"
+          placeholder="E-mail"
+        />
+      </div>
     ),
-    icon: <FiHome />,
   },
   {
-    title: "Passo 2",
-    content: <p>Conteúdo do passo 2</p>,
-    icon: <FiActivity />,
+    title: "Endereço",
+    icon: <FiMapPin />,
+    content: (
+      <div className="flex flex-col gap-2">
+        <input className="border rounded px-3 py-2 text-sm" placeholder="CEP" />
+        <input className="border rounded px-3 py-2 text-sm" placeholder="Rua" />
+        <div className="flex gap-2">
+          <input
+            className="border rounded px-3 py-2 text-sm w-1/3"
+            placeholder="Número"
+          />
+          <input
+            className="border rounded px-3 py-2 text-sm flex-1"
+            placeholder="Complemento"
+          />
+        </div>
+      </div>
+    ),
   },
   {
-    title: "Passo 3",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
+    title: "Pagamento",
+    icon: <FiCreditCard />,
+    content: (
+      <div className="flex flex-col gap-2">
+        <input
+          className="border rounded px-3 py-2 text-sm"
+          placeholder="Número do cartão"
+        />
+        <div className="flex gap-2">
+          <input
+            className="border rounded px-3 py-2 text-sm w-1/2"
+            placeholder="Validade"
+          />
+          <input
+            className="border rounded px-3 py-2 text-sm w-1/2"
+            placeholder="CVV"
+          />
+        </div>
+      </div>
+    ),
   },
   {
-    title: "Passo 4",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
-  },
-  {
-    title: "Passo 5",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
-  },
-  {
-    title: "Passo 6",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
-  },
-  {
-    title: "Passo 7",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
-  },
-  {
-    title: "Passo 8",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
-  },
-  {
-    title: "Passo 9",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
-  },
-  {
-    title: "Passo 12",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
-  },
-  {
-    title: "Passo 14",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
-  },
-  {
-    title: "Passo 432",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
-  },
-  {
-    title: "Passo 312",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
-  },
-  {
-    title: "Passo 1233",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
-  },
-  {
-    title: "Passo 3123",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
-  },
-  {
-    title: "Passo 1233",
-    content: <p>Conteúdo do passo 3</p>,
-    icon: <FiAirplay />,
+    title: "Confirmação",
+    icon: <FiCheckCircle />,
+    content: (
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>✅ Dados pessoais preenchidos</p>
+        <p>✅ Endereço confirmado</p>
+        <p>✅ Cartão válido</p>
+        <p className="font-semibold text-gray-800 mt-2">
+          Tudo certo! Clique em "Finalizar" para concluir.
+        </p>
+      </div>
+    ),
   },
 ];
 
-export const Tabs: Story = {
-  render: () => <CBMultiView variant="tabs" steps={steps} />,
-};
+const onboardingSteps: Step[] = [
+  {
+    title: "Bem-vindo",
+    icon: <FiUser />,
+    content: (
+      <p className="text-sm text-gray-600">
+        Vamos configurar sua conta em poucos passos. Isso levará menos de 2
+        minutos.
+      </p>
+    ),
+  },
+  {
+    title: "Seu perfil",
+    icon: <FiFileText />,
+    content: (
+      <div className="flex flex-col gap-2">
+        <input
+          className="border rounded px-3 py-2 text-sm"
+          placeholder="Como quer ser chamado?"
+        />
+        <select className="border rounded px-3 py-2 text-sm text-gray-500">
+          <option value="">Área de atuação</option>
+          <option>Desenvolvimento</option>
+          <option>Design</option>
+          <option>Produto</option>
+        </select>
+      </div>
+    ),
+  },
+  {
+    title: "Preferências",
+    icon: <FiSettings />,
+    content: (
+      <div className="flex flex-col gap-2 text-sm text-gray-700">
+        <label className="flex items-center gap-2">
+          <input type="checkbox" defaultChecked /> Receber novidades por e-mail
+        </label>
+        <label className="flex items-center gap-2">
+          <input type="checkbox" /> Ativar modo escuro por padrão
+        </label>
+        <label className="flex items-center gap-2">
+          <input type="checkbox" defaultChecked /> Notificações push
+        </label>
+      </div>
+    ),
+  },
+  {
+    title: "Segurança",
+    icon: <FiLock />,
+    content: (
+      <div className="flex flex-col gap-2">
+        <input
+          type="password"
+          className="border rounded px-3 py-2 text-sm"
+          placeholder="Crie uma senha"
+        />
+        <input
+          type="password"
+          className="border rounded px-3 py-2 text-sm"
+          placeholder="Confirme a senha"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Pronto!",
+    icon: <FiCheckCircle />,
+    content: (
+      <p className="text-sm text-gray-600">
+        Conta configurada com sucesso. Você já pode começar a usar a plataforma.
+        🎉
+      </p>
+    ),
+  },
+];
 
-export const TabsStyle: Story = {
-  render: () => (
-    <CBMultiView
-      variant="tabs"
-      steps={steps}
-      className="max-w-[300px] overflow-x-auto"
-      theme={{
-        tabs: {
-          segment: {
-            background: "#f1f5f9",
-            padding: "6px",
-            borderRadius: "14px",
-            hideIndicator: true,
-            border: "2px solid #2563eb",
-          },
-          button: {
-            background: "black",
-            text: "#475569",
-            activeBackground: "#2563eb",
-            activeText: "black",
-            border: "2px solid #2563eb",
-            rounded: true,
-          },
-        },
-      }}
-    />
-  ),
-};
+// ─── Stories ─────────────────────────────────────────────────────────────────
 
-export const Accordion: Story = {
-  render: () => <CBMultiView variant="accordion" steps={steps} />,
-};
-export const AccordionStyle: Story = {
-  render: () => (
-    <CBMultiView
-      variant="accordion"
-      steps={[
-        { title: "Perfil", content: <p>Dados</p> },
-        { title: "Endereço", content: <p>Endereço</p> },
-      ]}
-      theme={{
-        accordion: {
-          header: {
-            background: "#f8fafc",
-            color: "#1e293b",
-            borderRadius: "12px",
-            padding: "12px",
-          },
-          content: {
-            background: "#ffffff",
-            padding: "16px",
-          },
-          indicator: { hide: true },
-        },
-      }}
-    />
-  ),
-};
-
-export const Stepper: Story = {
+/**
+ * Caso base: horizontal sem customização.
+ * Serve para validar comportamento padrão de navegação e animações.
+ */
+export const HorizontalBasico: Story = {
+  name: "Horizontal — Básico",
   render: () => (
     <CBMultiView
       variant="stepper"
-      steps={steps}
-      color="secondary"
-      // Personalizando botões
-      initialStep={0}
       orientation="horizontal"
-      // Novas props de botão
-      showButtonNext={true}
-      showButtonPrev={true}
+      steps={checkoutSteps}
+      nextLabel={(i, len) => (i === len - 1 ? "Finalizar" : "Próximo")}
+      prevLabel="Voltar"
+    />
+  ),
+};
+
+/**
+ * Verifica que disableNext e disablePrev funcionam corretamente.
+ * Passo 2 (índice 1) bloqueia o avanço — útil para testar validação de formulário.
+ */
+export const HorizontalComBloqueio: Story = {
+  name: "Horizontal — Bloqueio de navegação",
+  render: () => (
+    <CBMultiView
+      variant="stepper"
+      orientation="horizontal"
+      steps={checkoutSteps}
       nextLabel="Avançar"
       prevLabel="Retornar"
-      disableNext={(step) => step === 1} // bloqueia passo 2
-      disablePrev={(step) => step === 0} // bloqueia botão voltar no passo 1
-      className="bg-gray-50 p-4 rounded-lg"
-      style={{ padding: "1rem" }}
-      // classNameContent="flex "
-    />
-  ),
-};
-export const StepperLong: Story = {
-  render: () => (
-    <CBMultiView
-      variant="stepper"
-      steps={[
-        { title: "Perfil", content: <p>Dados</p> },
-        { title: "Endereço", content: <p>Endereço</p> },
-      ]}
-    />
-  ),
-};
-
-export const StepperVert: Story = {
-  render: () => (
-    <CBMultiView
-      variant="stepper"
-      steps={steps}
-      orientation="vertical"
-      color="dark"
-      showButtonNext={true}
-      nextLabel="Próximo"
-      onNext={() => false}
-      prevLabel="Anterior"
-      disableNext={(step) => step === 2} // desabilita último passo
-      className="bg-white p-6 rounded-md shadow-lg"
-      theme={{
-        stepper: {
-          button: {
-            prev: {
-              background: "#f43f5e",
-              text: "#000000",
-              border: "#b91c1c",
-              hover: "#ec4899",
-              active: "#be185d",
-            },
-          },
-        },
-      }}
-    />
-  ),
-};
-export const StepperCustomTheme: Story = {
-  render: () => (
-    <CBMultiView
-      variant="stepper"
-      steps={steps}
-      orientation="horizontal"
-      initialStep={0}
-      color="primary"
-      showButtonNext
-      showButtonPrev
-      nextLabel="Avançar"
-      prevLabel="Voltar"
       disableNext={(step) => step === 1}
       disablePrev={(step) => step === 0}
-      className="bg-gray-50 p-4 rounded-lg"
-      style={{ padding: "1rem" }}
+    />
+  ),
+};
+
+/**
+ * Verifica que onNext assíncrono bloqueia navegação quando retorna false.
+ * Simula validação de backend (ex: checar CEP).
+ */
+export const HorizontalComValidacaoAssincrona: Story = {
+  name: "Horizontal — Validação assíncrona",
+  render: () => (
+    <CBMultiView
+      variant="stepper"
+      orientation="horizontal"
+      steps={checkoutSteps}
+      nextLabel="Avançar"
+      prevLabel="Voltar"
+      onNext={async (step) => {
+        if (step === 1) {
+          await new Promise((r) => setTimeout(r, 800));
+          return false; // bloqueia passo de endereço sempre
+        }
+        return true;
+      }}
+    />
+  ),
+};
+
+/**
+ * Tema customizado: cobre circle, line, titleColor e botões individualmente.
+ * Caso principal para testar o sistema de tema do stepper.
+ */
+export const HorizontalTemaCustom: Story = {
+  name: "Horizontal — Tema customizado",
+  render: () => (
+    <CBMultiView
+      variant="stepper"
+      orientation="horizontal"
+      steps={checkoutSteps}
+      nextLabel="Avançar"
+      prevLabel="Voltar"
+      className="bg-slate-50 p-6 rounded-xl"
       theme={{
         stepper: {
-          titleColor: "#af0000",
-          circle: { background: "#4ade80", text: "#a30000" },
-          line: "#22d3ee",
+          titleColor: "#1e293b",
+          circle: { background: "#6366f1", text: "#ffffff" },
+          line: "#a5b4fc",
           button: {
             next: {
-              background: "#f43f5e",
+              background: "#6366f1",
               text: "#ffffff",
-              border: "#b91c1c",
-              hover: "#ec4899",
-              active: "#be185d",
+              hover: "#4f46e5",
+              active: "#4338ca",
             },
             prev: {
-              background: "#524749",
-              text: "#0e0e0e",
-              border: "#b91c1c",
-              hover: "#ec4899",
-              active: "#be185d",
               variant: "outline",
+              border: "#6366f1",
+              text: "#6366f1",
             },
           },
         },
@@ -268,47 +277,117 @@ export const StepperCustomTheme: Story = {
   ),
 };
 
-export const StepperVerticalCustomTheme: Story = {
+/**
+ * Caso base vertical com fluxo de onboarding.
+ * Valida expansão/colapso animado do conteúdo e linha conectora.
+ */
+export const VerticalBasico: Story = {
+  name: "Vertical — Básico",
+  render: () => (
+    <div className="max-w-md">
+      <CBMultiView
+        variant="stepper"
+        orientation="vertical"
+        steps={onboardingSteps}
+        nextLabel={(i, len) => (i === len - 1 ? "Concluir" : "Continuar")}
+        prevLabel={(i) => (i === 0 ? "Cancelar" : "Voltar")}
+      />
+    </div>
+  ),
+};
+
+/**
+ * Verifica que goTo (clicar em círculo) valida passos intermediários.
+ * onNext bloqueia no passo 2 — clicar em passo 4 direto deve falhar.
+ */
+export const VerticalGoToComValidacao: Story = {
+  name: "Vertical — goTo com validação intermediária",
+  render: () => (
+    <div className="max-w-md">
+      <CBMultiView
+        variant="stepper"
+        orientation="vertical"
+        steps={onboardingSteps}
+        nextLabel="Continuar"
+        prevLabel="Voltar"
+        onNext={(step) => {
+          if (step === 2) return false; // bloqueia saída do passo "Preferências"
+        }}
+      />
+    </div>
+  ),
+};
+
+/**
+ * Tema customizado vertical com labels dinâmicos e botões arredondados.
+ */
+export const VerticalTemaCustom: Story = {
+  name: "Vertical — Tema customizado",
+  render: () => (
+    <div className="max-w-md bg-white p-6 rounded-xl shadow-md">
+      <CBMultiView
+        variant="stepper"
+        orientation="vertical"
+        steps={onboardingSteps}
+        color="primary"
+        nextLabel={(i, len) => (i === len - 1 ? "🎉 Finalizar" : "Continuar")}
+        prevLabel={(i) => (i === 0 ? "Sair" : "Voltar")}
+        theme={{
+          stepper: {
+            titleColor: "#111827",
+            circle: { background: "#f59e0b", text: "#1c1917" },
+            line: "#fcd34d",
+            button: {
+              next: {
+                background: "#f59e0b",
+                text: "#1c1917",
+                hover: "#d97706",
+                active: "#b45309",
+                rounded: true,
+              },
+              prev: {
+                variant: "clear",
+                text: "#6b7280",
+                rounded: true,
+              },
+            },
+          },
+        }}
+      />
+    </div>
+  ),
+};
+
+/**
+ * Valida que initialStep funciona para iniciar em passo diferente de 0.
+ */
+export const HorizontalInitialStep: Story = {
+  name: "Horizontal — initialStep=2",
   render: () => (
     <CBMultiView
       variant="stepper"
-      steps={steps}
-      orientation="vertical"
-      initialStep={0}
-      showButtonNext
-      showButtonPrev
-      nextLabel={(index, length) =>
-        index === length - 1 ? "Último passo!" : "Próximo"
-      }
-      prevLabel={(index) => (index === 0 ? "Cancelar" : "Voltar")}
-      disableNext={(step) => step === 2}
-      className="bg-white p-6 rounded-md shadow-lg"
-      theme={{
-        stepper: {
-          circle: { background: "#facc15", text: "#000000" },
-          line: "#10b981",
-          button: {
-            next: {
-              background: "#f43f5e",
-              text: "#ffffff",
-              border: "#b91c1c",
-              hover: "#ec4899",
-              active: "#be185d",
-              rounded: true,
-            },
-            prev: {
-              background: "#524749",
-              text: "#851b1b",
-              border: "#b91c1c",
-              hover: "#ec4899",
-              active: "#be185d",
-              variant: "outline",
-              rounded: true,
-            },
-          },
-          titleColor: "#111827",
-        },
-      }}
+      orientation="horizontal"
+      steps={checkoutSteps}
+      initialStep={2}
+      nextLabel="Avançar"
+      prevLabel="Voltar"
+    />
+  ),
+};
+
+/**
+ * Valida que showButtonNext/showButtonPrev ocultam os botões corretamente.
+ * Útil quando a navegação é controlada externamente.
+ */
+export const HorizontalSemBotoes: Story = {
+  name: "Horizontal — Sem botões (controle externo)",
+  render: () => (
+    <CBMultiView
+      variant="stepper"
+      orientation="horizontal"
+      steps={checkoutSteps}
+      showButtonNext={false}
+      showButtonPrev={false}
     />
   ),
 };

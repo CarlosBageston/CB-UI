@@ -129,7 +129,7 @@ export interface CBFilterBarProps<T> extends CBBaseProps {
     style?: CSSProperties;
 }
 /** ----------------- CBInput ----------------- */
-export type CBInputMask = "tel" | "cep" | "currency";
+export type CBInputMask = "tel" | "cep" | "currency" | "cnpj";
 export type CBInputMaskResult = {
     formatted: string;
     raw: string;

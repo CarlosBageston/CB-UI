@@ -20,6 +20,8 @@ export { default as CBEmptyState } from "./components/CBStateWrapper/CBEmptyStat
 export { default as CBStateWrapper } from "./components/CBStateWrapper/CBStateWrapper";
 export { default as CBStepperVertical } from "./components/CBStepper/CBStepperVertical";
 export { default as CBStepperHorizontal } from "./components/CBStepper/CBStepperHorizontal";
+export * from "./components/CBStepper/CBStepperProvider";
+export * from "./components/CBStepper/useCBStepper";
 export * from "./theme/CBColor";
 export * from "./hooks/useCBColor";
 export * from "./types/components";

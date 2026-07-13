@@ -1,5 +1,5 @@
 import React from "react";
-import type { CBColor } from "../theme/CBColor";
+import type { CBColorOrString } from "../theme/CBColor";
 /**
  * Props do componente CBCheckbox.
  */
@@ -15,7 +15,11 @@ export type CBCheckboxProps = {
     /** Callback chamado ao alterar o estado do checkbox */
     onChange: (checked: boolean) => void;
     /** Cor do checkbox (usa CBColor) */
-    color?: CBColor;
+    color?: CBColorOrString;
+    /** Classe CSS adicional */
+    className?: string;
+    /**color Text */
+    textColor?: string;
 };
 /**
  * Checkbox customizado com animação e suporte a cores, variantes e estado desabilitado.

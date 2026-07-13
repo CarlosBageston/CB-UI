@@ -1,13 +1,13 @@
 import CBButton from "../CBButton";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React from "react";
 import { useCBColor } from "../../hooks/useCBColor";
 import type { CBStepperProps } from "./CBStepper.types";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { useCBStepper } from "./useCBStepper";
 
-const CBStepperHorizontal: React.FC<CBStepperProps> = ({
+export const CBStepperHorizontal: React.FC<CBStepperProps> = ({
   steps,
-  initialStep = 0,
   color = "primary",
   className,
   classNameContent,
@@ -18,11 +18,9 @@ const CBStepperHorizontal: React.FC<CBStepperProps> = ({
   prevLabel = "Voltar",
   disableNext,
   disablePrev,
-  onNext,
-  onPrev,
   theme,
 }) => {
-  const [activeIndex, setActiveIndex] = useState(initialStep);
+  const { activeIndex, next, prev, canNext, canPrev } = useCBStepper();
   const { main: mainColorDefault, contrast: contrastColorDefault } =
     useCBColor(color);
   const stepperTheme = theme?.stepper;
@@ -30,29 +28,6 @@ const CBStepperHorizontal: React.FC<CBStepperProps> = ({
   const mainColor = stepperTheme?.circle?.background ?? mainColorDefault;
   const contrastColor = stepperTheme?.circle?.text ?? contrastColorDefault;
   const lineColorFinal = stepperTheme?.line ?? mainColorDefault;
-
-  const handleNext = async () => {
-    if (onNext) {
-      const canProceed = await onNext(activeIndex);
-      if (canProceed === false) return;
-    }
-
-    const nextIndex = activeIndex + 1;
-    if (nextIndex < steps.length) {
-      setActiveIndex(nextIndex);
-    }
-  };
-
-  const handlePrev = async () => {
-    if (onPrev) {
-      const canProceed = await onPrev(activeIndex);
-      if (canProceed === false) return;
-    }
-    const prevIndex = activeIndex - 1;
-    if (prevIndex >= 0) {
-      setActiveIndex(prevIndex);
-    }
-  };
 
   return (
     <div className={`flex flex-col gap-4 ${className ?? ""}`} style={style}>
@@ -141,7 +116,6 @@ const CBStepperHorizontal: React.FC<CBStepperProps> = ({
                       ease: "easeOut",
                     },
                   }}
-                  onClick={() => setActiveIndex(idx)}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -161,17 +135,24 @@ const CBStepperHorizontal: React.FC<CBStepperProps> = ({
         })}
       </div>
 
-      {/* Conteúdo do passo */}
-      <div className={classNameContent}>{steps[activeIndex].content}</div>
+      {/* Conteúdo do passo - renderiza todos, esconde inativos */}
+      <div className={classNameContent}>
+        {steps.map((step, idx) => (
+          <div
+            key={idx}
+            style={{ display: idx === activeIndex ? "block" : "none" }}
+          >
+            {step.content}
+          </div>
+        ))}
+      </div>
 
       {/* Navegação */}
       <div className="flex justify-between w-full mt-2">
         {showButtonPrev && (
           <CBButton
-            disabled={
-              disablePrev ? disablePrev(activeIndex) : activeIndex === 0
-            }
-            onClick={handlePrev}
+            disabled={disablePrev ? disablePrev(activeIndex) : !canPrev}
+            onClick={prev}
             iconStart={<MdKeyboardArrowLeft />}
             children={
               typeof prevLabel === "function"
@@ -190,12 +171,8 @@ const CBStepperHorizontal: React.FC<CBStepperProps> = ({
         )}
         {showButtonNext && (
           <CBButton
-            disabled={
-              disableNext
-                ? disableNext(activeIndex)
-                : activeIndex === steps.length - 1
-            }
-            onClick={handleNext}
+            disabled={disableNext ? disableNext(activeIndex) : !canNext}
+            onClick={next}
             iconEnd={<MdKeyboardArrowRight />}
             children={
               typeof nextLabel === "function"

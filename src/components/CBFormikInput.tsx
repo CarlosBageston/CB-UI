@@ -2,6 +2,7 @@ import CBInput from "./CBInput";
 import { useCallback, useMemo } from "react";
 import { useField, useFormikContext } from "formik";
 import type { CBFormikInputProps } from "../types/componentsFormikInput";
+import { resolveMask } from "../hooks/useInputMask";
 
 /**
  * Campo integrado ao Formik baseado no CBInput.
@@ -217,6 +218,10 @@ function CBFormikInput({
         style: "currency",
         currency: "BRL",
       }).format(Number(field.value));
+    }
+    if (valueSource === "raw" && props.mask) {
+      const maskFn = resolveMask(props.mask);
+      if (maskFn) return maskFn(String(field.value)).formatted;
     }
 
     return String(field.value);
