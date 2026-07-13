@@ -1,17 +1,78 @@
 import CBButton from "./CBButton";
+
 import { AgGridReact } from "ag-grid-react";
+
 import { FiEdit, FiTrash2 } from "react-icons/fi";
+
 import { useAGGridTheme } from "../hooks/useAGGridTheme";
-import type { ColDef, ColGroupDef } from "ag-grid-community";
-import { useEffect, useMemo, useRef, useState } from "react";
+
+import type {
+  ColDef,
+  ColGroupDef,
+  ICellRendererParams,
+  GetRowIdParams,
+} from "ag-grid-community";
+
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import {
   ModuleRegistry,
   ClientSideRowModelModule,
   PaginationModule,
+  RowSelectionModule,
+  CellStyleModule,
+  LocaleModule,
 } from "ag-grid-community";
+
 import type { CBDataTableProps, CBTableColumn } from "../datatable";
 
-ModuleRegistry.registerModules([ClientSideRowModelModule, PaginationModule]);
+ModuleRegistry.registerModules([
+  ClientSideRowModelModule,
+  PaginationModule,
+  RowSelectionModule,
+  CellStyleModule,
+  LocaleModule,
+]);
+
+/**
+ * Converte uma CBTableColumn (nossa API simplificada) em um ColDef/ColGroupDef
+ * do AG Grid.
+ *
+ * Ponto importante: fazemos spread das propriedades "cruas" do ColDef
+ * (sortable, filter, editable, pinned, valueGetter, etc.) que vierem em
+ * `col`, e SÓ DEPOIS sobrescrevemos o que o CBDataTable precisa controlar
+ * (flex, cellRenderer, cellClass). Isso evita que propriedades nativas do
+ * AG Grid que o consumidor tenha setado sejam silenciosamente descartadas
+ * (o problema que existia na versão anterior, que reconstruía o objeto do
+ * zero escolhendo campo por campo).
+ */
+function mapColumn<T>(col: CBTableColumn<T>): ColDef<T> | ColGroupDef<T> {
+  const { col: colSpan, render, children, align, ...colDefRest } = col;
+
+  if (children && children.length > 0) {
+    return {
+      ...colDefRest,
+      headerName: col.headerName,
+      children: children.map((child) => mapColumn(child)),
+      flex: colSpan ?? 1,
+    };
+  }
+
+  return {
+    ...colDefRest,
+    flex: colSpan ?? 1,
+    cellRenderer: render
+      ? (params: ICellRendererParams<T>) =>
+          params.data ? render(params.data) : null
+      : undefined,
+    cellClass:
+      align === "center"
+        ? "ag-cell-center"
+        : align === "right"
+          ? "ag-cell-right"
+          : "ag-cell-left",
+  };
+}
 
 /**
  * CBDataTable
@@ -50,6 +111,7 @@ ModuleRegistry.registerModules([ClientSideRowModelModule, PaginationModule]);
  *   columns={columns}
  *   data={data}
  *   pageSize={5}
+ *   getRowId={(user) => String(user.id)}
  *   onEdit={(user) => console.log("Editar", user)}
  *   onDelete={(user) => console.log("Excluir", user)}
  * />
@@ -60,53 +122,46 @@ function CBDataTable<T>({
   data,
   pageSize = 5,
   emptyMessage = "Nenhum dado encontrado",
+  getRowId,
   onEdit,
   onDelete,
+  selectionMode = "single",
+  theme = "dark",
 }: CBDataTableProps<T>) {
-  const themeTable = useAGGridTheme("dark");
-  const [selectedRow, setSelectedRow] = useState<T | null>(null);
+  const themeTable = useAGGridTheme(theme);
+  const [selectedRows, setSelectedRows] = useState<T[]>([]);
 
-  // referência do grid
   const gridRef = useRef<AgGridReact<T>>(null);
   const gridWrapperRef = useRef<HTMLDivElement>(null);
 
-  const onSelectionChanged = () => {
-    const selectedNodes = gridRef.current?.api.getSelectedNodes();
-    setSelectedRow(selectedNodes?.[0]?.data ?? null);
-  };
+  const onSelectionChanged = useCallback(() => {
+    const selectedNodes = gridRef.current?.api.getSelectedNodes() ?? [];
+    setSelectedRows(
+      selectedNodes.map((node) => node.data).filter((d): d is T => d != null),
+    );
+  }, []);
 
-  const mapColumn = <T,>(col: CBTableColumn<T>): ColDef<T> | ColGroupDef<T> => {
-    const totalCol = columns.reduce((sum, col) => sum + (col.col ?? 1), 0);
-    if (col.children && col.children.length > 0) {
-      // coluna com agrupamento
-      return {
-        headerName: col.headerName,
-        children: col.children.map(mapColumn),
-        flex: col.col ?? 1,
-      };
-    }
-    return {
-      field: col.field,
-      headerName: col.headerName,
-      flex: ((col.col ?? 1) / totalCol) * 12, // 12 colunas
-      cellRenderer: col.render
-        ? (params: any) => col.render!(params.data)
-        : undefined,
-      valueGetter: col.valueGetter,
-      colId: col.colId,
-      sortable: col.sortable,
-      cellClass:
-        col.align === "center"
-          ? "ag-cell-center"
-          : col.align === "right"
-            ? "ag-cell-right"
-            : "ag-cell-left",
-    };
-  };
+  const handleDelete = useCallback(() => {
+    if (!onDelete) return;
+    selectedRows.forEach((row) => onDelete(row));
+    gridRef.current?.api.deselectAll();
+    setSelectedRows([]);
+  }, [onDelete, selectedRows]);
 
   const columnDefs: (ColDef<T> | ColGroupDef<T>)[] = useMemo(
-    () => columns.map(mapColumn),
+    () => columns.map((col) => mapColumn(col)),
     [columns],
+  );
+
+  // Repassa o getRowId do consumidor para o formato que o AG Grid espera.
+  // Sem isso, o grid usa identidade por índice/objeto, o que pode bagunçar
+  // seleção e reconciliação de linhas quando `data` é atualizado.
+  const getRowIdCallback = useMemo(
+    () =>
+      getRowId
+        ? (params: GetRowIdParams<T>) => getRowId(params.data)
+        : undefined,
+    [getRowId],
   );
 
   useEffect(() => {
@@ -115,7 +170,7 @@ function CBDataTable<T>({
         gridWrapperRef.current &&
         !gridWrapperRef.current.contains(event.target as Node)
       ) {
-        setSelectedRow(null);
+        setSelectedRows([]);
         gridRef.current?.api.deselectAll();
       }
     };
@@ -129,19 +184,34 @@ function CBDataTable<T>({
       <AgGridReact
         ref={gridRef}
         rowData={data}
+        getRowId={getRowIdCallback}
         defaultColDef={{ resizable: false }}
         columnDefs={columnDefs}
         theme={themeTable}
         animateRows
-        rowSelection="single"
+        // API de seleção do AG Grid >= v32: rowSelection passou a ser um
+        // objeto de configuração em vez de string ("single"/"multiple").
+        rowSelection={
+          selectionMode === "multiple"
+            ? {
+                mode: "multiRow",
+                checkboxes: true,
+                headerCheckbox: true,
+                enableClickSelection: true,
+              }
+            : {
+                mode: "singleRow",
+                checkboxes: false,
+                enableClickSelection: true,
+              }
+        }
         domLayout="autoHeight"
         onSelectionChanged={onSelectionChanged}
-        pagination={true}
+        pagination
         paginationPageSize={pageSize}
-        paginationAutoPageSize={true}
-        overlayNoRowsTemplate={`<span class="text-white">${emptyMessage || "Nenhum dado encontrado"}</span>`}
+        paginationPageSizeSelector={false}
+        overlayNoRowsTemplate={`<span class="text-white">${emptyMessage}</span>`}
         localeText={{
-          // Paginação
           page: "Página",
           of: "de",
           to: "até",
@@ -155,24 +225,28 @@ function CBDataTable<T>({
       <div className="absolute -top-2 right-2 -translate-y-1/2 flex gap-2 z-10">
         {onEdit && (
           <CBButton
+            aria-label="Editar"
             children=""
             iconStart={<FiEdit size={18} />}
             color="primary"
-            disabled={!selectedRow}
-            onClick={() => selectedRow && onEdit?.(selectedRow)}
+            // Edição só faz sentido com exatamente 1 linha selecionada.
+            disabled={selectedRows.length !== 1}
+            onClick={() => selectedRows.length === 1 && onEdit(selectedRows[0])}
           />
         )}
         {onDelete && (
           <CBButton
+            aria-label="Excluir"
             children=""
             iconStart={<FiTrash2 size={18} />}
             color="danger"
-            disabled={!selectedRow}
-            onClick={() => selectedRow && onDelete?.(selectedRow)}
+            disabled={selectedRows.length === 0}
+            onClick={handleDelete}
           />
         )}
       </div>
     </div>
   );
 }
+
 export default CBDataTable;
