@@ -1,22 +1,16 @@
 import { FormikProvider, type FormikProps } from "formik";
-import type { ReactNode, FormEventHandler } from "react";
+import type { ReactNode } from "react";
 
 interface CBFormProps<T extends object> {
   formik: FormikProps<T>;
   children: ReactNode;
-  action?: string;
-  method?: "post" | "get";
-  activeOnSubmit?: boolean;
   className?: string;
-  onSubmit?: FormEventHandler<HTMLFormElement>;
+  onSubmit?: () => void;
 }
 
 function CBForm<T extends object>({
   formik,
   children,
-  action,
-  method,
-  activeOnSubmit = true,
   className,
   onSubmit,
 }: CBFormProps<T>) {
@@ -24,11 +18,7 @@ function CBForm<T extends object>({
     <FormikProvider value={formik}>
       <form
         className={className}
-        action={action}
-        method={method}
-        onSubmit={
-          onSubmit ? onSubmit : activeOnSubmit ? formik.handleSubmit : undefined
-        }
+        onSubmit={onSubmit ? onSubmit : formik.handleSubmit}
       >
         {children}
       </form>

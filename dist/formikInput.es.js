@@ -17,7 +17,7 @@ var B;
 function Ce() {
   if (B) return a;
   B = 1;
-  var r = typeof Symbol == "function" && Symbol.for, o = r ? /* @__PURE__ */ Symbol.for("react.element") : 60103, n = r ? /* @__PURE__ */ Symbol.for("react.portal") : 60106, u = r ? /* @__PURE__ */ Symbol.for("react.fragment") : 60107, f = r ? /* @__PURE__ */ Symbol.for("react.strict_mode") : 60108, s = r ? /* @__PURE__ */ Symbol.for("react.profiler") : 60114, l = r ? /* @__PURE__ */ Symbol.for("react.provider") : 60109, d = r ? /* @__PURE__ */ Symbol.for("react.context") : 60110, _ = r ? /* @__PURE__ */ Symbol.for("react.async_mode") : 60111, c = r ? /* @__PURE__ */ Symbol.for("react.concurrent_mode") : 60111, S = r ? /* @__PURE__ */ Symbol.for("react.forward_ref") : 60112, y = r ? /* @__PURE__ */ Symbol.for("react.suspense") : 60113, T = r ? /* @__PURE__ */ Symbol.for("react.suspense_list") : 60120, b = r ? /* @__PURE__ */ Symbol.for("react.memo") : 60115, m = r ? /* @__PURE__ */ Symbol.for("react.lazy") : 60116, C = r ? /* @__PURE__ */ Symbol.for("react.block") : 60121, R = r ? /* @__PURE__ */ Symbol.for("react.fundamental") : 60117, v = r ? /* @__PURE__ */ Symbol.for("react.responder") : 60118, x = r ? /* @__PURE__ */ Symbol.for("react.scope") : 60119;
+  var r = typeof Symbol == "function" && Symbol.for, o = r ? /* @__PURE__ */ Symbol.for("react.element") : 60103, n = r ? /* @__PURE__ */ Symbol.for("react.portal") : 60106, s = r ? /* @__PURE__ */ Symbol.for("react.fragment") : 60107, f = r ? /* @__PURE__ */ Symbol.for("react.strict_mode") : 60108, u = r ? /* @__PURE__ */ Symbol.for("react.profiler") : 60114, d = r ? /* @__PURE__ */ Symbol.for("react.provider") : 60109, l = r ? /* @__PURE__ */ Symbol.for("react.context") : 60110, _ = r ? /* @__PURE__ */ Symbol.for("react.async_mode") : 60111, c = r ? /* @__PURE__ */ Symbol.for("react.concurrent_mode") : 60111, S = r ? /* @__PURE__ */ Symbol.for("react.forward_ref") : 60112, y = r ? /* @__PURE__ */ Symbol.for("react.suspense") : 60113, T = r ? /* @__PURE__ */ Symbol.for("react.suspense_list") : 60120, b = r ? /* @__PURE__ */ Symbol.for("react.memo") : 60115, m = r ? /* @__PURE__ */ Symbol.for("react.lazy") : 60116, C = r ? /* @__PURE__ */ Symbol.for("react.block") : 60121, R = r ? /* @__PURE__ */ Symbol.for("react.fundamental") : 60117, v = r ? /* @__PURE__ */ Symbol.for("react.responder") : 60118, x = r ? /* @__PURE__ */ Symbol.for("react.scope") : 60119;
   function E(e) {
     if (typeof e == "object" && e !== null) {
       var P = e.$$typeof;
@@ -26,18 +26,18 @@ function Ce() {
           switch (e = e.type, e) {
             case _:
             case c:
-            case u:
             case s:
+            case u:
             case f:
             case y:
               return e;
             default:
               switch (e = e && e.$$typeof, e) {
-                case d:
+                case l:
                 case S:
                 case m:
                 case b:
-                case l:
+                case d:
                   return e;
                 default:
                   return P;
@@ -51,18 +51,18 @@ function Ce() {
   function p(e) {
     return E(e) === c;
   }
-  return a.AsyncMode = _, a.ConcurrentMode = c, a.ContextConsumer = d, a.ContextProvider = l, a.Element = o, a.ForwardRef = S, a.Fragment = u, a.Lazy = m, a.Memo = b, a.Portal = n, a.Profiler = s, a.StrictMode = f, a.Suspense = y, a.isAsyncMode = function(e) {
+  return a.AsyncMode = _, a.ConcurrentMode = c, a.ContextConsumer = l, a.ContextProvider = d, a.Element = o, a.ForwardRef = S, a.Fragment = s, a.Lazy = m, a.Memo = b, a.Portal = n, a.Profiler = u, a.StrictMode = f, a.Suspense = y, a.isAsyncMode = function(e) {
     return p(e) || E(e) === _;
   }, a.isConcurrentMode = p, a.isContextConsumer = function(e) {
-    return E(e) === d;
-  }, a.isContextProvider = function(e) {
     return E(e) === l;
+  }, a.isContextProvider = function(e) {
+    return E(e) === d;
   }, a.isElement = function(e) {
     return typeof e == "object" && e !== null && e.$$typeof === o;
   }, a.isForwardRef = function(e) {
     return E(e) === S;
   }, a.isFragment = function(e) {
-    return E(e) === u;
+    return E(e) === s;
   }, a.isLazy = function(e) {
     return E(e) === m;
   }, a.isMemo = function(e) {
@@ -70,23 +70,23 @@ function Ce() {
   }, a.isPortal = function(e) {
     return E(e) === n;
   }, a.isProfiler = function(e) {
-    return E(e) === s;
+    return E(e) === u;
   }, a.isStrictMode = function(e) {
     return E(e) === f;
   }, a.isSuspense = function(e) {
     return E(e) === y;
   }, a.isValidElementType = function(e) {
-    return typeof e == "string" || typeof e == "function" || e === u || e === c || e === s || e === f || e === y || e === T || typeof e == "object" && e !== null && (e.$$typeof === m || e.$$typeof === b || e.$$typeof === l || e.$$typeof === d || e.$$typeof === S || e.$$typeof === R || e.$$typeof === v || e.$$typeof === x || e.$$typeof === C);
+    return typeof e == "string" || typeof e == "function" || e === s || e === c || e === u || e === f || e === y || e === T || typeof e == "object" && e !== null && (e.$$typeof === m || e.$$typeof === b || e.$$typeof === d || e.$$typeof === l || e.$$typeof === S || e.$$typeof === R || e.$$typeof === v || e.$$typeof === x || e.$$typeof === C);
   }, a.typeOf = E, a;
 }
 var i = {};
 var V;
 function Pe() {
   return V || (V = 1, process.env.NODE_ENV !== "production" && (function() {
-    var r = typeof Symbol == "function" && Symbol.for, o = r ? /* @__PURE__ */ Symbol.for("react.element") : 60103, n = r ? /* @__PURE__ */ Symbol.for("react.portal") : 60106, u = r ? /* @__PURE__ */ Symbol.for("react.fragment") : 60107, f = r ? /* @__PURE__ */ Symbol.for("react.strict_mode") : 60108, s = r ? /* @__PURE__ */ Symbol.for("react.profiler") : 60114, l = r ? /* @__PURE__ */ Symbol.for("react.provider") : 60109, d = r ? /* @__PURE__ */ Symbol.for("react.context") : 60110, _ = r ? /* @__PURE__ */ Symbol.for("react.async_mode") : 60111, c = r ? /* @__PURE__ */ Symbol.for("react.concurrent_mode") : 60111, S = r ? /* @__PURE__ */ Symbol.for("react.forward_ref") : 60112, y = r ? /* @__PURE__ */ Symbol.for("react.suspense") : 60113, T = r ? /* @__PURE__ */ Symbol.for("react.suspense_list") : 60120, b = r ? /* @__PURE__ */ Symbol.for("react.memo") : 60115, m = r ? /* @__PURE__ */ Symbol.for("react.lazy") : 60116, C = r ? /* @__PURE__ */ Symbol.for("react.block") : 60121, R = r ? /* @__PURE__ */ Symbol.for("react.fundamental") : 60117, v = r ? /* @__PURE__ */ Symbol.for("react.responder") : 60118, x = r ? /* @__PURE__ */ Symbol.for("react.scope") : 60119;
+    var r = typeof Symbol == "function" && Symbol.for, o = r ? /* @__PURE__ */ Symbol.for("react.element") : 60103, n = r ? /* @__PURE__ */ Symbol.for("react.portal") : 60106, s = r ? /* @__PURE__ */ Symbol.for("react.fragment") : 60107, f = r ? /* @__PURE__ */ Symbol.for("react.strict_mode") : 60108, u = r ? /* @__PURE__ */ Symbol.for("react.profiler") : 60114, d = r ? /* @__PURE__ */ Symbol.for("react.provider") : 60109, l = r ? /* @__PURE__ */ Symbol.for("react.context") : 60110, _ = r ? /* @__PURE__ */ Symbol.for("react.async_mode") : 60111, c = r ? /* @__PURE__ */ Symbol.for("react.concurrent_mode") : 60111, S = r ? /* @__PURE__ */ Symbol.for("react.forward_ref") : 60112, y = r ? /* @__PURE__ */ Symbol.for("react.suspense") : 60113, T = r ? /* @__PURE__ */ Symbol.for("react.suspense_list") : 60120, b = r ? /* @__PURE__ */ Symbol.for("react.memo") : 60115, m = r ? /* @__PURE__ */ Symbol.for("react.lazy") : 60116, C = r ? /* @__PURE__ */ Symbol.for("react.block") : 60121, R = r ? /* @__PURE__ */ Symbol.for("react.fundamental") : 60117, v = r ? /* @__PURE__ */ Symbol.for("react.responder") : 60118, x = r ? /* @__PURE__ */ Symbol.for("react.scope") : 60119;
     function E(t) {
       return typeof t == "string" || typeof t == "function" || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
-      t === u || t === c || t === s || t === f || t === y || t === T || typeof t == "object" && t !== null && (t.$$typeof === m || t.$$typeof === b || t.$$typeof === l || t.$$typeof === d || t.$$typeof === S || t.$$typeof === R || t.$$typeof === v || t.$$typeof === x || t.$$typeof === C);
+      t === s || t === c || t === u || t === f || t === y || t === T || typeof t == "object" && t !== null && (t.$$typeof === m || t.$$typeof === b || t.$$typeof === d || t.$$typeof === l || t.$$typeof === S || t.$$typeof === R || t.$$typeof === v || t.$$typeof === x || t.$$typeof === C);
     }
     function p(t) {
       if (typeof t == "object" && t !== null) {
@@ -97,19 +97,19 @@ function Pe() {
             switch (g) {
               case _:
               case c:
-              case u:
               case s:
+              case u:
               case f:
               case y:
                 return g;
               default:
                 var L = g && g.$$typeof;
                 switch (L) {
-                  case d:
+                  case l:
                   case S:
                   case m:
                   case b:
-                  case l:
+                  case d:
                     return L;
                   default:
                     return M;
@@ -120,7 +120,7 @@ function Pe() {
         }
       }
     }
-    var e = _, P = c, A = d, D = l, W = o, H = S, K = u, G = m, X = b, Z = n, J = s, Q = f, ee = y, Y = !1;
+    var e = _, P = c, A = l, D = d, W = o, H = S, K = s, G = m, X = b, Z = n, J = u, Q = f, ee = y, Y = !1;
     function re(t) {
       return Y || (Y = !0, console.warn("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.")), j(t) || p(t) === _;
     }
@@ -128,10 +128,10 @@ function Pe() {
       return p(t) === c;
     }
     function te(t) {
-      return p(t) === d;
+      return p(t) === l;
     }
     function oe(t) {
-      return p(t) === l;
+      return p(t) === d;
     }
     function ne(t) {
       return typeof t == "object" && t !== null && t.$$typeof === o;
@@ -140,7 +140,7 @@ function Pe() {
       return p(t) === S;
     }
     function ie(t) {
-      return p(t) === u;
+      return p(t) === s;
     }
     function se(t) {
       return p(t) === m;
@@ -152,7 +152,7 @@ function Pe() {
       return p(t) === n;
     }
     function fe(t) {
-      return p(t) === s;
+      return p(t) === u;
     }
     function le(t) {
       return p(t) === f;
@@ -191,7 +191,7 @@ function Re() {
     callee: !0,
     arguments: !0,
     arity: !0
-  }, u = {
+  }, s = {
     $$typeof: !0,
     render: !0,
     defaultProps: !0,
@@ -204,12 +204,12 @@ function Re() {
     displayName: !0,
     propTypes: !0,
     type: !0
-  }, s = {};
-  s[r.ForwardRef] = u, s[r.Memo] = f;
-  function l(m) {
-    return r.isMemo(m) ? f : s[m.$$typeof] || o;
+  }, u = {};
+  u[r.ForwardRef] = s, u[r.Memo] = f;
+  function d(m) {
+    return r.isMemo(m) ? f : u[m.$$typeof] || o;
   }
-  var d = Object.defineProperty, _ = Object.getOwnPropertyNames, c = Object.getOwnPropertySymbols, S = Object.getOwnPropertyDescriptor, y = Object.getPrototypeOf, T = Object.prototype;
+  var l = Object.defineProperty, _ = Object.getOwnPropertyNames, c = Object.getOwnPropertySymbols, S = Object.getOwnPropertyDescriptor, y = Object.getPrototypeOf, T = Object.prototype;
   function b(m, C, R) {
     if (typeof C != "string") {
       if (T) {
@@ -218,12 +218,12 @@ function Re() {
       }
       var x = _(C);
       c && (x = x.concat(c(C)));
-      for (var E = l(m), p = l(C), e = 0; e < x.length; ++e) {
+      for (var E = d(m), p = d(C), e = 0; e < x.length; ++e) {
         var P = x[e];
         if (!n[P] && !(R && R[P]) && !(p && p[P]) && !(E && E[P])) {
           var A = S(C, P);
           try {
-            d(m, P, A);
+            l(m, P, A);
           } catch {
           }
         }
@@ -238,17 +238,17 @@ function I() {
   return I = Object.assign || function(r) {
     for (var o = 1; o < arguments.length; o++) {
       var n = arguments[o];
-      for (var u in n)
-        Object.prototype.hasOwnProperty.call(n, u) && (r[u] = n[u]);
+      for (var s in n)
+        Object.prototype.hasOwnProperty.call(n, s) && (r[s] = n[s]);
     }
     return r;
   }, I.apply(this, arguments);
 }
 function xe(r, o) {
   if (r == null) return {};
-  var n = {}, u = Object.keys(r), f, s;
-  for (s = 0; s < u.length; s++)
-    f = u[s], !(o.indexOf(f) >= 0) && (n[f] = r[f]);
+  var n = {}, s = Object.keys(r), f, u;
+  for (u = 0; u < s.length; u++)
+    f = s[u], !(o.indexOf(f) >= 0) && (n[f] = r[f]);
   return n;
 }
 var O = /* @__PURE__ */ pe(void 0);
@@ -263,40 +263,40 @@ var ge = function(o) {
   return o !== null && typeof o == "object";
 };
 function he(r) {
-  var o = k(), n = o.getFieldProps, u = o.getFieldMeta, f = o.getFieldHelpers, s = o.registerField, l = o.unregisterField, d = ge(r), _ = d ? r : {
+  var o = k(), n = o.getFieldProps, s = o.getFieldMeta, f = o.getFieldHelpers, u = o.registerField, d = o.unregisterField, l = ge(r), _ = l ? r : {
     name: r
   }, c = _.name, S = _.validate;
   Ee(function() {
-    return c && s(c, {
+    return c && u(c, {
       validate: S
     }), function() {
-      c && l(c);
+      c && d(c);
     };
-  }, [s, l, c, S]), process.env.NODE_ENV !== "production" && (o || (process.env.NODE_ENV !== "production" ? F(!1, "useField() / <Field /> must be used underneath a <Formik> component or withFormik() higher order component") : F())), c || (process.env.NODE_ENV !== "production" ? F(!1, "Invalid field name. Either pass `useField` a string or an object containing a `name` key.") : F());
+  }, [u, d, c, S]), process.env.NODE_ENV !== "production" && (o || (process.env.NODE_ENV !== "production" ? F(!1, "useField() / <Field /> must be used underneath a <Formik> component or withFormik() higher order component") : F())), c || (process.env.NODE_ENV !== "production" ? F(!1, "Invalid field name. Either pass `useField` a string or an object containing a `name` key.") : F());
   var y = U(function() {
     return f(c);
   }, [f, c]);
-  return [n(_), u(c), y];
+  return [n(_), s(c), y];
 }
 var $e = /* @__PURE__ */ Se(function(r, o) {
-  var n = r.action, u = xe(r, ["action"]), f = n ?? "#", s = k(), l = s.handleReset, d = s.handleSubmit;
+  var n = r.action, s = xe(r, ["action"]), f = n ?? "#", u = k(), d = u.handleReset, l = u.handleSubmit;
   return _e("form", I({
-    onSubmit: d,
+    onSubmit: l,
     ref: o,
-    onReset: l,
+    onReset: d,
     action: f
-  }, u));
+  }, s));
 });
 $e.displayName = "Form";
 function Ne({
   name: r,
   valueSource: o = "formatted",
   transformValue: n,
-  onChange: u,
+  onChange: s,
   onRawChange: f,
-  onBlur: s,
-  textColor: l,
-  ...d
+  onBlur: u,
+  textColor: d,
+  ...l
 }) {
   if (!k())
     throw new Error(
@@ -319,60 +319,55 @@ function Ne({
     [y, n]
   ), b = h(
     (v) => {
-      o === "formatted" && T(v), u?.(v);
+      o === "formatted" && T(v), s?.(v);
     },
-    [o, T, u]
+    [o, T, s]
   ), m = h(
     (v) => {
       o === "raw" && T(v), f?.(v);
     },
     [o, T, f]
   ), C = h(() => {
-    y.setTouched(!0), s?.();
-  }, [y, s]), R = U(() => {
+    y.setTouched(!0), u?.();
+  }, [y, u]), R = U(() => {
     if (c.value === null || c.value === void 0)
       return "";
-    if (d.mask === "currency" && o === "raw")
+    if (l.mask === "currency" && o === "raw")
       return Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL"
       }).format(Number(c.value));
-    if (o === "raw" && d.mask) {
-      const v = me(d.mask);
+    if (o === "raw" && l.mask) {
+      const v = me(l.mask);
       if (v) return v(String(c.value)).formatted;
     }
     return String(c.value);
-  }, [c.value, d.mask, o]);
+  }, [c.value, l.mask, o]);
   return /* @__PURE__ */ w(
     ve,
     {
-      ...d,
+      ...l,
       name: r,
       value: R,
       onChange: b,
       onRawChange: m,
       onBlur: C,
       error: S.touched ? S.error : void 0,
-      textColor: l
+      textColor: d
     }
   );
 }
 function we({
   formik: r,
   children: o,
-  action: n,
-  method: u,
-  activeOnSubmit: f = !0,
-  className: s,
-  onSubmit: l
+  className: n,
+  onSubmit: s
 }) {
   return /* @__PURE__ */ w(Fe, { value: r, children: /* @__PURE__ */ w(
     "form",
     {
-      className: s,
-      action: n,
-      method: u,
-      onSubmit: l || (f ? r.handleSubmit : void 0),
+      className: n,
+      onSubmit: s || r.handleSubmit,
       children: o
     }
   ) });

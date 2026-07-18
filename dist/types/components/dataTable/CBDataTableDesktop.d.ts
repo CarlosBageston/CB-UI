@@ -1,4 +1,4 @@
-import type { CBDataTableProps } from "../datatable";
+import type { CBDataTableProps } from "../../datatable";
 /**
  * CBDataTable
  *
@@ -6,7 +6,7 @@ import type { CBDataTableProps } from "../datatable";
  * - Suporte a colunas agrupadas
  * - Renderização customizada de células
  * - Paginação
- * - Seleção de linha única
+ * - Seleção de linha única ou múltipla
  * - Botões flutuantes de editar/excluir
  *
  * @template T Tipo do dado das linhas
@@ -36,10 +36,11 @@ import type { CBDataTableProps } from "../datatable";
  *   columns={columns}
  *   data={data}
  *   pageSize={5}
+ *   getRowId={(user) => String(user.id)}
  *   onEdit={(user) => console.log("Editar", user)}
  *   onDelete={(user) => console.log("Excluir", user)}
  * />
  * ```
  */
-declare function CBDataTable<T>({ columns, data, pageSize, emptyMessage, onEdit, onDelete, }: CBDataTableProps<T>): import("react").JSX.Element;
-export default CBDataTable;
+declare function CBDataTableDesktop<T>({ columns, data, pageSize, emptyMessage, getRowId, onEdit, onDelete, selectionMode, theme, page, totalRows, onPageChange, onPageSizeChange, loading, themePagination, }: CBDataTableProps<T>): import("react").JSX.Element;
+export default CBDataTableDesktop;

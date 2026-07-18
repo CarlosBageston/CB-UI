@@ -39,6 +39,34 @@ ion-select::part(icon) {
   outline: none !important;
   box-shadow: none !important;
 }
+
+/* Alinhamento de conteúdo das células (usado pelo CBDataTable/mapColumn) */
+.ag-cell-left {
+  justify-content: flex-start !important;
+  text-align: left !important;
+}
+
+.ag-cell-center {
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.ag-cell-right {
+  justify-content: flex-end !important;
+  text-align: right !important;
+}
+
+.ag-header-left .ag-header-cell-label {
+  justify-content: flex-start !important;
+}
+
+.ag-header-center .ag-header-cell-label {
+  justify-content: center !important;
+}
+
+.ag-header-right .ag-header-cell-label {
+  justify-content: flex-end !important;
+}
 .custom-calendar-modal {
   --width: auto;
   --height: auto;

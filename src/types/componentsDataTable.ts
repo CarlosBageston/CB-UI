@@ -45,6 +45,9 @@ export interface CBTableColumn<T> extends Pick<
   align?: "left" | "center" | "right";
 }
 
+/** Modo de paginação. Default "server". */
+export type PaginationMode = "client" | "server";
+
 /**
  * Props do componente CBDataTable
  *
@@ -64,7 +67,7 @@ export interface CBDataTableProps<T> extends CBBaseProps {
    * puder ser atualizado (ex: após um edit/delete), para o AG Grid não
    * perder seleção/estado ao reconciliar por índice.
    */
-  getRowId?: (item: T) => string;
+  getRowId: (item: T) => string;
   /** Callback ao clicar no botão de editar linha */
   onEdit?: (item: T) => void;
   /** Callback ao clicar no botão de excluir linha */
@@ -78,4 +81,31 @@ export interface CBDataTableProps<T> extends CBBaseProps {
   selectionMode?: "single" | "multiple";
   /** Tema da tabela */
   theme?: "dark" | "light";
+
+  /** Modo da tabela (móvel ou desktop)
+   * @default auto
+   */
+  modeTable?: "mobile" | "desktop" | "auto";
+
+  /**
+   * Props usadas quando paginationMode === "server"
+   */
+  /** Número da página atual */
+  page?: number;
+  /** Total de linhas da tabela */
+  totalRows?: number;
+  /** Callback ao mudar de página */
+  onPageChange?: (page: number) => void;
+  /** Callback ao mudar o tamanho da página */
+  onPageSizeChange?: (pageSize: number) => void;
+  /** Indica se a tabela está carregando dados */
+  loading?: boolean;
+
+  themePagination?: {
+    text?: string;
+    bgColorSelect?: string;
+    bgColorButtonNext?: string;
+    bgColorButtonPrevious?: string;
+    textSelect?: string;
+  };
 }

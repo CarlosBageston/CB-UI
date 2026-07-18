@@ -1,11 +1,21 @@
 /**
  * Opção de coluna para filtragem
  */
-export interface CBFilterOption {
-    /** Valor interno da coluna */
+export interface CBFilterOption<T = unknown> {
+    /**
+     * Identificador interno do filtro.
+     */
     value: string;
-    /** Label exibido no select */
+    /**
+     * Texto exibido para o usuário.
+     */
     label: string;
+    /**
+     * Define como pegar o valor usado na busca.
+     *
+     * Caso não seja informado, usa o campo informado em `value`.
+     */
+    getValue?: (item: T) => unknown;
 }
 /**
  * Props do CBFilterBar
