@@ -100,12 +100,4 @@ export interface CBDataTableProps<T> extends CBBaseProps {
   onPageSizeChange?: (pageSize: number) => void;
   /** Indica se a tabela está carregando dados */
   loading?: boolean;
-
-  themePagination?: {
-    text?: string;
-    bgColorSelect?: string;
-    bgColorButtonNext?: string;
-    bgColorButtonPrevious?: string;
-    textSelect?: string;
-  };
 }

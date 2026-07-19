@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { IonInput, IonSelect, IonSelectOption } from "@ionic/react";
-import { FiSearch, FiFilter } from "react-icons/fi";
+import { IonInput, IonItem, IonList, IonPopover } from "@ionic/react";
+import { FiSearch, FiFilter, FiChevronDown } from "react-icons/fi";
+import { DEFAULT_THEMES } from "./dataTable/theme/themeDataTable";
+import CBButton from "./CBButton";
 
 /**
  * Opção de coluna para filtragem
@@ -58,6 +60,8 @@ interface CBFilterBarProps<T> {
   selectClassName?: string;
   /** Estilo inline opcional */
   style?: React.CSSProperties;
+  /** Estilo opcional */
+  theme?: "light" | "dark";
 }
 
 /**
@@ -89,6 +93,7 @@ function CBFilterBar<T>({
   inputClassName = "",
   selectClassName = "",
   style,
+  theme,
 }: CBFilterBarProps<T>) {
   const [query, setQuery] = useState(initialQuery ?? "");
   const [selectedColumn, setSelectedColumn] = useState<string | undefined>();
@@ -120,12 +125,15 @@ function CBFilterBar<T>({
     onChangeRef.current(filtered);
   }, [query, selectedColumn, JSON.stringify(data)]); // JSON.stringify estabiliza: só reexecuta quando o conteúdo muda, não a referência
 
+  const classes = DEFAULT_THEMES[theme ?? "dark"].classes;
+  const colors = DEFAULT_THEMES[theme ?? "dark"].colorsFiler;
+
   return (
     <div
-      className={`flex items-center max-w-lg gap-3 bg-gray-100 rounded-lg shadow-sm p-2! ${className}`}
+      className={`flex items-center max-w-lg gap-3 ${classes.wrapper} rounded-lg shadow-sm p-2! ${className}`}
       style={style}
     >
-      <FiSearch className="text-gray-500" />
+      <FiSearch className={classes.textPrimary} />
 
       <IonInput
         value={query}
@@ -137,21 +145,62 @@ function CBFilterBar<T>({
 
       {columns.length > 0 && (
         <div className="flex items-center gap-2">
-          <FiFilter className="text-gray-500" size={20} />
-          <IonSelect
-            value={selectedColumn}
-            placeholder="Coluna"
-            onIonChange={(e) => setSelectedColumn(e.detail.value)}
-            interface="popover"
-            className={selectClassName}
+          <FiFilter className={classes.textPrimary} size={20} />
+          <div
+            className="self-stretch w-px"
+            style={{ backgroundColor: colors.border }}
+          />
+          <CBButton
+            variant="clear"
+            id="filter-column-button"
+            className={`${selectClassName} min-w-28! max-w-28! truncate`}
+            backgroundColor="transparent"
+            textColor={colors.text}
+            size="small"
+            iconEnd={<FiChevronDown size={14} className={colors.text} />}
           >
-            <IonSelectOption value={undefined}>Todas</IonSelectOption>
-            {columns.map((col) => (
-              <IonSelectOption key={col.value} value={col.value}>
-                {col.label}
-              </IonSelectOption>
-            ))}
-          </IonSelect>
+            {selectedColumn
+              ? columns.find((c) => c.value === selectedColumn)?.label
+              : "Todas"}
+          </CBButton>
+
+          <IonPopover
+            trigger="filter-column-button"
+            triggerAction="click"
+            dismissOnSelect
+            alignment="end"
+          >
+            <IonList
+              style={{
+                background: colors.background,
+              }}
+            >
+              <IonItem
+                button
+                onClick={() => setSelectedColumn(undefined)}
+                style={{
+                  "--background": colors.background,
+                  "--color": colors.text,
+                }}
+              >
+                Todas
+              </IonItem>
+
+              {columns.map((col) => (
+                <IonItem
+                  key={col.value}
+                  button
+                  style={{
+                    "--background": colors.background,
+                    "--color": colors.text,
+                  }}
+                  onClick={() => setSelectedColumn(col.value)}
+                >
+                  {col.label}
+                </IonItem>
+              ))}
+            </IonList>
+          </IonPopover>
         </div>
       )}
     </div>

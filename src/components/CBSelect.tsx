@@ -1,44 +1,53 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { IonSelect, IonSelectOption, IonNote, type SelectCustomEvent } from '@ionic/react';
-import { CB_COLOR_MAP, type CBColor, type CSSVars } from '../theme/CBColor';
-import { useCBColor } from '../hooks/useCBColor';
+import React, { useEffect, useRef, useState } from "react";
+import {
+  IonSelect,
+  IonSelectOption,
+  IonNote,
+  type SelectCustomEvent,
+} from "@ionic/react";
+import { CB_COLOR_MAP, type CBColor, type CSSVars } from "../theme/CBColor";
+import { useCBColor } from "../hooks/useCBColor";
 
-export interface CBSelectProps<T> extends Omit<React.ComponentProps<typeof IonSelect>, 'value' | 'onIonChange'> {
-    label?: string;
-    value: T | string | number;
-    items: T[];
-    getLabel: (option: T) => string;
-    getValue: (option: T) => string | number;
-    onValueChange: (value: T) => void;
-    placeholder?: string;
-    error?: boolean;
-    helperText?: string;
-    loading?: boolean;
-    color?: CBColor;
+export interface CBSelectProps<T> extends Omit<
+  React.ComponentProps<typeof IonSelect>,
+  "value" | "onIonChange"
+> {
+  label?: string;
+  value: T | string | number;
+  items: T[];
+  getLabel: (option: T) => string;
+  getValue: (option: T) => string | number;
+  onValueChange: (value: T) => void;
+  placeholder?: string;
+  error?: boolean;
+  helperText?: string;
+  loading?: boolean;
+  color?: CBColor;
 }
-
 
 /** Hook para definir interface com base no viewport */
 function useResponsiveInterface() {
-    const [selectInterface, setSelectInterface] = useState<'action-sheet' | 'popover'>('action-sheet');
+  const [selectInterface, setSelectInterface] = useState<
+    "action-sheet" | "popover"
+  >("action-sheet");
 
-    useEffect(() => {
-        const mediaQuery = window.matchMedia('(min-width: 768px)');
-        const update = (e: MediaQueryListEvent | MediaQueryList) => {
-            setSelectInterface(e.matches ? 'popover' : 'action-sheet');
-        };
-        update(mediaQuery);
-        mediaQuery.addEventListener('change', update);
-        return () => mediaQuery.removeEventListener('change', update);
-    }, []);
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const update = (e: MediaQueryListEvent | MediaQueryList) => {
+      setSelectInterface(e.matches ? "popover" : "action-sheet");
+    };
+    update(mediaQuery);
+    mediaQuery.addEventListener("change", update);
+    return () => mediaQuery.removeEventListener("change", update);
+  }, []);
 
-    return selectInterface;
+  return selectInterface;
 }
 /**
  * CBSelect
  *
  * Componente de seleção baseado no `IonSelect` do Ionic, com suporte a tipagem genérica,
- * exibição responsiva (popover em desktop e action-sheet em mobile), cores personalizadas, 
+ * exibição responsiva (popover em desktop e action-sheet em mobile), cores personalizadas,
  * estado de erro e helper text.
  *
  * @template T - Tipo dos itens do select
@@ -83,85 +92,83 @@ function useResponsiveInterface() {
  */
 
 function CBSelect<T>({
-    label,
-    value,
-    items,
-    getLabel,
-    getValue,
-    onValueChange,
-    placeholder = 'Selecione...',
-    error = false,
-    helperText = '',
-    disabled = false,
-    loading = false,
-    color = 'neutral',
-    style,
-    fill = 'outline',
-    shape = 'round',
-    ...rest
+  label,
+  value,
+  items,
+  getLabel,
+  getValue,
+  onValueChange,
+  placeholder = "Selecione...",
+  error = false,
+  helperText = "",
+  disabled = false,
+  loading = false,
+  color = "neutral",
+  style,
+  fill = "outline",
+  shape = "round",
+  ...rest
 }: CBSelectProps<T>) {
-    const selectRef = useRef<HTMLIonSelectElement>(null);
-    const selectInterface = useResponsiveInterface();
-    const { main: borderColor } = useCBColor(color);
+  const selectRef = useRef<HTMLIonSelectElement>(null);
+  const selectInterface = useResponsiveInterface();
+  const { main: borderColor } = useCBColor(color);
 
+  const handleChange = (event: SelectCustomEvent<T>) => {
+    const selectedValue = event.detail.value;
+    const selectedOption = items.find((opt) => getValue(opt) === selectedValue);
+    if (selectedOption) onValueChange(selectedOption);
+  };
 
-    const handleChange = (event: SelectCustomEvent<T>) => {
-        const selectedValue = event.detail.value;
-        const selectedOption = items.find(opt => getValue(opt) === selectedValue);
-        if (selectedOption) onValueChange(selectedOption);
-    };
+  const finalStyle: CSSVars = {
+    ...style,
+    "--border-color": error ? CB_COLOR_MAP.danger : borderColor,
+    "--icon-color": borderColor,
+    "--color": "var(--ion-color-dark)",
+    "--placeholder-color": "var(--ion-color-medium)",
+  };
 
+  return (
+    <div className="relative flex flex-col" style={{ minHeight: 72 }}>
+      {label && <label className="text-xs font-medium pl-6!">{label}</label>}
 
-    const finalStyle: CSSVars = {
-        ...style,
-        '--border-color': error ? CB_COLOR_MAP.danger : borderColor,
-        '--icon-color': borderColor,
-        '--color': 'var(--ion-color-dark)',
-        '--placeholder-color': 'var(--ion-color-medium)',
-    };
+      <IonSelect
+        ref={selectRef}
+        interface={selectInterface}
+        placeholder={placeholder}
+        value={value}
+        disabled={disabled || loading}
+        onIonChange={handleChange}
+        onClick={(ev) => {
+          ev.persist?.();
+          rest.interfaceOptions = {
+            ...rest.interfaceOptions,
+            event: ev.nativeEvent,
+          };
+        }}
+        interfaceOptions={{
+          header: label,
+        }}
+        fill={fill}
+        shape={shape}
+        mode="md"
+        labelPlacement="stacked"
+        style={finalStyle}
+        {...rest}
+      >
+        {items.map((option, index) => (
+          <IonSelectOption key={index} value={getValue(option)}>
+            {getLabel(option)}
+          </IonSelectOption>
+        ))}
+      </IonSelect>
 
-    return (
-        <div className="relative flex flex-col" style={{ minHeight: 72 }}>
-            {label && <label className="text-xs font-medium !pl-6">{label}</label>}
-
-            <IonSelect
-                ref={selectRef}
-                interface={selectInterface}
-                placeholder={placeholder}
-                value={value}
-                disabled={disabled || loading}
-                onIonChange={handleChange}
-                onClick={(ev) => {
-                    (ev).persist?.();
-                    (rest).interfaceOptions = {
-                        ...(rest).interfaceOptions,
-                        event: ev.nativeEvent,
-                    };
-                }}
-                interfaceOptions={{
-                    header: label,
-                }}
-                fill={fill}
-                shape={shape}
-                mode="md"
-                labelPlacement="stacked"
-                style={finalStyle}
-                {...rest}
-            >
-                {items.map((option, index) => (
-                    <IonSelectOption key={index} value={getValue(option)}>
-                        {getLabel(option)}
-                    </IonSelectOption>
-                ))}
-            </IonSelect>
-
-            {error && helperText && (
-                <IonNote className="text-[12px] !pl-6 text-[var(--ion-color-danger)]">
-                    {helperText}
-                </IonNote>
-            )}
-        </div>
-    );
+      {error && helperText && (
+        <IonNote className="text-[12px] pl-6! text-(--ion-color-danger)">
+          {helperText}
+        </IonNote>
+      )}
+    </div>
+  );
 }
 
 export default CBSelect;

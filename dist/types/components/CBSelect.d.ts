@@ -1,7 +1,7 @@
-import React from 'react';
-import { IonSelect } from '@ionic/react';
-import { type CBColor } from '../theme/CBColor';
-export interface CBSelectProps<T> extends Omit<React.ComponentProps<typeof IonSelect>, 'value' | 'onIonChange'> {
+import React from "react";
+import { IonSelect } from "@ionic/react";
+import { type CBColor } from "../theme/CBColor";
+export interface CBSelectProps<T> extends Omit<React.ComponentProps<typeof IonSelect>, "value" | "onIonChange"> {
     label?: string;
     value: T | string | number;
     items: T[];

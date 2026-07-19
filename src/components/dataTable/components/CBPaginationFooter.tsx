@@ -1,4 +1,9 @@
+import { useMemo } from "react";
 import CBButton from "../../CBButton";
+import {
+  DEFAULT_THEMES,
+  type CBTableMobileTheme,
+} from "../theme/themeDataTable";
 
 interface CBPaginationFooterProps {
   page: number;
@@ -9,13 +14,7 @@ interface CBPaginationFooterProps {
   onPageSizeChange?: (pageSize: number) => void;
   pageSizeOptions?: number[];
   isMobile?: boolean;
-  colorsPagination?: {
-    text?: string;
-    textSelect?: string;
-    bgColorSelect?: string;
-    bgColorButtonNext?: string;
-    bgColorButtonPrevious?: string;
-  };
+  themeConfig?: Partial<CBTableMobileTheme>;
   theme?: "light" | "dark";
 }
 
@@ -27,36 +26,18 @@ export function CBPaginationFooter({
   onPageChange,
   onPageSizeChange,
   isMobile = false,
-  pageSizeOptions = [10, 20, 50],
   theme,
-  colorsPagination,
+  pageSizeOptions = [10, 20, 50],
+  themeConfig,
 }: CBPaginationFooterProps) {
+  const activeTheme = useMemo<CBTableMobileTheme>(() => {
+    const baseTheme = DEFAULT_THEMES[theme ?? "dark"] || DEFAULT_THEMES.dark;
+    return { ...baseTheme, ...themeConfig };
+  }, [theme, themeConfig]);
   const totalPages = Math.max(Math.ceil(totalRows / pageSize), 1);
-  const isLigth = theme === "light";
-  const textColor = colorsPagination?.text
-    ? colorsPagination?.text
-    : !isMobile
-      ? "text-zinc-900"
-      : isLigth
-        ? "text-zinc-600"
-        : "text-zinc-200";
-  const selectTextColor = colorsPagination?.textSelect
-    ? colorsPagination?.textSelect
-    : isLigth
-      ? "text-black"
-      : "text-white";
-  const bgColorSelect = colorsPagination?.bgColorSelect
-    ? colorsPagination?.bgColorSelect
-    : isMobile && !isLigth
-      ? "bg-gray-800"
-      : isMobile && isLigth
-        ? "bg-gray-100"
-        : isLigth
-          ? "bg-gray-600"
-          : "bg-gray-100";
   return (
     <div
-      className={`flex items-center gap-1 px-4 py-3 text-sm ${textColor} ${isMobile ? "flex-col justify-center" : "flex-row justify-between"}`}
+      className={`flex items-center gap-1 px-4 py-3 text-sm ${activeTheme.classes.textPrimary} ${isMobile ? "flex-col justify-center" : "flex-row justify-between"}`}
     >
       {/* Informações de Registros */}
       <div className="flex items-center gap-3">
@@ -69,7 +50,9 @@ export function CBPaginationFooter({
         </span>
 
         {loading && !isMobile && (
-          <span className="inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 animate-pulse">
+          <span
+            className={`inline-flex items-center gap-1.5 text-xs ${activeTheme.classes.textPrimary} animate-pulse`}
+          >
             <span className="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
             Carregando...
           </span>
@@ -82,18 +65,20 @@ export function CBPaginationFooter({
         {/* Seletor de Tamanho da Página */}
         {onPageSizeChange ? (
           <div className="flex items-center gap-2">
-            <span className={`text-xs ${textColor}`}>Linhas por página:</span>
+            <span className={`text-xs ${activeTheme.classes.textPrimary}`}>
+              Linhas por página:
+            </span>
             <select
+              name="pageSize"
               value={pageSize}
               onChange={(e) => onPageSizeChange(Number(e.target.value))}
-              style={{ color: selectTextColor }}
-              className={`${bgColorSelect} rounded-md px-2 py-1 text-xs font-medium outline-none cursor-pointer focus:ring-1 focus:ring-blue-500/20 focus:border-blue-500 transition-all`}
+              className={`${activeTheme.classes.selectPagination} rounded-md px-2 py-1 text-xs font-medium outline-none cursor-pointer transition-all`}
             >
               {pageSizeOptions.map((size) => (
                 <option
                   key={size}
                   value={size}
-                  style={{ color: selectTextColor }}
+                  className={activeTheme.classes.textPrimary}
                 >
                   {size}
                 </option>
@@ -106,13 +91,13 @@ export function CBPaginationFooter({
             children="Anterior"
             disabled={page === 0 || loading}
             onClick={() => onPageChange(page - 1)}
-            color={colorsPagination?.bgColorButtonPrevious}
+            color={activeTheme?.colorsPagination?.bgButtonPreviousPagination}
           />
           <CBButton
             children="Próxima"
             disabled={page + 1 >= totalPages || loading}
             onClick={() => onPageChange(page + 1)}
-            color={colorsPagination?.bgColorButtonNext}
+            color={activeTheme?.colorsPagination?.bgButtonNextPagination}
           />
         </div>
         {loading && isMobile && (

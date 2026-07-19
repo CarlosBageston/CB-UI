@@ -4,15 +4,13 @@ import CBButton from "../CBButton";
 import type { CBDataTableProps } from "../../datatable";
 import CBCheckbox from "../CBCheckbox";
 import { useDataTableSelection } from "./hook/useDataTableSelection";
-import {
-  DEFAULT_THEMES,
-  flattenColumns,
-  getValue,
-  type CBTableMobileTheme,
-} from "./helper/mobile";
+import { flattenColumns, getValue } from "./helper/mobile";
 import { AnimatePresence, motion } from "framer-motion";
 import { CBPaginationFooter } from "./components/CBPaginationFooter";
-
+import {
+  DEFAULT_THEMES,
+  type CBTableMobileTheme,
+} from "./theme/themeDataTable";
 // Estendendo os tipos de entrada para permitir a passagem do objeto de tema
 interface CBDataTableMobileProps<T> extends CBDataTableProps<T> {
   themeConfig?: Partial<CBTableMobileTheme>;
@@ -27,15 +25,15 @@ function CBDataTableMobile<T>({
   onEdit,
   onDelete,
   selectionMode = "single",
-  theme = "dark",
+  theme,
   themeConfig,
   page,
   totalRows = 0,
   onPageChange,
   onPageSizeChange,
   loading = false,
-  themePagination,
 }: CBDataTableMobileProps<T>) {
+  console.log("theme mobile", theme);
   // Página interna só existe (e só é usada) no modo client.
   // No modo server, quem manda é o `page` vindo via props.
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>(
@@ -78,10 +76,9 @@ function CBDataTableMobile<T>({
     onDelete,
   });
   const wrapperRef = useRef<HTMLDivElement>(null);
-
   // Consolida o tema unindo as chaves enviadas por Props com o tema padrão (dark ou light)
   const activeTheme = useMemo<CBTableMobileTheme>(() => {
-    const baseTheme = DEFAULT_THEMES[theme] || DEFAULT_THEMES.dark;
+    const baseTheme = DEFAULT_THEMES[theme ?? "dark"] || DEFAULT_THEMES.dark;
     return { ...baseTheme, ...themeConfig };
   }, [theme, themeConfig]);
 
@@ -126,196 +123,201 @@ function CBDataTableMobile<T>({
     clearSelection();
   }, [currentPage]);
   return (
-    <div
-      ref={wrapperRef}
-      className={`w-full flex flex-col p-3.5 rounded-xl border transition-all duration-200 ${activeTheme.wrapper}`}
-    >
-      {/* Barra de ações + busca */}
-      <div className="flex flex-col gap-3.5 mb-4">
-        {hasActions && (
-          <div className="flex items-center justify-between gap-2">
-            <span
-              className={`text-xs px-2.5 py-1 rounded-full font-bold transition-all ${activeTheme.badge}`}
-            >
-              {selectedRows.length} selecionado(s)
-            </span>
-
-            <div className="flex items-center gap-2">
-              {onEdit && (
-                <CBButton
-                  color="primary"
-                  iconStart={<FiEdit size={16} />}
-                  disabled={selectedRows.length !== 1}
-                  onClick={() =>
-                    selectedRows.length === 1 && onEdit(selectedRows[0])
-                  }
-                  children=""
-                />
-              )}
-              {onDelete && (
-                <CBButton
-                  color="danger"
-                  iconStart={<FiTrash2 size={16} />}
-                  disabled={selectedRows.length === 0}
-                  onClick={handleDelete}
-                  children=""
-                />
-              )}
-            </div>
-          </div>
-        )}
-
-        {selectionMode === "multiple" && paginatedData.length > 0 && (
-          <label className="flex items-center gap-2 px-1 py-0.5 select-none cursor-pointer">
-            <CBCheckbox
-              checked={allPageSelected}
-              onChange={toggleSelectAllPage}
-              color="primary"
-              className={activeTheme.checkboxBorder}
-            />
-            <span className={`text-xs font-semibold ${activeTheme.textMuted}`}>
-              Selecionar todos desta página ({paginatedData.length})
-            </span>
-          </label>
-        )}
-      </div>
-
-      {/* Lista de cards */}
-      <div className="flex flex-col gap-3 min-h-[120px]">
-        {paginatedData.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-10 text-center">
-            <span className={`text-sm font-medium ${activeTheme.textMuted}`}>
-              {emptyMessage}
-            </span>
-          </div>
-        ) : (
-          paginatedData.map((row, index) => {
-            const key = getKey(row, index);
-            const isSelected = isRowSelected(row, index);
-            const isExpanded = !!expandedCards[key];
-
-            const titleValue = titleColumn?.render
-              ? titleColumn.render(row)
-              : getValue(row, titleColumn?.field);
-
-            return (
-              <div
-                key={key}
-                className={`rounded-xl border p-4 transition-all duration-200 ${
-                  activeTheme.card
-                } ${isSelected ? activeTheme.cardSelected : ""}`}
+    <>
+      <div
+        ref={wrapperRef}
+        className={`w-full flex flex-col p-3 rounded-xl border transition-all duration-200 ${activeTheme.classes.wrapper}`}
+      >
+        {/* Barra de ações + busca */}
+        <div className="flex flex-col gap-3.5 mb-4">
+          {hasActions && (
+            <div className="flex items-center justify-between gap-2">
+              <span
+                className={`text-xs px-2.5 py-1 rounded-full font-bold transition-all ${activeTheme.classes.badge}`}
               >
-                <div className="flex items-start gap-3.5">
-                  <div
-                    aria-label="Selecionar registro"
-                    onClick={() => toggleSelectRow(row, index)}
-                    className="pt-1 shrink-0 cursor-pointer"
-                  >
-                    <CBCheckbox
-                      checked={isSelected}
-                      onChange={() => {}}
-                      color="primary"
-                      className={activeTheme.checkboxBorder}
-                    />
-                  </div>
+                {selectedRows.length} selecionado(s)
+              </span>
 
-                  <div
-                    className="flex-1 min-w-0 cursor-pointer"
-                    onClick={() => toggleSelectRow(row, index)}
-                  >
-                    <div
-                      className={`text-xs font-bold uppercase tracking-widest mb-0.5 ${activeTheme.textMuted}`}
-                    >
-                      {titleColumn?.headerName || "Registro"}
-                    </div>
-                    <div
-                      className={`text-sm font-bold truncate ${activeTheme.textPrimary}`}
-                    >
-                      {titleValue}
-                    </div>
-                  </div>
-
-                  {restColumns.length > 0 && (
-                    <CBButton
-                      aria-label={
-                        isExpanded ? "Recolher detalhes" : "Expandir detalhes"
-                      }
-                      onClick={() => toggleExpandCard(key)}
-                      iconEnd={
-                        isExpanded ? (
-                          <FiChevronUp
-                            size={18}
-                            className={`${activeTheme.textPrimary}`}
-                          />
-                        ) : (
-                          <FiChevronDown
-                            size={18}
-                            className={`${activeTheme.textPrimary}`}
-                          />
-                        )
-                      }
-                      variant="clear"
-                      activeColor="transparent"
-                      size="small"
-                      children=""
-                    />
-                  )}
-                </div>
-
-                {/* Estrutura de Collapse */}
-                <AnimatePresence initial={false}>
-                  {isExpanded && restColumns.length > 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{
-                        duration: 0.25,
-                        ease: "easeInOut",
-                      }}
-                      className={`mt-4 pt-3.5 px-2 border-t space-y-3 animate-slide-down ${activeTheme.divider}`}
-                    >
-                      {restColumns.map((col, colIndex) => {
-                        const value = col.render
-                          ? col.render(row)
-                          : col.valueGetter
-                            ? col.valueGetter(row)
-                            : getValue(row, col.field);
-
-                        const textAlign =
-                          col.align === "center"
-                            ? "text-center"
-                            : col.align === "right"
-                              ? "text-right"
-                              : "text-left";
-
-                        return (
-                          <div
-                            key={colIndex}
-                            className="flex justify-between items-center gap-2 py-0.5"
-                          >
-                            <span
-                              className={`text-xs font-semibold truncate ${activeTheme.textMuted}`}
-                            >
-                              {col.headerName}
-                            </span>
-                            <span
-                              className={`col-span-2 text-xs font-medium break-all ${textAlign} ${activeTheme.textPrimary}`}
-                            >
-                              {value}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              <div className="flex items-center gap-2">
+                {onEdit && (
+                  <CBButton
+                    color="primary"
+                    iconStart={<FiEdit size={16} />}
+                    disabled={selectedRows.length !== 1}
+                    onClick={() =>
+                      selectedRows.length === 1 && onEdit(selectedRows[0])
+                    }
+                    children=""
+                  />
+                )}
+                {onDelete && (
+                  <CBButton
+                    color="danger"
+                    iconStart={<FiTrash2 size={16} />}
+                    disabled={selectedRows.length === 0}
+                    onClick={handleDelete}
+                    children=""
+                  />
+                )}
               </div>
-            );
-          })
-        )}
-      </div>
+            </div>
+          )}
 
+          {selectionMode === "multiple" && paginatedData.length > 0 && (
+            <label className="flex items-center gap-2 px-1 py-0.5 select-none cursor-pointer">
+              <CBCheckbox
+                checked={allPageSelected}
+                onChange={toggleSelectAllPage}
+                color="primary"
+                className={activeTheme.classes.checkboxBorder}
+              />
+              <span
+                className={`text-xs font-semibold ${activeTheme.classes.textMuted}`}
+              >
+                Selecionar todos desta página ({paginatedData.length})
+              </span>
+            </label>
+          )}
+        </div>
+
+        {/* Lista de cards */}
+        <div className="flex flex-col gap-1 min-h-[120px]">
+          {paginatedData.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-10 text-center">
+              <span
+                className={`text-sm font-medium ${activeTheme.classes.textMuted}`}
+              >
+                {emptyMessage}
+              </span>
+            </div>
+          ) : (
+            paginatedData.map((row, index) => {
+              const key = getKey(row, index);
+              const isSelected = isRowSelected(row, index);
+              const isExpanded = !!expandedCards[key];
+
+              const titleValue = titleColumn?.render
+                ? titleColumn.render(row)
+                : getValue(row, titleColumn?.field);
+
+              return (
+                <div
+                  key={key}
+                  className={`rounded-xl border px-4 py-2 transition-all duration-200 ${
+                    activeTheme.classes.card
+                  } ${isSelected ? activeTheme.classes.cardSelected : ""}`}
+                >
+                  <div className="flex items-start gap-3.5">
+                    <div
+                      aria-label="Selecionar registro"
+                      onClick={() => toggleSelectRow(row, index)}
+                      className="pt-1 shrink-0 cursor-pointer"
+                    >
+                      <CBCheckbox
+                        checked={isSelected}
+                        onChange={() => {}}
+                        color="primary"
+                        className={activeTheme.classes.checkboxBorder}
+                      />
+                    </div>
+
+                    <div
+                      className="flex-1 min-w-0 cursor-pointer"
+                      onClick={() => toggleSelectRow(row, index)}
+                    >
+                      <div
+                        className={`text-xs font-bold uppercase tracking-widest mb-0.5 ${activeTheme.classes.textMuted}`}
+                      >
+                        {titleColumn?.headerName || "Registro"}
+                      </div>
+                      <div
+                        className={`text-sm font-bold truncate ${activeTheme.classes.textPrimary}`}
+                      >
+                        {titleValue}
+                      </div>
+                    </div>
+
+                    {restColumns.length > 0 && (
+                      <CBButton
+                        aria-label={
+                          isExpanded ? "Recolher detalhes" : "Expandir detalhes"
+                        }
+                        onClick={() => toggleExpandCard(key)}
+                        iconEnd={
+                          isExpanded ? (
+                            <FiChevronUp
+                              size={18}
+                              className={`${activeTheme.classes.textPrimary}`}
+                            />
+                          ) : (
+                            <FiChevronDown
+                              size={18}
+                              className={`${activeTheme.classes.textPrimary}`}
+                            />
+                          )
+                        }
+                        variant="clear"
+                        activeColor="transparent"
+                        size="small"
+                        children=""
+                      />
+                    )}
+                  </div>
+
+                  {/* Estrutura de Collapse */}
+                  <AnimatePresence initial={false}>
+                    {isExpanded && restColumns.length > 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{
+                          duration: 0.25,
+                          ease: "easeInOut",
+                        }}
+                        className={`mt-4 pt-3.5 px-2 border-t space-y-3 animate-slide-down ${activeTheme.classes.divider}`}
+                      >
+                        {restColumns.map((col, colIndex) => {
+                          const value = col.render
+                            ? col.render(row)
+                            : col.valueGetter
+                              ? col.valueGetter(row)
+                              : getValue(row, col.field);
+
+                          const textAlign =
+                            col.align === "center"
+                              ? "text-center"
+                              : col.align === "right"
+                                ? "text-right"
+                                : "text-left";
+
+                          return (
+                            <div
+                              key={colIndex}
+                              className="flex justify-between items-center gap-2 py-0.5"
+                            >
+                              <span
+                                className={`text-xs font-semibold truncate ${activeTheme.classes.textMuted}`}
+                              >
+                                {col.headerName}
+                              </span>
+                              <span
+                                className={`col-span-2 text-xs font-medium break-all ${textAlign} ${activeTheme.classes.textPrimary}`}
+                              >
+                                {value}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })
+          )}
+        </div>
+      </div>
       {/* Paginação */}
       <CBPaginationFooter
         page={currentPage}
@@ -325,10 +327,10 @@ function CBDataTableMobile<T>({
         onPageChange={handlePageChange}
         onPageSizeChange={onPageSizeChange}
         theme={theme}
-        isMobile={true}
-        colorsPagination={themePagination}
+        isMobile
+        themeConfig={themeConfig}
       />
-    </div>
+    </>
   );
 }
 

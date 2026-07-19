@@ -1,15 +1,8 @@
 import CBButton from "../CBButton";
-
 import { AgGridReact } from "ag-grid-react";
-
 import { FiEdit, FiTrash2 } from "react-icons/fi";
-
-import { useAGGridTheme } from "../../hooks/useAGGridTheme";
-
-import type { ColDef, ColGroupDef, GetRowIdParams } from "ag-grid-community";
-
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-
+import type { ColDef, ColGroupDef, GetRowIdParams } from "ag-grid-community";
 import {
   ModuleRegistry,
   ClientSideRowModelModule,
@@ -19,8 +12,9 @@ import {
   LocaleModule,
 } from "ag-grid-community";
 
-import type { CBDataTableProps } from "../../datatable";
 import { mapColumn } from "./helper/desktop";
+import { getThemeTable } from "../../theme/themeTable";
+import type { CBDataTableProps } from "../../datatable";
 import { useDataTableSelection } from "./hook/useDataTableSelection";
 import { CBPaginationFooter } from "./components/CBPaginationFooter";
 
@@ -84,15 +78,14 @@ function CBDataTableDesktop<T>({
   onEdit,
   onDelete,
   selectionMode = "single",
-  theme = "dark",
+  theme,
   page,
   totalRows = 0,
   onPageChange,
   onPageSizeChange,
   loading = false,
-  themePagination,
 }: CBDataTableProps<T>) {
-  const themeTable = useAGGridTheme(theme);
+  const themeTable = useMemo(() => getThemeTable(theme === "dark"), [theme]);
   const [selectedRows, setSelectedRows] = useState<T[]>([]);
   const [internalPage, setInternalPage] = useState(0);
 
@@ -207,7 +200,7 @@ function CBDataTableDesktop<T>({
         loading={loading}
         onPageChange={handlePageChange}
         onPageSizeChange={onPageSizeChange}
-        colorsPagination={themePagination}
+        theme={theme}
       />
 
       {/* Botões flutuantes */}

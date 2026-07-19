@@ -16,10 +16,13 @@
   --ion-color-light: #f8fafc; /* Very light gray */
   --ion-color-dark: #0f172a; /* Almost black */
   --font-main: "Baloo 2", sans-serif;
+
+  --text-cb-primary: #f8fafc;
 }
 
 .dark {
   /* Modo escuro ajustando neutros */
   --ion-color-light: #1e293b; /* Dark gray */
   --ion-color-dark: #f8fafc; /* Almost white */
+  --text-cb-primary: #0f172a;
 }

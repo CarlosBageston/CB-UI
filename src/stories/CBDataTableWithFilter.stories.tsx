@@ -30,7 +30,7 @@ export const DefaultMobile: Story = {
           columns={[
             {
               field: "name",
-              headerName: "Nome",
+              headerName: "Nome muito grande para testar",
             },
             {
               field: "role",
@@ -48,7 +48,7 @@ export const DefaultMobile: Story = {
           filterColumns={[
             {
               value: "name",
-              label: "Nome",
+              label: "Nome muito grande para testar",
             },
             {
               value: "email",
@@ -76,7 +76,9 @@ export const DefaultDesktop: Story = {
         <CBDataTableWithFilter<User>
           modeTable="desktop"
           data={mockData}
+          theme="dark"
           getRowId={(user) => String(user.id)}
+          filterColumns={[{ label: "nome", value: "name" }]}
           columns={[
             {
               field: "name",

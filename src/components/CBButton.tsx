@@ -33,6 +33,7 @@ type NativeButtonProps = Pick<
   | "expand"
   | "className"
   | "style"
+  | "id"
 >;
 
 /**
@@ -318,7 +319,7 @@ const CBButton: React.FC<CBButtonProps> = ({
       finalStyle.fontSize = "18px";
       break;
   }
-
+  const hasIcons = iconStart || iconEnd;
   return (
     <IonButton
       fill={variant}
@@ -334,11 +335,13 @@ const CBButton: React.FC<CBButtonProps> = ({
           {loadingText ?? children}
         </>
       ) : (
-        <>
+        <span
+          className={hasIcons ? "inline-flex items-center gap-1" : undefined}
+        >
           {iconStart}
           {children}
           {iconEnd}
-        </>
+        </span>
       )}
     </IonButton>
   );

@@ -19,7 +19,7 @@ export type CBButtonVariant = "solid" | "outline" | "clear";
  * Apenas props consideradas úteis e seguras para a API pública
  * do componente são reexportadas.
  */
-type NativeButtonProps = Pick<React.ComponentProps<typeof IonButton>, "onClick" | "type" | "routerLink" | "href" | "target" | "expand" | "className" | "style">;
+type NativeButtonProps = Pick<React.ComponentProps<typeof IonButton>, "onClick" | "type" | "routerLink" | "href" | "target" | "expand" | "className" | "style" | "id">;
 /**
  * Props do componente `CBButton`.
  */

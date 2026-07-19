@@ -1,195 +1,183 @@
-import { jsxs as o, jsx as r } from "react/jsx-runtime";
-import { C as P, F as ae, a as le, b as Z, c as Ce, d as ve, A as Ne, m as ye, e as ke } from "./CBFilterBar-f99VwLRS.js";
+import { jsxs as o, jsx as a, Fragment as be } from "react/jsx-runtime";
+import { D as O, C as D, F as te, a as ae, b as Y, c as Ne, d as ve, A as Ce, m as ke, e as ye } from "./CBFilterBar-Bk_8vKkp.js";
 import { AgGridReact as we } from "ag-grid-react";
-import { themeQuartz as ne, colorSchemeDarkBlue as Se, colorSchemeLightCold as Re, ModuleRegistry as Te, ClientSideRowModelModule as Be, PaginationModule as $e, RowSelectionModule as Ee, CellStyleModule as Me, LocaleModule as Pe } from "ag-grid-community";
-import { useState as E, useEffect as L, useCallback as R, useRef as J, useMemo as F } from "react";
-const De = ne.withPart(Se), Fe = ne.withPart(Re), _ = (t) => t ? De : Fe, Le = (t) => {
-  const [a, e] = E(
-    _(t === "dark")
-  );
-  return L(() => {
-    if (t) {
-      e(_(t === "dark"));
-      return;
-    }
-    const s = new MutationObserver(() => {
-      const n = document.documentElement.classList.contains("dark");
-      e(_(n));
-    });
-    return s.observe(document.documentElement, {
-      attributes: !0,
-      attributeFilter: ["class"]
-    }), () => s.disconnect();
-  }, [t]), a;
-};
-function se(t) {
-  const { col: a, render: e, children: s, align: n, ...l } = t;
-  return s && s.length > 0 ? {
+import { useState as B, useCallback as R, useMemo as E, useRef as I, useEffect as L } from "react";
+import { themeQuartz as se, colorSchemeDarkBlue as Pe, colorSchemeLightCold as Se, ModuleRegistry as Re, ClientSideRowModelModule as Te, PaginationModule as $e, RowSelectionModule as Ee, CellStyleModule as Be, LocaleModule as Me } from "ag-grid-community";
+function ne(e) {
+  const { col: s, render: t, children: n, align: r, ...l } = e;
+  return n && n.length > 0 ? {
     ...l,
-    headerName: t.headerName,
-    children: s.map((m) => se(m)),
-    flex: a ?? 1
+    headerName: e.headerName,
+    children: n.map((d) => ne(d)),
+    flex: s ?? 1
   } : {
     ...l,
-    flex: a ?? 1,
-    cellRenderer: e ? (m) => m.data ? e(m.data) : null : void 0,
-    cellClass: n === "center" ? "ag-cell-center" : n === "right" ? "ag-cell-right" : "ag-cell-left",
-    headerClass: n === "center" ? "ag-header-center" : n === "right" ? "ag-header-right" : "ag-header-left"
+    flex: s ?? 1,
+    cellRenderer: t ? (d) => d.data ? t(d.data) : null : void 0,
+    cellClass: r === "center" ? "ag-cell-center" : r === "right" ? "ag-cell-right" : "ag-cell-left",
+    headerClass: r === "center" ? "ag-header-center" : r === "right" ? "ag-header-right" : "ag-header-left"
   };
 }
-function ce({
-  selectionMode: t,
-  getRowId: a,
-  onDelete: e
+const De = se.withPart(Pe), Fe = se.withPart(Se), Le = (e) => e ? De : Fe;
+function le({
+  selectionMode: e,
+  getRowId: s,
+  onDelete: t
 }) {
-  const [s, n] = E([]), l = R(
-    (i, h) => a ? a(i) : String(h),
-    [a]
-  ), d = R(
-    (i, h) => {
-      const x = l(i, h);
-      return s.some(
-        (u, b) => l(u, b) === x
+  const [n, r] = B([]), l = R(
+    (c, b) => s ? s(c) : String(b),
+    [s]
+  ), m = R(
+    (c, b) => {
+      const x = l(c, b);
+      return n.some(
+        (u, v) => l(u, v) === x
       );
     },
-    [s, l]
-  ), m = R(
-    (i, h) => {
-      const x = l(i, h);
-      n((u) => {
-        const b = u.some(
-          (v, N) => l(v, N) === x
+    [n, l]
+  ), d = R(
+    (c, b) => {
+      const x = l(c, b);
+      r((u) => {
+        const v = u.some(
+          (N, C) => l(N, C) === x
         );
-        return t === "single" ? b ? [] : [i] : b ? u.filter((v, N) => l(v, N) !== x) : [...u, i];
+        return e === "single" ? v ? [] : [c] : v ? u.filter((N, C) => l(N, C) !== x) : [...u, c];
       });
     },
-    [t, l]
-  ), y = R(() => {
-    n([]);
-  }, []), f = R(() => {
-    e && (s.forEach(e), y());
-  }, [s, e, y]), T = R(
-    (i) => {
-      n((h) => {
-        if (t === "single")
-          return i.length ? [i[0]] : [];
-        const x = [...h];
-        return i.forEach((u) => {
+    [e, l]
+  ), h = R(() => {
+    r([]);
+  }, []), y = R(() => {
+    t && (n.forEach(t), h());
+  }, [n, t, h]), p = R(
+    (c) => {
+      r((b) => {
+        if (e === "single")
+          return c.length ? [c[0]] : [];
+        const x = [...b];
+        return c.forEach((u) => {
           x.some(
-            (v, N) => l(v, N) === l(u, N)
+            (N, C) => l(N, C) === l(u, C)
           ) || x.push(u);
         }), x;
       });
     },
-    [t, l]
+    [e, l]
   );
   return {
     unselectRows: R(
-      (i) => {
-        n(
-          (h) => h.filter(
-            (x, u) => !i.some(
-              (b, v) => l(x, u) === l(b, v)
+      (c) => {
+        r(
+          (b) => b.filter(
+            (x, u) => !c.some(
+              (v, N) => l(x, u) === l(v, N)
             )
           )
         );
       },
       [l]
     ),
-    selectRows: T,
-    selectedRows: s,
-    setSelectedRows: n,
-    isSelected: d,
-    toggleRow: m,
-    clearSelection: y,
-    deleteSelected: f,
+    selectRows: p,
+    selectedRows: n,
+    setSelectedRows: r,
+    isSelected: m,
+    toggleRow: d,
+    clearSelection: h,
+    deleteSelected: y,
     getKey: l
   };
 }
-function ie({
-  page: t,
-  pageSize: a,
-  totalRows: e,
-  loading: s = !1,
-  onPageChange: n,
+function re({
+  page: e,
+  pageSize: s,
+  totalRows: t,
+  loading: n = !1,
+  onPageChange: r,
   onPageSizeChange: l,
-  isMobile: d = !1,
-  pageSizeOptions: m = [10, 20, 50],
-  theme: y,
-  colorsPagination: f
+  isMobile: m = !1,
+  theme: d,
+  pageSizeOptions: h = [10, 20, 50],
+  themeConfig: y
 }) {
-  const T = Math.max(Math.ceil(e / a), 1), C = y === "light", i = f?.text ? f?.text : d ? C ? "text-zinc-600" : "text-zinc-200" : "text-zinc-900", h = f?.textSelect ? f?.textSelect : C ? "text-black" : "text-white", x = f?.bgColorSelect ? f?.bgColorSelect : d && !C ? "bg-gray-800" : d && C ? "bg-gray-100" : C ? "bg-gray-600" : "bg-gray-100";
+  const p = E(() => ({ ...O[d ?? "dark"] || O.dark, ...y }), [d, y]), w = Math.max(Math.ceil(t / s), 1);
   return /* @__PURE__ */ o(
     "div",
     {
-      className: `flex items-center gap-1 px-4 py-3 text-sm ${i} ${d ? "flex-col justify-center" : "flex-row justify-between"}`,
+      className: `flex items-center gap-1 px-4 py-3 text-sm ${p.classes.textPrimary} ${m ? "flex-col justify-center" : "flex-row justify-between"}`,
       children: [
         /* @__PURE__ */ o("div", { className: "flex items-center gap-3", children: [
           /* @__PURE__ */ o("span", { children: [
             "Página ",
-            /* @__PURE__ */ r("strong", { className: "font-semibold", children: t + 1 }),
+            /* @__PURE__ */ a("strong", { className: "font-semibold", children: e + 1 }),
             " de",
             " ",
-            /* @__PURE__ */ r("strong", { className: "font-semibold", children: T }),
-            /* @__PURE__ */ r("span", { className: "mx-2", children: "|" }),
+            /* @__PURE__ */ a("strong", { className: "font-semibold", children: w }),
+            /* @__PURE__ */ a("span", { className: "mx-2", children: "|" }),
             "Total de ",
-            /* @__PURE__ */ r("strong", { className: "font-semibold", children: e }),
+            /* @__PURE__ */ a("strong", { className: "font-semibold", children: t }),
             " ",
             "registros"
           ] }),
-          s && !d && /* @__PURE__ */ o("span", { className: "inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 animate-pulse", children: [
-            /* @__PURE__ */ r("span", { className: "h-1.5 w-1.5 rounded-full bg-blue-500" }),
-            "Carregando..."
-          ] })
+          n && !m && /* @__PURE__ */ o(
+            "span",
+            {
+              className: `inline-flex items-center gap-1.5 text-xs ${p.classes.textPrimary} animate-pulse`,
+              children: [
+                /* @__PURE__ */ a("span", { className: "h-1.5 w-1.5 rounded-full bg-blue-500" }),
+                "Carregando..."
+              ]
+            }
+          )
         ] }),
         /* @__PURE__ */ o(
           "div",
           {
-            className: d ? "flex flex-col gap-1 items-center" : "flex gap-4",
+            className: m ? "flex flex-col gap-1 items-center" : "flex gap-4",
             children: [
               l ? /* @__PURE__ */ o("div", { className: "flex items-center gap-2", children: [
-                /* @__PURE__ */ r("span", { className: `text-xs ${i}`, children: "Linhas por página:" }),
-                /* @__PURE__ */ r(
+                /* @__PURE__ */ a("span", { className: `text-xs ${p.classes.textPrimary}`, children: "Linhas por página:" }),
+                /* @__PURE__ */ a(
                   "select",
                   {
-                    value: a,
-                    onChange: (u) => l(Number(u.target.value)),
-                    style: { color: h },
-                    className: `${x} rounded-md px-2 py-1 text-xs font-medium outline-none cursor-pointer focus:ring-1 focus:ring-blue-500/20 focus:border-blue-500 transition-all`,
-                    children: m.map((u) => /* @__PURE__ */ r(
+                    name: "pageSize",
+                    value: s,
+                    onChange: (c) => l(Number(c.target.value)),
+                    className: `${p.classes.selectPagination} rounded-md px-2 py-1 text-xs font-medium outline-none cursor-pointer transition-all`,
+                    children: h.map((c) => /* @__PURE__ */ a(
                       "option",
                       {
-                        value: u,
-                        style: { color: h },
-                        children: u
+                        value: c,
+                        className: p.classes.textPrimary,
+                        children: c
                       },
-                      u
+                      c
                     ))
                   }
                 )
               ] }) : null,
               /* @__PURE__ */ o("div", { children: [
-                /* @__PURE__ */ r(
-                  P,
+                /* @__PURE__ */ a(
+                  D,
                   {
                     children: "Anterior",
-                    disabled: t === 0 || s,
-                    onClick: () => n(t - 1),
-                    color: f?.bgColorButtonPrevious
+                    disabled: e === 0 || n,
+                    onClick: () => r(e - 1),
+                    color: p?.colorsPagination?.bgButtonPreviousPagination
                   }
                 ),
-                /* @__PURE__ */ r(
-                  P,
+                /* @__PURE__ */ a(
+                  D,
                   {
                     children: "Próxima",
-                    disabled: t + 1 >= T || s,
-                    onClick: () => n(t + 1),
-                    color: f?.bgColorButtonNext
+                    disabled: e + 1 >= w || n,
+                    onClick: () => r(e + 1),
+                    color: p?.colorsPagination?.bgButtonNextPagination
                   }
                 )
               ] }),
-              s && d && /* @__PURE__ */ o("span", { className: "inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 animate-pulse", children: [
-                /* @__PURE__ */ r("span", { className: "h-1.5 w-1.5 rounded-full bg-blue-500" }),
+              n && m && /* @__PURE__ */ o("span", { className: "inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 animate-pulse", children: [
+                /* @__PURE__ */ a("span", { className: "h-1.5 w-1.5 rounded-full bg-blue-500" }),
                 "Carregando..."
               ] })
             ]
@@ -199,72 +187,71 @@ function ie({
     }
   );
 }
-Te.registerModules([
-  Be,
+Re.registerModules([
+  Te,
   $e,
   Ee,
-  Me,
-  Pe
+  Be,
+  Me
 ]);
-function q({
-  columns: t,
-  data: a,
-  pageSize: e = 5,
-  emptyMessage: s = "Nenhum dado encontrado",
-  getRowId: n,
+function Z({
+  columns: e,
+  data: s,
+  pageSize: t = 5,
+  emptyMessage: n = "Nenhum dado encontrado",
+  getRowId: r,
   onEdit: l,
-  onDelete: d,
-  selectionMode: m = "single",
-  theme: y = "dark",
-  page: f,
-  totalRows: T = 0,
-  onPageChange: C,
-  onPageSizeChange: i,
-  loading: h = !1,
-  themePagination: x
+  onDelete: m,
+  selectionMode: d = "single",
+  theme: h,
+  page: y,
+  totalRows: p = 0,
+  onPageChange: w,
+  onPageSizeChange: c,
+  loading: b = !1
 }) {
-  const u = Le(y), [b, v] = E([]), [N, A] = E(0), B = f ?? N, O = (g) => {
-    C ? C(g) : A(g);
-  }, j = T || a.length, { deleteSelected: k } = ce({
-    selectionMode: m,
-    getRowId: n,
-    onDelete: d
-  }), w = J(null), D = J(null), G = R(() => {
-    const g = w.current?.api?.getSelectedNodes() ?? [];
+  const x = E(() => Le(h === "dark"), [h]), [u, v] = B([]), [N, C] = B(0), T = y ?? N, Q = (f) => {
+    w ? w(f) : C(f);
+  }, A = p || s.length, { deleteSelected: k } = le({
+    selectionMode: d,
+    getRowId: r,
+    onDelete: m
+  }), P = I(null), F = I(null), j = R(() => {
+    const f = P.current?.api?.getSelectedNodes() ?? [];
     v(
-      g.map((M) => M.data).filter((M) => M != null)
+      f.map((M) => M.data).filter((M) => M != null)
     );
-  }, []), Q = F(
-    () => t.map((g) => se(g)),
-    [t]
-  ), H = F(
-    () => n ? (g) => n(g.data) : void 0,
-    [n]
+  }, []), z = E(
+    () => e.map((f) => ne(f)),
+    [e]
+  ), H = E(
+    () => r ? (f) => r(f.data) : void 0,
+    [r]
   );
   L(() => {
-    const g = (M) => {
-      D.current && !D.current.contains(M.target) && (v([]), w.current?.api?.deselectAll());
+    const f = (M) => {
+      F.current && !F.current.contains(M.target) && (v([]), P.current?.api?.deselectAll());
     };
-    return document.addEventListener("mousedown", g), () => document.removeEventListener("mousedown", g);
+    return document.addEventListener("mousedown", f), () => document.removeEventListener("mousedown", f);
   }, []);
-  const I = F(() => {
-    if (C)
-      return a;
-    const g = B * e;
-    return a.slice(g, g + e);
-  }, [a, B, e, C]);
-  return /* @__PURE__ */ o("div", { ref: D, className: "relative w-full", children: [
-    /* @__PURE__ */ r(
+  const K = E(() => {
+    if (w)
+      return s;
+    const f = T * t;
+    return s.slice(f, f + t);
+  }, [s, T, t, w]);
+  return /* @__PURE__ */ o("div", { ref: F, className: "relative w-full", children: [
+    /* @__PURE__ */ a(
       we,
       {
-        ref: w,
-        rowData: I,
+        ref: P,
+        rowData: K,
         getRowId: H,
         defaultColDef: { resizable: !1 },
-        columnDefs: Q,
-        theme: u,
+        columnDefs: z,
+        theme: x,
         animateRows: !0,
-        rowSelection: m === "multiple" ? {
+        rowSelection: d === "multiple" ? {
           mode: "multiRow",
           checkboxes: !0,
           headerCheckbox: !0,
@@ -275,8 +262,8 @@ function q({
           enableClickSelection: !0
         },
         domLayout: "autoHeight",
-        onSelectionChanged: G,
-        overlayNoRowsTemplate: `<span class="text-white">${s}</span>`,
+        onSelectionChanged: j,
+        overlayNoRowsTemplate: `<span class="text-white">${n}</span>`,
         localeText: {
           page: "Página",
           of: "de",
@@ -288,381 +275,387 @@ function q({
         }
       }
     ),
-    /* @__PURE__ */ r(
-      ie,
+    /* @__PURE__ */ a(
+      re,
       {
-        page: B,
-        pageSize: e,
-        totalRows: j,
-        loading: h,
-        onPageChange: O,
-        onPageSizeChange: i,
-        colorsPagination: x
+        page: T,
+        pageSize: t,
+        totalRows: A,
+        loading: b,
+        onPageChange: Q,
+        onPageSizeChange: c,
+        theme: h
       }
     ),
     /* @__PURE__ */ o("div", { className: "absolute -top-2 right-2 -translate-y-1/2 flex gap-2 z-10", children: [
-      l && /* @__PURE__ */ r(
-        P,
+      l && /* @__PURE__ */ a(
+        D,
         {
           "aria-label": "Editar",
           children: "",
-          iconStart: /* @__PURE__ */ r(ae, { size: 18 }),
+          iconStart: /* @__PURE__ */ a(te, { size: 18 }),
           color: "primary",
-          disabled: b.length !== 1,
-          onClick: () => b.length === 1 && l(b[0])
+          disabled: u.length !== 1,
+          onClick: () => u.length === 1 && l(u[0])
         }
       ),
-      d && /* @__PURE__ */ r(
-        P,
+      m && /* @__PURE__ */ a(
+        D,
         {
           "aria-label": "Excluir",
           children: "",
-          iconStart: /* @__PURE__ */ r(le, { size: 18 }),
+          iconStart: /* @__PURE__ */ a(ae, { size: 18 }),
           color: "danger",
-          disabled: b.length === 0,
+          disabled: u.length === 0,
           onClick: k
         }
       )
     ] })
   ] });
 }
-const ee = {
-  dark: {
-    wrapper: "bg-slate-900 border-slate-800 text-slate-100",
-    card: "bg-slate-950 border-slate-800/80 hover:border-slate-800",
-    cardSelected: "ring-1 ring-primary/80 border-primary shadow-lg shadow-primary-950/20",
-    textTitle: "text-primary-400",
-    textPrimary: "text-slate-100",
-    textMuted: "text-slate-400",
-    input: "bg-slate-950 border-slate-800 text-slate-200 placeholder:text-slate-600 focus:ring-primary-500/50 focus:border-primary-500",
-    inputIcon: "text-slate-500",
-    divider: "border-slate-800/80",
-    badge: "bg-slate-800 text-slate-300",
-    checkboxBorder: "border-slate-700"
-  },
-  light: {
-    wrapper: "bg-white border-slate-200 text-slate-800",
-    card: "bg-slate-50 border-[#e7e5e4] hover:bg-slate-100",
-    cardSelected: "ring-1 ring-primary border-primary-200 shadow-md shadow-primary-500/5",
-    textTitle: "text-primary-600",
-    textPrimary: "text-slate-800",
-    textMuted: "text-slate-500",
-    input: "bg-slate-50 border-slate-200 text-slate-800 placeholder:text-slate-400 focus:ring-primary-500/30 focus:border-primary-500",
-    inputIcon: "text-slate-400",
-    divider: "border-slate-150",
-    badge: "bg-slate-100 text-slate-700",
-    checkboxBorder: "border-slate-300"
-  }
-};
-function oe(t) {
-  const a = [];
-  return t.forEach((e) => {
-    if (e.children && e.children.length > 0) {
-      a.push(...oe(e.children));
+function ce(e) {
+  const s = [];
+  return e.forEach((t) => {
+    if (t.children && t.children.length > 0) {
+      s.push(...ce(t.children));
       return;
     }
-    a.push({
-      headerName: e.headerName ?? "",
-      field: e.field,
-      align: e.align,
-      render: e.render,
-      valueGetter: e.valueGetter
+    s.push({
+      headerName: t.headerName ?? "",
+      field: t.field,
+      align: t.align,
+      render: t.render,
+      valueGetter: t.valueGetter
     });
-  }), a;
+  }), s;
 }
-function te(t, a) {
-  if (!a) return "-";
-  const e = t[a];
-  return e == null || e === "" ? "-" : String(e);
+function q(e, s) {
+  if (!s) return "-";
+  const t = e[s];
+  return t == null || t === "" ? "-" : String(t);
 }
-function re({
-  columns: t,
-  data: a,
-  pageSize: e = 5,
-  emptyMessage: s = "Nenhum dado encontrado",
-  getRowId: n,
+function ee({
+  columns: e,
+  data: s,
+  pageSize: t = 5,
+  emptyMessage: n = "Nenhum dado encontrado",
+  getRowId: r,
   onEdit: l,
-  onDelete: d,
-  selectionMode: m = "single",
-  theme: y = "dark",
-  themeConfig: f,
-  page: T,
-  totalRows: C = 0,
-  onPageChange: i,
-  onPageSizeChange: h,
-  loading: x = !1,
-  themePagination: u
+  onDelete: m,
+  selectionMode: d = "single",
+  theme: h,
+  themeConfig: y,
+  page: p,
+  totalRows: w = 0,
+  onPageChange: c,
+  onPageSizeChange: b,
+  loading: x = !1
 }) {
-  const [b, v] = E(
+  console.log("theme mobile", h);
+  const [u, v] = B(
     {}
-  ), [N, A] = E(0), B = T ?? N, O = (c) => {
-    i ? i(c) : A(c);
-  }, j = C || a.length, k = F(() => {
-    if (i)
-      return a;
-    const c = B * e;
-    return a.slice(c, c + e);
-  }, [a, B, e, i]), {
-    selectedRows: w,
-    isSelected: D,
-    toggleRow: G,
-    deleteSelected: Q,
+  ), [N, C] = B(0), T = p ?? N, Q = (i) => {
+    c ? c(i) : C(i);
+  }, A = w || s.length, k = E(() => {
+    if (c)
+      return s;
+    const i = T * t;
+    return s.slice(i, i + t);
+  }, [s, T, t, c]), {
+    selectedRows: P,
+    isSelected: F,
+    toggleRow: j,
+    deleteSelected: z,
     clearSelection: H,
-    selectRows: I,
-    unselectRows: g,
+    selectRows: K,
+    unselectRows: f,
     getKey: M
-  } = ce({
-    selectionMode: m,
-    getRowId: n,
-    onDelete: d
-  }), de = J(null), p = F(() => ({ ...ee[y] || ee.dark, ...f }), [y, f]), ue = F(() => oe(t), [t]), [z, ...K] = ue, X = Math.max(1, Math.ceil(j / e));
+  } = le({
+    selectionMode: d,
+    getRowId: r,
+    onDelete: m
+  }), oe = I(null), g = E(() => ({ ...O[h ?? "dark"] || O.dark, ...y }), [h, y]), de = E(() => ce(e), [e]), [G, ...U] = de, J = Math.max(1, Math.ceil(A / t));
   L(() => {
-    const c = Math.max(X - 1, 0);
-    N > c && A(c);
-  }, [X, N]);
-  const U = k.length > 0 && k.every((c, S) => D(c, S)), me = R(() => {
-    m === "multiple" && (U ? g(k) : I(k));
-  }, [U, k, m]), he = (c) => {
-    v((S) => ({ ...S, [c]: !S[c] }));
-  }, xe = !!(l || d);
+    const i = Math.max(J - 1, 0);
+    N > i && C(i);
+  }, [J, N]);
+  const V = k.length > 0 && k.every((i, S) => F(i, S)), me = R(() => {
+    d === "multiple" && (V ? f(k) : K(k));
+  }, [V, k, d]), ue = (i) => {
+    v((S) => ({ ...S, [i]: !S[i] }));
+  }, he = !!(l || m);
   return L(() => {
     H();
-  }, [B]), /* @__PURE__ */ o(
-    "div",
-    {
-      ref: de,
-      className: `w-full flex flex-col p-3.5 rounded-xl border transition-all duration-200 ${p.wrapper}`,
-      children: [
-        /* @__PURE__ */ o("div", { className: "flex flex-col gap-3.5 mb-4", children: [
-          xe && /* @__PURE__ */ o("div", { className: "flex items-center justify-between gap-2", children: [
-            /* @__PURE__ */ o(
-              "span",
-              {
-                className: `text-xs px-2.5 py-1 rounded-full font-bold transition-all ${p.badge}`,
-                children: [
-                  w.length,
-                  " selecionado(s)"
-                ]
-              }
-            ),
-            /* @__PURE__ */ o("div", { className: "flex items-center gap-2", children: [
-              l && /* @__PURE__ */ r(
-                P,
+  }, [T]), /* @__PURE__ */ o(be, { children: [
+    /* @__PURE__ */ o(
+      "div",
+      {
+        ref: oe,
+        className: `w-full flex flex-col p-3 rounded-xl border transition-all duration-200 ${g.classes.wrapper}`,
+        children: [
+          /* @__PURE__ */ o("div", { className: "flex flex-col gap-3.5 mb-4", children: [
+            he && /* @__PURE__ */ o("div", { className: "flex items-center justify-between gap-2", children: [
+              /* @__PURE__ */ o(
+                "span",
                 {
-                  color: "primary",
-                  iconStart: /* @__PURE__ */ r(ae, { size: 16 }),
-                  disabled: w.length !== 1,
-                  onClick: () => w.length === 1 && l(w[0]),
-                  children: ""
+                  className: `text-xs px-2.5 py-1 rounded-full font-bold transition-all ${g.classes.badge}`,
+                  children: [
+                    P.length,
+                    " selecionado(s)"
+                  ]
                 }
               ),
-              d && /* @__PURE__ */ r(
-                P,
+              /* @__PURE__ */ o("div", { className: "flex items-center gap-2", children: [
+                l && /* @__PURE__ */ a(
+                  D,
+                  {
+                    color: "primary",
+                    iconStart: /* @__PURE__ */ a(te, { size: 16 }),
+                    disabled: P.length !== 1,
+                    onClick: () => P.length === 1 && l(P[0]),
+                    children: ""
+                  }
+                ),
+                m && /* @__PURE__ */ a(
+                  D,
+                  {
+                    color: "danger",
+                    iconStart: /* @__PURE__ */ a(ae, { size: 16 }),
+                    disabled: P.length === 0,
+                    onClick: z,
+                    children: ""
+                  }
+                )
+              ] })
+            ] }),
+            d === "multiple" && k.length > 0 && /* @__PURE__ */ o("label", { className: "flex items-center gap-2 px-1 py-0.5 select-none cursor-pointer", children: [
+              /* @__PURE__ */ a(
+                Y,
                 {
-                  color: "danger",
-                  iconStart: /* @__PURE__ */ r(le, { size: 16 }),
-                  disabled: w.length === 0,
-                  onClick: Q,
-                  children: ""
+                  checked: V,
+                  onChange: me,
+                  color: "primary",
+                  className: g.classes.checkboxBorder
+                }
+              ),
+              /* @__PURE__ */ o(
+                "span",
+                {
+                  className: `text-xs font-semibold ${g.classes.textMuted}`,
+                  children: [
+                    "Selecionar todos desta página (",
+                    k.length,
+                    ")"
+                  ]
                 }
               )
             ] })
           ] }),
-          m === "multiple" && k.length > 0 && /* @__PURE__ */ o("label", { className: "flex items-center gap-2 px-1 py-0.5 select-none cursor-pointer", children: [
-            /* @__PURE__ */ r(
-              Z,
-              {
-                checked: U,
-                onChange: me,
-                color: "primary",
-                className: p.checkboxBorder
-              }
-            ),
-            /* @__PURE__ */ o("span", { className: `text-xs font-semibold ${p.textMuted}`, children: [
-              "Selecionar todos desta página (",
-              k.length,
-              ")"
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ r("div", { className: "flex flex-col gap-3 min-h-[120px]", children: k.length === 0 ? /* @__PURE__ */ r("div", { className: "flex flex-col items-center justify-center py-10 text-center", children: /* @__PURE__ */ r("span", { className: `text-sm font-medium ${p.textMuted}`, children: s }) }) : k.map((c, S) => {
-          const V = M(c, S), Y = D(c, S), W = !!b[V], ge = z?.render ? z.render(c) : te(c, z?.field);
-          return /* @__PURE__ */ o(
-            "div",
+          /* @__PURE__ */ a("div", { className: "flex flex-col gap-1 min-h-[120px]", children: k.length === 0 ? /* @__PURE__ */ a("div", { className: "flex flex-col items-center justify-center py-10 text-center", children: /* @__PURE__ */ a(
+            "span",
             {
-              className: `rounded-xl border p-4 transition-all duration-200 ${p.card} ${Y ? p.cardSelected : ""}`,
-              children: [
-                /* @__PURE__ */ o("div", { className: "flex items-start gap-3.5", children: [
-                  /* @__PURE__ */ r(
-                    "div",
-                    {
-                      "aria-label": "Selecionar registro",
-                      onClick: () => G(c, S),
-                      className: "pt-1 shrink-0 cursor-pointer",
-                      children: /* @__PURE__ */ r(
-                        Z,
-                        {
-                          checked: Y,
-                          onChange: () => {
-                          },
-                          color: "primary",
-                          className: p.checkboxBorder
-                        }
-                      )
-                    }
-                  ),
-                  /* @__PURE__ */ o(
-                    "div",
-                    {
-                      className: "flex-1 min-w-0 cursor-pointer",
-                      onClick: () => G(c, S),
-                      children: [
-                        /* @__PURE__ */ r(
-                          "div",
+              className: `text-sm font-medium ${g.classes.textMuted}`,
+              children: n
+            }
+          ) }) : k.map((i, S) => {
+            const W = M(i, S), X = F(i, S), _ = !!u[W], fe = G?.render ? G.render(i) : q(i, G?.field);
+            return /* @__PURE__ */ o(
+              "div",
+              {
+                className: `rounded-xl border px-4 py-2 transition-all duration-200 ${g.classes.card} ${X ? g.classes.cardSelected : ""}`,
+                children: [
+                  /* @__PURE__ */ o("div", { className: "flex items-start gap-3.5", children: [
+                    /* @__PURE__ */ a(
+                      "div",
+                      {
+                        "aria-label": "Selecionar registro",
+                        onClick: () => j(i, S),
+                        className: "pt-1 shrink-0 cursor-pointer",
+                        children: /* @__PURE__ */ a(
+                          Y,
                           {
-                            className: `text-xs font-bold uppercase tracking-widest mb-0.5 ${p.textMuted}`,
-                            children: z?.headerName || "Registro"
-                          }
-                        ),
-                        /* @__PURE__ */ r(
-                          "div",
-                          {
-                            className: `text-sm font-bold truncate ${p.textPrimary}`,
-                            children: ge
+                            checked: X,
+                            onChange: () => {
+                            },
+                            color: "primary",
+                            className: g.classes.checkboxBorder
                           }
                         )
-                      ]
-                    }
-                  ),
-                  K.length > 0 && /* @__PURE__ */ r(
-                    P,
+                      }
+                    ),
+                    /* @__PURE__ */ o(
+                      "div",
+                      {
+                        className: "flex-1 min-w-0 cursor-pointer",
+                        onClick: () => j(i, S),
+                        children: [
+                          /* @__PURE__ */ a(
+                            "div",
+                            {
+                              className: `text-xs font-bold uppercase tracking-widest mb-0.5 ${g.classes.textMuted}`,
+                              children: G?.headerName || "Registro"
+                            }
+                          ),
+                          /* @__PURE__ */ a(
+                            "div",
+                            {
+                              className: `text-sm font-bold truncate ${g.classes.textPrimary}`,
+                              children: fe
+                            }
+                          )
+                        ]
+                      }
+                    ),
+                    U.length > 0 && /* @__PURE__ */ a(
+                      D,
+                      {
+                        "aria-label": _ ? "Recolher detalhes" : "Expandir detalhes",
+                        onClick: () => ue(W),
+                        iconEnd: _ ? /* @__PURE__ */ a(
+                          Ne,
+                          {
+                            size: 18,
+                            className: `${g.classes.textPrimary}`
+                          }
+                        ) : /* @__PURE__ */ a(
+                          ve,
+                          {
+                            size: 18,
+                            className: `${g.classes.textPrimary}`
+                          }
+                        ),
+                        variant: "clear",
+                        activeColor: "transparent",
+                        size: "small",
+                        children: ""
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ a(Ce, { initial: !1, children: _ && U.length > 0 && /* @__PURE__ */ a(
+                    ke.div,
                     {
-                      "aria-label": W ? "Recolher detalhes" : "Expandir detalhes",
-                      onClick: () => he(V),
-                      iconEnd: W ? /* @__PURE__ */ r(
-                        Ce,
-                        {
-                          size: 18,
-                          className: `${p.textPrimary}`
-                        }
-                      ) : /* @__PURE__ */ r(
-                        ve,
-                        {
-                          size: 18,
-                          className: `${p.textPrimary}`
-                        }
-                      ),
-                      variant: "clear",
-                      activeColor: "transparent",
-                      size: "small",
-                      children: ""
+                      initial: { opacity: 0, height: 0 },
+                      animate: { opacity: 1, height: "auto" },
+                      exit: { opacity: 0, height: 0 },
+                      transition: {
+                        duration: 0.25,
+                        ease: "easeInOut"
+                      },
+                      className: `mt-4 pt-3.5 px-2 border-t space-y-3 animate-slide-down ${g.classes.divider}`,
+                      children: U.map(($, ge) => {
+                        const xe = $.render ? $.render(i) : $.valueGetter ? $.valueGetter(i) : q(i, $.field), pe = $.align === "center" ? "text-center" : $.align === "right" ? "text-right" : "text-left";
+                        return /* @__PURE__ */ o(
+                          "div",
+                          {
+                            className: "flex justify-between items-center gap-2 py-0.5",
+                            children: [
+                              /* @__PURE__ */ a(
+                                "span",
+                                {
+                                  className: `text-xs font-semibold truncate ${g.classes.textMuted}`,
+                                  children: $.headerName
+                                }
+                              ),
+                              /* @__PURE__ */ a(
+                                "span",
+                                {
+                                  className: `col-span-2 text-xs font-medium break-all ${pe} ${g.classes.textPrimary}`,
+                                  children: xe
+                                }
+                              )
+                            ]
+                          },
+                          ge
+                        );
+                      })
                     }
-                  )
-                ] }),
-                /* @__PURE__ */ r(Ne, { initial: !1, children: W && K.length > 0 && /* @__PURE__ */ r(
-                  ye.div,
-                  {
-                    initial: { opacity: 0, height: 0 },
-                    animate: { opacity: 1, height: "auto" },
-                    exit: { opacity: 0, height: 0 },
-                    transition: {
-                      duration: 0.25,
-                      ease: "easeInOut"
-                    },
-                    className: `mt-4 pt-3.5 px-2 border-t space-y-3 animate-slide-down ${p.divider}`,
-                    children: K.map(($, fe) => {
-                      const pe = $.render ? $.render(c) : $.valueGetter ? $.valueGetter(c) : te(c, $.field), be = $.align === "center" ? "text-center" : $.align === "right" ? "text-right" : "text-left";
-                      return /* @__PURE__ */ o(
-                        "div",
-                        {
-                          className: "flex justify-between items-center gap-2 py-0.5",
-                          children: [
-                            /* @__PURE__ */ r(
-                              "span",
-                              {
-                                className: `text-xs font-semibold truncate ${p.textMuted}`,
-                                children: $.headerName
-                              }
-                            ),
-                            /* @__PURE__ */ r(
-                              "span",
-                              {
-                                className: `col-span-2 text-xs font-medium break-all ${be} ${p.textPrimary}`,
-                                children: pe
-                              }
-                            )
-                          ]
-                        },
-                        fe
-                      );
-                    })
-                  }
-                ) })
-              ]
-            },
-            V
-          );
-        }) }),
-        /* @__PURE__ */ r(
-          ie,
-          {
-            page: B,
-            pageSize: e,
-            totalRows: j,
-            loading: x,
-            onPageChange: O,
-            onPageSizeChange: h,
-            theme: y,
-            isMobile: !0,
-            colorsPagination: u
-          }
-        )
-      ]
-    }
-  );
-}
-function Ae(t) {
-  const a = () => typeof window > "u" ? !1 : window.matchMedia(t).matches, [e, s] = E(a);
-  return L(() => {
-    const n = window.matchMedia(t), l = (d) => {
-      s(d.matches);
-    };
-    return s(n.matches), n.addEventListener("change", l), () => {
-      n.removeEventListener("change", l);
-    };
-  }, [t]), e;
-}
-function je(t) {
-  const a = Ae("(max-width: 768px)"), { modeTable: e = "auto" } = t;
-  return e === "mobile" ? /* @__PURE__ */ r(re, { ...t }) : e === "desktop" ? /* @__PURE__ */ r(q, { ...t }) : a ? /* @__PURE__ */ r(re, { ...t }) : /* @__PURE__ */ r(q, { ...t });
-}
-function Ie({
-  data: t,
-  filterColumns: a,
-  filterPlaceholder: e = "Filtrar...",
-  showFilter: s = !0,
-  filterClassName: n,
-  ...l
-}) {
-  const [d, m] = E(t);
-  return /* @__PURE__ */ o("div", { className: "flex flex-col gap-6", children: [
-    s && /* @__PURE__ */ r(
-      ke,
-      {
-        data: t,
-        columns: a,
-        placeholder: e,
-        onChange: m,
-        className: n
+                  ) })
+                ]
+              },
+              W
+            );
+          }) })
+        ]
       }
     ),
-    /* @__PURE__ */ r(je, { ...l, data: d })
+    /* @__PURE__ */ a(
+      re,
+      {
+        page: T,
+        pageSize: t,
+        totalRows: A,
+        loading: x,
+        onPageChange: Q,
+        onPageSizeChange: b,
+        theme: h,
+        isMobile: !0,
+        themeConfig: y
+      }
+    )
+  ] });
+}
+function Ae(e) {
+  const s = () => typeof window > "u" ? !1 : window.matchMedia(e).matches, [t, n] = B(s);
+  return L(() => {
+    const r = window.matchMedia(e), l = (m) => {
+      n(m.matches);
+    };
+    return n(r.matches), r.addEventListener("change", l), () => {
+      r.removeEventListener("change", l);
+    };
+  }, [e]), t;
+}
+function ie(e) {
+  const [s, t] = B(
+    e ?? (document.documentElement.classList.contains("dark") ? "dark" : "light")
+  );
+  return L(() => {
+    if (e) {
+      t(e);
+      return;
+    }
+    const n = new MutationObserver(() => {
+      t(
+        document.documentElement.classList.contains("dark") ? "dark" : "light"
+      );
+    });
+    return n.observe(document.documentElement, {
+      attributes: !0,
+      attributeFilter: ["class"]
+    }), () => n.disconnect();
+  }, [e]), console.log("theme", s), s;
+}
+function je(e) {
+  const s = Ae("(max-width: 768px)"), { modeTable: t = "auto" } = e, n = ie(e.theme);
+  return console.log("themeComputed", n), t === "mobile" ? /* @__PURE__ */ a(ee, { ...e, theme: n }) : t === "desktop" ? /* @__PURE__ */ a(Z, { ...e, theme: n }) : s ? /* @__PURE__ */ a(ee, { ...e, theme: n }) : /* @__PURE__ */ a(Z, { ...e, theme: n });
+}
+function Ke({
+  data: e,
+  filterColumns: s,
+  filterPlaceholder: t = "Buscar...",
+  filterClassName: n,
+  theme: r,
+  ...l
+}) {
+  const [m, d] = B(e), h = ie(r);
+  return /* @__PURE__ */ o("div", { className: "flex flex-col gap-6", children: [
+    /* @__PURE__ */ a(
+      ye,
+      {
+        data: e,
+        columns: s,
+        placeholder: t,
+        onChange: d,
+        className: n,
+        theme: h
+      }
+    ),
+    /* @__PURE__ */ a(je, { ...l, data: m, theme: r })
   ] });
 }
 export {
   je as CBDataTable,
-  q as CBDataTableDesktop,
-  re as CBDataTableMobile,
-  Ie as CBDataTableWithFilter,
-  Le as useAGGridTheme
+  Z as CBDataTableDesktop,
+  ee as CBDataTableMobile,
+  Ke as CBDataTableWithFilter
 };

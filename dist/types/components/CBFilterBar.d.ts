@@ -39,6 +39,8 @@ interface CBFilterBarProps<T> {
     selectClassName?: string;
     /** Estilo inline opcional */
     style?: React.CSSProperties;
+    /** Estilo opcional */
+    theme?: "light" | "dark";
 }
 /**
  * CBFilterBar
@@ -59,5 +61,5 @@ interface CBFilterBarProps<T> {
  * />
  * ```
  */
-declare function CBFilterBar<T>({ data, columns, placeholder, onChange, initialQuery, className, inputClassName, selectClassName, style, }: CBFilterBarProps<T>): import("react").JSX.Element;
+declare function CBFilterBar<T>({ data, columns, placeholder, onChange, initialQuery, className, inputClassName, selectClassName, style, theme, }: CBFilterBarProps<T>): import("react").JSX.Element;
 export default CBFilterBar;
