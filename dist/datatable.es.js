@@ -2,7 +2,7 @@ import { jsxs as o, jsx as a, Fragment as be } from "react/jsx-runtime";
 import { D as O, C as D, F as te, a as ae, b as Y, c as Ne, d as ve, A as Ce, m as ke, e as ye } from "./CBFilterBar-Bk_8vKkp.js";
 import { AgGridReact as we } from "ag-grid-react";
 import { useState as B, useCallback as R, useMemo as E, useRef as I, useEffect as L } from "react";
-import { themeQuartz as se, colorSchemeDarkBlue as Pe, colorSchemeLightCold as Se, ModuleRegistry as Re, ClientSideRowModelModule as Te, PaginationModule as $e, RowSelectionModule as Ee, CellStyleModule as Be, LocaleModule as Me } from "ag-grid-community";
+import { themeQuartz as se, colorSchemeDarkBlue as Pe, colorSchemeLightCold as Se, ModuleRegistry as Re, ClientSideRowModelModule as $e, PaginationModule as Te, RowSelectionModule as Ee, CellStyleModule as Be, LocaleModule as Me } from "ag-grid-community";
 function ne(e) {
   const { col: s, render: t, children: n, align: r, ...l } = e;
   return n && n.length > 0 ? {
@@ -148,7 +148,7 @@ function re({
                       "option",
                       {
                         value: c,
-                        className: p.classes.textPrimary,
+                        className: `${p.classes.textPrimary} cursor-pointer `,
                         children: c
                       },
                       c
@@ -188,8 +188,8 @@ function re({
   );
 }
 Re.registerModules([
-  Te,
   $e,
+  Te,
   Ee,
   Be,
   Me
@@ -210,7 +210,7 @@ function Z({
   onPageSizeChange: c,
   loading: b = !1
 }) {
-  const x = E(() => Le(h === "dark"), [h]), [u, v] = B([]), [N, C] = B(0), T = y ?? N, Q = (f) => {
+  const x = E(() => Le(h === "dark"), [h]), [u, v] = B([]), [N, C] = B(0), $ = y ?? N, Q = (f) => {
     w ? w(f) : C(f);
   }, A = p || s.length, { deleteSelected: k } = le({
     selectionMode: d,
@@ -237,9 +237,9 @@ function Z({
   const K = E(() => {
     if (w)
       return s;
-    const f = T * t;
+    const f = $ * t;
     return s.slice(f, f + t);
-  }, [s, T, t, w]);
+  }, [s, $, t, w]);
   return /* @__PURE__ */ o("div", { ref: F, className: "relative w-full", children: [
     /* @__PURE__ */ a(
       we,
@@ -278,7 +278,7 @@ function Z({
     /* @__PURE__ */ a(
       re,
       {
-        page: T,
+        page: $,
         pageSize: t,
         totalRows: A,
         loading: b,
@@ -354,14 +354,14 @@ function ee({
   console.log("theme mobile", h);
   const [u, v] = B(
     {}
-  ), [N, C] = B(0), T = p ?? N, Q = (i) => {
+  ), [N, C] = B(0), $ = p ?? N, Q = (i) => {
     c ? c(i) : C(i);
   }, A = w || s.length, k = E(() => {
     if (c)
       return s;
-    const i = T * t;
+    const i = $ * t;
     return s.slice(i, i + t);
-  }, [s, T, t, c]), {
+  }, [s, $, t, c]), {
     selectedRows: P,
     isSelected: F,
     toggleRow: j,
@@ -386,7 +386,7 @@ function ee({
   }, he = !!(l || m);
   return L(() => {
     H();
-  }, [T]), /* @__PURE__ */ o(be, { children: [
+  }, [$]), /* @__PURE__ */ o(be, { children: [
     /* @__PURE__ */ o(
       "div",
       {
@@ -542,8 +542,8 @@ function ee({
                         ease: "easeInOut"
                       },
                       className: `mt-4 pt-3.5 px-2 border-t space-y-3 animate-slide-down ${g.classes.divider}`,
-                      children: U.map(($, ge) => {
-                        const xe = $.render ? $.render(i) : $.valueGetter ? $.valueGetter(i) : q(i, $.field), pe = $.align === "center" ? "text-center" : $.align === "right" ? "text-right" : "text-left";
+                      children: U.map((T, ge) => {
+                        const xe = T.render ? T.render(i) : T.valueGetter ? T.valueGetter(i) : q(i, T.field), pe = T.align === "center" ? "text-center" : T.align === "right" ? "text-right" : "text-left";
                         return /* @__PURE__ */ o(
                           "div",
                           {
@@ -553,7 +553,7 @@ function ee({
                                 "span",
                                 {
                                   className: `text-xs font-semibold truncate ${g.classes.textMuted}`,
-                                  children: $.headerName
+                                  children: T.headerName
                                 }
                               ),
                               /* @__PURE__ */ a(
@@ -581,7 +581,7 @@ function ee({
     /* @__PURE__ */ a(
       re,
       {
-        page: T,
+        page: $,
         pageSize: t,
         totalRows: A,
         loading: x,

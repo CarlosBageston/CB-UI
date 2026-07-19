@@ -78,7 +78,7 @@ export function CBPaginationFooter({
                 <option
                   key={size}
                   value={size}
-                  className={activeTheme.classes.textPrimary}
+                  className={`${activeTheme.classes.textPrimary} cursor-pointer `}
                 >
                   {size}
                 </option>
