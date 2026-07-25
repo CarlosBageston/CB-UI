@@ -305,7 +305,7 @@ function ur({
     "--border-color": m ? gt.danger : w,
     "--icon-color": w,
     "--color": "var(--cb-color-dark)",
-    "--placeholder-color": "var(--cb-color-medium)"
+    "--placeholder-color": "var(--cb-color-border)"
   };
   return /* @__PURE__ */ S("div", { className: "relative flex flex-col", style: { minHeight: 72 }, children: [
     t && /* @__PURE__ */ e("label", { className: "text-xs font-medium pl-6!", children: t }),
@@ -613,7 +613,7 @@ const pr = ({
 }) => {
   const { main: Y } = W(i), { main: N } = W("danger"), [B, _] = U(!1), [h, M] = U(!1);
   oe(() => M(!!u), [u]);
-  const w = g ? N : B || h ? Y : "var(--cb-color-medium)", r = l ? l - u.length : void 0, x = r !== void 0 && r < 0;
+  const w = g ? N : B || h ? Y : "var(--cb-color-border)", r = l ? l - u.length : void 0, x = r !== void 0 && r < 0;
   return /* @__PURE__ */ S("div", { className: "relative flex flex-col", style: { minHeight: 72 }, children: [
     t && /* @__PURE__ */ e("label", { className: "text-xs font-medium pl-6", children: t }),
     /* @__PURE__ */ e(
@@ -1805,7 +1805,7 @@ const _e = (t) => t ? "toDate" in t ? t.toDate() : t : null, br = ({
                   borderColor: _,
                   color: h
                 },
-                className: `w-full pr-4 pl-8 py-4 border outline-none placeholder-(--cb-color-medium) ${v}`
+                className: `w-full pr-4 pl-8 py-4 border outline-none placeholder-(--cb-color-border) ${v}`
               }
             ),
             p && /* @__PURE__ */ e(Vt, { className: "absolute right-8 text-[24px] text-gray-500 hover:text-blue-600 transition-colors cursor-pointer" })
@@ -1928,7 +1928,7 @@ function Mr({
           left: 0,
           ...h
         },
-        children: f ? /* @__PURE__ */ e("div", { className: "flex justify-center items-center p-4", children: /* @__PURE__ */ e(ie, { name: "crescent", style: { color: H } }) }) : /* @__PURE__ */ S(mt, { className: "!p-0", children: [
+        children: f ? /* @__PURE__ */ e("div", { className: "flex justify-center items-center p-4", children: /* @__PURE__ */ e(ie, { name: "crescent", style: { color: H } }) }) : /* @__PURE__ */ S(mt, { className: "p-0", children: [
           $.map((n) => /* @__PURE__ */ e(
             Ye,
             {
@@ -1954,7 +1954,7 @@ function Mr({
       className: `relative ${m ? "w-full" : "w-auto"} flex flex-col ${p}`,
       style: { minHeight: 72, ...Y },
       children: [
-        l && /* @__PURE__ */ e("label", { className: `text-xs font-medium !pl-6 ${r}`, children: l }),
+        l && /* @__PURE__ */ e("label", { className: `text-xs font-medium pl-6 ${r}`, children: l }),
         /* @__PURE__ */ e(
           "input",
           {
@@ -1963,7 +1963,7 @@ function Mr({
             placeholder: g,
             onFocus: () => T(!0),
             onBlur: () => setTimeout(() => T(!1), 150),
-            className: `w-full !pr-4 !pl-8 !py-4 border outline-none placeholder-[var(--cb-color-medium)] ${N}`,
+            className: `w-full pr-4 pl-8 py-4 border outline-none placeholder-(--cb-color-border) ${N}`,
             style: {
               borderColor: H,
               borderRadius: E,
