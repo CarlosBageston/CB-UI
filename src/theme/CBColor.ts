@@ -19,26 +19,26 @@ export interface CSSVars extends React.CSSProperties {
 
 // Cores principais
 export const CB_COLOR_MAP: Record<CBColor, string> = {
-  primary: "var(--ion-color-primary)",
-  secondary: "var(--ion-color-secondary)",
-  success: "var(--ion-color-success)",
-  warning: "var(--ion-color-warning)",
-  danger: "var(--ion-color-danger)",
-  info: "var(--ion-color-info)",
-  neutral: "var(--ion-color-neutral)",
-  light: "var(--ion-color-light)",
-  dark: "var(--ion-color-dark)",
+  primary: "var(--cb-color-primary)",
+  secondary: "var(--cb-color-secondary)",
+  success: "var(--cb-color-success)",
+  warning: "var(--cb-color-warning)",
+  danger: "var(--cb-color-danger)",
+  info: "var(--cb-color-info)",
+  neutral: "var(--cb-color-neutral)",
+  light: "var(--cb-color-light)",
+  dark: "var(--cb-color-dark)",
 };
 
 // Contraste (texto que fica legível sobre cada cor)
 export const CB_COLOR_CONTRAST_MAP: Record<CBColor, string> = {
-  primary: "var(--ion-color-light)", // texto claro sobre azul escuro
-  secondary: "var(--ion-color-light)", // texto claro sobre roxo
-  success: "var(--ion-color-light)", // texto claro sobre verde
-  warning: "var(--ion-color-dark)", // texto escuro sobre amarelo
-  danger: "var(--ion-color-light)", // texto claro sobre vermelho
-  info: "var(--ion-color-dark)", // texto escuro sobre azul suave
-  neutral: "var(--ion-color-dark)", // texto escuro sobre cinza médio
-  light: "var(--ion-color-dark)", // texto escuro sobre claro
-  dark: "var(--ion-color-light)", // texto claro sobre escuro
+  primary: "var(--cb-color-light)", // texto claro sobre azul escuro
+  secondary: "var(--cb-color-light)", // texto claro sobre roxo
+  success: "var(--cb-color-light)", // texto claro sobre verde
+  warning: "var(--cb-color-dark)", // texto escuro sobre amarelo
+  danger: "var(--cb-color-light)", // texto claro sobre vermelho
+  info: "var(--cb-color-dark)", // texto escuro sobre azul suave
+  neutral: "var(--cb-color-dark)", // texto escuro sobre cinza médio
+  light: "var(--cb-color-dark)", // texto escuro sobre claro
+  dark: "var(--cb-color-light)", // texto claro sobre escuro
 };

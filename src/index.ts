@@ -1,4 +1,4 @@
-import "./styles/tailwind.css";
+import "./styles/cb-ui.css";
 
 // Exporta todos os componentes
 export { default as CBCard } from "./components/CBCard";
@@ -9,6 +9,7 @@ export { default as CBButton } from "./components/CBButton";
 export { default as CBSelect } from "./components/CBSelect";
 export { default as CBLoading } from "./components/CBLoading";
 export { default as CBTooltip } from "./components/CBTooltip";
+export { default as CBGrid } from "./components/CBGrid/CBGrid";
 export { default as CBCheckbox } from "./components/CBCheckbox";
 export { default as CBTextArea } from "./components/CBTextArea";
 export { default as CBSelector } from "./components/CBSelector";
@@ -16,6 +17,7 @@ export { default as CBFabButton } from "./components/CBFabButton";
 export { default as CBFilterBar } from "./components/CBFilterBar";
 export { default as CBMultiView } from "./components/CBMultiView";
 export { default as CBDataPicker } from "./components/CBDataPicker";
+export { default as CBGridItem } from "./components/CBGrid/CBGridItem";
 export { default as CBAutocomplete } from "./components/CBAutoComplete";
 export { default as CBFabButtonCenter } from "./components/CBFabButtonCenter";
 export { default as CBEmptyState } from "./components/CBStateWrapper/CBEmptyState";

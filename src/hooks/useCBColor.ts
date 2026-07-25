@@ -20,7 +20,6 @@ export function useCBColor(
 
   const contrast = isKnown
     ? CB_COLOR_CONTRAST_MAP[color as CBColor]
-    : (fallbackContrast ?? "var(--ion-color-light)");
-
+    : (fallbackContrast ?? "var(--cb-color-light)");
   return { main, contrast };
 }

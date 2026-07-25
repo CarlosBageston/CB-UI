@@ -1,28 +1,53 @@
-@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
+@layer theme {
+  :root {
+    /* ===============================
+       Ionic compatibility
+       Mantém compatibilidade com componentes Ionic
+    =============================== */
 
-:root {
-  /* === Paleta Quente e Moderna === */
-  --ion-color-primary: #1e40af; /* Azul quente e forte */
-  --ion-color-secondary: #7c3aed; /* Roxo quente */
-  --ion-color-success: #16a34a; /* Verde quente */
-  --ion-color-warning: #fbbf24; /* Amarelo quente */
-  --ion-color-danger: #dc2626; /* Vermelho quente */
-  --ion-color-info: #60a5fa; /* Azul suave / informação */
-  --ion-color-neutral: #9ca3af; /* Cinza médio para alertas / neutro */
+    --ion-color-primary: #1e40af;
+    --ion-color-secondary: #7c3aed;
+    --ion-color-success: #16a34a;
+    --ion-color-warning: #fbbf24;
+    --ion-color-danger: #dc2626;
+    --ion-color-info: #60a5fa;
+    --ion-color-medium: #b8bdc7;
+    --ion-color-light: #f8fafc;
+    --ion-color-dark: #0f172a;
 
-  --ion-color-medium: #b8bdc7;
+    /* ===============================
+       CB-UI Design Tokens
+       Componentes da biblioteca usam estes
+    =============================== */
 
-  /* === Extended palette (light/dark usage) === */
-  --ion-color-light: #f8fafc; /* Very light gray */
-  --ion-color-dark: #0f172a; /* Almost black */
-  --font-main: "Baloo 2", sans-serif;
+    --cb-color-primary: var(--ion-color-primary, #1e40af);
+    --cb-color-secondary: var(--ion-color-secondary, #7c3aed);
+    --cb-color-success: var(--ion-color-success, #16a34a);
+    --cb-color-warning: var(--ion-color-warning, #fbbf24);
+    --cb-color-danger: var(--ion-color-danger, #dc2626);
+    --cb-color-info: var(--ion-color-info, #60a5fa);
+    --cb-color-neutral: #9ca3af;
 
-  --text-cb-primary: #f8fafc;
-}
+    --cb-color-light: var(--ion-color-light, #f8fafc);
+    --cb-color-dark: var(--ion-color-dark, #0f172a);
+    --cb-color-border: var(--ion-color-medium, #b8bdc7);
 
-.dark {
-  /* Modo escuro ajustando neutros */
-  --ion-color-light: #1e293b; /* Dark gray */
-  --ion-color-dark: #f8fafc; /* Almost white */
-  --text-cb-primary: #0f172a;
+    /* ===============================
+       Outros tokens CB-UI
+    =============================== */
+
+    --font-main: "Baloo 2", sans-serif;
+
+    --cb-text-primary: #f8fafc;
+  }
+
+  /* ===============================
+     Dark mode
+  =============================== */
+
+  .dark {
+    --ion-color-light: #1e293b;
+    --ion-color-dark: #f8fafc;
+    --cb-text-primary: #0f172a;
+  }
 }

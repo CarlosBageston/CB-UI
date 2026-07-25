@@ -1,78 +1,48 @@
-/* -------------------------------
-   Reset básico
----------------------------------*/
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-html,
-body,
-#root {
-  height: 100%;
-  font-family: var(--font-main), sans-serif;
-  background-color: var(--ion-background-color);
-  color: var(--ion-text-color);
-}
+  html,
+  body,
+  #root {
+    height: 100%;
+    font-family: var(--font-main, sans-serif);
+    background-color: var(--ion-background-color);
+    color: var(--ion-text-color);
+  }
 
-body {
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  body {
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
-}
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
 
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 
-ul,
-ol {
-  list-style: none;
-}
-ion-segment-button {
-  --ripple-color: transparent;
-}
-.cb-tabs-no-indicator ion-segment-button::part(indicator) {
-  display: none !important;
-}
-ion-segment ion-segment-button {
-  flex-shrink: 0;
-  min-width: 100px;
-  white-space: nowrap;
-}
-ion-accordion {
-  --ripple-color: transparent;
-}
-.cb-acc-no-indicator ion-accordion::part(expand-icon) {
-  display: none !important;
-}
-.cb-tabs-scroll-hider::-webkit-scrollbar {
-  height: 0;
-  background: transparent;
-}
-.cb-tabs-scroll-hider::-webkit-scrollbar-thumb {
-  background: transparent;
-}
-
-.cb-tabs-scroll-hider {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  ul,
+  ol {
+    list-style: none;
+  }
 }

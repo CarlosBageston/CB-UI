@@ -1,7 +1,6 @@
 import type { Preview } from "@storybook/react-vite";
 import { IonApp, setupIonicReact } from "@ionic/react";
 
-
 import "@ionic/react/css/core.css";
 import "@ionic/react/css/normalize.css";
 import "@ionic/react/css/structure.css";
@@ -14,7 +13,7 @@ import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
 // Tailwind custom
-import "../src/styles/tailwind.css";
+import "../src/styles/tailwind-dev.css";
 setupIonicReact();
 const preview: Preview = {
   parameters: {
@@ -39,15 +38,21 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => {
-
       return (
         <IonApp>
-          <div style={{ padding: "32px 12px", position: 'relative', height: '100vh', width: '100vw' }}>
+          <div
+            style={{
+              padding: "32px 12px",
+              position: "relative",
+              height: "100vh",
+              width: "100vw",
+            }}
+          >
             <Story />
           </div>
         </IonApp>
-      )
-    }
+      );
+    },
   ],
 };
 

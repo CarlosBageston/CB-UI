@@ -123,8 +123,8 @@ function CBSelect<T>({
     ...style,
     "--border-color": error ? CB_COLOR_MAP.danger : borderColor,
     "--icon-color": borderColor,
-    "--color": "var(--ion-color-dark)",
-    "--placeholder-color": "var(--ion-color-medium)",
+    "--color": "var(--cb-color-dark)",
+    "--placeholder-color": "var(--cb-color-medium)",
   };
 
   return (
@@ -163,7 +163,7 @@ function CBSelect<T>({
       </IonSelect>
 
       {error && helperText && (
-        <IonNote className="text-[12px] pl-6! text-(--ion-color-danger)">
+        <IonNote className="text-[12px] pl-6! text-(--cb-color-danger)">
           {helperText}
         </IonNote>
       )}

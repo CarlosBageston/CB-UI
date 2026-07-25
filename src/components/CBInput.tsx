@@ -99,7 +99,8 @@ const CBInput: React.FC<CBInputProps> = ({
   const { main: mainColor } = useCBColor(color, colorContrast);
   const { main: errorColor } = useCBColor("danger");
   const { show, toggle, inputType } = usePasswordToggle();
-
+  console.log("mainColor", mainColor);
+  console.log("errorColor", errorColor);
   const { handleChange, inputMode } = useInputMask(mask, onChange, onRawChange);
 
   const stringValue = useMemo(() => toStringValue(value), [value]);
@@ -111,7 +112,7 @@ const CBInput: React.FC<CBInputProps> = ({
     ? errorColor
     : focused || filled
       ? mainColor
-      : "var(--ion-color-medium)";
+      : "var(--cb-color-border)";
 
   const handleInput = useCallback(
     (e: IonInputCustomEvent<InputInputEventDetail>) => {
@@ -133,7 +134,7 @@ const CBInput: React.FC<CBInputProps> = ({
     full: "9999px",
   };
   return (
-    <div className={`relative flex flex-col h-[72px] pt-2 mb-3! ${className}`}>
+    <div className={`relative flex flex-col h-18 pt-2 mb-3! ${className}`}>
       <IonInput
         {...props}
         value={stringValue}
@@ -151,7 +152,7 @@ const CBInput: React.FC<CBInputProps> = ({
           "--border-color": borderColor,
           "--highlight-color-focused": mainColor,
           "--border-radius": borderRadiusMap[radius || "md"],
-          color: textColor ?? "var(--ion-color-dark)",
+          color: textColor ?? "var(--cb-color-dark)",
           ...style,
         }}
         onIonInput={handleInput}
@@ -170,11 +171,11 @@ const CBInput: React.FC<CBInputProps> = ({
         >
           {show ? (
             <IoEye
-              className={`text-2xl text-(--ion-color-dark) ${classNameIcon}`}
+              className={`text-2xl text-(--cb-color-dark) ${classNameIcon}`}
             />
           ) : (
             <IoEyeOff
-              className={`text-2xl text-(--ion-color-dark) ${classNameIcon}`}
+              className={`text-2xl text-(--cb-color-dark) ${classNameIcon}`}
             />
           )}
         </IonGrid>
@@ -183,7 +184,7 @@ const CBInput: React.FC<CBInputProps> = ({
       {error && (
         <IonNote
           role="alert"
-          className="text-[12px] pl-6! text-(--ion-color-danger)"
+          className="text-[12px] pl-6! text-(--cb-color-danger)"
         >
           {error}
         </IonNote>

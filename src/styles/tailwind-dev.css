@@ -1,0 +1,8 @@
+@layer theme, base, cb-vendor, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@import "./cb-ui.css";
+
+@custom-variant dark (&:where(.dark, .dark *));

@@ -178,7 +178,7 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
         }}
         className={`relative flex flex-col ${classNameContainer}`}
       >
-        {label && <label className="text-xs font-medium !pl-6">{label}</label>}
+        {label && <label className="text-xs font-medium pl-6">{label}</label>}
 
         <div className="relative flex items-center w-full" onClick={openPicker}>
           <input
@@ -192,14 +192,14 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
               borderColor,
               color: textColor,
             }}
-            className={`w-full !pr-4 !pl-8 !py-4 border outline-none placeholder-[var(--ion-color-medium)] ${classNameInput}`}
+            className={`w-full pr-4 pl-8 py-4 border outline-none placeholder-(--cb-color-medium) ${classNameInput}`}
           />
           {withCalendar && (
             <LuCalendar className="absolute right-8 text-[24px] text-gray-500 hover:text-blue-600 transition-colors cursor-pointer" />
           )}
         </div>
         {errorText && (
-          <IonNote className="text-[12px] !pl-6 text-[var(--ion-color-danger)]">
+          <IonNote className="text-[12px] pl-6 text-(--cb-color-danger)">
             {" "}
             {errorText}{" "}
           </IonNote>
@@ -212,7 +212,7 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
           onDidDismiss={() => setShowModal(false)}
           className="custom-calendar-modal"
         >
-          <div className="!p-4 bg-white !rounded-lg shadow-lg">
+          <div className="p-4 bg-white rounded-lg shadow-lg">
             <IonDatetime
               locale="pt-BR"
               value={internalValue}
@@ -242,7 +242,7 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
       )}
 
       {pickerMode === "dropdown" && showModal && (
-        <div className="absolute z-50 mt-2 bg-white !rounded-lg shadow-lg !p-3">
+        <div className="absolute z-50 mt-2 bg-white rounded-lg shadow-lg p-3">
           <IonDatetime
             locale="pt-BR"
             value={internalValue}

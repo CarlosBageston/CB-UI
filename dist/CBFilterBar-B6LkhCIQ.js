@@ -110,10 +110,10 @@ const Hn = {
       cardSelected: "ring-1 ring-primary/80 border-primary shadow-lg shadow-primary-950/20",
       textPrimary: "text-slate-100",
       textMuted: "text-slate-400",
+      selectPagination: "bg-[#1f2836] border border-slate-700",
       divider: "border-slate-800/80",
       badge: "bg-slate-800 text-slate-300",
-      checkboxBorder: "border-slate-700",
-      border: "#b7b7b7"
+      checkboxBorder: "border-slate-700"
     },
     colorsPagination: {
       bgButtonPreviousPagination: "",
@@ -131,11 +131,11 @@ const Hn = {
       card: "bg-slate-50 border-[#e7e5e4] hover:bg-slate-100",
       cardSelected: "ring-1 ring-primary border-primary-200 shadow-md shadow-primary-500/5",
       textPrimary: "text-slate-800",
+      selectPagination: "bg-white border border-[#31415899]",
       textMuted: "text-slate-500",
       divider: "border-slate-150",
       badge: "bg-slate-100 text-slate-700",
-      checkboxBorder: "border-slate-300",
-      border: "#b7b7b7"
+      checkboxBorder: "border-slate-300"
     },
     colorsPagination: {
       bgButtonPreviousPagination: "",
@@ -5534,11 +5534,11 @@ export {
   Ah as A,
   dr as C,
   Hn as D,
-  pr as F,
-  wh as a,
-  Ph as b,
-  Ch as c,
-  bh as d,
+  wh as F,
+  Ph as a,
+  Ch as b,
+  bh as c,
+  pr as d,
   Vh as e,
   us as m
 };
