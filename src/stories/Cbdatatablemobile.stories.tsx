@@ -48,7 +48,7 @@ export const ServerPagination: Story = {
       return (
         <CBDataTableMobile
           columns={userColumns}
-          // theme="light"
+          theme="dark"
           data={response?.data ?? []}
           page={page}
           pageSize={pageSize}

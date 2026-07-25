@@ -36,6 +36,15 @@ type NativeButtonProps = Pick<
   | "id"
 >;
 
+export type CBButtonRounded =
+  | boolean
+  | "none"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "full"
+  | string;
 /**
  * Props do componente `CBButton`.
  */
@@ -71,11 +80,17 @@ export interface CBButtonProps extends NativeButtonProps {
   variant?: CBButtonVariant;
 
   /**
-   * Aplica bordas totalmente arredondadas.
+   * Define o arredondamento das bordas.
+   *
+   * Aceita:
+   * - true: totalmente arredondado
+   * - false: sem alteração
+   * - tokens (`sm`, `md`, `lg`, `xl`, `full`)
+   * - valores CSS customizados
    *
    * @default false
    */
-  rounded?: boolean;
+  rounded?: CBButtonRounded;
 
   /**
    * Faz o botão ocupar 100% da largura disponível.
@@ -294,7 +309,39 @@ const CBButton: React.FC<CBButtonProps> = ({
 
   // Border radius
   if (rounded) {
-    finalStyle["--border-radius"] = "999px";
+    switch (rounded) {
+      case true:
+      case "full":
+        finalStyle["--border-radius"] = "999px";
+        break;
+
+      case "none":
+        finalStyle["--border-radius"] = "0px";
+        break;
+
+      case "sm":
+        finalStyle["--border-radius"] = "4px";
+        break;
+
+      case "md":
+        finalStyle["--border-radius"] = "8px";
+        break;
+
+      case "lg":
+        finalStyle["--border-radius"] = "12px";
+        break;
+
+      case "xl":
+        finalStyle["--border-radius"] = "16px";
+        break;
+
+      default:
+        // permite valores CSS:
+        // rounded="6px"
+        // rounded="50%"
+        finalStyle["--border-radius"] = rounded;
+        break;
+    }
   }
 
   // Full width
@@ -319,7 +366,6 @@ const CBButton: React.FC<CBButtonProps> = ({
       finalStyle.fontSize = "18px";
       break;
   }
-  const hasIcons = iconStart || iconEnd;
   return (
     <IonButton
       fill={variant}
@@ -335,13 +381,11 @@ const CBButton: React.FC<CBButtonProps> = ({
           {loadingText ?? children}
         </>
       ) : (
-        <span
-          className={hasIcons ? "inline-flex items-center gap-1" : undefined}
-        >
+        <>
           {iconStart}
           {children}
           {iconEnd}
-        </span>
+        </>
       )}
     </IonButton>
   );

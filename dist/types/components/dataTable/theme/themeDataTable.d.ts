@@ -23,8 +23,8 @@ export interface CBTableMobileTheme {
         badge: string;
         /** Borda do checkbox quando não está marcado */
         checkboxBorder: string;
-        /** Selecionar linhas */
-        selectPagination: string;
+        /** border pagination linhas */
+        border: string;
     };
     /**Usar cores hexadecimal para ionic */
     colorsPagination: {

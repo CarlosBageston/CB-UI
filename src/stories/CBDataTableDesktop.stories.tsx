@@ -41,6 +41,7 @@ export const ServerPagination: Story = {
           columns={userColumns}
           data={response?.data ?? []}
           page={page}
+          theme="light"
           pageSize={pageSize}
           totalRows={response?.totalElements ?? 0}
           onPageChange={setPage}

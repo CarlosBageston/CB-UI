@@ -20,6 +20,7 @@ export type CBButtonVariant = "solid" | "outline" | "clear";
  * do componente são reexportadas.
  */
 type NativeButtonProps = Pick<React.ComponentProps<typeof IonButton>, "onClick" | "type" | "routerLink" | "href" | "target" | "expand" | "className" | "style" | "id">;
+export type CBButtonRounded = boolean | "none" | "sm" | "md" | "lg" | "xl" | "full" | string;
 /**
  * Props do componente `CBButton`.
  */
@@ -52,11 +53,17 @@ export interface CBButtonProps extends NativeButtonProps {
      */
     variant?: CBButtonVariant;
     /**
-     * Aplica bordas totalmente arredondadas.
+     * Define o arredondamento das bordas.
+     *
+     * Aceita:
+     * - true: totalmente arredondado
+     * - false: sem alteração
+     * - tokens (`sm`, `md`, `lg`, `xl`, `full`)
+     * - valores CSS customizados
      *
      * @default false
      */
-    rounded?: boolean;
+    rounded?: CBButtonRounded;
     /**
      * Faz o botão ocupar 100% da largura disponível.
      *

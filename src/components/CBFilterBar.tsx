@@ -153,15 +153,20 @@ function CBFilterBar<T>({
           <CBButton
             variant="clear"
             id="filter-column-button"
-            className={`${selectClassName} min-w-28! max-w-28! truncate`}
+            className={`${selectClassName} min-w-28! max-w-28!`}
             backgroundColor="transparent"
             textColor={colors.text}
             size="small"
-            iconEnd={<FiChevronDown size={14} className={colors.text} />}
           >
-            {selectedColumn
-              ? columns.find((c) => c.value === selectedColumn)?.label
-              : "Todas"}
+            <span className="flex items-center gap-1 w-full min-w-0">
+              <span className="truncate min-w-0 flex-1">
+                {selectedColumn
+                  ? columns.find((c) => c.value === selectedColumn)?.label
+                  : "Todas"}
+              </span>
+
+              <FiChevronDown size={14} className="shrink-0 opacity-70" />
+            </span>
           </CBButton>
 
           <IonPopover
@@ -177,6 +182,7 @@ function CBFilterBar<T>({
             >
               <IonItem
                 button
+                className="uppercase"
                 onClick={() => setSelectedColumn(undefined)}
                 style={{
                   "--background": colors.background,
@@ -189,6 +195,7 @@ function CBFilterBar<T>({
               {columns.map((col) => (
                 <IonItem
                   key={col.value}
+                  className="uppercase"
                   button
                   style={{
                     "--background": colors.background,
