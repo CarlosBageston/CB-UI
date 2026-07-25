@@ -1,6 +1,6 @@
-import React from 'react';
-import type { IconType } from 'react-icons/lib';
-import type { CBColor } from '../theme/CBColor';
+import React from "react";
+import type { IconType } from "react-icons/lib";
+import type { CBColor } from "../theme/CBColor";
 /**
  * Props do componente CBFabButton
  */

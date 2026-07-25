@@ -153,7 +153,7 @@ function CBAutocomplete<T>({
             <IonSpinner name="crescent" style={{ color: borderColor }} />
           </div>
         ) : (
-          <IonList className="!p-0">
+          <IonList className="p-0">
             {filteredItems.map((item) => (
               <IonItem
                 key={getValue(item)}
@@ -191,7 +191,7 @@ function CBAutocomplete<T>({
         style={{ minHeight: 72, ...style }}
       >
         {label && (
-          <label className={`text-xs font-medium !pl-6 ${labelClass}`}>
+          <label className={`text-xs font-medium pl-6 ${labelClass}`}>
             {label}
           </label>
         )}
@@ -201,7 +201,7 @@ function CBAutocomplete<T>({
           placeholder={placeholder}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setTimeout(() => setIsFocused(false), 150)}
-          className={`w-full !pr-4 !pl-8 !py-4 border outline-none placeholder-[var(--cb-color-medium)] ${inputClass}`}
+          className={`w-full pr-4 pl-8 py-4 border outline-none placeholder-(--cb-color-border) ${inputClass}`}
           style={{
             borderColor,
             borderRadius: borderRadiusInput,

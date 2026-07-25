@@ -192,7 +192,7 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
               borderColor,
               color: textColor,
             }}
-            className={`w-full pr-4 pl-8 py-4 border outline-none placeholder-(--cb-color-medium) ${classNameInput}`}
+            className={`w-full pr-4 pl-8 py-4 border outline-none placeholder-(--cb-color-border) ${classNameInput}`}
           />
           {withCalendar && (
             <LuCalendar className="absolute right-8 text-[24px] text-gray-500 hover:text-blue-600 transition-colors cursor-pointer" />

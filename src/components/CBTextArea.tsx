@@ -80,7 +80,7 @@ const CBTextArea: React.FC<CBTextAreaProps> = ({
     ? errorColor
     : focused || filled
       ? mainColor
-      : "var(--cb-color-medium)";
+      : "var(--cb-color-border)";
 
   const charsLeft = maxLength ? maxLength - value.length : undefined;
   const charsOver = charsLeft !== undefined && charsLeft < 0;

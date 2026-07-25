@@ -124,7 +124,7 @@ function CBSelect<T>({
     "--border-color": error ? CB_COLOR_MAP.danger : borderColor,
     "--icon-color": borderColor,
     "--color": "var(--cb-color-dark)",
-    "--placeholder-color": "var(--cb-color-medium)",
+    "--placeholder-color": "var(--cb-color-border)",
   };
 
   return (
