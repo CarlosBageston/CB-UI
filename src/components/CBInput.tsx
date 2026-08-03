@@ -31,7 +31,12 @@ function toStringValue(value: unknown): string {
  * Exibição: (41) 99999-8888
  * Raw: 41999998888
  * ```
- *
+ * `cpf`
+ * ```txt
+ * Entrada: 12345678901
+ * Exibição: 123.456.789-01
+ * Raw: 12345678901
+ * ```
  * `cep`
  * ```txt
  * Entrada: 84000000
@@ -62,6 +67,7 @@ function toStringValue(value: unknown): string {
  *   }}
  * />
  * ```
+ *
  *
  * `onChange` retorna o valor formatado exibido ao usuário.
  *
@@ -99,8 +105,6 @@ const CBInput: React.FC<CBInputProps> = ({
   const { main: mainColor } = useCBColor(color, colorContrast);
   const { main: errorColor } = useCBColor("danger");
   const { show, toggle, inputType } = usePasswordToggle();
-  console.log("mainColor", mainColor);
-  console.log("errorColor", errorColor);
   const { handleChange, inputMode } = useInputMask(mask, onChange, onRawChange);
 
   const stringValue = useMemo(() => toStringValue(value), [value]);

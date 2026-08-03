@@ -1,5 +1,6 @@
-export type GridSpan = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+export type GridSpan = "auto" | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 export declare const colSpan: {
+    auto: string;
     1: string;
     2: string;
     3: string;
@@ -14,6 +15,7 @@ export declare const colSpan: {
     12: string;
 };
 export declare const smColSpan: {
+    auto: string;
     1: string;
     2: string;
     3: string;
@@ -28,6 +30,7 @@ export declare const smColSpan: {
     12: string;
 };
 export declare const mdColSpan: {
+    auto: string;
     1: string;
     2: string;
     3: string;
@@ -42,6 +45,7 @@ export declare const mdColSpan: {
     12: string;
 };
 export declare const lgColSpan: {
+    auto: string;
     1: string;
     2: string;
     3: string;
@@ -56,6 +60,7 @@ export declare const lgColSpan: {
     12: string;
 };
 export declare const xlColSpan: {
+    auto: string;
     1: string;
     2: string;
     3: string;

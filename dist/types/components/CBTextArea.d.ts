@@ -11,6 +11,7 @@ export interface CBTextAreaProps extends React.ComponentProps<typeof IonTextarea
     color?: CBColor;
     onChangeValue: (val: string) => void;
     maxLength?: number;
+    radius?: "none" | "sm" | "md" | "lg" | "full";
 }
 /**
  * CBTextArea

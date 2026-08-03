@@ -1,5 +1,6 @@
 import type { ColDef } from "ag-grid-community";
 import type { CSSProperties, ReactNode } from "react";
+import type { CBInputMask, CBInputMaskFn } from "./components";
 
 /** Base para componentes que aceitam className e style */
 interface CBBaseProps {
@@ -43,6 +44,7 @@ export interface CBTableColumn<T> extends Pick<
   children?: CBTableColumn<T>[];
   /** Alinhamento do texto da célula */
   align?: "left" | "center" | "right";
+  mask?: CBInputMask | CBInputMaskFn;
 }
 
 /** Modo de paginação. Default "server". */

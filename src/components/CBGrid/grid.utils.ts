@@ -1,6 +1,20 @@
-export type GridSpan = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+export type GridSpan =
+  | "auto"
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12;
 
 export const colSpan = {
+  auto: "md:col-auto",
   1: "col-span-1",
   2: "col-span-2",
   3: "col-span-3",
@@ -16,6 +30,7 @@ export const colSpan = {
 } satisfies Record<GridSpan, string>;
 
 export const smColSpan = {
+  auto: "md:col-auto",
   1: "sm:col-span-1",
   2: "sm:col-span-2",
   3: "sm:col-span-3",
@@ -31,6 +46,7 @@ export const smColSpan = {
 } satisfies Record<GridSpan, string>;
 
 export const mdColSpan = {
+  auto: "md:col-auto",
   1: "md:col-span-1",
   2: "md:col-span-2",
   3: "md:col-span-3",
@@ -46,6 +62,7 @@ export const mdColSpan = {
 } satisfies Record<GridSpan, string>;
 
 export const lgColSpan = {
+  auto: "md:col-auto",
   1: "lg:col-span-1",
   2: "lg:col-span-2",
   3: "lg:col-span-3",
@@ -61,6 +78,7 @@ export const lgColSpan = {
 } satisfies Record<GridSpan, string>;
 
 export const xlColSpan = {
+  auto: "md:col-auto",
   1: "xl:col-span-1",
   2: "xl:col-span-2",
   3: "xl:col-span-3",

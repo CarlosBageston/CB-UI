@@ -5,4 +5,5 @@ export declare function useInputMask(mask: CBInputMask | CBInputMaskFn | undefin
     readonly handleChange: (value: string) => void;
     readonly inputMode: "text" | "numeric" | undefined;
 };
+export declare function applyMask(value: unknown, mask?: CBInputMask | CBInputMaskFn, customMasks?: Record<string, CBInputMaskFn>): string;
 export {};

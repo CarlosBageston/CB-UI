@@ -1,95 +1,54 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
+  IonNote,
   IonSelect,
   IonSelectOption,
-  IonNote,
   type SelectCustomEvent,
 } from "@ionic/react";
-import { CB_COLOR_MAP, type CBColor, type CSSVars } from "../theme/CBColor";
+
 import { useCBColor } from "../hooks/useCBColor";
+import type { CBColor, CSSVars } from "../theme/CBColor";
 
 export interface CBSelectProps<T> extends Omit<
   React.ComponentProps<typeof IonSelect>,
   "value" | "onIonChange"
 > {
   label?: string;
-  value: T | string | number;
+  value?: T | string | number | null;
   items: T[];
-  getLabel: (option: T) => string;
-  getValue: (option: T) => string | number;
-  onValueChange: (value: T) => void;
-  placeholder?: string;
-  error?: boolean;
+  getLabel: (item: T) => string;
+  getValue: (item: T) => string | number;
+
+  onValueChange?: (value: T) => void;
+
+  error?: string;
   helperText?: string;
   loading?: boolean;
+
   color?: CBColor;
+
+  radius?: "none" | "sm" | "md" | "lg" | "full";
 }
 
-/** Hook para definir interface com base no viewport */
 function useResponsiveInterface() {
-  const [selectInterface, setSelectInterface] = useState<
-    "action-sheet" | "popover"
-  >("action-sheet");
+  const [mode, setMode] = useState<"popover" | "action-sheet">("action-sheet");
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 768px)");
-    const update = (e: MediaQueryListEvent | MediaQueryList) => {
-      setSelectInterface(e.matches ? "popover" : "action-sheet");
+    const media = window.matchMedia("(min-width:768px)");
+
+    const update = () => {
+      setMode(media.matches ? "popover" : "action-sheet");
     };
-    update(mediaQuery);
-    mediaQuery.addEventListener("change", update);
-    return () => mediaQuery.removeEventListener("change", update);
+
+    update();
+
+    media.addEventListener("change", update);
+
+    return () => media.removeEventListener("change", update);
   }, []);
 
-  return selectInterface;
+  return mode;
 }
-/**
- * CBSelect
- *
- * Componente de seleção baseado no `IonSelect` do Ionic, com suporte a tipagem genérica,
- * exibição responsiva (popover em desktop e action-sheet em mobile), cores personalizadas,
- * estado de erro e helper text.
- *
- * @template T - Tipo dos itens do select
- *
- * @param {Object} props - Propriedades do componente
- * @param {string} [props.label] - Texto do label exibido acima do select.
- * @param {T | string | number} props.value - Valor atual selecionado.
- * @param {T[]} props.items - Lista de itens disponíveis para seleção.
- * @param {(option: T) => string} props.getLabel - Função que retorna o texto exibido de cada item.
- * @param {(option: T) => string | number} props.getValue - Função que retorna o valor único de cada item.
- * @param {(value: T) => void} props.onValueChange - Callback chamado ao selecionar um item.
- * @param {string} [props.placeholder='Selecione...'] - Texto exibido quando nenhum item está selecionado.
- * @param {boolean} [props.error=false] - Indica se o campo está em estado de erro.
- * @param {string} [props.helperText=''] - Texto de ajuda ou erro exibido abaixo do select.
- * @param {boolean} [props.disabled=false] - Desabilita a seleção.
- * @param {boolean} [props.loading=false] - Indica se o select está em estado de loading.
- * @param {CBColor} [props.color='neutral'] - Cor principal do select, usada em borda e ícone.
- * @param {React.CSSProperties} [props.style] - Estilos inline adicionais.
- * @param {"outline" | "solid"} [props.fill='outline'] - Tipo de preenchimento do select.
- * @param {"round" | "default"} [props.shape='round'] - Formato do select.
- *
- * @example
- * type Option = { id: number; name: string };
- * const options: Option[] = [
- *   { id: 1, name: "Opção 1" },
- *   { id: 2, name: "Opção 2" }
- * ];
- *
- * <CBSelect
- *   label="Escolha uma opção"
- *   items={options}
- *   value={options[0]}
- *   getLabel={(opt) => opt.name}
- *   getValue={(opt) => opt.id}
- *   onValueChange={(opt) => console.log(opt)}
- * />
- *
- * @remarks
- * - Em telas >= 768px, o select utiliza popover; em telas menores, action-sheet.
- * - Suporta estado de erro e exibe helperText quando `error` é true.
- * - Suporta cores personalizadas através da prop `color` usando o mapa `CB_COLOR_MAP`.
- */
 
 function CBSelect<T>({
   label,
@@ -98,73 +57,110 @@ function CBSelect<T>({
   getLabel,
   getValue,
   onValueChange,
+
   placeholder = "Selecione...",
-  error = false,
-  helperText = "",
-  disabled = false,
-  loading = false,
+  disabled,
+  loading,
+
+  error,
+  helperText,
+
   color = "neutral",
+
+  radius = "md",
+
   style,
+
   fill = "outline",
   shape = "round",
-  ...rest
-}: CBSelectProps<T>) {
-  const selectRef = useRef<HTMLIonSelectElement>(null);
-  const selectInterface = useResponsiveInterface();
-  const { main: borderColor } = useCBColor(color);
 
-  const handleChange = (event: SelectCustomEvent<T>) => {
-    const selectedValue = event.detail.value;
-    const selectedOption = items.find((opt) => getValue(opt) === selectedValue);
-    if (selectedOption) onValueChange(selectedOption);
+  ...props
+}: CBSelectProps<T>) {
+  const ref = useRef<HTMLIonSelectElement>(null);
+
+  const [focused, setFocused] = useState(false);
+
+  const { main } = useCBColor(color);
+  const { main: danger } = useCBColor("danger");
+
+  const selectInterface = useResponsiveInterface();
+
+  const filled = value !== undefined && value !== null && value !== "";
+
+  const borderColor = error
+    ? danger
+    : focused || filled
+      ? main
+      : "var(--cb-color-border)";
+
+  const radiusMap = {
+    none: "0px",
+    sm: "8px",
+    md: "12px",
+    lg: "16px",
+    full: "9999px",
   };
 
-  const finalStyle: CSSVars = {
-    ...style,
-    "--border-color": error ? CB_COLOR_MAP.danger : borderColor,
-    "--icon-color": borderColor,
-    "--color": "var(--cb-color-dark)",
-    "--placeholder-color": "var(--cb-color-border)",
+  const css = useMemo<CSSVars>(
+    () => ({
+      ...style,
+
+      "--border-color": borderColor,
+      "--highlight-color-focused": main,
+      "--border-radius": radiusMap[radius],
+
+      "--icon-color": borderColor,
+      "--color": "var(--cb-color-dark)",
+      "--placeholder-color": "var(--cb-color-border)",
+    }),
+    [style, borderColor, main, radius],
+  );
+
+  const handleChange = (e: SelectCustomEvent<string | number>) => {
+    const option = items.find((item) => getValue(item) === e.detail.value);
+
+    if (option) {
+      onValueChange?.(option);
+    }
   };
 
   return (
-    <div className="relative flex flex-col" style={{ minHeight: 72 }}>
-      {label && <label className="text-xs font-medium pl-6!">{label}</label>}
-
+    <div className="relative flex flex-col h-18 pt-2 mb-3!">
       <IonSelect
-        ref={selectRef}
-        interface={selectInterface}
+        ref={ref}
+        value={value ?? undefined}
+        label={label}
+        labelPlacement="stacked"
         placeholder={placeholder}
-        value={value}
-        disabled={disabled || loading}
-        onIonChange={handleChange}
-        onClick={(ev) => {
-          ev.persist?.();
-          rest.interfaceOptions = {
-            ...rest.interfaceOptions,
-            event: ev.nativeEvent,
-          };
-        }}
-        interfaceOptions={{
-          header: label,
-        }}
         fill={fill}
         shape={shape}
         mode="md"
-        labelPlacement="stacked"
-        style={finalStyle}
-        {...rest}
+        disabled={disabled || loading}
+        interface={selectInterface}
+        interfaceOptions={{
+          header: label,
+        }}
+        style={css}
+        onIonFocus={() => setFocused(true)}
+        onIonBlur={() => setFocused(false)}
+        onIonChange={handleChange}
+        {...props}
       >
-        {items.map((option, index) => (
-          <IonSelectOption key={index} value={getValue(option)}>
-            {getLabel(option)}
+        {items.map((item) => (
+          <IonSelectOption key={String(getValue(item))} value={getValue(item)}>
+            {getLabel(item)}
           </IonSelectOption>
         ))}
       </IonSelect>
 
-      {error && helperText && (
-        <IonNote className="text-[12px] pl-6! text-(--cb-color-danger)">
-          {helperText}
+      {(error || helperText) && (
+        <IonNote
+          role="alert"
+          className={`pl-6! text-[12px] ${
+            error ? "text-(--cb-color-danger)" : "text-(--cb-color-secondary)"
+          }`}
+        >
+          {error ?? helperText}
         </IonNote>
       )}
     </div>

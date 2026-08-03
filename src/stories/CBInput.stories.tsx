@@ -21,10 +21,12 @@ export const Playground: Story = {
       cep: "",
       salario: "",
       idade: "",
+      cpf: "",
     });
 
     const [rawValues, setRawValues] = useState({
       telefone: "",
+      cpf: "",
       cep: "",
       salario: "",
     });
@@ -78,6 +80,15 @@ export const Playground: Story = {
           }
         />
 
+        <CBInput
+          label="CPF"
+          placeholder="000.000.000-00"
+          mask="cpf"
+          maxLength={14}
+          value={form.cpf}
+          onChange={(cpf) => setForm((prev) => ({ ...prev, cpf }))}
+          onRawChange={(raw) => setRawValues((prev) => ({ ...prev, cpf: raw }))}
+        />
         <CBInput
           label="CEP"
           placeholder="00000-000"

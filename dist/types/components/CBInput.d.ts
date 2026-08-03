@@ -17,7 +17,12 @@ import type { CBInputProps } from "../types/components";
  * Exibição: (41) 99999-8888
  * Raw: 41999998888
  * ```
- *
+ * `cpf`
+ * ```txt
+ * Entrada: 12345678901
+ * Exibição: 123.456.789-01
+ * Raw: 12345678901
+ * ```
  * `cep`
  * ```txt
  * Entrada: 84000000
@@ -48,6 +53,7 @@ import type { CBInputProps } from "../types/components";
  *   }}
  * />
  * ```
+ *
  *
  * `onChange` retorna o valor formatado exibido ao usuário.
  *

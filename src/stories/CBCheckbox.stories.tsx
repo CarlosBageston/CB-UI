@@ -1,73 +1,111 @@
 import { useState } from "react";
+import CBCheckbox from "../components/CBCheckbox/CBCheckbox";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { CBCheckbox } from "..";
 
 const meta: Meta<typeof CBCheckbox> = {
-  title: "Form/CBCheckbox",
+  title: "Components/CBCheckbox",
   component: CBCheckbox,
-  args: {
-    label: "Aceito os termos",
-    checked: false,
-    variant: "default",
-    disabled: false,
-  },
+
   argTypes: {
-    variant: {
+    color: {
       control: "select",
-      options: ["default", "filled"],
+      options: ["primary", "secondary", "success", "danger", "warning"],
     },
-    onChange: { action: "changed" },
+
+    labelPlacement: {
+      control: "radio",
+      options: ["start", "end"],
+    },
+
+    disabled: {
+      control: "boolean",
+    },
   },
 };
 
 export default meta;
+
 type Story = StoryObj<typeof CBCheckbox>;
 
-// ✅ Story base controlada com hook
 export const Default: Story = {
-  render: (args) => {
+  render: () => {
     const [checked, setChecked] = useState(false);
-    return <CBCheckbox {...args} checked={checked} onChange={setChecked} />;
-  },
-};
 
-// ✅ Filled variant
-export const Filled: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(true);
     return (
       <CBCheckbox
-        {...args}
-        label="Receber notificações"
+        label="Aceito os termos"
         checked={checked}
         onChange={setChecked}
-        variant="filled"
-        textColor="#FFFF"
-        color="#F1d"
       />
     );
   },
 };
 
-// ✅ Sem label
-export const WithoutLabel: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(false);
-    return <CBCheckbox {...args} checked={checked} onChange={setChecked} />;
+export const Checked: Story = {
+  render: () => {
+    const [checked, setChecked] = useState(true);
+
+    return (
+      <CBCheckbox
+        label="Usuário ativo"
+        checked={checked}
+        onChange={setChecked}
+        color="success"
+      />
+    );
   },
 };
 
-// ✅ Desabilitado
-export const Disabled: Story = {
-  render: (args) => {
+export const LabelStart: Story = {
+  render: () => {
+    const [value, setValue] = useState(false);
+
     return (
       <CBCheckbox
-        {...args}
-        label="Opção desabilitada"
-        checked={true}
-        disabled={true}
-        onChange={() => {}}
+        label="Label antes"
+        checked={value}
+        onChange={setValue}
+        labelPlacement="start"
       />
+    );
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    label: "Desabilitado",
+    checked: true,
+    disabled: true,
+  },
+};
+
+export const Colors: Story = {
+  render: () => {
+    const [value, setValue] = useState(true);
+
+    return (
+      <div className="flex flex-col gap-4">
+        <CBCheckbox
+          label="Primary"
+          checked={value}
+          onChange={setValue}
+          color="primary"
+        />
+
+        <CBCheckbox
+          label="Success"
+          checked={value}
+          onChange={setValue}
+          color="success"
+        />
+
+        <CBCheckbox
+          label="Danger"
+          checked={value}
+          onChange={setValue}
+          color="danger"
+        />
+      </div>
     );
   },
 };

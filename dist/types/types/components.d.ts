@@ -9,18 +9,23 @@ interface CBBaseProps {
 }
 /** ----------------- CBAutocomplete ----------------- */
 export type CBAutocompleteVariant = "search" | "select";
-export interface CBAutocompleteProps<T> extends CBBaseProps {
-    items: T[];
+export interface CBAutocompleteProps<T> {
+    value?: T | null;
+    items?: T[];
     getLabel: (item: T) => string;
     getValue: (item: T) => string | number;
-    onSelect: (item: T | undefined) => void;
-    placeholder?: string;
-    color?: CBColor;
-    rounded?: boolean;
-    fullWidth?: boolean;
-    loading?: boolean;
-    variant?: CBAutocompleteVariant;
+    onChange?: (item?: T) => void;
+    search?: (value: string) => Promise<T[]>;
     label?: string;
+    placeholder?: string;
+    disabled?: boolean;
+    loading?: boolean;
+    error?: string;
+    color?: CBColor;
+    radius?: "none" | "sm" | "md" | "lg" | "full";
+    className?: string;
+    style?: React.CSSProperties;
+    maxResults?: number;
 }
 /** ----------------- CBButton ----------------- */
 export type CBButtonSize = "small" | "medium" | "large";
@@ -129,7 +134,7 @@ export interface CBFilterBarProps<T> extends CBBaseProps {
     style?: CSSProperties;
 }
 /** ----------------- CBInput ----------------- */
-export type CBInputMask = "tel" | "cep" | "currency" | "cnpj";
+export type CBInputMask = "tel" | "cep" | "currency" | "cnpj" | "cpf";
 export type CBInputMaskResult = {
     formatted: string;
     raw: string;

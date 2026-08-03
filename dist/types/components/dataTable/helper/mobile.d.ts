@@ -1,10 +1,12 @@
 import type { CBTableColumn } from "../../../datatable";
+import type { CBInputMask, CBInputMaskFn } from "../../../types/components";
 interface FlatColumn<T> {
     headerName: string;
     field?: string;
     align?: "left" | "center" | "right";
     render?: (row: T) => React.ReactNode;
     valueGetter?: (row: T) => React.ReactNode;
+    mask?: CBInputMask | CBInputMaskFn;
 }
 /**
  * Converte colunas agrupadas em uma lista simples.
@@ -23,4 +25,5 @@ export declare function flattenColumns<T>(columns: CBTableColumn<T>[]): FlatColu
  * retorna "-" para manter a tabela organizada.
  */
 export declare function getValue<T>(row: T, field?: string): React.ReactNode;
+export declare function getDisplayValue<T>(row: T, col: FlatColumn<T>): React.ReactNode;
 export {};

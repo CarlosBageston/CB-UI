@@ -25,7 +25,6 @@ export function useTheme(forcedTheme?: "light" | "dark") {
     });
     return () => observer.disconnect();
   }, [forcedTheme]);
-  console.log("theme", theme);
 
   return theme;
 }

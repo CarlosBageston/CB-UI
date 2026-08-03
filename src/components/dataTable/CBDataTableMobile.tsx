@@ -1,12 +1,12 @@
+import CBCheckbox from "../CBCheckbox/CBCheckbox";
+import CBButton from "../CBButton";
+import { AnimatePresence, motion } from "framer-motion";
+import type { CBDataTableProps } from "../../datatable";
+import { flattenColumns, getDisplayValue } from "./helper/mobile";
+import { CBPaginationFooter } from "./components/CBPaginationFooter";
+import { useDataTableSelection } from "./hook/useDataTableSelection";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FiEdit, FiTrash2, FiChevronDown, FiChevronUp } from "react-icons/fi";
-import CBButton from "../CBButton";
-import type { CBDataTableProps } from "../../datatable";
-import CBCheckbox from "../CBCheckbox";
-import { useDataTableSelection } from "./hook/useDataTableSelection";
-import { flattenColumns, getValue } from "./helper/mobile";
-import { AnimatePresence, motion } from "framer-motion";
-import { CBPaginationFooter } from "./components/CBPaginationFooter";
 import {
   DEFAULT_THEMES,
   type CBTableMobileTheme,
@@ -33,7 +33,6 @@ function CBDataTableMobile<T>({
   onPageSizeChange,
   loading = false,
 }: CBDataTableMobileProps<T>) {
-  console.log("theme mobile", theme);
   // Página interna só existe (e só é usada) no modo client.
   // No modo server, quem manda é o `page` vindo via props.
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>(
@@ -181,7 +180,7 @@ function CBDataTableMobile<T>({
         </div>
 
         {/* Lista de cards */}
-        <div className="flex flex-col gap-1 min-h-[120px]">
+        <div className="flex flex-col gap-1 min-h-30">
           {paginatedData.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-10 text-center">
               <span
@@ -196,9 +195,7 @@ function CBDataTableMobile<T>({
               const isSelected = isRowSelected(row, index);
               const isExpanded = !!expandedCards[key];
 
-              const titleValue = titleColumn?.render
-                ? titleColumn.render(row)
-                : getValue(row, titleColumn?.field);
+              const titleValue = getDisplayValue(row, titleColumn);
 
               return (
                 <div
@@ -278,11 +275,7 @@ function CBDataTableMobile<T>({
                         className={`mt-4 pt-3.5 px-2 border-t space-y-3 animate-slide-down ${activeTheme.classes.divider}`}
                       >
                         {restColumns.map((col, colIndex) => {
-                          const value = col.render
-                            ? col.render(row)
-                            : col.valueGetter
-                              ? col.valueGetter(row)
-                              : getValue(row, col.field);
+                          const value = getDisplayValue(row, col);
 
                           const textAlign =
                             col.align === "center"

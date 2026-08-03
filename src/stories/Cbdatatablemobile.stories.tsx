@@ -10,7 +10,7 @@ import {
 } from "../helper/mockPagination";
 
 const meta: Meta<typeof CBDataTableMobile<User>> = {
-  title: "Form/CBDataTableMobile",
+  title: "Form/CBDataTable/Mobile",
   component: CBDataTableMobile<User>,
 };
 

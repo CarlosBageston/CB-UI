@@ -4,6 +4,7 @@ import type {
   ICellRendererParams,
 } from "ag-grid-community";
 import type { CBTableColumn } from "../../../datatable";
+import { applyMask } from "../../../hooks/useInputMask";
 
 /**
  * Converte uma CBTableColumn (nossa API simplificada) em um ColDef/ColGroupDef
@@ -20,7 +21,7 @@ import type { CBTableColumn } from "../../../datatable";
 export function mapColumn<T>(
   col: CBTableColumn<T>,
 ): ColDef<T> | ColGroupDef<T> {
-  const { col: colSpan, render, children, align, ...colDefRest } = col;
+  const { col: colSpan, render, children, align, mask, ...colDefRest } = col;
 
   if (children && children.length > 0) {
     return {
@@ -44,6 +45,9 @@ export function mapColumn<T>(
     cellRenderer: render
       ? (params: ICellRendererParams<T>) =>
           params.data ? render(params.data) : null
+      : undefined,
+    valueFormatter: mask
+      ? (params) => applyMask(params.value, mask)
       : undefined,
     cellClass:
       align === "center"

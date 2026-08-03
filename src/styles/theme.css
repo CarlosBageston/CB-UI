@@ -19,7 +19,7 @@
        CB-UI Design Tokens
        Componentes da biblioteca usam estes
     =============================== */
-
+    --cb-surface: #f8fafc;
     --cb-color-primary: var(--ion-color-primary, #1e40af);
     --cb-color-secondary: var(--ion-color-secondary, #7c3aed);
     --cb-color-success: var(--ion-color-success, #16a34a);
@@ -31,14 +31,15 @@
     --cb-color-light: var(--ion-color-light, #f8fafc);
     --cb-color-dark: var(--ion-color-dark, #0f172a);
     --cb-color-border: var(--ion-color-medium, #b8bdc7);
+    --cb-surface-elevated: #f8fafc;
 
+    --cb-text-primary: #111827;
+    --cb-text-secondary: #6b7280;
     /* ===============================
        Outros tokens CB-UI
     =============================== */
 
     --font-main: "Baloo 2", sans-serif;
-
-    --cb-text-primary: #f8fafc;
   }
 
   /* ===============================
@@ -48,6 +49,10 @@
   .dark {
     --ion-color-light: #1e293b;
     --ion-color-dark: #f8fafc;
-    --cb-text-primary: #0f172a;
+    --cb-surface: #1e293b;
+    --cb-surface-elevated: #0f172a;
+
+    --cb-text-primary: #f8fafc;
+    --cb-text-secondary: #cbd5e1;
   }
 }

@@ -86,7 +86,6 @@ function CBDataTableDesktop<T>({
   loading = false,
 }: CBDataTableProps<T>) {
   const themeTable = useMemo(() => getThemeTable(theme === "dark"), [theme]);
-  const [selectedRows, setSelectedRows] = useState<T[]>([]);
   const [internalPage, setInternalPage] = useState(0);
 
   const currentPage = page ?? internalPage;
@@ -99,7 +98,11 @@ function CBDataTableDesktop<T>({
   };
 
   const rowsCount = totalRows || data.length;
-  const { deleteSelected: handleDelete } = useDataTableSelection({
+  const {
+    selectedRows,
+    deleteSelected: handleDelete,
+    selectRows,
+  } = useDataTableSelection({
     selectionMode,
     getRowId,
     onDelete,
@@ -110,10 +113,13 @@ function CBDataTableDesktop<T>({
 
   const onSelectionChanged = useCallback(() => {
     const selectedNodes = gridRef.current?.api?.getSelectedNodes() ?? [];
-    setSelectedRows(
-      selectedNodes.map((node) => node.data).filter((d): d is T => d != null),
-    );
-  }, []);
+
+    const rows = selectedNodes
+      .map((node) => node.data)
+      .filter((d): d is T => d != null);
+
+    selectRows(rows);
+  }, [selectRows]);
   const columnDefs: (ColDef<T> | ColGroupDef<T>)[] = useMemo(
     () => columns.map((col) => mapColumn(col)),
     [columns],
@@ -136,7 +142,6 @@ function CBDataTableDesktop<T>({
         gridWrapperRef.current &&
         !gridWrapperRef.current.contains(event.target as Node)
       ) {
-        setSelectedRows([]);
         gridRef.current?.api?.deselectAll();
       }
     };

@@ -2,6 +2,30 @@ import { useCallback, useMemo } from "react";
 import type { CBInputMask, CBInputMaskFn } from "../types/components";
 
 const defaultMasks: Record<CBInputMask, CBInputMaskFn> = {
+  cpf: (value) => {
+    const digits = value.replace(/\D/g, "").slice(0, 11);
+
+    if (!digits) return { formatted: "", raw: "" };
+
+    let formatted = digits;
+
+    if (digits.length > 3) {
+      formatted = `${digits.substring(0, 3)}.${digits.substring(3)}`;
+    }
+
+    if (digits.length > 6) {
+      formatted = `${digits.substring(0, 3)}.${digits.substring(3, 6)}.${digits.substring(6)}`;
+    }
+
+    if (digits.length > 9) {
+      formatted = `${digits.substring(0, 3)}.${digits.substring(3, 6)}.${digits.substring(6, 9)}-${digits.substring(9)}`;
+    }
+
+    return {
+      formatted,
+      raw: digits,
+    };
+  },
   tel: (value) => {
     const digits = value.replace(/\D/g, "").slice(0, 11);
     if (!digits) return { formatted: "", raw: "" };
@@ -96,11 +120,36 @@ export function useInputMask(
   );
 
   const inputMode = useMemo(() => {
-    if (mask === "tel" || mask === "cep" || mask === "currency")
+    if (
+      mask === "tel" ||
+      mask === "cep" ||
+      mask === "currency" ||
+      mask === "cpf"
+    )
       return "numeric";
     if (mask === "cnpj") return "text";
     return undefined;
   }, [mask]);
 
   return { handleChange, inputMode } as const;
+}
+
+export function applyMask(
+  value: unknown,
+  mask?: CBInputMask | CBInputMaskFn,
+  customMasks?: Record<string, CBInputMaskFn>,
+): string {
+  if (mask === "currency") {
+    const numeric =
+      typeof value === "number" ? value : parseFloat(String(value));
+    if (isNaN(numeric)) return "";
+    return Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(numeric);
+  }
+  const maskFn = resolveMask(mask, customMasks);
+  if (!maskFn) return value == null ? "" : String(value);
+
+  return maskFn(String(value ?? "")).formatted;
 }

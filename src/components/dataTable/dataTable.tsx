@@ -8,7 +8,7 @@ function CBDataTable<T>(props: CBDataTableProps<T>) {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const { modeTable = "auto" } = props;
   const themeComputed = useTheme(props.theme);
-  console.log("themeComputed", themeComputed);
+
   if (modeTable === "mobile") {
     return <CBDataTableMobile {...props} theme={themeComputed} />;
   }
