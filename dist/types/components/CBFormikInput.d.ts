@@ -131,13 +131,23 @@ import type { CBFormikInputProps } from "../types/componentsFormikInput";
  *   onBlur={() => {
  *     console.log("campo perdeu foco");
  *   }}
+ *   onClick={() => {
+ *     console.log("campo clicado");
+ *   }}
+ *   onEnterPress={() => {
+ *     handleSubmit();
+ *   }}
  * />
  * ```
+ *
+ * `onEnterPress` é um atalho para `onKeyDown` filtrado por `Enter`.
+ * Use-o quando quiser executar uma ação ao pressionar Enter sem
+ * precisar lidar com o evento de teclado diretamente.
  *
  * Observação:
  *
  * Os callbacks não substituem o comportamento do Formik.
  * Eles são executados após a atualização interna do campo.
  */
-declare function CBFormikInput({ name, valueSource, transformValue, onChange, onRawChange, onBlur, textColor, ...props }: CBFormikInputProps): import("react").JSX.Element;
+declare function CBFormikInput({ name, valueSource, transformValue, onChange, onRawChange, onBlur, onClick, onKeyDown, onEnterPress, textColor, ...props }: CBFormikInputProps): import("react").JSX.Element;
 export default CBFormikInput;

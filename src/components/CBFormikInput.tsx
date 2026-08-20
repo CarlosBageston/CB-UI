@@ -136,8 +136,18 @@ import { resolveMask } from "../hooks/useInputMask";
  *   onBlur={() => {
  *     console.log("campo perdeu foco");
  *   }}
+ *   onClick={() => {
+ *     console.log("campo clicado");
+ *   }}
+ *   onEnterPress={() => {
+ *     handleSubmit();
+ *   }}
  * />
  * ```
+ *
+ * `onEnterPress` é um atalho para `onKeyDown` filtrado por `Enter`.
+ * Use-o quando quiser executar uma ação ao pressionar Enter sem
+ * precisar lidar com o evento de teclado diretamente.
  *
  * Observação:
  *
@@ -151,6 +161,9 @@ function CBFormikInput({
   onChange,
   onRawChange,
   onBlur,
+  onClick,
+  onKeyDown,
+  onEnterPress,
   textColor,
   ...props
 }: CBFormikInputProps) {
@@ -208,6 +221,18 @@ function CBFormikInput({
 
     onBlur?.();
   }, [helpers, onBlur]);
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        onEnterPress?.();
+      }
+
+      onKeyDown?.(event);
+    },
+    [onEnterPress, onKeyDown],
+  );
+
   const displayValue = useMemo(() => {
     if (field.value === null || field.value === undefined) {
       return "";
@@ -235,6 +260,8 @@ function CBFormikInput({
       onChange={handleChange}
       onRawChange={handleRawChange}
       onBlur={handleBlur}
+      onClick={onClick}
+      onKeyDown={handleKeyDown}
       error={meta.touched ? meta.error : undefined}
       textColor={textColor}
     />

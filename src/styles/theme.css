@@ -20,6 +20,7 @@
        Componentes da biblioteca usam estes
     =============================== */
     --cb-surface: #f8fafc;
+    --cb-surface-rgb: 255, 255, 255;
     --cb-color-primary: var(--ion-color-primary, #1e40af);
     --cb-color-secondary: var(--ion-color-secondary, #7c3aed);
     --cb-color-success: var(--ion-color-success, #16a34a);
@@ -50,6 +51,7 @@
     --ion-color-light: #1e293b;
     --ion-color-dark: #f8fafc;
     --cb-surface: #1e293b;
+    --cb-surface-rgb: 30, 41, 59;
     --cb-surface-elevated: #0f172a;
 
     --cb-text-primary: #f8fafc;

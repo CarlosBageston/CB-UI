@@ -46,4 +46,27 @@ export interface CBFormikInputProps extends Omit<CBInputProps, "value" | "error"
      * Callback adicional ao perder foco.
      */
     onBlur?: () => void;
+    /**
+     * Disparado ao clicar no campo.
+     */
+    onClick?: () => void;
+    /**
+     * Disparado ao pressionar uma tecla no campo.
+     */
+    onKeyDown?: (event: KeyboardEvent) => void;
+    /**
+     * Atalho: executado quando o usuário pressiona Enter no campo.
+     *
+     * Equivalente a usar `onKeyDown` e filtrar `event.key === 'Enter'`,
+     * mas sem precisar lidar com o evento diretamente.
+     *
+     * ```tsx
+     * <CBFormikInput
+     *   name="search"
+     *   label="Busca"
+     *   onEnterPress={() => handleSearch()}
+     * />
+     * ```
+     */
+    onEnterPress?: () => void;
 }

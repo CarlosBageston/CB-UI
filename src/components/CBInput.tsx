@@ -95,6 +95,8 @@ const CBInput: React.FC<CBInputProps> = ({
   onRawChange,
   onBlur,
   onFocus,
+  onClick,
+  onKeyDown,
   radius = "md",
   classNameIcon = "",
   classNameContainerIcon = "",
@@ -165,6 +167,8 @@ const CBInput: React.FC<CBInputProps> = ({
           onFocus?.();
         }}
         onIonBlur={handleBlur}
+        onClick={onClick}
+        onKeyDown={(e) => onKeyDown?.(e as unknown as KeyboardEvent)}
       />
 
       {isPassword && (

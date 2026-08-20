@@ -3,107 +3,61 @@ import "dayjs/locale/pt-br";
 import { LuCalendar } from "react-icons/lu";
 import type { CBColor } from "../theme/CBColor";
 import { useCBColor } from "../hooks/useCBColor";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { IonNote, IonModal, IonButton, IonDatetime } from "@ionic/react";
+import {
+  IonInput,
+  IonModal,
+  IonButton,
+  IonDatetime,
+  IonNote,
+} from "@ionic/react";
 
 dayjs.locale("pt-br");
 dayjs.extend(customParseFormat);
 dayjs.extend(localizedFormat);
+
 export interface DateLike {
   toDate(): Date;
 }
+
 const toDate = (val: Date | DateLike | null) => {
   if (!val) return null;
   if ("toDate" in val) return val.toDate();
   return val;
 };
 
-/**
- * Define os modos de exibição do date picker.
- * - `"modal"`: exibe em modal.
- * - `"dropdown"`: exibe em dropdown.
- */
 type PickerMode = "modal" | "dropdown";
+type Radius = "none" | "sm" | "md" | "lg" | "full";
 
-/**
- * Props do componente CBDataPicker.
- */
 export interface CBDataPickerProps {
-  /** Valor atual do date picker (Date ou Timestamp do Firestore) */
   value: Date | null;
-  /** Callback chamado ao selecionar uma data */
   onChange: (date: Date) => void;
-  /** Label exibido acima do input */
   label: string;
-  /** Formato de exibição da data */
   format?: "day" | "month-year" | "date" | "datetime" | "MMMM/YYYY";
-  /** Desabilita o date picker */
   disabled?: boolean;
-  /** Texto de erro exibido abaixo do input */
   errorText?: string;
-  /** Placeholder do input */
   placeholder?: string;
-  /** Data mínima selecionável */
   minDate?: string | number;
-  /** Data máxima selecionável */
   maxDate?: string | number;
-  /** Classe CSS customizada para o input */
   classNameInput?: string;
-  /** Classe CSS customizada para o container */
   classNameContainer?: string;
-  /** Exibe ícone de calendário */
   withCalendar?: boolean;
-  /** Define bordas arredondadas */
-  rounded?: boolean;
-  /** Cor do date picker */
+  /** Substitui o antigo `rounded` boolean, agora no mesmo padrão do CBInput */
+  radius?: Radius;
   color?: CBColor;
-  /** Modo de exibição do picker */
   pickerMode?: PickerMode;
 }
 
-/**
- * CBDataPicker
- *
- * Componente para seleção de datas com suporte a:
- * - Diferentes formatos de exibição
- * - Datas mínimas e máximas
- * - Modal ou dropdown
- * - Icone de calendário
- *
- * @param props Propriedades do date picker
- * @returns JSX.Element
- *
- * @example
- * ```tsx
- * const [date, setDate] = useState<Date | null>(null);
- *
- * <CBDataPicker
- *   label="Data de Nascimento"
- *   value={date}
- *   onChange={setDate}
- *   format="date"
- *   placeholder="Selecione a data"
- *   withCalendar
- *   rounded
- *   color="primary"
- * />
- * ```
- *
- * @example
- * ```tsx
- * <CBDataPicker
- *   label="Mês/Ano"
- *   value={date}
- *   onChange={setDate}
- *   format="month-year"
- *   pickerMode="dropdown"
- *   minDate="2020-01-01"
- *   maxDate="2030-12-31"
- * />
- * ```
- */
+const borderRadiusMap: Record<Radius, string> = {
+  none: "0px",
+  sm: "8px",
+  md: "12px",
+  lg: "16px",
+  full: "9999px",
+};
+
 const CBDataPicker: React.FC<CBDataPickerProps> = ({
   value,
   onChange,
@@ -117,12 +71,15 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
   classNameInput,
   classNameContainer,
   withCalendar = false,
-  rounded = true,
+  radius = "md",
   color = "neutral",
   pickerMode = "modal",
 }) => {
-  const { main: borderColor, contrast: textColor } = useCBColor(color);
+  const { main: mainColor, contrast: textColor } = useCBColor(color);
+  const { main: errorColor } = useCBColor("danger");
+
   const [showModal, setShowModal] = useState(false);
+  const [focused, setFocused] = useState(false);
   const [internalValue, setInternalValue] = useState<string>(
     value ? dayjs(toDate(value)).format("YYYY-MM-DDTHH:mm") : "",
   );
@@ -132,6 +89,7 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
       value ? dayjs(toDate(value)).format("YYYY-MM-DDTHH:mm") : "",
     );
   }, [value]);
+
   const formatDisplay = () => {
     if (!internalValue) return "";
     const date = dayjs(internalValue);
@@ -153,6 +111,7 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
     if (internalValue) {
       onChange(dayjs(internalValue).toDate());
       setShowModal(false);
+      setFocused(false);
     }
   };
 
@@ -161,58 +120,70 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
       return dayjs().add(value, "years").format("YYYY-MM-DD");
     return value ?? fallback.format("YYYY-MM-DD");
   };
-  const openPicker = () => {
-    if (!disabled) {
-      setInternalValue(internalValue || dayjs().format("YYYY-MM-DDTHH:mm"));
-      setShowModal(true);
-    }
+
+  const openPicker = useCallback(() => {
+    if (disabled) return;
+    setInternalValue(internalValue || dayjs().format("YYYY-MM-DDTHH:mm"));
+    setFocused(true);
+    setShowModal(true);
+  }, [disabled, internalValue]);
+
+  const closePicker = () => {
+    setShowModal(false);
+    setFocused(false);
   };
-  const borderRadiusInput = rounded ? "99999px" : "6px";
+
+  const filled = !!internalValue;
+  const borderColor = errorText
+    ? errorColor
+    : focused || filled
+      ? mainColor
+      : "var(--cb-color-border)";
 
   return (
-    <div className="relative">
-      <div
-        onClick={() => {
-          setInternalValue(internalValue || dayjs().format("YYYY-MM-DDTHH:mm"));
-          setShowModal(true);
-        }}
-        className={`relative flex flex-col ${classNameContainer}`}
-      >
-        {label && <label className="text-xs font-medium pl-6">{label}</label>}
-
-        <div className="relative flex items-center w-full" onClick={openPicker}>
-          <input
-            type="text"
-            readOnly
-            value={internalValue ? formatDisplay() : ""}
-            placeholder={placeholder}
-            disabled={disabled}
-            style={{
-              borderRadius: borderRadiusInput,
-              borderColor,
-              color: textColor,
-            }}
-            className={`w-full pr-4 pl-8 py-4 border outline-none placeholder-(--cb-color-border) ${classNameInput}`}
-          />
-          {withCalendar && (
-            <LuCalendar className="absolute right-8 text-[24px] text-gray-500 hover:text-blue-600 transition-colors cursor-pointer" />
-          )}
-        </div>
-        {errorText && (
-          <IonNote className="text-[12px] pl-6 text-(--cb-color-danger)">
-            {" "}
-            {errorText}{" "}
-          </IonNote>
+    <div
+      className={`relative flex flex-col h-18 pt-2 mb-3! ${classNameContainer ?? ""}`}
+    >
+      <div className="relative flex items-center w-full" onClick={openPicker}>
+        <IonInput
+          readonly
+          value={formatDisplay()}
+          label={label}
+          placeholder={placeholder}
+          disabled={disabled}
+          fill="outline"
+          shape="round"
+          labelPlacement="stacked"
+          aria-invalid={!!errorText}
+          style={{
+            "--border-color": borderColor,
+            "--highlight-color-focused": mainColor,
+            "--border-radius": borderRadiusMap[radius],
+            color: textColor ?? "var(--cb-text-primary)",
+          }}
+          className={classNameInput}
+        />
+        {withCalendar && (
+          <LuCalendar className="absolute right-4 text-[20px] text-gray-500 hover:text-blue-600 transition-colors cursor-pointer pointer-events-none" />
         )}
       </div>
+
+      {errorText && (
+        <IonNote
+          role="alert"
+          className="text-[12px] pl-6! text-(--cb-color-danger)"
+        >
+          {errorText}
+        </IonNote>
+      )}
 
       {pickerMode === "modal" && (
         <IonModal
           isOpen={showModal}
-          onDidDismiss={() => setShowModal(false)}
+          onDidDismiss={closePicker}
           className="custom-calendar-modal"
         >
-          <div className="p-4 bg-white rounded-lg shadow-lg">
+          <div className="p-4 bg-(--cb-surface) rounded-lg shadow-lg">
             <IonDatetime
               locale="pt-BR"
               value={internalValue}
@@ -220,6 +191,12 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
                 dayjs().subtract(10, "years").startOf("year"),
                 minDate,
               )}
+              style={{
+                "--background": "var(--cb-surface)",
+                "--background-rgb": "var(--cb-surface-rgb)",
+                "--color": "var(--cb-text-primary)",
+                "--ion-color-base-rgb": "var(--cb-color-base-rgb)",
+              }}
               max={resolveDate(dayjs().add(50, "years").endOf("year"), maxDate)}
               presentation={
                 format === "month-year" || format === "MMMM/YYYY"
@@ -232,7 +209,7 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
               showDefaultButtons={false}
             />
             <div className="flex justify-end mt-4 gap-2">
-              <IonButton color="medium" onClick={() => setShowModal(false)}>
+              <IonButton color="medium" onClick={closePicker}>
                 Cancelar
               </IonButton>
               <IonButton onClick={handleConfirm}>Confirmar</IonButton>
@@ -242,7 +219,7 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
       )}
 
       {pickerMode === "dropdown" && showModal && (
-        <div className="absolute z-50 mt-2 bg-white rounded-lg shadow-lg p-3">
+        <div className="absolute picker-modal z-50 mt-16 bg-(--cb-surface) rounded-lg shadow-lg p-3">
           <IonDatetime
             locale="pt-BR"
             value={internalValue}
@@ -250,6 +227,11 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
               dayjs().subtract(10, "years").startOf("year"),
               minDate,
             )}
+            style={{
+              "--background": "var(--cb-surface)",
+              "--background-rgb": "var(--cb-surface-rgb)",
+              "--color": "var(--cb-text-primary)",
+            }}
             max={resolveDate(dayjs().add(50, "years").endOf("year"), maxDate)}
             presentation={
               format === "month-year" || format === "MMMM/YYYY"
@@ -262,6 +244,7 @@ const CBDataPicker: React.FC<CBDataPickerProps> = ({
               setInternalValue(e.detail.value as string);
               handleConfirm();
             }}
+            className="calendar-days-of-week"
             showDefaultButtons={false}
           />
         </div>

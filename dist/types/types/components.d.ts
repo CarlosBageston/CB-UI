@@ -205,6 +205,14 @@ export interface CBInputProps {
     onRawChange?: (raw: string) => void;
     onBlur?: () => void;
     onFocus?: () => void;
+    /**
+     * Disparado ao clicar no campo.
+     */
+    onClick?: () => void;
+    /**
+     * Disparado ao pressionar uma tecla no campo.
+     */
+    onKeyDown?: (event: KeyboardEvent) => void;
 }
 /** ----------------- CBLoading ----------------- */
 export type LoadingType = "circular" | "dots" | "linear";

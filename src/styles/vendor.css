@@ -49,11 +49,36 @@
     --border-radius: 12px;
     --backdrop-opacity: 0.4;
 
-    display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
   }
-
+  .custom-calendar-modal[aria-hidden="true"] {
+    pointer-events: none;
+  }
+  ion-datetime::part(calendar-day) {
+    color: var(--cb-text-primary);
+  }
+  ion-datetime::part(month-year-button) {
+    color: var(--cb-text-primary);
+  }
+  ion-datetime::part(next-button),
+  ion-datetime::part(previous-button) {
+    color: var(--cb-text-primary);
+  }
+  ion-datetime::part(calendar-days-of-week) {
+    color: var(--cb-text-primary);
+  }
+  ion-datetime::part(wheel-item) {
+    color: var(--cb-text-primary);
+  }
+  ion-datetime {
+    --ion-color-base-rgb: transparent;
+  }
+  ion-datetime,
+  ion-picker-column,
+  ion-picker-column-option {
+    --ion-color-base-rgb: var(--cb-primary-rgb) !important;
+  }
   ion-modal {
     --height: auto;
     align-items: end;
