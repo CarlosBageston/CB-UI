@@ -11,7 +11,7 @@ import {
   DEFAULT_THEMES,
   type CBTableMobileTheme,
 } from "./theme/themeDataTable";
-// Estendendo os tipos de entrada para permitir a passagem do objeto de tema
+
 interface CBDataTableMobileProps<T> extends CBDataTableProps<T> {
   themeConfig?: Partial<CBTableMobileTheme>;
 }
@@ -32,9 +32,8 @@ function CBDataTableMobile<T>({
   onPageChange,
   onPageSizeChange,
   loading = false,
+  defaultExpanded = false,
 }: CBDataTableMobileProps<T>) {
-  // Página interna só existe (e só é usada) no modo client.
-  // No modo server, quem manda é o `page` vindo via props.
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>(
     {},
   );
@@ -43,15 +42,14 @@ function CBDataTableMobile<T>({
   const currentPage = page ?? internalPage;
   const handlePageChange = (newPage: number) => {
     if (onPageChange) {
-      onPageChange(newPage); // modo controlado
+      onPageChange(newPage);
     } else {
-      setInternalPage(newPage); // modo interno
+      setInternalPage(newPage);
     }
   };
   const rowsCount = totalRows || data.length;
 
   const paginatedData = useMemo(() => {
-    // Se existe onPageChange, quem pagina é o consumidor
     if (onPageChange) {
       return data;
     }
@@ -74,8 +72,9 @@ function CBDataTableMobile<T>({
     getRowId,
     onDelete,
   });
+
   const wrapperRef = useRef<HTMLDivElement>(null);
-  // Consolida o tema unindo as chaves enviadas por Props com o tema padrão (dark ou light)
+
   const activeTheme = useMemo<CBTableMobileTheme>(() => {
     const baseTheme = DEFAULT_THEMES[theme ?? "dark"] || DEFAULT_THEMES.dark;
     return { ...baseTheme, ...themeConfig };
@@ -86,10 +85,6 @@ function CBDataTableMobile<T>({
 
   const totalPages = Math.max(1, Math.ceil(rowsCount / pageSize));
 
-  // Esse ajuste de "página inválida" só faz sentido no modo client, onde
-  // a página é controlada aqui dentro. No modo server, quem corrige
-  // page fora do range é a tela consumidora (ela decide o que fazer,
-  // ex: recuar uma página se a atual ficou vazia após um delete).
   useEffect(() => {
     const maxPage = Math.max(totalPages - 1, 0);
 
@@ -113,23 +108,29 @@ function CBDataTableMobile<T>({
   }, [allPageSelected, paginatedData, selectionMode]);
 
   const toggleExpandCard = (key: string) => {
-    setExpandedCards((prev) => ({ ...prev, [key]: !prev[key] }));
+    setExpandedCards((prev) => {
+      // Se tiver defaultExpanded e a chave ainda não estiver no objeto, considera que ela estava 'true'
+      const currentState = prev[key] ?? defaultExpanded;
+      return { ...prev, [key]: !currentState };
+    });
   };
 
   const hasActions = Boolean(onEdit || onDelete);
+  const isMultiple = selectionMode === "multiple";
 
   useEffect(() => {
     clearSelection();
   }, [currentPage]);
+
   return (
     <>
       <div
         ref={wrapperRef}
         className={`w-full flex flex-col p-3 rounded-xl border transition-all duration-200 ${activeTheme.classes.wrapper}`}
       >
-        {/* Barra de ações + busca */}
+        {/* Barra de ações + seleção */}
         <div className="flex flex-col gap-3.5 mb-4">
-          {hasActions && (
+          {hasActions && isMultiple && (
             <div className="flex items-center justify-between gap-2">
               <span
                 className={`text-xs px-2.5 py-1 rounded-full font-bold transition-all ${activeTheme.classes.badge}`}
@@ -162,7 +163,7 @@ function CBDataTableMobile<T>({
             </div>
           )}
 
-          {selectionMode === "multiple" && paginatedData.length > 0 && (
+          {isMultiple && paginatedData.length > 0 && (
             <label className="flex items-center gap-2 px-1 py-0.5 select-none cursor-pointer">
               <CBCheckbox
                 checked={allPageSelected}
@@ -193,7 +194,8 @@ function CBDataTableMobile<T>({
             paginatedData.map((row, index) => {
               const key = getKey(row, index);
               const isSelected = isRowSelected(row, index);
-              const isExpanded = !!expandedCards[key];
+              // Considera a prop defaultExpanded caso a chave individual ainda não tenha sido alterada
+              const isExpanded = expandedCards[key] ?? defaultExpanded;
 
               const titleValue = getDisplayValue(row, titleColumn);
 
@@ -202,25 +204,28 @@ function CBDataTableMobile<T>({
                   key={key}
                   className={`rounded-xl border px-4 py-2 transition-all duration-200 ${
                     activeTheme.classes.card
-                  } ${isSelected ? activeTheme.classes.cardSelected : ""}`}
+                  } ${isSelected && isMultiple ? activeTheme.classes.cardSelected : ""}`}
                 >
                   <div className="flex items-start gap-3.5">
-                    <div
-                      aria-label="Selecionar registro"
-                      onClick={() => toggleSelectRow(row, index)}
-                      className="pt-1 shrink-0 cursor-pointer"
-                    >
-                      <CBCheckbox
-                        checked={isSelected}
-                        onChange={() => {}}
-                        color="primary"
-                        className={activeTheme.classes.checkboxBorder}
-                      />
-                    </div>
+                    {/* Renderiza Checkbox APENAS se for seleção múltipla */}
+                    {isMultiple && (
+                      <div
+                        aria-label="Selecionar registro"
+                        onClick={() => toggleSelectRow(row, index)}
+                        className="pt-1 shrink-0 cursor-pointer"
+                      >
+                        <CBCheckbox
+                          checked={isSelected}
+                          onChange={() => {}}
+                          color="primary"
+                          className={activeTheme.classes.checkboxBorder}
+                        />
+                      </div>
+                    )}
 
                     <div
-                      className="flex-1 min-w-0 cursor-pointer"
-                      onClick={() => toggleSelectRow(row, index)}
+                      className={`flex-1 min-w-0 ${isMultiple ? "cursor-pointer" : ""}`}
+                      onClick={() => isMultiple && toggleSelectRow(row, index)}
                     >
                       <div
                         className={`text-xs font-bold uppercase tracking-widest mb-0.5 ${activeTheme.classes.textMuted}`}
@@ -311,6 +316,7 @@ function CBDataTableMobile<T>({
           )}
         </div>
       </div>
+
       {/* Paginação */}
       <CBPaginationFooter
         page={currentPage}
