@@ -6,7 +6,7 @@ interface CBBaseProps {
     className?: string;
     style?: CSSProperties;
 }
-type PassthroughColDefKeys = "field" | "headerName" | "valueGetter" | "valueFormatter" | "colId" | "sortable" | "comparator" | "filter" | "filterParams" | "editable" | "pinned" | "width" | "minWidth" | "maxWidth" | "hide";
+type PassthroughColDefKeys = "field" | "headerName" | "valueGetter" | "valueSetter" | "valueFormatter" | "colId" | "sortable" | "comparator" | "filter" | "filterParams" | "editable" | "cellEditor" | "cellEditorParams" | "cellEditorPopup" | "cellEditorPopupPosition" | "onCellValueChanged" | "singleClickEdit" | "pinned" | "width" | "minWidth" | "maxWidth" | "hide";
 /** ----------------- CBDataTable ----------------- */
 /**
  * Representa uma coluna da tabela personalizada.
@@ -76,5 +76,20 @@ export interface CBDataTableProps<T> extends CBBaseProps {
     onPageSizeChange?: (pageSize: number) => void;
     /** Indica se a tabela está carregando dados */
     loading?: boolean;
+    /** Define se os cards já iniciam expandidos (ideal para tabelas com inputs/edição) */
+    defaultExpanded?: boolean;
+    /** Habilita edição com clique único ao invés de duplo clique */
+    singleClickEdit?: boolean;
+    /** Cancela/conclui edição quando a célula perde o foco */
+    stopEditingWhenCellsLoseFocus?: boolean;
+    /** Callback quando o valor de uma célula editável é alterado */
+    onCellValueChanged?: (event: {
+        data: T;
+        oldValue: unknown;
+        newValue: unknown;
+        colDef: ColDef<T>;
+    }) => void;
+    /** Inicia a edição automaticamente na primeira célula editável da primeira linha ao montar a tabela */
+    autoFocusFirstEditableCell?: boolean;
 }
 export {};

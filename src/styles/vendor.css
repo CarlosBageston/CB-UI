@@ -87,4 +87,23 @@
   .modal-height-full {
     --height: 95%;
   }
+  .no-number-spinner::-webkit-inner-spin-button,
+  .no-number-spinner::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .no-number-spinner {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  /* Scroll funcional mas sem barra visível */
+  .scrollbar-hidden {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE / Edge legado */
+  }
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none; /* Chrome / Safari / Opera */
+  }
 }

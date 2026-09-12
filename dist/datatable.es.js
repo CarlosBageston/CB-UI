@@ -1,185 +1,185 @@
-import { jsxs as i, jsx as a, Fragment as Ne } from "react/jsx-runtime";
-import { D as O, C as $, F as ae, a as se, b as Z, c as ve, d as Ce, A as ke, m as ye, e as we } from "./CBFilterBar-DcJN3pf3.js";
-import { AgGridReact as Pe } from "ag-grid-react";
-import { useState as E, useCallback as R, useMemo as T, useRef as I, useEffect as A } from "react";
-import { themeQuartz as ne, colorSchemeDarkBlue as Se, colorSchemeLightCold as Re, ModuleRegistry as Te, ClientSideRowModelModule as $e, PaginationModule as Ee, RowSelectionModule as Me, CellStyleModule as Be, LocaleModule as De } from "ag-grid-community";
-import { a as le } from "./useInputMask-DlqD3EiL.js";
-function re(t) {
-  const { col: s, render: e, children: l, align: r, mask: n, ...m } = t;
-  return l && l.length > 0 ? {
-    ...m,
+import { jsxs as d, jsx as l, Fragment as $e } from "react/jsx-runtime";
+import { D as ee, C as j, F as ge, a as pe, b as ue, c as Be, d as Le, A as Fe, m as Ke, e as Ae } from "./CBFilterBar-DcJN3pf3.js";
+import { AgGridReact as Ie } from "ag-grid-react";
+import { useState as F, useCallback as R, useMemo as L, useRef as te, useEffect as G } from "react";
+import { themeQuartz as xe, colorSchemeDarkBlue as Ve, colorSchemeLightCold as je, ModuleRegistry as Ge, ClientSideRowModelModule as He, PaginationModule as Oe, RowSelectionModule as Qe, CellStyleModule as Ue, LocaleModule as We, TextEditorModule as ze, NumberEditorModule as _e, DateEditorModule as qe, SelectEditorModule as Je, LargeTextEditorModule as Xe, CheckboxEditorModule as Ye, CustomEditorModule as Ze, UndoRedoEditModule as et } from "ag-grid-community";
+import { a as be } from "./useInputMask-DlqD3EiL.js";
+function Ce(t) {
+  const { col: n, render: e, children: a, align: c, mask: s, ...u } = t;
+  return a && a.length > 0 ? {
+    ...u,
     headerName: t.headerName,
-    children: l.map((o) => re(o)),
-    flex: s ?? 1
+    children: a.map((o) => Ce(o)),
+    flex: n ?? 1
   } : {
-    ...m,
-    flex: s ?? 1,
+    ...u,
+    flex: n ?? 1,
     cellRenderer: e ? (o) => o.data ? e(o.data) : null : void 0,
-    valueFormatter: n ? (o) => le(o.value, n) : void 0,
-    cellClass: r === "center" ? "ag-cell-center" : r === "right" ? "ag-cell-right" : "ag-cell-left",
-    headerClass: r === "center" ? "ag-header-center" : r === "right" ? "ag-header-right" : "ag-header-left"
+    valueFormatter: s ? (o) => be(o.value, s) : void 0,
+    cellClass: c === "center" ? "ag-cell-center" : c === "right" ? "ag-cell-right" : "ag-cell-left",
+    headerClass: c === "center" ? "ag-header-center" : c === "right" ? "ag-header-right" : "ag-header-left"
   };
 }
-const Fe = ne.withPart(Se), Le = ne.withPart(Re), Ae = (t) => t ? Fe : Le;
-function ce({
+const tt = xe.withPart(Ve), nt = xe.withPart(je), lt = (t) => t ? tt : nt;
+function ve({
   selectionMode: t,
-  getRowId: s,
+  getRowId: n,
   onDelete: e
 }) {
-  const [l, r] = E([]), n = R(
-    (c, N) => s ? s(c) : String(N),
-    [s]
-  ), m = R(
-    (c, N) => {
-      const x = n(c, N);
-      return l.some(
-        (p, C) => n(p, C) === x
+  const [a, c] = F([]), s = R(
+    (i, y) => n ? n(i) : String(y),
+    [n]
+  ), u = R(
+    (i, y) => {
+      const v = s(i, y);
+      return a.some(
+        (b, E) => s(b, E) === v
       );
     },
-    [l, n]
-  ), u = R(
-    (c, N) => {
-      const x = n(c, N);
-      r((p) => {
-        const C = p.some(
-          (h, k) => n(h, k) === x
+    [a, s]
+  ), x = R(
+    (i, y) => {
+      const v = s(i, y);
+      c((b) => {
+        const E = b.some(
+          (N, p) => s(N, p) === v
         );
-        return t === "single" ? C ? [] : [c] : C ? p.filter((h, k) => n(h, k) !== x) : [...p, c];
+        return t === "single" ? E ? [] : [i] : E ? b.filter((N, p) => s(N, p) !== v) : [...b, i];
       });
     },
-    [t, n]
+    [t, s]
   ), o = R(() => {
-    r([]);
-  }, []), y = R(() => {
-    e && (l.forEach(e), o());
-  }, [l, e, o]), b = R(
-    (c) => {
-      r((N) => {
+    c([]);
+  }, []), w = R(() => {
+    e && (a.forEach(e), o());
+  }, [a, e, o]), k = R(
+    (i) => {
+      c((y) => {
         if (t === "single")
-          return c.length ? [c[0]] : [];
-        const x = [...N];
-        return c.forEach((p) => {
-          x.some(
-            (h, k) => n(h, k) === n(p, k)
-          ) || x.push(p);
-        }), x;
+          return i.length ? [i[0]] : [];
+        const v = [...y];
+        return i.forEach((b) => {
+          v.some(
+            (N, p) => s(N, p) === s(b, p)
+          ) || v.push(b);
+        }), v;
       });
     },
-    [t, n]
+    [t, s]
   );
   return {
     unselectRows: R(
-      (c) => {
-        r(
-          (N) => N.filter(
-            (x, p) => !c.some(
-              (C, h) => n(x, p) === n(C, h)
+      (i) => {
+        c(
+          (y) => y.filter(
+            (v, b) => !i.some(
+              (E, N) => s(v, b) === s(E, N)
             )
           )
         );
       },
-      [n]
+      [s]
     ),
-    selectRows: b,
-    selectedRows: l,
-    setSelectedRows: r,
-    isSelected: m,
-    toggleRow: u,
+    selectRows: k,
+    selectedRows: a,
+    setSelectedRows: c,
+    isSelected: u,
+    toggleRow: x,
     clearSelection: o,
-    deleteSelected: y,
-    getKey: n
+    deleteSelected: w,
+    getKey: s
   };
 }
-function ie({
+function Ne({
   page: t,
-  pageSize: s,
+  pageSize: n,
   totalRows: e,
-  loading: l = !1,
-  onPageChange: r,
-  onPageSizeChange: n,
-  isMobile: m = !1,
-  theme: u,
+  loading: a = !1,
+  onPageChange: c,
+  onPageSizeChange: s,
+  isMobile: u = !1,
+  theme: x,
   pageSizeOptions: o = [10, 20, 50],
-  themeConfig: y
+  themeConfig: w
 }) {
-  const b = T(() => ({ ...O[u ?? "dark"] || O.dark, ...y }), [u, y]), w = Math.max(Math.ceil(e / s), 1);
-  return /* @__PURE__ */ i(
+  const k = L(() => ({ ...ee[x ?? "dark"] || ee.dark, ...w }), [x, w]), g = Math.max(Math.ceil(e / n), 1);
+  return /* @__PURE__ */ d(
     "div",
     {
-      className: `flex items-center gap-1 px-4 py-3 text-sm ${b.classes.textPrimary} ${m ? "flex-col justify-center" : "flex-row justify-between"}`,
+      className: `flex items-center gap-1 px-4 py-3 text-sm ${k.classes.textPrimary} ${u ? "flex-col justify-center" : "flex-row justify-between"}`,
       children: [
-        /* @__PURE__ */ i("div", { className: "flex items-center gap-3", children: [
-          /* @__PURE__ */ i("span", { children: [
+        /* @__PURE__ */ d("div", { className: "flex items-center gap-3", children: [
+          /* @__PURE__ */ d("span", { children: [
             "Página ",
-            /* @__PURE__ */ a("strong", { className: "font-semibold", children: t + 1 }),
+            /* @__PURE__ */ l("strong", { className: "font-semibold", children: t + 1 }),
             " de",
             " ",
-            /* @__PURE__ */ a("strong", { className: "font-semibold", children: w }),
-            /* @__PURE__ */ a("span", { className: "mx-2", children: "|" }),
+            /* @__PURE__ */ l("strong", { className: "font-semibold", children: g }),
+            /* @__PURE__ */ l("span", { className: "mx-2", children: "|" }),
             "Total de ",
-            /* @__PURE__ */ a("strong", { className: "font-semibold", children: e }),
+            /* @__PURE__ */ l("strong", { className: "font-semibold", children: e }),
             " ",
             "registros"
           ] }),
-          l && !m && /* @__PURE__ */ i(
+          a && !u && /* @__PURE__ */ d(
             "span",
             {
-              className: `inline-flex items-center gap-1.5 text-xs ${b.classes.textPrimary} animate-pulse`,
+              className: `inline-flex items-center gap-1.5 text-xs ${k.classes.textPrimary} animate-pulse`,
               children: [
-                /* @__PURE__ */ a("span", { className: "h-1.5 w-1.5 rounded-full bg-blue-500" }),
+                /* @__PURE__ */ l("span", { className: "h-1.5 w-1.5 rounded-full bg-blue-500" }),
                 "Carregando..."
               ]
             }
           )
         ] }),
-        /* @__PURE__ */ i(
+        /* @__PURE__ */ d(
           "div",
           {
-            className: m ? "flex flex-col gap-1 items-center" : "flex gap-4",
+            className: u ? "flex flex-col gap-1 items-center" : "flex gap-4",
             children: [
-              n ? /* @__PURE__ */ i("div", { className: "flex items-center gap-2", children: [
-                /* @__PURE__ */ a("span", { className: `text-xs ${b.classes.textPrimary}`, children: "Linhas por página:" }),
-                /* @__PURE__ */ a(
+              s ? /* @__PURE__ */ d("div", { className: "flex items-center gap-2", children: [
+                /* @__PURE__ */ l("span", { className: `text-xs ${k.classes.textPrimary}`, children: "Linhas por página:" }),
+                /* @__PURE__ */ l(
                   "select",
                   {
                     name: "pageSize",
-                    value: s,
-                    onChange: (c) => n(Number(c.target.value)),
-                    className: `${b.classes.selectPagination} rounded-md px-2 py-1 text-xs font-medium outline-none cursor-pointer transition-all`,
-                    children: o.map((c) => /* @__PURE__ */ a(
+                    value: n,
+                    onChange: (i) => s(Number(i.target.value)),
+                    className: `${k.classes.selectPagination} rounded-md px-2 py-1 text-xs font-medium outline-none cursor-pointer transition-all`,
+                    children: o.map((i) => /* @__PURE__ */ l(
                       "option",
                       {
-                        value: c,
-                        className: b.classes.textPrimary,
-                        children: c
+                        value: i,
+                        className: k.classes.textPrimary,
+                        children: i
                       },
-                      c
+                      i
                     ))
                   }
                 )
               ] }) : null,
-              /* @__PURE__ */ i("div", { children: [
-                /* @__PURE__ */ a(
-                  $,
+              /* @__PURE__ */ d("div", { children: [
+                /* @__PURE__ */ l(
+                  j,
                   {
                     children: "Anterior",
-                    disabled: t === 0 || l,
-                    onClick: () => r(t - 1),
-                    color: b?.colorsPagination?.bgButtonPreviousPagination
+                    disabled: t === 0 || a,
+                    onClick: () => c(t - 1),
+                    color: k?.colorsPagination?.bgButtonPreviousPagination
                   }
                 ),
-                /* @__PURE__ */ a(
-                  $,
+                /* @__PURE__ */ l(
+                  j,
                   {
                     children: "Próxima",
-                    disabled: t + 1 >= w || l,
-                    onClick: () => r(t + 1),
-                    color: b?.colorsPagination?.bgButtonNextPagination
+                    disabled: t + 1 >= g || a,
+                    onClick: () => c(t + 1),
+                    color: k?.colorsPagination?.bgButtonNextPagination
                   }
                 )
               ] }),
-              l && m && /* @__PURE__ */ i("span", { className: "inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 animate-pulse", children: [
-                /* @__PURE__ */ a("span", { className: "h-1.5 w-1.5 rounded-full bg-blue-500" }),
+              a && u && /* @__PURE__ */ d("span", { className: "inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 animate-pulse", children: [
+                /* @__PURE__ */ l("span", { className: "h-1.5 w-1.5 rounded-full bg-blue-500" }),
                 "Carregando..."
               ] })
             ]
@@ -189,73 +189,104 @@ function ie({
     }
   );
 }
-Te.registerModules([
-  $e,
-  Ee,
-  Me,
-  Be,
-  De
+Ge.registerModules([
+  He,
+  Oe,
+  Qe,
+  Ue,
+  We,
+  ze,
+  _e,
+  qe,
+  Je,
+  Xe,
+  Ye,
+  Ze,
+  et
 ]);
-function q({
+function me({
   columns: t,
-  data: s,
+  data: n,
   pageSize: e = 5,
-  emptyMessage: l = "Nenhum dado encontrado",
-  getRowId: r,
-  onEdit: n,
-  onDelete: m,
-  selectionMode: u = "single",
+  emptyMessage: a = "Nenhum dado encontrado",
+  getRowId: c,
+  onEdit: s,
+  onDelete: u,
+  selectionMode: x = "single",
   theme: o,
-  page: y,
-  totalRows: b = 0,
-  onPageChange: w,
-  onPageSizeChange: c,
-  loading: N = !1
+  page: w,
+  totalRows: k = 0,
+  onPageChange: g,
+  onPageSizeChange: i,
+  loading: y = !1,
+  singleClickEdit: v = !0,
+  stopEditingWhenCellsLoseFocus: b = !0,
+  onCellValueChanged: E,
+  autoFocusFirstEditableCell: N = !1
 }) {
-  const x = T(() => Ae(o === "dark"), [o]), [p, C] = E(0), h = y ?? p, k = (f) => {
-    w ? w(f) : C(f);
-  }, M = b || s.length, {
-    selectedRows: B,
-    deleteSelected: j,
-    selectRows: v
-  } = ce({
-    selectionMode: u,
-    getRowId: r,
-    onDelete: m
-  }), P = I(null), D = I(null), G = R(() => {
-    const F = (P.current?.api?.getSelectedNodes() ?? []).map((L) => L.data).filter((L) => L != null);
-    v(F);
-  }, [v]), Q = T(
-    () => t.map((f) => re(f)),
+  const p = L(() => lt(o === "dark"), [o]), [ne, le] = F(0), K = w ?? ne, z = (m) => {
+    g ? g(m) : le(m);
+  }, H = k || n.length, {
+    selectedRows: M,
+    deleteSelected: O,
+    selectRows: _
+  } = ve({
+    selectionMode: x,
+    getRowId: c,
+    onDelete: u
+  }), A = te(null), C = te(null), I = R(() => {
+    const D = (A.current?.api?.getSelectedNodes() ?? []).map((V) => V.data).filter((V) => V != null);
+    _(D);
+  }, [_]), q = L(
+    () => t.map((m) => Ce(m)),
     [t]
-  ), z = T(
-    () => r ? (f) => r(f.data) : void 0,
-    [r]
+  ), J = L(
+    () => c ? (m) => c(m.data) : void 0,
+    [c]
   );
-  A(() => {
-    const f = (F) => {
-      D.current && !D.current.contains(F.target) && P.current?.api?.deselectAll();
+  G(() => {
+    const m = (D) => {
+      C.current && !C.current.contains(D.target) && A.current?.api?.deselectAll();
     };
-    return document.addEventListener("mousedown", f), () => document.removeEventListener("mousedown", f);
+    return document.addEventListener("mousedown", m), () => document.removeEventListener("mousedown", m);
   }, []);
-  const H = T(() => {
-    if (w)
-      return s;
-    const f = h * e;
-    return s.slice(f, f + e);
-  }, [s, h, e, w]);
-  return /* @__PURE__ */ i("div", { ref: D, className: "relative w-full", children: [
-    /* @__PURE__ */ a(
-      Pe,
+  const U = L(() => {
+    if (g)
+      return n;
+    const m = K * e;
+    return n.slice(m, m + e);
+  }, [n, K, e, g]), X = R(() => {
+    if (!N || U.length === 0) return;
+    const m = t.find((V) => V.editable);
+    if (!m) return;
+    const D = m.colId ?? (typeof m.field == "string" ? m.field : void 0);
+    D && setTimeout(() => {
+      document.activeElement instanceof HTMLElement && document.activeElement.blur(), setTimeout(() => {
+        console.log("gridWrapperRef", C.current), console.log("colKey", D), A.current?.api?.startEditingCell({
+          rowIndex: 0,
+          colKey: D
+        });
+      }, 50);
+    }, 0);
+  }, [N, t, U.length]), ae = R(() => {
+    X();
+  }, [X]);
+  return /* @__PURE__ */ d("div", { ref: C, className: "relative w-full", children: [
+    /* @__PURE__ */ l(
+      Ie,
       {
-        ref: P,
-        rowData: H,
-        getRowId: z,
+        ref: A,
+        rowData: U,
+        getRowId: J,
         defaultColDef: { resizable: !1 },
-        columnDefs: Q,
-        theme: x,
+        columnDefs: q,
+        singleClickEdit: v,
+        stopEditingWhenCellsLoseFocus: b,
+        onCellValueChanged: E ? (m) => E(m) : void 0,
+        onFirstDataRendered: ae,
+        theme: p,
         animateRows: !0,
-        rowSelection: u === "multiple" ? {
+        rowSelection: x === "multiple" ? {
           mode: "multiRow",
           checkboxes: !0,
           headerCheckbox: !0,
@@ -266,8 +297,8 @@ function q({
           enableClickSelection: !0
         },
         domLayout: "autoHeight",
-        onSelectionChanged: G,
-        overlayNoRowsTemplate: `<span class="text-white">${l}</span>`,
+        onSelectionChanged: I,
+        overlayNoRowsTemplate: `<span class="text-white">${a}</span>`,
         localeText: {
           page: "Página",
           of: "de",
@@ -279,258 +310,394 @@ function q({
         }
       }
     ),
-    /* @__PURE__ */ a(
-      ie,
+    /* @__PURE__ */ l(
+      Ne,
       {
-        page: h,
+        page: K,
         pageSize: e,
-        totalRows: M,
-        loading: N,
-        onPageChange: k,
-        onPageSizeChange: c,
+        totalRows: H,
+        loading: y,
+        onPageChange: z,
+        onPageSizeChange: i,
         theme: o
       }
     ),
-    /* @__PURE__ */ i("div", { className: "absolute -top-2 right-2 -translate-y-1/2 flex gap-2 z-10", children: [
-      n && /* @__PURE__ */ a(
-        $,
+    /* @__PURE__ */ d("div", { className: "absolute -top-2 right-2 -translate-y-1/2 flex gap-2 z-10", children: [
+      s && /* @__PURE__ */ l(
+        j,
         {
           "aria-label": "Editar",
           children: "",
-          iconStart: /* @__PURE__ */ a(ae, { size: 18 }),
+          iconStart: /* @__PURE__ */ l(ge, { size: 18 }),
           color: "primary",
-          disabled: B.length !== 1,
-          onClick: () => B.length === 1 && n(B[0])
+          disabled: M.length !== 1,
+          onClick: () => M.length === 1 && s(M[0])
         }
       ),
-      m && /* @__PURE__ */ a(
-        $,
+      u && /* @__PURE__ */ l(
+        j,
         {
           "aria-label": "Excluir",
           children: "",
-          iconStart: /* @__PURE__ */ a(se, { size: 18 }),
+          iconStart: /* @__PURE__ */ l(pe, { size: 18 }),
           color: "danger",
-          disabled: B.length === 0,
-          onClick: j
+          disabled: M.length === 0,
+          onClick: O
         }
       )
     ] })
   ] });
 }
-function oe(t) {
-  const s = [];
+function ke(t) {
+  const n = [];
   return t.forEach((e) => {
     if (e.children && e.children.length > 0) {
-      s.push(...oe(e.children));
+      n.push(...ke(e.children));
       return;
     }
-    s.push({
+    n.push({
       headerName: e.headerName ?? "",
       field: e.field,
+      colId: e.colId,
       align: e.align,
       render: e.render,
       valueGetter: e.valueGetter,
-      mask: e.mask
+      mask: e.mask,
+      editable: e.editable,
+      cellEditor: e.cellEditor,
+      cellEditorParams: e.cellEditorParams,
+      singleClickEdit: e.singleClickEdit,
+      onCellValueChanged: e.onCellValueChanged
     });
-  }), s;
+  }), n;
 }
-function je(t, s) {
-  if (!s) return "-";
-  const e = t[s];
+function at(t, n) {
+  if (!n) return "-";
+  const e = t[n];
   return e == null || e === "" ? "-" : String(e);
 }
-function ee(t, s) {
-  if (s.render) return s.render(t);
-  const e = s.valueGetter ? s.valueGetter(t) : je(t, s.field);
-  return e == null || e === "" ? "-" : s.mask ? le(e, s.mask) : String(e);
+function ie(t, n) {
+  if (n.render) return n.render(t);
+  const e = n.valueGetter ? n.valueGetter(t) : at(t, n.field);
+  return e == null || e === "" ? "-" : n.mask ? be(e, n.mask) : String(e);
 }
-function te({
-  columns: t,
-  data: s,
-  pageSize: e = 5,
-  emptyMessage: l = "Nenhum dado encontrado",
-  getRowId: r,
-  onEdit: n,
-  onDelete: m,
-  selectionMode: u = "single",
-  theme: o,
-  themeConfig: y,
-  page: b,
-  totalRows: w = 0,
-  onPageChange: c,
-  onPageSizeChange: N,
-  loading: x = !1
+function st(t) {
+  switch (t) {
+    case "agNumberCellEditor":
+      return "number";
+    case "agDateCellEditor":
+      return "date";
+    case "agCheckboxCellEditor":
+      return "checkbox";
+    default:
+      return "text";
+  }
+}
+function re(t, n) {
+  return t.editable ? typeof t.editable == "function" ? t.editable({ data: n }) : t.editable : !1;
+}
+function fe({
+  row: t,
+  col: n,
+  isEditing: e,
+  onStartEdit: a,
+  onCommit: c,
+  onCancel: s,
+  textClass: u,
+  activeTheme: x
 }) {
-  const [p, C] = E(
+  const o = n.field, w = o ? t[o] : void 0, k = st(n.cellEditor), g = n.cellEditorParams ?? {}, i = te(null);
+  G(() => {
+    if (e) {
+      const p = setTimeout(() => i.current?.focus(), 0);
+      return () => clearTimeout(p);
+    }
+  }, [e]);
+  const y = (p) => {
+    p.key === "Enter" ? (p.preventDefault(), c(i.current?.value ?? "")) : p.key === "Escape" && (p.preventDefault(), s());
+  }, v = () => {
+    c(i.current?.value ?? "");
+  }, b = () => {
+    n.singleClickEdit && !e && a();
+  }, E = () => {
+    !n.singleClickEdit && !e && a();
+  };
+  if (e)
+    return /* @__PURE__ */ l(
+      "input",
+      {
+        ref: i,
+        type: k,
+        defaultValue: w != null ? String(w) : "",
+        min: g.min !== void 0 ? Number(g.min) : void 0,
+        max: g.max !== void 0 ? Number(g.max) : void 0,
+        step: g.precision !== void 0 ? g.precision === 0 ? 1 : Math.pow(10, -Number(g.precision)) : void 0,
+        onKeyDown: y,
+        onBlur: v,
+        className: `
+          w-24 h-9 
+          px-3 
+          ${x.classes.wrapper} 
+          border border-gray-500! 
+          text-center text-sm font-medium
+          rounded-md outline-none
+           no-number-spinner
+          `
+      }
+    );
+  const N = ie(t, n);
+  return /* @__PURE__ */ l(
+    "span",
+    {
+      className: `text-xs font-medium cursor-pointer select-none ${u} ${n.singleClickEdit ? "" : "cursor-text"}`,
+      onClick: b,
+      onDoubleClick: E,
+      title: n.singleClickEdit ? "Clique para editar" : "Clique duplo para editar",
+      children: N
+    }
+  );
+}
+function he({
+  columns: t,
+  data: n,
+  pageSize: e = 5,
+  emptyMessage: a = "Nenhum dado encontrado",
+  getRowId: c,
+  onEdit: s,
+  onDelete: u,
+  selectionMode: x = "single",
+  theme: o,
+  themeConfig: w,
+  page: k,
+  totalRows: g = 0,
+  onPageChange: i,
+  onPageSizeChange: y,
+  loading: v = !1,
+  defaultExpanded: b = !1,
+  singleClickEdit: E = !0,
+  onCellValueChanged: N,
+  autoFocusFirstEditableCell: p = !1
+}) {
+  const [ne, le] = F(
     {}
-  ), [h, k] = E(0), M = b ?? h, B = (d) => {
-    c ? c(d) : k(d);
-  }, j = w || s.length, v = T(() => {
-    if (c)
-      return s;
-    const d = M * e;
-    return s.slice(d, d + e);
-  }, [s, M, e, c]), {
-    selectedRows: P,
-    isSelected: D,
-    toggleRow: G,
-    deleteSelected: Q,
-    clearSelection: z,
-    selectRows: H,
-    unselectRows: f,
-    getKey: F
-  } = ce({
-    selectionMode: u,
-    getRowId: r,
-    onDelete: m
-  }), L = I(null), g = T(() => ({ ...O[o ?? "dark"] || O.dark, ...y }), [o, y]), me = T(() => oe(t), [t]), [J, ...K] = me, X = Math.max(1, Math.ceil(j / e));
-  A(() => {
-    const d = Math.max(X - 1, 0);
-    h > d && k(d);
-  }, [X, h]);
-  const U = v.length > 0 && v.every((d, S) => D(d, S)), ue = R(() => {
-    u === "multiple" && (U ? f(v) : H(v));
-  }, [U, v, u]), he = (d) => {
-    C((S) => ({ ...S, [d]: !S[d] }));
-  }, fe = !!(n || m);
-  return A(() => {
-    z();
-  }, [M]), /* @__PURE__ */ i(Ne, { children: [
-    /* @__PURE__ */ i(
+  ), [K, z] = F(0), [H, M] = F(null), O = k ?? K, _ = (r) => {
+    i ? i(r) : z(r);
+  }, A = g || n.length, C = L(() => {
+    if (i)
+      return n;
+    const r = O * e;
+    return n.slice(r, r + e);
+  }, [n, O, e, i]), {
+    selectedRows: I,
+    isSelected: q,
+    toggleRow: J,
+    deleteSelected: U,
+    clearSelection: X,
+    selectRows: ae,
+    unselectRows: m,
+    getKey: D
+  } = ve({
+    selectionMode: x,
+    getRowId: c,
+    onDelete: u
+  }), V = te(null), h = L(() => ({ ...ee[o ?? "dark"] || ee.dark, ...w }), [o, w]), Ee = L(() => ke(t).map((f) => ({
+    ...f,
+    singleClickEdit: f.singleClickEdit ?? E
+  })), [t, E]), [T, ...Y] = Ee, ce = Math.max(1, Math.ceil(A / e));
+  G(() => {
+    const r = Math.max(ce - 1, 0);
+    K > r && z(r);
+  }, [ce, K]);
+  const se = C.length > 0 && C.every((r, f) => q(r, f)), we = R(() => {
+    x === "multiple" && (se ? m(C) : ae(C));
+  }, [se, C, x]), Se = (r) => {
+    le((f) => {
+      const S = f[r] ?? b;
+      return { ...f, [r]: !S };
+    });
+  }, Pe = !!(s || u), Q = x === "multiple";
+  G(() => {
+    X();
+  }, [O]), G(() => {
+    if (!p || C.length === 0) return;
+    const r = C[0], f = D(r, 0), $ = [T, ...Y].find(
+      (B) => B ? re(B, r) : !1
+    );
+    $ && $.field && M({ rowKey: f, field: $.field });
+  }, [p, C.length]);
+  const oe = R(
+    (r, f, S) => {
+      M(null);
+      const $ = f.field;
+      if (!$) return;
+      const B = r[$];
+      let W = S;
+      if (f.cellEditor === "agNumberCellEditor" && (W = S === "" ? null : Number(S)), W === B) return;
+      const Z = {
+        data: r,
+        oldValue: B,
+        newValue: W,
+        colDef: {
+          field: $,
+          colId: f.colId,
+          headerName: f.headerName
+        }
+      };
+      f.onCellValueChanged ? f.onCellValueChanged(Z) : N && N(Z);
+    },
+    [N]
+  );
+  return /* @__PURE__ */ d($e, { children: [
+    /* @__PURE__ */ d(
       "div",
       {
-        ref: L,
-        className: `w-full flex flex-col p-3 rounded-xl border transition-all duration-200 ${g.classes.wrapper}`,
+        ref: V,
+        className: `w-full flex flex-col p-3 rounded-xl border transition-all duration-200 ${h.classes.wrapper}`,
         children: [
-          /* @__PURE__ */ i("div", { className: "flex flex-col gap-3.5 mb-4", children: [
-            fe && /* @__PURE__ */ i("div", { className: "flex items-center justify-between gap-2", children: [
-              /* @__PURE__ */ i(
+          /* @__PURE__ */ d("div", { className: "flex flex-col gap-3.5 mb-4", children: [
+            Pe && Q && /* @__PURE__ */ d("div", { className: "flex items-center justify-between gap-2", children: [
+              /* @__PURE__ */ d(
                 "span",
                 {
-                  className: `text-xs px-2.5 py-1 rounded-full font-bold transition-all ${g.classes.badge}`,
+                  className: `text-xs px-2.5 py-1 rounded-full font-bold transition-all ${h.classes.badge}`,
                   children: [
-                    P.length,
+                    I.length,
                     " selecionado(s)"
                   ]
                 }
               ),
-              /* @__PURE__ */ i("div", { className: "flex items-center gap-2", children: [
-                n && /* @__PURE__ */ a(
-                  $,
+              /* @__PURE__ */ d("div", { className: "flex items-center gap-2", children: [
+                s && /* @__PURE__ */ l(
+                  j,
                   {
                     color: "primary",
-                    iconStart: /* @__PURE__ */ a(ae, { size: 16 }),
-                    disabled: P.length !== 1,
-                    onClick: () => P.length === 1 && n(P[0]),
+                    iconStart: /* @__PURE__ */ l(ge, { size: 16 }),
+                    disabled: I.length !== 1,
+                    onClick: () => I.length === 1 && s(I[0]),
                     children: ""
                   }
                 ),
-                m && /* @__PURE__ */ a(
-                  $,
+                u && /* @__PURE__ */ l(
+                  j,
                   {
                     color: "danger",
-                    iconStart: /* @__PURE__ */ a(se, { size: 16 }),
-                    disabled: P.length === 0,
-                    onClick: Q,
+                    iconStart: /* @__PURE__ */ l(pe, { size: 16 }),
+                    disabled: I.length === 0,
+                    onClick: U,
                     children: ""
                   }
                 )
               ] })
             ] }),
-            u === "multiple" && v.length > 0 && /* @__PURE__ */ i("label", { className: "flex items-center gap-2 px-1 py-0.5 select-none cursor-pointer", children: [
-              /* @__PURE__ */ a(
-                Z,
+            Q && C.length > 0 && /* @__PURE__ */ d("label", { className: "flex items-center gap-2 px-1 py-0.5 select-none cursor-pointer", children: [
+              /* @__PURE__ */ l(
+                ue,
                 {
-                  checked: U,
-                  onChange: ue,
+                  checked: se,
+                  onChange: we,
                   color: "primary",
-                  className: g.classes.checkboxBorder
+                  className: h.classes.checkboxBorder
                 }
               ),
-              /* @__PURE__ */ i(
+              /* @__PURE__ */ d(
                 "span",
                 {
-                  className: `text-xs font-semibold ${g.classes.textMuted}`,
+                  className: `text-xs font-semibold ${h.classes.textMuted}`,
                   children: [
                     "Selecionar todos desta página (",
-                    v.length,
+                    C.length,
                     ")"
                   ]
                 }
               )
             ] })
           ] }),
-          /* @__PURE__ */ a("div", { className: "flex flex-col gap-1 min-h-30", children: v.length === 0 ? /* @__PURE__ */ a("div", { className: "flex flex-col items-center justify-center py-10 text-center", children: /* @__PURE__ */ a(
+          /* @__PURE__ */ l("div", { className: "flex flex-col gap-1 min-h-30", children: C.length === 0 ? /* @__PURE__ */ l("div", { className: "flex flex-col items-center justify-center py-10 text-center", children: /* @__PURE__ */ l(
             "span",
             {
-              className: `text-sm font-medium ${g.classes.textMuted}`,
-              children: l
+              className: `text-sm font-medium ${h.classes.textMuted}`,
+              children: a
             }
-          ) }) : v.map((d, S) => {
-            const W = F(d, S), Y = D(d, S), _ = !!p[W], ge = ee(d, J);
-            return /* @__PURE__ */ i(
+          ) }) : C.map((r, f) => {
+            const S = D(r, f), $ = q(r, f), B = ne[S] ?? b, W = T && re(T, r), Z = H?.rowKey === S && H?.field === T?.field;
+            return /* @__PURE__ */ d(
               "div",
               {
-                className: `rounded-xl border px-4 py-2 transition-all duration-200 ${g.classes.card} ${Y ? g.classes.cardSelected : ""}`,
+                className: `rounded-xl border px-4 py-2 transition-all duration-200 ${h.classes.card} ${$ && Q ? h.classes.cardSelected : ""}`,
                 children: [
-                  /* @__PURE__ */ i("div", { className: "flex items-start gap-3.5", children: [
-                    /* @__PURE__ */ a(
+                  /* @__PURE__ */ d("div", { className: "flex items-start gap-3.5", children: [
+                    Q && /* @__PURE__ */ l(
                       "div",
                       {
                         "aria-label": "Selecionar registro",
-                        onClick: () => G(d, S),
+                        onClick: () => J(r, f),
                         className: "pt-1 shrink-0 cursor-pointer",
-                        children: /* @__PURE__ */ a(
-                          Z,
+                        children: /* @__PURE__ */ l(
+                          ue,
                           {
-                            checked: Y,
+                            checked: $,
                             onChange: () => {
                             },
                             color: "primary",
-                            className: g.classes.checkboxBorder
+                            className: h.classes.checkboxBorder
                           }
                         )
                       }
                     ),
-                    /* @__PURE__ */ i(
+                    /* @__PURE__ */ d(
                       "div",
                       {
-                        className: "flex-1 min-w-0 cursor-pointer",
-                        onClick: () => G(d, S),
+                        className: `flex-1 min-w-0 ${Q ? "cursor-pointer" : ""}`,
+                        onClick: () => Q && J(r, f),
                         children: [
-                          /* @__PURE__ */ a(
+                          /* @__PURE__ */ l(
                             "div",
                             {
-                              className: `text-xs font-bold uppercase tracking-widest mb-0.5 ${g.classes.textMuted}`,
-                              children: J?.headerName || "Registro"
+                              className: `text-xs font-bold uppercase tracking-widest mb-0.5 ${h.classes.textMuted}`,
+                              children: T?.headerName || "Registro"
                             }
                           ),
-                          /* @__PURE__ */ a(
+                          T && W ? /* @__PURE__ */ l(
+                            fe,
+                            {
+                              row: r,
+                              col: T,
+                              isEditing: Z,
+                              onStartEdit: () => M({
+                                rowKey: S,
+                                field: T.field
+                              }),
+                              activeTheme: h,
+                              onCommit: (P) => oe(r, T, String(P)),
+                              onCancel: () => M(null),
+                              textClass: h.classes.textPrimary
+                            }
+                          ) : /* @__PURE__ */ l(
                             "div",
                             {
-                              className: `text-sm font-bold truncate ${g.classes.textPrimary}`,
-                              children: ge
+                              className: `text-sm font-bold truncate ${h.classes.textPrimary}`,
+                              children: T ? ie(r, T) : "-"
                             }
                           )
                         ]
                       }
                     ),
-                    K.length > 0 && /* @__PURE__ */ a(
-                      $,
+                    Y.length > 0 && /* @__PURE__ */ l(
+                      j,
                       {
-                        "aria-label": _ ? "Recolher detalhes" : "Expandir detalhes",
-                        onClick: () => he(W),
-                        iconEnd: _ ? /* @__PURE__ */ a(
-                          ve,
+                        "aria-label": B ? "Recolher detalhes" : "Expandir detalhes",
+                        onClick: () => Se(S),
+                        iconEnd: B ? /* @__PURE__ */ l(
+                          Be,
                           {
                             size: 18,
-                            className: `${g.classes.textPrimary}`
+                            className: `${h.classes.textPrimary}`
                           }
-                        ) : /* @__PURE__ */ a(
-                          Ce,
+                        ) : /* @__PURE__ */ l(
+                          Le,
                           {
                             size: 18,
-                            className: `${g.classes.textPrimary}`
+                            className: `${h.classes.textPrimary}`
                           }
                         ),
                         variant: "clear",
@@ -540,8 +707,8 @@ function te({
                       }
                     )
                   ] }),
-                  /* @__PURE__ */ a(ke, { initial: !1, children: _ && K.length > 0 && /* @__PURE__ */ a(
-                    ye.div,
+                  /* @__PURE__ */ l(Fe, { initial: !1, children: B && Y.length > 0 && /* @__PURE__ */ l(
+                    Ke.div,
                     {
                       initial: { opacity: 0, height: 0 },
                       animate: { opacity: 1, height: "auto" },
@@ -550,121 +717,137 @@ function te({
                         duration: 0.25,
                         ease: "easeInOut"
                       },
-                      className: `mt-4 pt-3.5 px-2 border-t space-y-3 animate-slide-down ${g.classes.divider}`,
-                      children: K.map((V, xe) => {
-                        const pe = ee(d, V), be = V.align === "center" ? "text-center" : V.align === "right" ? "text-right" : "text-left";
-                        return /* @__PURE__ */ i(
+                      className: `mt-4 pt-3.5 px-2 border-t space-y-3 animate-slide-down ${h.classes.divider}`,
+                      children: Y.map((P, Re) => {
+                        if (!P) return null;
+                        const de = P.align === "center" ? "text-center" : P.align === "right" ? "text-right" : "text-left", Me = re(P, r), Te = H?.rowKey === S && H?.field === P.field;
+                        return /* @__PURE__ */ d(
                           "div",
                           {
                             className: "flex justify-between items-center gap-2 py-0.5",
                             children: [
-                              /* @__PURE__ */ a(
+                              /* @__PURE__ */ l(
                                 "span",
                                 {
-                                  className: `text-xs font-semibold truncate ${g.classes.textMuted}`,
-                                  children: V.headerName
+                                  className: `text-xs font-semibold truncate ${h.classes.textMuted}`,
+                                  children: P.headerName
                                 }
                               ),
-                              /* @__PURE__ */ a(
+                              Me ? /* @__PURE__ */ l(
+                                fe,
+                                {
+                                  row: r,
+                                  col: P,
+                                  activeTheme: h,
+                                  isEditing: Te,
+                                  onStartEdit: () => M({
+                                    rowKey: S,
+                                    field: P.field
+                                  }),
+                                  onCommit: (De) => oe(r, P, String(De)),
+                                  onCancel: () => M(null),
+                                  textClass: `${de} ${h.classes.textPrimary}`
+                                }
+                              ) : /* @__PURE__ */ l(
                                 "span",
                                 {
-                                  className: `col-span-2 text-xs font-medium break-all ${be} ${g.classes.textPrimary}`,
-                                  children: pe
+                                  className: `col-span-2 text-xs font-medium break-all ${de} ${h.classes.textPrimary}`,
+                                  children: ie(r, P)
                                 }
                               )
                             ]
                           },
-                          xe
+                          Re
                         );
                       })
                     }
                   ) })
                 ]
               },
-              W
+              S
             );
           }) })
         ]
       }
     ),
-    /* @__PURE__ */ a(
-      ie,
+    /* @__PURE__ */ l(
+      Ne,
       {
-        page: M,
+        page: O,
         pageSize: e,
-        totalRows: j,
-        loading: x,
-        onPageChange: B,
-        onPageSizeChange: N,
+        totalRows: A,
+        loading: v,
+        onPageChange: _,
+        onPageSizeChange: y,
         theme: o,
         isMobile: !0,
-        themeConfig: y
+        themeConfig: w
       }
     )
   ] });
 }
-function Ge(t) {
-  const s = () => typeof window > "u" ? !1 : window.matchMedia(t).matches, [e, l] = E(s);
-  return A(() => {
-    const r = window.matchMedia(t), n = (m) => {
-      l(m.matches);
+function rt(t) {
+  const n = () => typeof window > "u" ? !1 : window.matchMedia(t).matches, [e, a] = F(n);
+  return G(() => {
+    const c = window.matchMedia(t), s = (u) => {
+      a(u.matches);
     };
-    return l(r.matches), r.addEventListener("change", n), () => {
-      r.removeEventListener("change", n);
+    return a(c.matches), c.addEventListener("change", s), () => {
+      c.removeEventListener("change", s);
     };
   }, [t]), e;
 }
-function de(t) {
-  const [s, e] = E(
+function ye(t) {
+  const [n, e] = F(
     t ?? (document.documentElement.classList.contains("dark") ? "dark" : "light")
   );
-  return A(() => {
+  return G(() => {
     if (t) {
       e(t);
       return;
     }
-    const l = new MutationObserver(() => {
+    const a = new MutationObserver(() => {
       e(
         document.documentElement.classList.contains("dark") ? "dark" : "light"
       );
     });
-    return l.observe(document.documentElement, {
+    return a.observe(document.documentElement, {
       attributes: !0,
       attributeFilter: ["class"]
-    }), () => l.disconnect();
-  }, [t]), s;
+    }), () => a.disconnect();
+  }, [t]), n;
 }
-function Ve(t) {
-  const s = Ge("(max-width: 768px)"), { modeTable: e = "auto" } = t, l = de(t.theme);
-  return e === "mobile" ? /* @__PURE__ */ a(te, { ...t, theme: l }) : e === "desktop" ? /* @__PURE__ */ a(q, { ...t, theme: l }) : s ? /* @__PURE__ */ a(te, { ...t, theme: l }) : /* @__PURE__ */ a(q, { ...t, theme: l });
+function it(t) {
+  const n = rt("(max-width: 768px)"), { modeTable: e = "auto" } = t, a = ye(t.theme);
+  return e === "mobile" ? /* @__PURE__ */ l(he, { ...t, theme: a }) : e === "desktop" ? /* @__PURE__ */ l(me, { ...t, theme: a }) : n ? /* @__PURE__ */ l(he, { ...t, theme: a }) : /* @__PURE__ */ l(me, { ...t, theme: a });
 }
-function We({
+function ht({
   data: t,
-  filterColumns: s,
+  filterColumns: n,
   filterPlaceholder: e = "Buscar...",
-  filterClassName: l,
-  theme: r,
-  ...n
+  filterClassName: a,
+  theme: c,
+  ...s
 }) {
-  const [m, u] = E(t), o = de(r);
-  return /* @__PURE__ */ i("div", { className: "flex flex-col gap-6", children: [
-    /* @__PURE__ */ a(
-      we,
+  const [u, x] = F(t), o = ye(c);
+  return /* @__PURE__ */ d("div", { className: "flex flex-col gap-6", children: [
+    /* @__PURE__ */ l(
+      Ae,
       {
         data: t,
-        columns: s,
+        columns: n,
         placeholder: e,
-        onChange: u,
-        className: l,
+        onChange: x,
+        className: a,
         theme: o
       }
     ),
-    /* @__PURE__ */ a(Ve, { ...n, data: m, theme: r })
+    /* @__PURE__ */ l(it, { ...s, data: u, theme: c })
   ] });
 }
 export {
-  Ve as CBDataTable,
-  q as CBDataTableDesktop,
-  te as CBDataTableMobile,
-  We as CBDataTableWithFilter
+  it as CBDataTable,
+  me as CBDataTableDesktop,
+  he as CBDataTableMobile,
+  ht as CBDataTableWithFilter
 };

@@ -1,12 +1,34 @@
 import type { CBTableColumn } from "../../../datatable";
 import type { CBInputMask, CBInputMaskFn } from "../../../types/components";
-interface FlatColumn<T> {
+export interface FlatColumn<T> {
     headerName: string;
     field?: string;
+    colId?: string;
     align?: "left" | "center" | "right";
     render?: (row: T) => React.ReactNode;
     valueGetter?: (row: T) => React.ReactNode;
     mask?: CBInputMask | CBInputMaskFn;
+    /** Se a célula é editável */
+    editable?: boolean | ((params: {
+        data: T;
+    }) => boolean);
+    /** Editor AG Grid (usado para derivar o tipo do input HTML) */
+    cellEditor?: string;
+    /** Parâmetros do editor (min, max, precision, values…) */
+    cellEditorParams?: Record<string, unknown>;
+    /** Ativa edição com clique único */
+    singleClickEdit?: boolean;
+    /** Callback chamado quando o valor é alterado */
+    onCellValueChanged?: (params: {
+        data: T;
+        oldValue: unknown;
+        newValue: unknown;
+        colDef: {
+            field?: string;
+            colId?: string;
+            headerName?: string;
+        };
+    }) => void;
 }
 /**
  * Converte colunas agrupadas em uma lista simples.
@@ -26,4 +48,7 @@ export declare function flattenColumns<T>(columns: CBTableColumn<T>[]): FlatColu
  */
 export declare function getValue<T>(row: T, field?: string): React.ReactNode;
 export declare function getDisplayValue<T>(row: T, col: FlatColumn<T>): React.ReactNode;
-export {};
+/** Retorna o tipo HTML do input com base no cellEditor do AG Grid */
+export declare function getInputType(cellEditor?: string): string;
+/** Retorna true se a coluna é editável para o row dado */
+export declare function isColumnEditable<T>(col: FlatColumn<T>, row: T): boolean;

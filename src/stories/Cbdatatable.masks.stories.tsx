@@ -111,6 +111,7 @@ export const MasksDesktop: Story = {
         <CBDataTable<MaskedRecord>
           getRowId={(item) => item.id.toString()}
           modeTable="desktop"
+          defaultExpanded
           columns={maskedColumns}
           data={mockMaskedData}
           pageSize={5}
@@ -129,6 +130,7 @@ export const MasksMobile: Story = {
       <CBDataTable<MaskedRecord>
         getRowId={(item) => item.id.toString()}
         modeTable="mobile"
+        defaultExpanded
         columns={maskedColumns}
         data={mockMaskedData}
         pageSize={5}

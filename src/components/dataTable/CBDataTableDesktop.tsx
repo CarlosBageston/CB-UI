@@ -10,6 +10,14 @@ import {
   RowSelectionModule,
   CellStyleModule,
   LocaleModule,
+  TextEditorModule,
+  NumberEditorModule,
+  DateEditorModule,
+  SelectEditorModule,
+  LargeTextEditorModule,
+  CheckboxEditorModule,
+  CustomEditorModule,
+  UndoRedoEditModule,
 } from "ag-grid-community";
 
 import { mapColumn } from "./helper/desktop";
@@ -24,6 +32,14 @@ ModuleRegistry.registerModules([
   RowSelectionModule,
   CellStyleModule,
   LocaleModule,
+  TextEditorModule,
+  NumberEditorModule,
+  DateEditorModule,
+  SelectEditorModule,
+  LargeTextEditorModule,
+  CheckboxEditorModule,
+  CustomEditorModule,
+  UndoRedoEditModule,
 ]);
 
 /**
@@ -84,6 +100,10 @@ function CBDataTableDesktop<T>({
   onPageChange,
   onPageSizeChange,
   loading = false,
+  singleClickEdit = true,
+  stopEditingWhenCellsLoseFocus = true,
+  onCellValueChanged,
+  autoFocusFirstEditableCell = false,
 }: CBDataTableProps<T>) {
   const themeTable = useMemo(() => getThemeTable(theme === "dark"), [theme]);
   const [internalPage, setInternalPage] = useState(0);
@@ -159,6 +179,41 @@ function CBDataTableDesktop<T>({
     return data.slice(start, start + pageSize);
   }, [data, currentPage, pageSize, onPageChange]);
 
+  const focusFirstEditableCell = useCallback(() => {
+    if (!autoFocusFirstEditableCell) return;
+    if (pagedData.length === 0) return;
+
+    const firstEditableCol = columns.find((col) => col.editable);
+    if (!firstEditableCol) return;
+
+    const colKey =
+      firstEditableCol.colId ??
+      (typeof firstEditableCol.field === "string"
+        ? firstEditableCol.field
+        : undefined);
+
+    if (!colKey) return;
+    setTimeout(() => {
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
+
+      setTimeout(() => {
+        console.log("gridWrapperRef", gridWrapperRef.current);
+        console.log("colKey", colKey);
+        gridRef.current?.api?.startEditingCell({
+          rowIndex: 0,
+          colKey,
+        });
+        // autoFocusPendingRef.current = false;
+      }, 50);
+    }, 0);
+  }, [autoFocusFirstEditableCell, columns, pagedData.length]);
+
+  const handleFirstDataRendered = useCallback(() => {
+    focusFirstEditableCell();
+  }, [focusFirstEditableCell]);
+
   return (
     <div ref={gridWrapperRef} className="relative w-full">
       <AgGridReact
@@ -167,6 +222,12 @@ function CBDataTableDesktop<T>({
         getRowId={getRowIdCallback}
         defaultColDef={{ resizable: false }}
         columnDefs={columnDefs}
+        singleClickEdit={singleClickEdit}
+        stopEditingWhenCellsLoseFocus={stopEditingWhenCellsLoseFocus}
+        onCellValueChanged={
+          onCellValueChanged ? (e) => onCellValueChanged(e as any) : undefined
+        }
+        onFirstDataRendered={handleFirstDataRendered}
         theme={themeTable}
         animateRows
         // API de seleção do AG Grid >= v32: rowSelection passou a ser um

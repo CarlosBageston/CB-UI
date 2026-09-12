@@ -8,6 +8,8 @@ import {
   type MockUser,
   type PaginationDto,
 } from "../helper/mockPagination";
+import type { CBTableColumn } from "../datatable";
+import { useFormik } from "formik";
 
 const meta: Meta<typeof CBDataTableDesktop<User>> = {
   title: "Form/CBDataTable/Desktop",
@@ -419,5 +421,334 @@ export const ManyRowsPagination: Story = {
         getRowId={(user) => String(user.id)}
       />
     );
+  },
+};
+
+export const CustomRenderControlledInput: Story = {
+  render: () => {
+    type Row = {
+      id: number;
+      product: string;
+      price: number;
+      quantity: number | null;
+    };
+
+    const ControlledInputDemo = () => {
+      const [rows] = useState<Row[]>([
+        {
+          id: 1,
+          product: "Sorvete Chocolate",
+          price: 10,
+          quantity: 0,
+        },
+        {
+          id: 2,
+          product: "Sorvete Morango",
+          price: 12,
+          quantity: 1,
+        },
+        {
+          id: 3,
+          product: "Sorvete Creme",
+          price: 11,
+          quantity: 0,
+        },
+      ]);
+
+      const columns: CBTableColumn<Row>[] = [
+        {
+          field: "product",
+          headerName: "Produto",
+          col: 3,
+        },
+        {
+          field: "price",
+          headerName: "Preço",
+          col: 2,
+          mask: "currency",
+        },
+        {
+          headerName: "Quantidade",
+          field: "quantity",
+          col: 2,
+          align: "left",
+          editable: true,
+          cellEditor: "agNumberCellEditor",
+          cellEditorParams: {
+            min: 0,
+            precision: 0,
+          },
+          singleClickEdit: true,
+          onCellValueChanged: (params) => {
+            console.log(params);
+          },
+        },
+        {
+          headerName: "Total",
+          col: 2,
+          valueGetter: (params) =>
+            (params.data?.quantity ?? 0) * (params.data?.price ?? 0),
+          mask: "currency",
+        },
+      ];
+
+      const total = rows.reduce(
+        (acc, row) => acc + (row.quantity ?? 0) * row.price,
+        0,
+      );
+      const getRowId = useCallback((row: Row) => String(row.id), []);
+      return (
+        <div className="space-y-4">
+          <div className="p-3 rounded-lg border bg-gray-50 dark:bg-gray-800">
+            <p className="text-sm">
+              <strong>Teste:</strong> clique em um campo de quantidade e digite
+              vários números seguidos.
+            </p>
+
+            <p className="text-sm mt-1">
+              Total: <strong>R$ {total.toFixed(2)}</strong>
+            </p>
+          </div>
+
+          <CBDataTableDesktop<Row>
+            columns={columns}
+            data={rows}
+            theme="dark"
+            getRowId={getRowId}
+            pageSize={5}
+            autoFocusFirstEditableCell
+          />
+        </div>
+      );
+    };
+
+    return <ControlledInputDemo />;
+  },
+};
+export const AutoFocusAfterApi: Story = {
+  render: () => {
+    type Row = {
+      id: number;
+      product: string;
+      quantity: number;
+      price: number;
+    };
+
+    const AutoFocusAfterApiDemo = () => {
+      const [data, setData] = useState<Row[]>([]);
+      const [loading, setLoading] = useState(false);
+
+      const loadData = useCallback(async () => {
+        setLoading(true);
+
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        const response: Row[] = [
+          {
+            id: 1,
+            product: "Sorvete Chocolate",
+            quantity: 0,
+            price: 10,
+          },
+          {
+            id: 2,
+            product: "Sorvete Morango",
+            quantity: 0,
+            price: 12,
+          },
+          {
+            id: 3,
+            product: "Sorvete Creme",
+            quantity: 0,
+            price: 11,
+          },
+        ];
+
+        setData(response);
+        setLoading(false);
+      }, []);
+
+      useEffect(() => {
+        loadData();
+      }, [loadData]);
+
+      const columns: CBTableColumn<Row>[] = [
+        {
+          field: "product",
+          headerName: "Produto",
+          col: 4,
+        },
+        {
+          field: "quantity",
+          headerName: "Quantidade",
+          col: 2,
+          editable: true,
+          cellEditor: "agNumberCellEditor",
+          cellEditorParams: {
+            min: 0,
+            precision: 0,
+          },
+          singleClickEdit: true,
+        },
+        {
+          field: "price",
+          headerName: "Preço",
+          col: 2,
+          mask: "currency",
+        },
+      ];
+
+      return (
+        <div className="space-y-4">
+          <div className="p-3 rounded-lg border bg-gray-50 dark:bg-gray-800">
+            <p className="text-sm">
+              <strong>Status:</strong>{" "}
+              {loading
+                ? "Buscando dados na API..."
+                : data.length > 0
+                  ? "Dados carregados"
+                  : "Aguardando"}
+            </p>
+
+            <p className="text-sm mt-1">
+              Linhas carregadas: <strong>{data.length}</strong>
+            </p>
+
+            <p className="text-sm mt-1">
+              A primeira coluna editável é <strong>Quantidade</strong>.
+            </p>
+          </div>
+
+          <CBDataTableDesktop<Row>
+            columns={columns}
+            data={data}
+            theme="dark"
+            getRowId={(row) => String(row.id)}
+            pageSize={5}
+            loading={loading}
+            autoFocusFirstEditableCell
+          />
+        </div>
+      );
+    };
+
+    return <AutoFocusAfterApiDemo />;
+  },
+};
+export const AutoFocusAfterFormik: Story = {
+  render: () => {
+    type Row = {
+      id: number;
+      product: string;
+      quantity: number;
+      price: number;
+    };
+
+    const AutoFocusAfterFormikDemo = () => {
+      const formik = useFormik<{ orderItemList: Row[] }>({
+        initialValues: {
+          orderItemList: [],
+        },
+        onSubmit: () => {},
+      });
+
+      const [loading, setLoading] = useState(false);
+
+      const loadOrder = useCallback(async () => {
+        setLoading(true);
+
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        const response: Row[] = [
+          {
+            id: 1,
+            product: "Sorvete Chocolate",
+            quantity: 0,
+            price: 10,
+          },
+          {
+            id: 2,
+            product: "Sorvete Morango",
+            quantity: 0,
+            price: 12,
+          },
+          {
+            id: 3,
+            product: "Sorvete Creme",
+            quantity: 0,
+            price: 11,
+          },
+        ];
+
+        formik.setValues({
+          orderItemList: response,
+        });
+
+        setLoading(false);
+      }, [formik]);
+
+      useEffect(() => {
+        loadOrder();
+      }, [loadOrder]);
+
+      const columns: CBTableColumn<Row>[] = [
+        {
+          field: "product",
+          headerName: "Produto",
+          col: 4,
+        },
+        {
+          field: "quantity",
+          headerName: "Quantidade",
+          col: 2,
+          editable: true,
+          cellEditor: "agNumberCellEditor",
+          cellEditorParams: {
+            min: 0,
+            precision: 0,
+          },
+          singleClickEdit: true,
+        },
+        {
+          field: "price",
+          headerName: "Preço",
+          col: 2,
+          mask: "currency",
+        },
+      ];
+
+      const rows = formik.values.orderItemList;
+
+      return (
+        <div className="space-y-4">
+          <div className="p-3 rounded-lg border bg-gray-50 dark:bg-gray-800">
+            <p className="text-sm">
+              <strong>Status:</strong>{" "}
+              {loading
+                ? "Buscando pedido..."
+                : rows.length > 0
+                  ? "Pedido carregado"
+                  : "Aguardando"}
+            </p>
+
+            <p className="text-sm mt-1">
+              Itens: <strong>{rows.length}</strong>
+            </p>
+          </div>
+
+          <CBDataTableDesktop<Row>
+            columns={columns}
+            data={rows}
+            theme="dark"
+            getRowId={(row) => String(row.id)}
+            pageSize={5}
+            loading={loading}
+            autoFocusFirstEditableCell
+          />
+        </div>
+      );
+    };
+
+    return <AutoFocusAfterFormikDemo />;
   },
 };

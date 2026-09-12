@@ -12,7 +12,7 @@ type Story = StoryObj<typeof CBDataTableWithFilter<User>>;
 const MobileFrame = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex justify-center bg-slate-200 min-h-screen">
-      <div className="w-[390px] min-h-[700px] rounded-4xl p-2 border-8 border-slate-900 overflow-hidden shadow-2xl bg-white">
+      <div className="w-97.5 min-h-175 rounded-4xl p-2 border-8 border-slate-900 overflow-hidden shadow-2xl bg-white">
         {children}
       </div>
     </div>

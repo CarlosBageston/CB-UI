@@ -19,7 +19,7 @@ type Story = StoryObj<typeof CBDataTableMobile<User>>;
 const MobileFrame = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex justify-center bg-slate-200 min-h-screen">
-      <div className="w-97.5 h-200 max-h-200 overflow-auto rounded-4xl p-2 border-8 border-slate-900  shadow-2xl bg-white">
+      <div className="w-97.5 h-200 max-h-200 rounded-4xl p-2 border-8 overflow-auto scrollbar-hidden border-slate-900  shadow-2xl bg-white">
         {children}
       </div>
     </div>
@@ -450,6 +450,227 @@ export const ManyRowsPagination: Story = {
           pageSize={5}
           getRowId={(user) => String(user.id)}
         />
+      </MobileFrame>
+    );
+  },
+};
+
+// 12. Edição com inputs e cards expandidos por padrão (ideal para formulários/pedidos)
+export const WithInputsAndDefaultExpanded: Story = {
+  render: () => {
+    const WithInputsDemo = () => {
+      const [items, setItems] = useState([
+        {
+          id: "1",
+          code: "PRD-001",
+          name: "Notebook Dell Inspiron",
+          price: 3500,
+          quantity: 2,
+        },
+        {
+          id: "2",
+          code: "PRD-002",
+          name: "Mouse Sem Fio Logitech",
+          price: 120,
+          quantity: 5,
+        },
+        {
+          id: "3",
+          code: "PRD-003",
+          name: "Teclado Mecânico RGB",
+          price: 350,
+          quantity: 1,
+        },
+        {
+          id: "4",
+          code: "PRD-004",
+          name: "Monitor 27' Full HD",
+          price: 1100,
+          quantity: 3,
+        },
+      ]);
+
+      const handleQuantityChange = (id: string, value: string) => {
+        const qty = value === "" ? 0 : Number(value);
+        setItems((prev) =>
+          prev.map((item) =>
+            item.id === id ? { ...item, quantity: qty } : item,
+          ),
+        );
+      };
+
+      const total = items.reduce(
+        (acc, item) => acc + item.quantity * item.price,
+        0,
+      );
+
+      return (
+        <div className="space-y-4">
+          <div className="p-3 bg-slate-800 rounded-xl text-white text-xs flex justify-between items-center">
+            <span>
+              Modo: <b>selectionMode="single"</b>
+            </span>
+            <span className="font-bold text-emerald-400">
+              Total: R${" "}
+              {total.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+            </span>
+          </div>
+
+          <CBDataTableMobile
+            getRowId={(item) => item.id}
+            selectionMode="single"
+            defaultExpanded={true}
+            columns={[
+              { field: "name", headerName: "Produto", col: 3 },
+              { field: "code", headerName: "Código", col: 2 },
+              {
+                field: "price",
+                headerName: "Preço Unit.",
+                col: 2,
+                render: (row) => `R$ ${row.price.toFixed(2)}`,
+              },
+              {
+                headerName: "Quantidade",
+                col: 2,
+                align: "center",
+                render: (row) => (
+                  <input
+                    type="number"
+                    min={0}
+                    placeholder="0"
+                    value={row.quantity ?? ""}
+                    onChange={(e) =>
+                      handleQuantityChange(row.id, e.target.value)
+                    }
+                    onKeyDown={(e) => {
+                      if (["e", "E", "+", "-"].includes(e.key)) {
+                        e.preventDefault();
+                      }
+                    }}
+                    className="w-20 h-8 px-2 text-center text-xs font-semibold border rounded-md outline-none transition-all duration-150
+                      bg-gray-800 
+                      text-gray-900 dark:text-gray-100 
+                      border-gray-300 dark:border-gray-700 
+                      hover:border-primary/60 
+                      focus:border-primary focus:ring-2 focus:ring-primary/20 
+                      [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  />
+                ),
+              },
+              {
+                headerName: "Total Item",
+                col: 2,
+                align: "right",
+                render: (row) => (
+                  <span className="font-bold text-emerald-500">
+                    R$ {(row.quantity * row.price).toFixed(2)}
+                  </span>
+                ),
+              },
+            ]}
+            data={items}
+            pageSize={4}
+          />
+        </div>
+      );
+    };
+
+    return (
+      <MobileFrame>
+        <WithInputsDemo />
+      </MobileFrame>
+    );
+  },
+};
+
+export const EditableCell: Story = {
+  render: () => {
+    type Row = {
+      id: number;
+      product: string;
+      price: number;
+      quantity: number | null;
+    };
+
+    const EditableCellDemo = () => {
+      const [rows, setRows] = useState<Row[]>([
+        { id: 1, product: "Sorvete Chocolate", price: 10, quantity: 0 },
+        { id: 2, product: "Sorvete Morango", price: 12, quantity: 1 },
+        { id: 3, product: "Sorvete Creme", price: 11, quantity: 0 },
+        { id: 4, product: "Sorvete maça verde", price: 11, quantity: 0 },
+        { id: 5, product: "Sorvete uva", price: 11, quantity: 0 },
+        { id: 6, product: "Sorvete Baunilha", price: 11, quantity: 0 },
+        { id: 7, product: "Sorvete Morango Limão", price: 11, quantity: 0 },
+      ]);
+
+      const total = rows.reduce(
+        (acc, row) => acc + (row.quantity ?? 0) * row.price,
+        0,
+      );
+
+      return (
+        <div className="space-y-4 overflow-hidden">
+          <div className="p-3 bg-slate-800 rounded-xl text-white text-xs flex justify-between items-center overflow-hidden">
+            <span>
+              Modo: <b>editable + agNumberCellEditor</b>
+            </span>
+            <span className="font-bold text-emerald-400">
+              Total: R$ {total.toFixed(2)}
+            </span>
+          </div>
+
+          <CBDataTableMobile<Row>
+            getRowId={(row) => String(row.id)}
+            defaultExpanded
+            singleClickEdit
+            autoFocusFirstEditableCell
+            columns={[
+              { field: "product", headerName: "Produto", col: 3 },
+              {
+                field: "price",
+                headerName: "Preço",
+                col: 2,
+                mask: "currency",
+              },
+              {
+                headerName: "Quantidade",
+                field: "quantity",
+                col: 2,
+                editable: true,
+                cellEditor: "agNumberCellEditor",
+                cellEditorParams: { min: 0, precision: 0 },
+                singleClickEdit: true,
+                onCellValueChanged: (params) => {
+                  const newQty =
+                    params.newValue === null ? 0 : Number(params.newValue);
+                  setRows((prev) =>
+                    prev.map((r) =>
+                      r.id === (params.data as Row).id
+                        ? { ...r, quantity: newQty }
+                        : r,
+                    ),
+                  );
+                },
+              },
+              {
+                headerName: "Total",
+                col: 2,
+                valueGetter: (row) =>
+                  ((row as any).quantity ?? 0) * ((row as any).price ?? 0),
+                mask: "currency",
+              },
+            ]}
+            data={rows}
+            theme="light"
+            pageSize={5}
+          />
+        </div>
+      );
+    };
+
+    return (
+      <MobileFrame>
+        <EditableCellDemo />
       </MobileFrame>
     );
   },

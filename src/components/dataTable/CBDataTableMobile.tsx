@@ -2,7 +2,13 @@ import CBCheckbox from "../CBCheckbox/CBCheckbox";
 import CBButton from "../CBButton";
 import { AnimatePresence, motion } from "framer-motion";
 import type { CBDataTableProps } from "../../datatable";
-import { flattenColumns, getDisplayValue } from "./helper/mobile";
+import {
+  flattenColumns,
+  getDisplayValue,
+  getInputType,
+  isColumnEditable,
+  type FlatColumn,
+} from "./helper/mobile";
 import { CBPaginationFooter } from "./components/CBPaginationFooter";
 import { useDataTableSelection } from "./hook/useDataTableSelection";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -15,6 +21,122 @@ import {
 interface CBDataTableMobileProps<T> extends CBDataTableProps<T> {
   themeConfig?: Partial<CBTableMobileTheme>;
 }
+
+// ─── Célula editável ────────────────────────────────────────────────────────
+
+interface EditableCellProps<T> {
+  row: T;
+  col: FlatColumn<T>;
+  isEditing: boolean;
+  onStartEdit: () => void;
+  onCommit: (newValue: unknown) => void;
+  onCancel: () => void;
+  textClass: string;
+  activeTheme: CBTableMobileTheme;
+}
+
+function EditableCell<T>({
+  row,
+  col,
+  isEditing,
+  onStartEdit,
+  onCommit,
+  onCancel,
+  textClass,
+  activeTheme,
+}: EditableCellProps<T>) {
+  const field = col.field;
+  const rawValue = field ? (row as Record<string, unknown>)[field] : undefined;
+  const inputType = getInputType(col.cellEditor);
+  const params = col.cellEditorParams ?? {};
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Foca o input quando entrar em modo de edição
+  useEffect(() => {
+    if (isEditing) {
+      // Timeout para garantir que o input foi montado
+      const t = setTimeout(() => inputRef.current?.focus(), 0);
+      return () => clearTimeout(t);
+    }
+  }, [isEditing]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      onCommit(inputRef.current?.value ?? "");
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      onCancel();
+    }
+  };
+
+  const handleBlur = () => {
+    onCommit(inputRef.current?.value ?? "");
+  };
+
+  const handleClick = () => {
+    if (col.singleClickEdit && !isEditing) {
+      onStartEdit();
+    }
+  };
+
+  const handleDoubleClick = () => {
+    if (!col.singleClickEdit && !isEditing) {
+      onStartEdit();
+    }
+  };
+
+  if (isEditing) {
+    return (
+      <input
+        ref={inputRef}
+        type={inputType}
+        defaultValue={
+          rawValue !== null && rawValue !== undefined ? String(rawValue) : ""
+        }
+        min={params.min !== undefined ? Number(params.min) : undefined}
+        max={params.max !== undefined ? Number(params.max) : undefined}
+        step={
+          params.precision !== undefined
+            ? params.precision === 0
+              ? 1
+              : Math.pow(10, -Number(params.precision))
+            : undefined
+        }
+        onKeyDown={handleKeyDown}
+        onBlur={handleBlur}
+        className={`
+          w-24 h-9 
+          px-3 
+          ${activeTheme.classes.wrapper} 
+          border border-gray-500! 
+          text-center text-sm font-medium
+          rounded-md outline-none
+           no-number-spinner
+          `}
+      />
+    );
+  }
+
+  const displayValue = getDisplayValue(row, col);
+
+  return (
+    <span
+      className={`text-xs font-medium cursor-pointer select-none ${textClass} ${
+        col.singleClickEdit ? "" : "cursor-text"
+      }`}
+      onClick={handleClick}
+      onDoubleClick={handleDoubleClick}
+      title={
+        col.singleClickEdit ? "Clique para editar" : "Clique duplo para editar"
+      }
+    >
+      {displayValue}
+    </span>
+  );
+}
+
+// ─── Componente principal ───────────────────────────────────────────────────
 
 function CBDataTableMobile<T>({
   columns,
@@ -33,11 +155,20 @@ function CBDataTableMobile<T>({
   onPageSizeChange,
   loading = false,
   defaultExpanded = false,
+  singleClickEdit = true,
+  onCellValueChanged,
+  autoFocusFirstEditableCell = false,
 }: CBDataTableMobileProps<T>) {
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>(
     {},
   );
   const [internalPage, setInternalPage] = useState(0);
+
+  /** { rowKey: string; field: string } | null */
+  const [editingCell, setEditingCell] = useState<{
+    rowKey: string;
+    field: string;
+  } | null>(null);
 
   const currentPage = page ?? internalPage;
   const handlePageChange = (newPage: number) => {
@@ -80,7 +211,16 @@ function CBDataTableMobile<T>({
     return { ...baseTheme, ...themeConfig };
   }, [theme, themeConfig]);
 
-  const flatColumns = useMemo(() => flattenColumns(columns), [columns]);
+  // Garante que singleClickEdit da prop global seja propagado para colunas
+  // que não definem o próprio singleClickEdit
+  const flatColumns = useMemo(() => {
+    const cols = flattenColumns(columns);
+    return cols.map((col) => ({
+      ...col,
+      singleClickEdit: col.singleClickEdit ?? singleClickEdit,
+    }));
+  }, [columns, singleClickEdit]);
+
   const [titleColumn, ...restColumns] = flatColumns;
 
   const totalPages = Math.max(1, Math.ceil(rowsCount / pageSize));
@@ -121,6 +261,63 @@ function CBDataTableMobile<T>({
   useEffect(() => {
     clearSelection();
   }, [currentPage]);
+
+  // Auto-foco na primeira célula editável da primeira linha
+  useEffect(() => {
+    if (!autoFocusFirstEditableCell || paginatedData.length === 0) return;
+
+    const firstRow = paginatedData[0];
+    const firstKey = getKey(firstRow, 0);
+
+    // Procura a primeira coluna editável (incluindo titleColumn)
+    const allCols = [titleColumn, ...restColumns];
+    const firstEditableCol = allCols.find((col) =>
+      col ? isColumnEditable(col, firstRow) : false,
+    );
+
+    if (firstEditableCol && firstEditableCol.field) {
+      setEditingCell({ rowKey: firstKey, field: firstEditableCol.field });
+    }
+  }, [autoFocusFirstEditableCell, paginatedData.length]);
+
+  /** Commita o valor editado e chama callbacks */
+  const commitEdit = useCallback(
+    (row: T, col: FlatColumn<T>, newValue: string) => {
+      setEditingCell(null);
+
+      const field = col.field;
+      if (!field) return;
+
+      const oldValue = (row as Record<string, unknown>)[field];
+
+      // Converte o valor conforme o tipo do editor
+      let parsedValue: unknown = newValue;
+      if (col.cellEditor === "agNumberCellEditor") {
+        parsedValue = newValue === "" ? null : Number(newValue);
+      }
+
+      if (parsedValue === oldValue) return; // sem mudança
+
+      const params = {
+        data: row,
+        oldValue,
+        newValue: parsedValue,
+        colDef: {
+          field,
+          colId: col.colId,
+          headerName: col.headerName,
+        },
+      };
+
+      // Callback da coluna tem prioridade; fallback para prop global
+      if (col.onCellValueChanged) {
+        col.onCellValueChanged(params);
+      } else if (onCellValueChanged) {
+        onCellValueChanged(params as any);
+      }
+    },
+    [onCellValueChanged],
+  );
 
   return (
     <>
@@ -197,7 +394,11 @@ function CBDataTableMobile<T>({
               // Considera a prop defaultExpanded caso a chave individual ainda não tenha sido alterada
               const isExpanded = expandedCards[key] ?? defaultExpanded;
 
-              const titleValue = getDisplayValue(row, titleColumn);
+              const titleEditable =
+                titleColumn && isColumnEditable(titleColumn, row);
+              const titleIsEditing =
+                editingCell?.rowKey === key &&
+                editingCell?.field === titleColumn?.field;
 
               return (
                 <div
@@ -232,11 +433,34 @@ function CBDataTableMobile<T>({
                       >
                         {titleColumn?.headerName || "Registro"}
                       </div>
-                      <div
-                        className={`text-sm font-bold truncate ${activeTheme.classes.textPrimary}`}
-                      >
-                        {titleValue}
-                      </div>
+
+                      {titleColumn && titleEditable ? (
+                        <EditableCell
+                          row={row}
+                          col={titleColumn}
+                          isEditing={titleIsEditing}
+                          onStartEdit={() =>
+                            setEditingCell({
+                              rowKey: key,
+                              field: titleColumn.field!,
+                            })
+                          }
+                          activeTheme={activeTheme}
+                          onCommit={(val) =>
+                            commitEdit(row, titleColumn, String(val))
+                          }
+                          onCancel={() => setEditingCell(null)}
+                          textClass={activeTheme.classes.textPrimary}
+                        />
+                      ) : (
+                        <div
+                          className={`text-sm font-bold truncate ${activeTheme.classes.textPrimary}`}
+                        >
+                          {titleColumn
+                            ? getDisplayValue(row, titleColumn)
+                            : "-"}
+                        </div>
+                      )}
                     </div>
 
                     {restColumns.length > 0 && (
@@ -280,7 +504,7 @@ function CBDataTableMobile<T>({
                         className={`mt-4 pt-3.5 px-2 border-t space-y-3 animate-slide-down ${activeTheme.classes.divider}`}
                       >
                         {restColumns.map((col, colIndex) => {
-                          const value = getDisplayValue(row, col);
+                          if (!col) return null;
 
                           const textAlign =
                             col.align === "center"
@@ -288,6 +512,11 @@ function CBDataTableMobile<T>({
                               : col.align === "right"
                                 ? "text-right"
                                 : "text-left";
+
+                          const cellEditable = isColumnEditable(col, row);
+                          const cellIsEditing =
+                            editingCell?.rowKey === key &&
+                            editingCell?.field === col.field;
 
                           return (
                             <div
@@ -299,11 +528,32 @@ function CBDataTableMobile<T>({
                               >
                                 {col.headerName}
                               </span>
-                              <span
-                                className={`col-span-2 text-xs font-medium break-all ${textAlign} ${activeTheme.classes.textPrimary}`}
-                              >
-                                {value}
-                              </span>
+
+                              {cellEditable ? (
+                                <EditableCell
+                                  row={row}
+                                  col={col}
+                                  activeTheme={activeTheme}
+                                  isEditing={cellIsEditing}
+                                  onStartEdit={() =>
+                                    setEditingCell({
+                                      rowKey: key,
+                                      field: col.field!,
+                                    })
+                                  }
+                                  onCommit={(val) =>
+                                    commitEdit(row, col, String(val))
+                                  }
+                                  onCancel={() => setEditingCell(null)}
+                                  textClass={`${textAlign} ${activeTheme.classes.textPrimary}`}
+                                />
+                              ) : (
+                                <span
+                                  className={`col-span-2 text-xs font-medium break-all ${textAlign} ${activeTheme.classes.textPrimary}`}
+                                >
+                                  {getDisplayValue(row, col)}
+                                </span>
+                              )}
                             </div>
                           );
                         })}

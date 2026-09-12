@@ -8,7 +8,7 @@ import {
   IonCardContent,
   IonFooter,
 } from "@ionic/react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { IoChevronDownSharp } from "react-icons/io5";
 import { MdEdit, MdDeleteForever } from "react-icons/md";
 
@@ -150,18 +150,29 @@ const CBCard: React.FC<CBCardProps> = ({
         </IonCardHeader>
       )}
 
-      {!collapsed && children && (
-        <IonCardContent
-          style={{
-            padding: theme?.contentCard?.padding,
-            backgroundColor: theme?.contentCard?.background,
-            color: theme?.contentCard?.text,
-          }}
-          className={`${textColor} text-sm`}
-        >
-          {children}
-        </IonCardContent>
-      )}
+      <AnimatePresence initial={false}>
+        {!collapsed && children && (
+          <motion.div
+            key="card-content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            style={{ overflow: "hidden" }}
+          >
+            <IonCardContent
+              style={{
+                padding: theme?.contentCard?.padding,
+                backgroundColor: theme?.contentCard?.background,
+                color: theme?.contentCard?.text,
+              }}
+              className={`${textColor} text-sm`}
+            >
+              {children}
+            </IonCardContent>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {footer && (
         <IonFooter
