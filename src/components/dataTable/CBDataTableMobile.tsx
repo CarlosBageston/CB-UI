@@ -12,11 +12,12 @@ import {
 import { CBPaginationFooter } from "./components/CBPaginationFooter";
 import { useDataTableSelection } from "./hook/useDataTableSelection";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FiEdit, FiTrash2, FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import {
   DEFAULT_THEMES,
   type CBTableMobileTheme,
 } from "./theme/themeDataTable";
+import CBDataTableActions from "./components/CBDataTableActions";
 
 interface CBDataTableMobileProps<T> extends CBDataTableProps<T> {
   themeConfig?: Partial<CBTableMobileTheme>;
@@ -158,6 +159,7 @@ function CBDataTableMobile<T>({
   singleClickEdit = true,
   onCellValueChanged,
   autoFocusFirstEditableCell = false,
+  actions = [],
 }: CBDataTableMobileProps<T>) {
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>(
     {},
@@ -255,7 +257,7 @@ function CBDataTableMobile<T>({
     });
   };
 
-  const hasActions = Boolean(onEdit || onDelete);
+  const hasActions = Boolean(onEdit || onDelete || actions.length);
   const isMultiple = selectionMode === "multiple";
 
   useEffect(() => {
@@ -336,26 +338,12 @@ function CBDataTableMobile<T>({
               </span>
 
               <div className="flex items-center gap-2">
-                {onEdit && (
-                  <CBButton
-                    color="primary"
-                    iconStart={<FiEdit size={16} />}
-                    disabled={selectedRows.length !== 1}
-                    onClick={() =>
-                      selectedRows.length === 1 && onEdit(selectedRows[0])
-                    }
-                    children=""
-                  />
-                )}
-                {onDelete && (
-                  <CBButton
-                    color="danger"
-                    iconStart={<FiTrash2 size={16} />}
-                    disabled={selectedRows.length === 0}
-                    onClick={handleDelete}
-                    children=""
-                  />
-                )}
+                <CBDataTableActions
+                  selectedRows={selectedRows}
+                  onEdit={onEdit}
+                  onDelete={handleDelete}
+                  actions={actions}
+                />
               </div>
             </div>
           )}
@@ -557,6 +545,14 @@ function CBDataTableMobile<T>({
                             </div>
                           );
                         })}
+                        <div className="flex items-center gap-2">
+                          <CBDataTableActions
+                            selectedRows={[row]}
+                            onEdit={onEdit}
+                            onDelete={handleDelete}
+                            actions={actions}
+                          />
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>

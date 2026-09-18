@@ -29,6 +29,10 @@ export const DefaultMobile: Story = {
           getRowId={(user) => String(user.id)}
           columns={[
             {
+              field: "object.cidade",
+              headerName: "Cidade",
+            },
+            {
               field: "name",
               headerName: "Nome muito grande para testar",
             },

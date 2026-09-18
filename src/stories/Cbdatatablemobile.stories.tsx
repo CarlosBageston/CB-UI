@@ -8,6 +8,7 @@ import {
   type MockUser,
   type PaginationDto,
 } from "../helper/mockPagination";
+import { FiCopy, FiPrinter } from "react-icons/fi";
 
 const meta: Meta<typeof CBDataTableMobile<User>> = {
   title: "Form/CBDataTable/Mobile",
@@ -671,6 +672,158 @@ export const EditableCell: Story = {
     return (
       <MobileFrame>
         <EditableCellDemo />
+      </MobileFrame>
+    );
+  },
+};
+// 14. Campos aninhados
+// Testa campos usando dot notation, como "customer.name".
+// O objetivo é garantir que a tabela mobile consiga acessar
+// propriedades dentro de objetos aninhados.
+export const NestedObjectFields: Story = {
+  render: () => {
+    type Customer = {
+      id: number;
+      name: string;
+      city: string;
+    };
+
+    type Order = {
+      id: number;
+      code: string;
+      customer: Customer;
+      status: string;
+      total: number;
+    };
+
+    const orders: Order[] = [
+      {
+        id: 1,
+        code: "PED-001",
+        customer: {
+          id: 10,
+          name: "Carlos Bageston",
+          city: "Dois Vizinhos",
+        },
+        status: "Aberto",
+        total: 125.5,
+      },
+      {
+        id: 2,
+        code: "PED-002",
+        customer: {
+          id: 11,
+          name: "João da Silva",
+          city: "Francisco Beltrão",
+        },
+        status: "Entregue",
+        total: 89.9,
+      },
+      {
+        id: 3,
+        code: "PED-003",
+        customer: {
+          id: 12,
+          name: "Maria Oliveira",
+          city: "Pato Branco",
+        },
+        status: "Cancelado",
+        total: 42.0,
+      },
+    ];
+
+    return (
+      <MobileFrame>
+        <CBDataTableMobile<Order>
+          getRowId={(order) => String(order.id)}
+          defaultExpanded
+          columns={[
+            {
+              field: "code",
+              headerName: "Pedido",
+              col: 2,
+            },
+            {
+              field: "customer.name",
+              headerName: "Cliente",
+              col: 3,
+            },
+            {
+              field: "customer.city",
+              headerName: "Cidade",
+              col: 2,
+            },
+            {
+              field: "status",
+              headerName: "Status",
+              col: 2,
+            },
+            {
+              field: "total",
+              headerName: "Total",
+              col: 2,
+              mask: "currency",
+            },
+          ]}
+          data={orders}
+          pageSize={5}
+          theme="light"
+        />
+      </MobileFrame>
+    );
+  },
+};
+
+// 15. Ações customizadas
+// Testa ações customizadas recebendo os registros selecionados.
+export const CustomActions: Story = {
+  render: () => {
+    const [message, setMessage] = useState("Nenhuma ação executada");
+
+    return (
+      <MobileFrame>
+        <div className="space-y-3">
+          <div className="p-3 bg-slate-800 rounded-xl text-white text-xs">
+            {message}
+          </div>
+
+          <CBDataTableMobile<User>
+            getRowId={(user) => String(user.id)}
+            selectionMode="multiple"
+            columns={[
+              { field: "name", headerName: "Nome", col: 2 },
+              { field: "role", headerName: "Cargo", col: 2 },
+              { field: "age", headerName: "Idade", col: 1 },
+              { field: "email", headerName: "E-mail", col: 3 },
+            ]}
+            data={mockData}
+            pageSize={5}
+            actions={[
+              {
+                icon: <FiCopy size={18} />,
+                color: "primary",
+                children: "",
+                disabled: (rows) => rows.length !== 1,
+                onClick: (rows) => {
+                  setMessage(`Copiando: ${rows[0].name}`);
+                },
+              },
+              {
+                icon: <FiPrinter size={18} />,
+                color: "secondary",
+                children: "",
+                disabled: (rows) => rows.length === 0,
+                onClick: (rows) => {
+                  setMessage(
+                    `Imprimindo ${rows.length} registro(s): ${rows
+                      .map((row) => row.name)
+                      .join(", ")}`,
+                  );
+                },
+              },
+            ]}
+          />
+        </div>
       </MobileFrame>
     );
   },

@@ -5,6 +5,9 @@ export interface User {
   age: number;
   email: string;
   phone: string;
+  object?: {
+    cidade: string;
+  };
 }
 
 export const mockData: User[] = [
@@ -15,6 +18,9 @@ export const mockData: User[] = [
     age: 28,
     email: "V2aQs@example.com",
     phone: "1234567890",
+    object: {
+      cidade: "Dois Vizinhos",
+    },
   },
   {
     id: 2,
@@ -23,6 +29,9 @@ export const mockData: User[] = [
     age: 25,
     email: "9aTt8@example.com",
     phone: "9876543210",
+    object: {
+      cidade: "Pato Branco",
+    },
   },
   {
     id: 3,

@@ -15,7 +15,7 @@ const mockData: User[] = [
   { name: "Maria", role: "Developer", age: 30 },
 ];
 
-const columns: CBFilterOption[] = [
+const columns: CBFilterOption<any>[] = [
   { value: "name", label: "Nome" },
   { value: "role", label: "Cargo" },
   { value: "age", label: "Idade" },
@@ -136,6 +136,102 @@ export const CustomClassNames: Story = {
           selectClassName="text-blue-500" // select estilizado
           style={{ maxWidth: 400 }} // largura máxima inline
         />
+        <pre>{JSON.stringify(filtered, null, 2)}</pre>
+      </div>
+    );
+  },
+};
+
+interface Order {
+  id: string;
+  customer: {
+    name: string;
+  };
+  status: "OPEN" | "DELIVERED" | "CANCELLED";
+}
+
+const mockOrders: Order[] = [
+  {
+    id: "1",
+    customer: { name: "Carlos" },
+    status: "OPEN",
+  },
+  {
+    id: "2",
+    customer: { name: "Ana" },
+    status: "DELIVERED",
+  },
+  {
+    id: "3",
+    customer: { name: "João" },
+    status: "CANCELLED",
+  },
+  {
+    id: "4",
+    customer: { name: "Maria" },
+    status: "OPEN",
+  },
+];
+
+const STATUS_ORDER_LABELS: Record<Order["status"], string> = {
+  OPEN: "Pedido em Aberto",
+  DELIVERED: "Pedido Entregue",
+  CANCELLED: "Pedido Cancelado",
+};
+
+const orderFilterColumns: CBFilterOption<Order>[] = [
+  {
+    value: "customer.name",
+    label: "Cliente",
+  },
+  {
+    value: "status",
+    label: "Status",
+    getValue: (order) => {
+      const status = order.status;
+
+      return status ? STATUS_ORDER_LABELS[status] : "";
+    },
+  },
+];
+
+export const EnumAndNestedFields: Story = {
+  render: () => {
+    const [filtered, setFiltered] = useState<Order[]>(mockOrders);
+
+    return (
+      <div className="flex flex-col gap-4">
+        <CBFilterBar<Order>
+          data={mockOrders}
+          columns={orderFilterColumns}
+          placeholder="Pesquisar pedido..."
+          onChange={setFiltered}
+        />
+
+        <pre>{JSON.stringify(filtered, null, 2)}</pre>
+      </div>
+    );
+  },
+};
+export const EnumFilter: Story = {
+  render: () => {
+    const [filtered, setFiltered] = useState<Order[]>(mockOrders);
+
+    return (
+      <div className="flex flex-col gap-4">
+        <CBFilterBar<Order>
+          data={mockOrders}
+          columns={[
+            {
+              value: "status",
+              label: "Status",
+              getValue: (order) =>
+                STATUS_ORDER_LABELS[(order as Order).status!],
+            },
+          ]}
+          onChange={setFiltered}
+        />
+
         <pre>{JSON.stringify(filtered, null, 2)}</pre>
       </div>
     );

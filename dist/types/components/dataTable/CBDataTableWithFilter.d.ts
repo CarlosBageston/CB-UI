@@ -1,7 +1,7 @@
 import { type CBFilterOption } from "../CBFilterBar";
 import type { CBDataTableProps } from "../../types/componentsDataTable";
 interface CBDataTableWithFilterProps<T> extends CBDataTableProps<T> {
-    filterColumns?: CBFilterOption[];
+    filterColumns?: CBFilterOption<T>[];
     filterPlaceholder?: string;
     filterClassName?: string;
 }

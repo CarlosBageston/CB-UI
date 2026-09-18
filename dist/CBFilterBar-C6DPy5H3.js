@@ -1,8 +1,8 @@
 import { jsx as L, jsxs as dt, Fragment as Ue } from "react/jsx-runtime";
 import * as ye from "react";
-import { createContext as Ct, useRef as z, useLayoutEffect as tr, useEffect as ve, useId as pn, useContext as N, useInsertionEffect as mn, useMemo as vt, useCallback as us, Children as er, isValidElement as nr, useState as re, Fragment as hs, createElement as ir, forwardRef as sr, Component as or } from "react";
+import { createContext as Ct, useRef as K, useLayoutEffect as tr, useEffect as ve, useId as pn, useContext as N, useInsertionEffect as mn, useMemo as vt, useCallback as us, Children as er, isValidElement as nr, useState as re, Fragment as hs, createElement as ir, forwardRef as sr, Component as or } from "react";
 import { IonButton as rr, IonSpinner as ar, IonCheckbox as lr, IonInput as cr, IonPopover as ur, IonList as hr, IonItem as Kn } from "@ionic/react";
-import { u as fs, G as Mt } from "./useInputMask-DlqD3EiL.js";
+import { u as fs, G as Mt } from "./iconBase-DcKQz3bW.js";
 const fr = ({
   children: t,
   size: e = "medium",
@@ -19,48 +19,49 @@ const fr = ({
   style: f,
   color: d = "primary",
   backgroundColor: p,
-  textColor: g,
-  borderColor: m,
+  textColor: m,
+  borderColor: g,
   hoverColor: y,
-  routerLink: x,
-  activeColor: v,
-  ...T
+  routerLink: v,
+  activeColor: T,
+  type: b = "button",
+  ...S
 }) => {
-  const { main: A, contrast: C } = fs(d), b = { ...f }, P = p ?? c ?? A, V = g ?? C, S = m ?? A, M = y ?? V, R = v ?? V;
-  if (n === "solid" ? (b["--background"] = P, b["--color"] = V, b["--background-focused"] = A, b["--background-activated"] = A, b["--color-focused"] = V, b["--color-hover"] = M, b["--color-activated"] = R) : n === "outline" ? (b["--color"] = V, b["--border-color"] = S, b["--border-color-focused"] = S, b["--border-color-activated"] = S, b["--color-focused"] = V, b["--color-hover"] = M, b["--color-activated"] = R) : n === "clear" && (b["--color"] = V, b["--color-focused"] = V, b["--color-hover"] = M, b["--color-activated"] = R), i)
+  const { main: A, contrast: V } = fs(d), x = { ...f }, C = p ?? c ?? A, P = m ?? V, M = g ?? A, R = y ?? P, z = T ?? P;
+  if (n === "solid" ? (x["--background"] = C, x["--color"] = P, x["--background-focused"] = A, x["--background-activated"] = A, x["--color-focused"] = P, x["--color-hover"] = R, x["--color-activated"] = z) : n === "outline" ? (x["--color"] = P, x["--border-color"] = M, x["--border-color-focused"] = M, x["--border-color-activated"] = M, x["--color-focused"] = P, x["--color-hover"] = R, x["--color-activated"] = z) : n === "clear" && (x["--color"] = P, x["--color-focused"] = P, x["--color-hover"] = R, x["--color-activated"] = z), i)
     switch (i) {
       case !0:
       case "full":
-        b["--border-radius"] = "999px";
+        x["--border-radius"] = "999px";
         break;
       case "none":
-        b["--border-radius"] = "0px";
+        x["--border-radius"] = "0px";
         break;
       case "sm":
-        b["--border-radius"] = "4px";
+        x["--border-radius"] = "4px";
         break;
       case "md":
-        b["--border-radius"] = "8px";
+        x["--border-radius"] = "8px";
         break;
       case "lg":
-        b["--border-radius"] = "12px";
+        x["--border-radius"] = "12px";
         break;
       case "xl":
-        b["--border-radius"] = "16px";
+        x["--border-radius"] = "16px";
         break;
       default:
-        b["--border-radius"] = i;
+        x["--border-radius"] = i;
         break;
     }
-  switch (s && (b.width = "100%"), e) {
+  switch (s && (x.width = "100%"), e) {
     case "small":
-      b.height = "32px", b.fontSize = "14px";
+      x.height = "32px", x.fontSize = "14px";
       break;
     case "medium":
-      b.height = "40px", b.fontSize = "16px";
+      x.height = "40px", x.fontSize = "16px";
       break;
     case "large":
-      b.height = "48px", b.fontSize = "18px";
+      x.height = "48px", x.fontSize = "18px";
       break;
   }
   return /* @__PURE__ */ L(
@@ -68,10 +69,11 @@ const fr = ({
     {
       fill: n,
       disabled: a || r,
-      style: b,
+      style: x,
       className: h,
-      routerLink: x,
-      ...T,
+      routerLink: v,
+      type: b,
+      ...S,
       children: r ? /* @__PURE__ */ dt(Ue, { children: [
         /* @__PURE__ */ L(ar, { name: "crescent", slot: "start" }),
         o ?? t
@@ -82,26 +84,7 @@ const fr = ({
       ] })
     }
   );
-};
-function dr(t) {
-  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "polyline", attr: { points: "6 9 12 15 18 9" } }] })(t);
-}
-function xh(t) {
-  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "polyline", attr: { points: "18 15 12 9 6 15" } }] })(t);
-}
-function Th(t) {
-  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "path", attr: { d: "M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" } }, { tag: "path", attr: { d: "M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" } }] })(t);
-}
-function pr(t) {
-  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "polygon", attr: { points: "22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" } }] })(t);
-}
-function mr(t) {
-  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "circle", attr: { cx: "11", cy: "11", r: "8" } }, { tag: "line", attr: { x1: "21", y1: "21", x2: "16.65", y2: "16.65" } }] })(t);
-}
-function bh(t) {
-  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "polyline", attr: { points: "3 6 5 6 21 6" } }, { tag: "path", attr: { d: "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" } }, { tag: "line", attr: { x1: "10", y1: "11", x2: "10", y2: "17" } }, { tag: "line", attr: { x1: "14", y1: "11", x2: "14", y2: "17" } }] })(t);
-}
-const Hn = {
+}, Hn = {
   dark: {
     classes: {
       wrapper: "bg-[#1f2836] border-slate-800 text-slate-100",
@@ -146,7 +129,26 @@ const Hn = {
       border: "#cbd5e1"
     }
   }
-}, wh = ({
+};
+function dr(t) {
+  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "polyline", attr: { points: "6 9 12 15 18 9" } }] })(t);
+}
+function xh(t) {
+  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "polyline", attr: { points: "18 15 12 9 6 15" } }] })(t);
+}
+function Th(t) {
+  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "path", attr: { d: "M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" } }, { tag: "path", attr: { d: "M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" } }] })(t);
+}
+function pr(t) {
+  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "polygon", attr: { points: "22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" } }] })(t);
+}
+function mr(t) {
+  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "circle", attr: { cx: "11", cy: "11", r: "8" } }, { tag: "line", attr: { x1: "21", y1: "21", x2: "16.65", y2: "16.65" } }] })(t);
+}
+function bh(t) {
+  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "polyline", attr: { points: "3 6 5 6 21 6" } }, { tag: "path", attr: { d: "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" } }, { tag: "line", attr: { x1: "10", y1: "11", x2: "10", y2: "17" } }, { tag: "line", attr: { x1: "14", y1: "11", x2: "14", y2: "17" } }] })(t);
+}
+const wh = ({
   label: t,
   checked: e,
   disabled: n = !1,
@@ -176,7 +178,7 @@ const Hn = {
   ) });
 }, gn = Ct({});
 function yn(t) {
-  const e = z(null);
+  const e = K(null);
   return e.current === null && (e.current = t()), e.current;
 }
 const gr = typeof window < "u", ds = gr ? tr : ve, xe = /* @__PURE__ */ Ct(null);
@@ -187,7 +189,7 @@ function ae(t, e) {
   const n = t.indexOf(e);
   n > -1 && t.splice(n, 1);
 }
-const et = (t, e, n) => n > e ? e : n < t ? t : n;
+const nt = (t, e, n) => n > e ? e : n < t ? t : n;
 function We(t, e) {
   return e ? `${t}. For more information and steps for solving, visit https://motion.dev/troubleshooting/${e}` : t;
 }
@@ -206,7 +208,7 @@ function ys(t) {
   let e;
   return () => (e === void 0 && (e = t()), e);
 }
-const G = /* @__NO_SIDE_EFFECTS__ */ (t) => t, $t = (...t) => t.reduce((e, n) => (i) => n(e(i))), jt = /* @__NO_SIDE_EFFECTS__ */ (t, e, n) => {
+const _ = /* @__NO_SIDE_EFFECTS__ */ (t) => t, $t = (...t) => t.reduce((e, n) => (i) => n(e(i))), jt = /* @__NO_SIDE_EFFECTS__ */ (t, e, n) => {
   const i = e - t;
   return i ? (n - t) / i : 1;
 };
@@ -235,7 +237,7 @@ class xn {
     this.subscriptions.length = 0;
   }
 }
-const $ = /* @__NO_SIDE_EFFECTS__ */ (t) => t * 1e3, H = /* @__NO_SIDE_EFFECTS__ */ (t) => t / 1e3, vs = /* @__NO_SIDE_EFFECTS__ */ (t, e) => e ? t * (1e3 / e) : 0, Gn = /* @__PURE__ */ new Set();
+const $ = /* @__NO_SIDE_EFFECTS__ */ (t) => t * 1e3, G = /* @__NO_SIDE_EFFECTS__ */ (t) => t / 1e3, vs = /* @__NO_SIDE_EFFECTS__ */ (t, e) => e ? t * (1e3 / e) : 0, Gn = /* @__PURE__ */ new Set();
 function Tn(t, e, n) {
   t || Gn.has(e) || (console.warn(We(e, n)), Gn.add(e));
 }
@@ -250,12 +252,12 @@ function xr(t, e, n, i, s) {
 // @__NO_SIDE_EFFECTS__
 function zt(t, e, n, i) {
   if (t === e && n === i)
-    return G;
+    return _;
   const s = (r) => xr(r, 0, 1, t, n);
   return (r) => r === 0 || r === 1 ? r : xs(s(r), e, i);
 }
 const Ts = /* @__NO_SIDE_EFFECTS__ */ (t) => (e) => e <= 0.5 ? t(2 * e) / 2 : (2 - t(2 * (1 - e))) / 2, bs = /* @__NO_SIDE_EFFECTS__ */ (t) => (e) => 1 - t(1 - e), ws = /* @__PURE__ */ zt(0.33, 1.53, 0.69, 0.99), bn = /* @__PURE__ */ bs(ws), Ps = /* @__PURE__ */ Ts(bn), Ss = (t) => t >= 1 ? 1 : (t *= 2) < 1 ? 0.5 * bn(t) : 0.5 * (2 - Math.pow(2, -10 * (t - 1))), wn = (t) => 1 - Math.sin(Math.acos(t)), As = /* @__PURE__ */ bs(wn), Vs = /* @__PURE__ */ Ts(wn), Tr = /* @__PURE__ */ zt(0.42, 0, 1, 1), br = /* @__PURE__ */ zt(0, 0, 0.58, 1), Cs = /* @__PURE__ */ zt(0.42, 0, 0.58, 1), wr = /* @__NO_SIDE_EFFECTS__ */ (t) => Array.isArray(t) && typeof t[0] != "number", Ms = /* @__NO_SIDE_EFFECTS__ */ (t) => Array.isArray(t) && typeof t[0] == "number", _n = {
-  linear: G,
+  linear: _,
   easeIn: Tr,
   easeInOut: Cs,
   easeOut: br,
@@ -339,21 +341,21 @@ function Ds(t, e) {
     delta: 0,
     timestamp: 0,
     isProcessing: !1
-  }, r = () => n = !0, o = Gt.reduce((v, T) => (v[T] = Sr(r), v), {}), { setup: a, read: c, resolveKeyframes: u, preUpdate: l, update: h, preRender: f, render: d, postRender: p } = o, g = () => {
-    const v = at.useManualTiming, T = v ? s.timestamp : performance.now();
-    n = !1, v || (s.delta = i ? 1e3 / 60 : Math.max(Math.min(T - s.timestamp, Ar), 1)), s.timestamp = T, s.isProcessing = !0, a.process(s), c.process(s), u.process(s), l.process(s), h.process(s), f.process(s), d.process(s), p.process(s), s.isProcessing = !1, n && e && (i = !1, t(g));
-  }, m = () => {
-    n = !0, i = !0, s.isProcessing || t(g);
+  }, r = () => n = !0, o = Gt.reduce((T, b) => (T[b] = Sr(r), T), {}), { setup: a, read: c, resolveKeyframes: u, preUpdate: l, update: h, preRender: f, render: d, postRender: p } = o, m = () => {
+    const T = at.useManualTiming, b = T ? s.timestamp : performance.now();
+    n = !1, T || (s.delta = i ? 1e3 / 60 : Math.max(Math.min(b - s.timestamp, Ar), 1)), s.timestamp = b, s.isProcessing = !0, a.process(s), c.process(s), u.process(s), l.process(s), h.process(s), f.process(s), d.process(s), p.process(s), s.isProcessing = !1, n && e && (i = !1, t(m));
+  }, g = () => {
+    n = !0, i = !0, s.isProcessing || t(m);
   };
-  return { schedule: Gt.reduce((v, T) => {
-    const A = o[T];
-    return v[T] = (C, b = !1, P = !1) => (n || m(), A.schedule(C, b, P)), v;
-  }, {}), cancel: (v) => {
-    for (let T = 0; T < Gt.length; T++)
-      o[Gt[T]].cancel(v);
+  return { schedule: Gt.reduce((T, b) => {
+    const S = o[b];
+    return T[b] = (A, V = !1, x = !1) => (n || g(), S.schedule(A, V, x)), T;
+  }, {}), cancel: (T) => {
+    for (let b = 0; b < Gt.length; b++)
+      o[Gt[b]].cancel(T);
   }, state: s, steps: o };
 }
-const { schedule: E, cancel: lt, state: O, steps: Se } = /* @__PURE__ */ Ds(typeof requestAnimationFrame < "u" ? requestAnimationFrame : G, !0);
+const { schedule: E, cancel: lt, state: O, steps: Se } = /* @__PURE__ */ Ds(typeof requestAnimationFrame < "u" ? requestAnimationFrame : _, !0);
 let Zt;
 function Vr() {
   Zt = void 0;
@@ -373,7 +375,7 @@ const Et = {
   transform: (t) => t
 }, Nt = {
   ...Et,
-  transform: (t) => et(0, 1, t)
+  transform: (t) => nt(0, 1, t)
 }, _t = {
   ...Et,
   default: 1
@@ -391,7 +393,7 @@ const Er = /^(?:#[\da-f]{3,8}|(?:rgb|hsl)a?\((?:-?[\d.]+%?[,\s]+){2}-?[\d.]+%?\s
     [n]: parseFloat(o),
     alpha: a !== void 0 ? parseFloat(a) : 1
   };
-}, kr = (t) => et(0, 255, t), Ae = {
+}, kr = (t) => nt(0, 255, t), Ae = {
   ...Et,
   transform: (t) => Math.round(kr(t))
 }, pt = {
@@ -416,14 +418,14 @@ const $e = {
   test: (e) => typeof e == "string" && e.endsWith(t) && e.split(" ").length === 1,
   parse: parseFloat,
   transform: (e) => `${e}${t}`
-}), st = /* @__PURE__ */ Kt("deg"), tt = /* @__PURE__ */ Kt("%"), w = /* @__PURE__ */ Kt("px"), Lr = /* @__PURE__ */ Kt("vh"), Br = /* @__PURE__ */ Kt("vw"), qn = {
-  ...tt,
-  parse: (t) => tt.parse(t) / 100,
-  transform: (t) => tt.transform(t * 100)
+}), st = /* @__PURE__ */ Kt("deg"), et = /* @__PURE__ */ Kt("%"), w = /* @__PURE__ */ Kt("px"), Lr = /* @__PURE__ */ Kt("vh"), Br = /* @__PURE__ */ Kt("vw"), qn = {
+  ...et,
+  parse: (t) => et.parse(t) / 100,
+  transform: (t) => et.transform(t * 100)
 }, bt = {
   test: /* @__PURE__ */ An("hsl", "hue"),
   parse: /* @__PURE__ */ Rs("hue", "saturation", "lightness"),
-  transform: ({ hue: t, saturation: e, lightness: n, alpha: i = 1 }) => "hsla(" + Math.round(t) + ", " + tt.transform(Ft(e)) + ", " + tt.transform(Ft(n)) + ", " + Ft(Nt.transform(i)) + ")"
+  transform: ({ hue: t, saturation: e, lightness: n, alpha: i = 1 }) => "hsla(" + Math.round(t) + ", " + et.transform(Ft(e)) + ", " + et.transform(Ft(n)) + ", " + Ft(Nt.transform(i)) + ")"
 }, B = {
   test: (t) => pt.test(t) || $e.test(t) || bt.test(t),
   parse: (t) => pt.test(t) ? pt.parse(t) : bt.test(t) ? bt.parse(t) : $e.parse(t),
@@ -470,7 +472,7 @@ function Kr(t) {
   const e = At(t);
   return Fs(e)(e.values.map((i, s) => zr(i, e.split[s])));
 }
-const X = {
+const q = {
   test: Ir,
   parse: Ur,
   createTransformer: Wr,
@@ -552,7 +554,7 @@ function Zr(t, e) {
   return n;
 }
 const Jr = (t, e) => {
-  const n = X.createTransformer(e), i = At(t), s = At(e);
+  const n = q.createTransformer(e), i = At(t), s = At(e);
   return i.indexes.var.length === s.indexes.var.length && i.indexes.color.length === s.indexes.color.length && i.indexes.number.length >= s.indexes.number.length ? ze.has(t) && !s.values.length || ze.has(e) && !i.values.length ? Yr(t, e) : $t(Is(Zr(i, s), s.values), n) : (Dt(!0, `Complex values '${t}' and '${e}' too different to mix. Ensure all colors are of the same type, and that each contains the same quantity of number and color values. Falling back to instant transition.`, "complex-values-different"), le(t, e));
 };
 function Os(t, e, n) {
@@ -589,7 +591,7 @@ function ta(t, e = 100, n) {
   return {
     type: "keyframes",
     ease: (r) => i.next(s * r).value / e,
-    duration: /* @__PURE__ */ H(s)
+    duration: /* @__PURE__ */ G(s)
   };
 }
 const k = {
@@ -636,12 +638,12 @@ function ia({ duration: t = k.duration, bounce: e = k.bounce, velocity: n = k.ve
   let s, r;
   Dt(t <= /* @__PURE__ */ $(k.maxDuration), "Spring duration must be 10 seconds or less", "spring-duration-limit");
   let o = 1 - e;
-  o = et(k.minDamping, k.maxDamping, o), t = et(k.minDuration, k.maxDuration, /* @__PURE__ */ H(t)), o < 1 ? (s = (u) => {
+  o = nt(k.minDamping, k.maxDamping, o), t = nt(k.minDuration, k.maxDuration, /* @__PURE__ */ G(t)), o < 1 ? (s = (u) => {
     const l = u * o, h = l * t, f = l - n, d = Ke(u, o), p = Math.exp(-h);
     return Me - f / d * p;
   }, r = (u) => {
-    const h = u * o * t, f = h * n + n, d = Math.pow(o, 2) * Math.pow(u, 2) * t, p = Math.exp(-h), g = Ke(Math.pow(u, 2), o);
-    return (-s(u) + Me > 0 ? -1 : 1) * ((f - d) * p) / g;
+    const h = u * o * t, f = h * n + n, d = Math.pow(o, 2) * Math.pow(u, 2) * t, p = Math.exp(-h), m = Ke(Math.pow(u, 2), o);
+    return (-s(u) + Me > 0 ? -1 : 1) * ((f - d) * p) / m;
   }) : (s = (u) => {
     const l = Math.exp(-u * t), h = (u - n) * t + 1;
     return -Me + l * h;
@@ -680,7 +682,7 @@ function ra(t) {
   };
   if (!ti(t, oa) && ti(t, sa))
     if (e.velocity = 0, t.visualDuration) {
-      const n = t.visualDuration, i = 2 * Math.PI / (n * 1.2), s = i * i, r = 2 * et(0.05, 1, 1 - (t.bounce || 0)) * Math.sqrt(s);
+      const n = t.visualDuration, i = 2 * Math.PI / (n * 1.2), s = i * i, r = 2 * nt(0.05, 1, 1 - (t.bounce || 0)) * Math.sqrt(s);
       e = {
         ...e,
         mass: k.mass,
@@ -706,56 +708,56 @@ function ue(t = k.visualDuration, e = k.bounce) {
   let { restSpeed: i, restDelta: s } = n;
   const r = n.keyframes[0], o = n.keyframes[n.keyframes.length - 1], a = { done: !1, value: r }, { stiffness: c, damping: u, mass: l, duration: h, velocity: f, isResolvedFromDuration: d } = ra({
     ...n,
-    velocity: -/* @__PURE__ */ H(n.velocity || 0)
-  }), p = f || 0, g = u / (2 * Math.sqrt(c * l)), m = o - r, y = /* @__PURE__ */ H(Math.sqrt(c / l)), x = Math.abs(m) < 5;
-  i || (i = x ? k.restSpeed.granular : k.restSpeed.default), s || (s = x ? k.restDelta.granular : k.restDelta.default);
-  let v, T, A, C, b, P;
-  if (g < 1)
-    A = Ke(y, g), C = (p + g * y * m) / A, v = (S) => {
-      const M = Math.exp(-g * y * S);
-      return o - M * (C * Math.sin(A * S) + m * Math.cos(A * S));
-    }, b = g * y * C + m * A, P = g * y * m - C * A, T = (S) => Math.exp(-g * y * S) * (b * Math.sin(A * S) + P * Math.cos(A * S));
-  else if (g === 1) {
-    v = (M) => o - Math.exp(-y * M) * (m + (p + y * m) * M);
-    const S = p + y * m;
-    T = (M) => Math.exp(-y * M) * (y * S * M - p);
+    velocity: -/* @__PURE__ */ G(n.velocity || 0)
+  }), p = f || 0, m = u / (2 * Math.sqrt(c * l)), g = o - r, y = /* @__PURE__ */ G(Math.sqrt(c / l)), v = Math.abs(g) < 5;
+  i || (i = v ? k.restSpeed.granular : k.restSpeed.default), s || (s = v ? k.restDelta.granular : k.restDelta.default);
+  let T, b, S, A, V, x;
+  if (m < 1)
+    S = Ke(y, m), A = (p + m * y * g) / S, T = (P) => {
+      const M = Math.exp(-m * y * P);
+      return o - M * (A * Math.sin(S * P) + g * Math.cos(S * P));
+    }, V = m * y * A + g * S, x = m * y * g - A * S, b = (P) => Math.exp(-m * y * P) * (V * Math.sin(S * P) + x * Math.cos(S * P));
+  else if (m === 1) {
+    T = (M) => o - Math.exp(-y * M) * (g + (p + y * g) * M);
+    const P = p + y * g;
+    b = (M) => Math.exp(-y * M) * (y * P * M - p);
   } else {
-    const S = y * Math.sqrt(g * g - 1);
-    v = (q) => {
-      const it = Math.exp(-g * y * q), Z = Math.min(S * q, 300);
-      return o - it * ((p + g * y * m) * Math.sinh(Z) + S * m * Math.cosh(Z)) / S;
+    const P = y * Math.sqrt(m * m - 1);
+    T = (Z) => {
+      const it = Math.exp(-m * y * Z), J = Math.min(P * Z, 300);
+      return o - it * ((p + m * y * g) * Math.sinh(J) + P * g * Math.cosh(J)) / P;
     };
-    const M = (p + g * y * m) / S, R = g * y * M - m * S, nt = g * y * m - M * S;
-    T = (q) => {
-      const it = Math.exp(-g * y * q), Z = Math.min(S * q, 300);
-      return it * (R * Math.sinh(Z) + nt * Math.cosh(Z));
+    const M = (p + m * y * g) / P, R = m * y * M - g * P, z = m * y * g - M * P;
+    b = (Z) => {
+      const it = Math.exp(-m * y * Z), J = Math.min(P * Z, 300);
+      return it * (R * Math.sinh(J) + z * Math.cosh(J));
     };
   }
-  const V = {
+  const C = {
     calculatedDuration: d && h || null,
-    velocity: (S) => /* @__PURE__ */ $(T(S)),
-    next: (S) => {
-      if (!d && g < 1) {
-        const R = Math.exp(-g * y * S), nt = Math.sin(A * S), q = Math.cos(A * S), it = o - R * (C * nt + m * q), Z = /* @__PURE__ */ $(R * (b * nt + P * q));
-        return a.done = Math.abs(Z) <= i && Math.abs(o - it) <= s, a.value = a.done ? o : it, a;
+    velocity: (P) => /* @__PURE__ */ $(b(P)),
+    next: (P) => {
+      if (!d && m < 1) {
+        const R = Math.exp(-m * y * P), z = Math.sin(S * P), Z = Math.cos(S * P), it = o - R * (A * z + g * Z), J = /* @__PURE__ */ $(R * (V * z + x * Z));
+        return a.done = Math.abs(J) <= i && Math.abs(o - it) <= s, a.value = a.done ? o : it, a;
       }
-      const M = v(S);
+      const M = T(P);
       if (d)
-        a.done = S >= h;
+        a.done = P >= h;
       else {
-        const R = /* @__PURE__ */ $(T(S));
+        const R = /* @__PURE__ */ $(b(P));
         a.done = Math.abs(R) <= i && Math.abs(o - M) <= s;
       }
       return a.value = a.done ? o : M, a;
     },
     toString: () => {
-      const S = Math.min(Cn(V), ce), M = js((R) => V.next(S * R).value, S, 30);
-      return S + "ms " + M;
+      const P = Math.min(Cn(C), ce), M = js((R) => C.next(P * R).value, P, 30);
+      return P + "ms " + M;
     },
     toTransition: () => {
     }
   };
-  return V;
+  return C;
 }
 ue.applyToOptions = (t) => {
   const e = ta(t, 100, ue);
@@ -770,19 +772,19 @@ function He({ keyframes: t, velocity: e = 0, power: n = 0.8, timeConstant: i = 3
   const h = t[0], f = {
     done: !1,
     value: h
-  }, d = (P) => a !== void 0 && P < a || c !== void 0 && P > c, p = (P) => a === void 0 ? c : c === void 0 || Math.abs(a - P) < Math.abs(c - P) ? a : c;
-  let g = n * e;
-  const m = h + g, y = o === void 0 ? m : o(m);
-  y !== m && (g = y - h);
-  const x = (P) => -g * Math.exp(-P / i), v = (P) => y + x(P), T = (P) => {
-    const V = x(P), S = v(P);
-    f.done = Math.abs(V) <= u, f.value = f.done ? y : S;
+  }, d = (x) => a !== void 0 && x < a || c !== void 0 && x > c, p = (x) => a === void 0 ? c : c === void 0 || Math.abs(a - x) < Math.abs(c - x) ? a : c;
+  let m = n * e;
+  const g = h + m, y = o === void 0 ? g : o(g);
+  y !== g && (m = y - h);
+  const v = (x) => -m * Math.exp(-x / i), T = (x) => y + v(x), b = (x) => {
+    const C = v(x), P = T(x);
+    f.done = Math.abs(C) <= u, f.value = f.done ? y : P;
   };
-  let A, C;
-  const b = (P) => {
-    d(f.value) && (A = P, C = ue({
+  let S, A;
+  const V = (x) => {
+    d(f.value) && (S = x, A = ue({
       keyframes: [f.value, p(f.value)],
-      velocity: Ns(v, P, f.value),
+      velocity: Ns(T, x, f.value),
       // TODO: This should be passing * 1000
       damping: s,
       stiffness: r,
@@ -790,11 +792,11 @@ function He({ keyframes: t, velocity: e = 0, power: n = 0.8, timeConstant: i = 3
       restSpeed: l
     }));
   };
-  return b(0), {
+  return V(0), {
     calculatedDuration: null,
-    next: (P) => {
-      let V = !1;
-      return !C && A === void 0 && (V = !0, T(P), b(P)), A !== void 0 && P >= A ? C.next(P - A) : (!V && T(P), f);
+    next: (x) => {
+      let C = !1;
+      return !A && S === void 0 && (C = !0, b(x), V(x)), S !== void 0 && x >= S ? A.next(x - S) : (!C && b(x), f);
     }
   };
 }
@@ -803,7 +805,7 @@ function la(t, e, n) {
   for (let o = 0; o < r; o++) {
     let a = s(t[o], t[o + 1]);
     if (e) {
-      const c = Array.isArray(e) ? e[o] || G : e;
+      const c = Array.isArray(e) ? e[o] || _ : e;
       a = $t(c, a);
     }
     i.push(a);
@@ -828,7 +830,7 @@ function ca(t, e, { clamp: n = !0, ease: i, mixer: s } = {}) {
     const f = /* @__PURE__ */ jt(t[h], t[h + 1], l);
     return a[h](f);
   };
-  return n ? (l) => u(et(t[0], t[r - 1], l)) : u;
+  return n ? (l) => u(nt(t[0], t[r - 1], l)) : u;
 }
 function ua(t, e) {
   const n = t[t.length - 1];
@@ -938,22 +940,22 @@ class he extends Mn {
     const { generator: i, totalDuration: s, mixKeyframes: r, mirroredGenerator: o, resolvedDuration: a, calculatedDuration: c } = this;
     if (this.startTime === null)
       return i.next(0);
-    const { delay: u = 0, keyframes: l, repeat: h, repeatType: f, repeatDelay: d, type: p, onUpdate: g, finalKeyframe: m } = this.options;
+    const { delay: u = 0, keyframes: l, repeat: h, repeatType: f, repeatDelay: d, type: p, onUpdate: m, finalKeyframe: g } = this.options;
     this.speed > 0 ? this.startTime = Math.min(this.startTime, e) : this.speed < 0 && (this.startTime = Math.min(e - s / this.speed, this.startTime)), n ? this.currentTime = e : this.updateTime(e);
-    const y = this.currentTime - u * (this.playbackSpeed >= 0 ? 1 : -1), x = this.playbackSpeed >= 0 ? y < 0 : y > s;
+    const y = this.currentTime - u * (this.playbackSpeed >= 0 ? 1 : -1), v = this.playbackSpeed >= 0 ? y < 0 : y > s;
     this.currentTime = Math.max(y, 0), this.state === "finished" && this.holdTime === null && (this.currentTime = s);
-    let v = this.currentTime, T = i;
+    let T = this.currentTime, b = i;
     if (h) {
-      const P = Math.min(this.currentTime, s) / a;
-      let V = Math.floor(P), S = P % 1;
-      !S && P >= 1 && (S = 1), S === 1 && V--, V = Math.min(V, h + 1), V % 2 && (f === "reverse" ? (S = 1 - S, d && (S -= d / a)) : f === "mirror" && (T = o)), v = et(0, 1, S) * a;
+      const x = Math.min(this.currentTime, s) / a;
+      let C = Math.floor(x), P = x % 1;
+      !P && x >= 1 && (P = 1), P === 1 && C--, C = Math.min(C, h + 1), C % 2 && (f === "reverse" ? (P = 1 - P, d && (P -= d / a)) : f === "mirror" && (b = o)), T = nt(0, 1, P) * a;
     }
-    let A;
-    x ? (this.delayState.value = l[0], A = this.delayState) : A = T.next(v), r && !x && (A.value = r(A.value));
-    let { done: C } = A;
-    !x && c !== null && (C = this.playbackSpeed >= 0 ? this.currentTime >= s : this.currentTime <= 0);
-    const b = this.holdTime === null && (this.state === "finished" || this.state === "running" && C);
-    return b && p !== He && (A.value = Te(l, this.options, m, this.speed)), g && g(A.value), b && this.finish(), A;
+    let S;
+    v ? (this.delayState.value = l[0], S = this.delayState) : S = b.next(T), r && !v && (S.value = r(S.value));
+    let { done: A } = S;
+    !v && c !== null && (A = this.playbackSpeed >= 0 ? this.currentTime >= s : this.currentTime <= 0);
+    const V = this.holdTime === null && (this.state === "finished" || this.state === "running" && A);
+    return V && p !== He && (S.value = Te(l, this.options, g, this.speed)), m && m(S.value), V && this.finish(), S;
   }
   /**
    * Allows the returned animation to be awaited or promise-chained. Currently
@@ -964,14 +966,14 @@ class he extends Mn {
     return this.finished.then(e, n);
   }
   get duration() {
-    return /* @__PURE__ */ H(this.calculatedDuration);
+    return /* @__PURE__ */ G(this.calculatedDuration);
   }
   get iterationDuration() {
     const { delay: e = 0 } = this.options || {};
-    return this.duration + /* @__PURE__ */ H(e);
+    return this.duration + /* @__PURE__ */ G(e);
   }
   get time() {
-    return /* @__PURE__ */ H(this.currentTime);
+    return /* @__PURE__ */ G(this.currentTime);
   }
   set time(e) {
     e = /* @__PURE__ */ $(e), this.currentTime = e, this.startTime === null || this.holdTime !== null || this.playbackSpeed === 0 ? this.holdTime = e : this.driver && (this.startTime = this.driver.now() - e / this.playbackSpeed), this.driver ? this.driver.start(!1) : (this.startTime = 0, this.state = "paused", this.holdTime = e, this.tick(e));
@@ -995,7 +997,7 @@ class he extends Mn {
   }
   set speed(e) {
     const n = this.playbackSpeed !== e;
-    n && this.driver && this.updateTime(U.now()), this.playbackSpeed = e, n && this.driver && (this.time = /* @__PURE__ */ H(this.currentTime));
+    n && this.driver && this.updateTime(U.now()), this.playbackSpeed = e, n && this.driver && (this.time = /* @__PURE__ */ G(this.currentTime));
   }
   play() {
     if (this.isStopped)
@@ -1316,14 +1318,14 @@ class Ys extends Mn {
   }
   get duration() {
     const e = this.animation.effect?.getComputedTiming?.().duration || 0;
-    return /* @__PURE__ */ H(Number(e));
+    return /* @__PURE__ */ G(Number(e));
   }
   get iterationDuration() {
     const { delay: e = 0 } = this.options || {};
-    return this.duration + /* @__PURE__ */ H(e);
+    return this.duration + /* @__PURE__ */ G(e);
   }
   get time() {
-    return /* @__PURE__ */ H(Number(this.animation.currentTime) || 0);
+    return /* @__PURE__ */ G(Number(this.animation.currentTime) || 0);
   }
   set time(e) {
     const n = this.finishedTime !== null;
@@ -1352,7 +1354,7 @@ class Ys extends Mn {
    * Attaches a timeline to the animation, for instance the `ScrollTimeline`.
    */
   attachTimeline({ timeline: e, rangeStart: n, rangeEnd: i, observe: s }) {
-    return this.allowFlatten && this.animation.effect?.updateTiming({ easing: "linear" }), this.animation.onfinish = null, e && Ma() ? (this.animation.timeline = e, n && (this.animation.rangeStart = n), i && (this.animation.rangeEnd = i), G) : s(this);
+    return this.allowFlatten && this.animation.effect?.updateTiming({ easing: "linear" }), this.animation.onfinish = null, e && Ma() ? (this.animation.timeline = e, n && (this.animation.rangeStart = n), i && (this.animation.rangeEnd = i), _) : s(this);
   }
 }
 const Xs = {
@@ -1390,12 +1392,12 @@ class La extends Ys {
     const a = new he({
       ...o,
       autoplay: !1
-    }), c = Math.max(De, U.now() - this.startTime), u = et(0, De, c - De), l = a.sample(c).value, { name: h } = this.options;
+    }), c = Math.max(De, U.now() - this.startTime), u = nt(0, De, c - De), l = a.sample(c).value, { name: h } = this.options;
     r && h && zs(r, h, l), n.setWithVelocity(a.sample(Math.max(0, c - u)).value, l, u), a.stop();
   }
 }
 const ri = (t, e) => e === "zIndex" ? !1 : !!(typeof t == "number" || Array.isArray(t) || typeof t == "string" && // It's animatable if we have a string
-(X.test(t) || t === "0") && // And it contains numbers and/or colors
+(q.test(t) || t === "0") && // And it contains numbers and/or colors
 !t.startsWith("url("));
 function Ba(t) {
   const e = t[0];
@@ -1477,7 +1479,7 @@ class $a extends Mn {
       element: l,
       ...h
     }, d = l?.KeyframeResolver || Dn;
-    this.keyframeResolver = new d(a, (p, g, m) => this.onKeyframesResolved(p, g, f, !m), c, u, l), this.keyframeResolver?.scheduleResolve();
+    this.keyframeResolver = new d(a, (p, m, g) => this.onKeyframesResolved(p, m, f, !g), c, u, l), this.keyframeResolver?.scheduleResolve();
   }
   onKeyframesResolved(e, n, i, s) {
     this.keyframeResolver = void 0;
@@ -1490,22 +1492,22 @@ class $a extends Mn {
       finalKeyframe: n,
       ...i,
       keyframes: e
-    }, p = h && !u && Ua(d), g = d.motionValue?.owner?.current;
-    let m;
+    }, p = h && !u && Ua(d), m = d.motionValue?.owner?.current;
+    let g;
     if (p)
       try {
-        m = new La({
+        g = new La({
           ...d,
-          element: g
+          element: m
         });
       } catch {
-        m = new he(d);
+        g = new he(d);
       }
     else
-      m = new he(d);
-    m.finished.then(() => {
+      g = new he(d);
+    g.finished.then(() => {
       this.notifyFinished();
-    }).catch(G), this.pendingTimeline && (this.stopTimeline = m.attachTimeline(this.pendingTimeline), this.pendingTimeline = void 0), this._animation = m;
+    }).catch(_), this.pendingTimeline && (this.stopTimeline = g.attachTimeline(this.pendingTimeline), this.pendingTimeline = void 0), this._animation = g;
   }
   get finished() {
     return this._animation ? this.animation.finished : this._finished;
@@ -1944,32 +1946,32 @@ function io(t, e, { delay: n = 0, transitionOverride: i, type: s } = {}) {
   const h = [], f = s && t.animationState && t.animationState.getState()[s], d = r?.path;
   d && d.animateVisualElement(t, a, r, n, h);
   for (const p in a) {
-    const g = t.getValue(p, t.latestValues[p] ?? null), m = a[p];
-    if (m === void 0 || f && rl(f, p))
+    const m = t.getValue(p, t.latestValues[p] ?? null), g = a[p];
+    if (g === void 0 || f && rl(f, p))
       continue;
     const y = {
       delay: n,
       ...En(r || {}, p)
     };
     l && (y.skipAnimations = !0);
-    const x = g.get();
-    if (x !== void 0 && !g.isAnimating() && !Array.isArray(m) && m === x && !y.velocity) {
-      E.update(() => g.set(m));
+    const v = m.get();
+    if (v !== void 0 && !m.isAnimating() && !Array.isArray(g) && g === v && !y.velocity) {
+      E.update(() => m.set(g));
       continue;
     }
-    let v = !1;
+    let T = !1;
     if (window.MotionHandoffAnimation) {
-      const C = no(t);
-      if (C) {
-        const b = window.MotionHandoffAnimation(C, p, E);
-        b !== null && (y.startTime = b, v = !0);
+      const A = no(t);
+      if (A) {
+        const V = window.MotionHandoffAnimation(A, p, E);
+        V !== null && (y.startTime = V, T = !0);
       }
     }
     en(t, p);
-    const T = u ?? t.shouldReduceMotion;
-    g.start(kn(p, g, m, T && to.has(p) ? { type: !1 } : y, t, v));
-    const A = g.animation;
-    A && h.push(A);
+    const b = u ?? t.shouldReduceMotion;
+    m.start(kn(p, m, g, b && to.has(p) ? { type: !1 } : y, t, T));
+    const S = m.animation;
+    S && h.push(S);
   }
   if (o) {
     const p = () => E.update(() => {
@@ -2021,7 +2023,7 @@ function ll(t, e, n = {}) {
 const cl = {
   test: (t) => t === "auto",
   parse: (t) => t
-}, so = (t) => (e) => e.test(t), oo = [Et, w, tt, st, Br, Lr, cl], ci = (t) => oo.find(so(t));
+}, so = (t) => (e) => e.test(t), oo = [Et, w, et, st, Br, Lr, cl], ci = (t) => oo.find(so(t));
 function ul(t) {
   return typeof t == "number" ? t === 0 : t !== null ? t === "none" || t === "0" || gs(t) : !0;
 }
@@ -2038,16 +2040,16 @@ function fl(t) {
   return i !== n && (r *= 100), e + "(" + r + s + ")";
 }
 const dl = /\b([a-z-]*)\(.*?\)/gu, sn = {
-  ...X,
+  ...q,
   getAnimatableNone: (t) => {
     const e = t.match(dl);
     return e ? e.map(fl).join(" ") : t;
   }
 }, on = {
-  ...X,
+  ...q,
   getAnimatableNone: (t) => {
-    const e = X.parse(t);
-    return X.createTransformer(t)(e.map((i) => typeof i == "number" ? 0 : typeof i == "object" ? { ...i, alpha: 1 } : i));
+    const e = q.parse(t);
+    return q.createTransformer(t)(e.map((i) => typeof i == "number" ? 0 : typeof i == "object" ? { ...i, alpha: 1 } : i));
   }
 }, ui = {
   ...Et,
@@ -2166,7 +2168,7 @@ const dl = /\b([a-z-]*)\(.*?\)/gu, sn = {
 }, ro = (t) => ml[t], gl = /* @__PURE__ */ new Set([sn, on]);
 function ao(t, e) {
   let n = ro(t);
-  return gl.has(n) || (n = X), n.getAnimatableNone ? n.getAnimatableNone(e) : void 0;
+  return gl.has(n) || (n = q), n.getAnimatableNone ? n.getAnimatableNone(e) : void 0;
 }
 const yl = /* @__PURE__ */ new Set(["auto", "none", "0"]);
 function vl(t, e, n) {
@@ -2252,18 +2254,18 @@ const rn = (t, e) => e && typeof t == "number" ? e.transform(t) : t;
 function Jt(t) {
   return ms(t) && "offsetHeight" in t && !("ownerSVGElement" in t);
 }
-const { schedule: Bn } = /* @__PURE__ */ Ds(queueMicrotask, !1), Y = {
+const { schedule: Bn } = /* @__PURE__ */ Ds(queueMicrotask, !1), X = {
   x: !1,
   y: !1
 };
 function co() {
-  return Y.x || Y.y;
+  return X.x || X.y;
 }
 function Tl(t) {
-  return t === "x" || t === "y" ? Y[t] ? null : (Y[t] = !0, () => {
-    Y[t] = !1;
-  }) : Y.x || Y.y ? null : (Y.x = Y.y = !0, () => {
-    Y.x = Y.y = !1;
+  return t === "x" || t === "y" ? X[t] ? null : (X[t] = !0, () => {
+    X[t] = !1;
+  }) : X.x || X.y ? null : (X.x = X.y = !0, () => {
+    X.x = X.y = !1;
   });
 }
 function uo(t, e) {
@@ -2283,28 +2285,28 @@ function wl(t, e, n = {}) {
     let a = !1, c = !1, u;
     const l = () => {
       o.removeEventListener("pointerleave", p);
-    }, h = (m) => {
-      u && (u(m), u = void 0), l();
-    }, f = (m) => {
-      a = !1, window.removeEventListener("pointerup", f), window.removeEventListener("pointercancel", f), c && (c = !1, h(m));
+    }, h = (g) => {
+      u && (u(g), u = void 0), l();
+    }, f = (g) => {
+      a = !1, window.removeEventListener("pointerup", f), window.removeEventListener("pointercancel", f), c && (c = !1, h(g));
     }, d = () => {
       a = !0, window.addEventListener("pointerup", f, s), window.addEventListener("pointercancel", f, s);
-    }, p = (m) => {
-      if (m.pointerType !== "touch") {
+    }, p = (g) => {
+      if (g.pointerType !== "touch") {
         if (a) {
           c = !0;
           return;
         }
-        h(m);
+        h(g);
       }
-    }, g = (m) => {
-      if (!bl(m))
+    }, m = (g) => {
+      if (!bl(g))
         return;
       c = !1;
-      const y = e(o, m);
+      const y = e(o, g);
       typeof y == "function" && (u = y, o.addEventListener("pointerleave", p, s));
     };
-    o.addEventListener("pointerenter", g, s), o.addEventListener("pointerdown", d, s);
+    o.addEventListener("pointerenter", m, s), o.addEventListener("pointerdown", d, s);
   }), r;
 }
 const ho = (t, e) => e ? t === e ? !0 : ho(t, e.parentElement) : !1, Fn = (t) => t.pointerType === "mouse" ? typeof t.button != "number" || t.button <= 0 : t.isPrimary !== !1, Pl = /* @__PURE__ */ new Set([
@@ -2431,7 +2433,7 @@ function pi(t, e) {
 function Ol(t) {
   return In(t) && t.tagName === "svg";
 }
-const jl = [...oo, B, X], Nl = (t) => jl.find(so(t)), mi = () => ({
+const jl = [...oo, B, q], Nl = (t) => jl.find(so(t)), mi = () => ({
   translate: 0,
   scale: 1,
   origin: 0,
@@ -2692,7 +2694,7 @@ class Hl {
    */
   readValue(e, n) {
     let i = this.latestValues[e] !== void 0 || !this.current ? this.latestValues[e] : this.getBaseTargetFromProps(this.props, e) ?? this.readValueFromInstance(this.current, e, this.options);
-    return i != null && (typeof i == "string" && (ps(i) || gs(i)) ? i = parseFloat(i) : !Nl(i) && X.test(n) && (i = ao(e, n)), this.setBaseTarget(e, j(i) ? i.get() : i)), j(i) ? i.get() : i;
+    return i != null && (typeof i == "string" && (ps(i) || gs(i)) ? i = parseFloat(i) : !Nl(i) && q.test(n) && (i = ao(e, n)), this.setBaseTarget(e, j(i) ? i.get() : i)), j(i) ? i.get() : i;
   }
   /**
    * Set the base target to later animate back to. This is currently
@@ -2814,11 +2816,11 @@ function Yl(t, e, n, i = !1) {
   for (let a = 0; a < s; a++) {
     r = n[a], o = r.projectionDelta;
     const { visualElement: c } = r.options;
-    c && c.props.style && c.props.style.display === "contents" || (i && r.options.layoutScroll && r.scroll && r !== r.root && (Q(t.x, -r.scroll.offset.x), Q(t.y, -r.scroll.offset.y)), o && (e.x *= o.x.scale, e.y *= o.y.scale, To(t, o)), i && ft(r.latestValues) && ie(t, r.latestValues, r.layout?.layoutBox));
+    c && c.props.style && c.props.style.display === "contents" || (i && r.options.layoutScroll && r.scroll && r !== r.root && (tt(t.x, -r.scroll.offset.x), tt(t.y, -r.scroll.offset.y)), o && (e.x *= o.x.scale, e.y *= o.y.scale, To(t, o)), i && ft(r.latestValues) && ie(t, r.latestValues, r.layout?.layoutBox));
   }
   e.x < bi && e.x > Ti && (e.x = 1), e.y < bi && e.y > Ti && (e.y = 1);
 }
-function Q(t, e) {
+function tt(t, e) {
   t.min += e, t.max += e;
 }
 function wi(t, e, n, i, s = 0.5) {
@@ -2837,7 +2839,7 @@ function bo(t, e) {
 }
 function Xl(t, e, n) {
   const i = bo(t, n), { scroll: s } = e;
-  return s && (Q(i.x, s.offset.x), Q(i.y, s.offset.y)), i;
+  return s && (tt(i.x, s.offset.x), tt(i.y, s.offset.y)), i;
 }
 const ql = {
   x: "translateX",
@@ -2918,10 +2920,10 @@ const Lt = {
   }
 }, Ql = {
   correct: (t, { treeScale: e, projectionDelta: n }) => {
-    const i = t, s = X.parse(t);
+    const i = t, s = q.parse(t);
     if (s.length > 5)
       return i;
-    const r = X.createTransformer(t), o = typeof s[0] != "number" ? 1 : 0, a = n.x.scale * e.x, c = n.y.scale * e.y;
+    const r = q.createTransformer(t), o = typeof s[0] != "number" ? 1 : 0, a = n.x.scale * e.x, c = n.y.scale * e.y;
     s[0 + o] /= a, s[1 + o] /= c;
     const u = D(a, c, 0.5);
     return typeof s[2 + o] == "number" && (s[2 + o] /= u), typeof s[3 + o] == "number" && (s[3 + o] /= u), r(s);
@@ -3118,8 +3120,8 @@ function fc(t) {
   const r = (u) => (l, h) => {
     const f = yt(t, h, u === "exit" ? t.presenceContext?.custom : void 0);
     if (f) {
-      const { transition: d, transitionEnd: p, ...g } = f;
-      l = { ...l, ...g, ...p };
+      const { transition: d, transitionEnd: p, ...m } = f;
+      l = { ...l, ...m, ...p };
     }
     return l;
   };
@@ -3128,75 +3130,75 @@ function fc(t) {
   }
   function a(u) {
     const { props: l } = t, h = Mo(t.parent) || {}, f = [], d = /* @__PURE__ */ new Set();
-    let p = {}, g = 1 / 0;
+    let p = {}, m = 1 / 0;
     for (let y = 0; y < uc; y++) {
-      const x = cc[y], v = n[x], T = l[x] !== void 0 ? l[x] : h[x], A = Ut(T), C = x === u ? v.isActive : null;
-      C === !1 && (g = y);
-      let b = T === h[x] && T !== l[x] && A;
-      if (b && (i || s) && t.manuallyAnimateOnMount && (b = !1), v.protectedKeys = { ...p }, // If it isn't active and hasn't *just* been set as inactive
-      !v.isActive && C === null || // If we didn't and don't have any defined prop for this animation type
-      !T && !v.prevProp || // Or if the prop doesn't define an animation
-      be(T) || typeof T == "boolean")
+      const v = cc[y], T = n[v], b = l[v] !== void 0 ? l[v] : h[v], S = Ut(b), A = v === u ? T.isActive : null;
+      A === !1 && (m = y);
+      let V = b === h[v] && b !== l[v] && S;
+      if (V && (i || s) && t.manuallyAnimateOnMount && (V = !1), T.protectedKeys = { ...p }, // If it isn't active and hasn't *just* been set as inactive
+      !T.isActive && A === null || // If we didn't and don't have any defined prop for this animation type
+      !b && !T.prevProp || // Or if the prop doesn't define an animation
+      be(b) || typeof b == "boolean")
         continue;
-      if (x === "exit" && v.isActive && C !== !0) {
-        v.prevResolvedValues && (p = {
+      if (v === "exit" && T.isActive && A !== !0) {
+        T.prevResolvedValues && (p = {
           ...p,
-          ...v.prevResolvedValues
+          ...T.prevResolvedValues
         });
         continue;
       }
-      const P = dc(v.prevProp, T);
-      let V = P || // If we're making this variant active, we want to always make it active
-      x === u && v.isActive && !b && A || // If we removed a higher-priority variant (i is in reverse order)
-      y > g && A, S = !1;
-      const M = Array.isArray(T) ? T : [T];
-      let R = M.reduce(r(x), {});
-      C === !1 && (R = {});
-      const { prevResolvedValues: nt = {} } = v, q = {
-        ...nt,
+      const x = dc(T.prevProp, b);
+      let C = x || // If we're making this variant active, we want to always make it active
+      v === u && T.isActive && !V && S || // If we removed a higher-priority variant (i is in reverse order)
+      y > m && S, P = !1;
+      const M = Array.isArray(b) ? b : [b];
+      let R = M.reduce(r(v), {});
+      A === !1 && (R = {});
+      const { prevResolvedValues: z = {} } = T, Z = {
+        ...z,
         ...R
       }, it = (I) => {
-        V = !0, d.has(I) && (S = !0, d.delete(I)), v.needsAnimating[I] = !0;
-        const K = t.getValue(I);
-        K && (K.liveStyle = !1);
+        C = !0, d.has(I) && (P = !0, d.delete(I)), T.needsAnimating[I] = !0;
+        const H = t.getValue(I);
+        H && (H.liveStyle = !1);
       };
-      for (const I in q) {
-        const K = R[I], ut = nt[I];
+      for (const I in Z) {
+        const H = R[I], ut = z[I];
         if (p.hasOwnProperty(I))
           continue;
         let xt = !1;
-        tn(K) && tn(ut) ? xt = !Do(K, ut) || P : xt = K !== ut, xt ? K != null ? it(I) : d.add(I) : K !== void 0 && d.has(I) ? it(I) : v.protectedKeys[I] = !0;
+        tn(H) && tn(ut) ? xt = !Do(H, ut) || x : xt = H !== ut, xt ? H != null ? it(I) : d.add(I) : H !== void 0 && d.has(I) ? it(I) : T.protectedKeys[I] = !0;
       }
-      v.prevProp = T, v.prevResolvedValues = R, v.isActive && (p = { ...p, ...R }), (i || s) && t.blockInitialAnimation && (V = !1);
-      const Z = b && P;
-      V && (!Z || S) && f.push(...M.map((I) => {
-        const K = { type: x };
-        if (typeof I == "string" && (i || s) && !Z && t.manuallyAnimateOnMount && t.parent) {
+      T.prevProp = b, T.prevResolvedValues = R, T.isActive && (p = { ...p, ...R }), (i || s) && t.blockInitialAnimation && (C = !1);
+      const J = V && x;
+      C && (!J || P) && f.push(...M.map((I) => {
+        const H = { type: v };
+        if (typeof I == "string" && (i || s) && !J && t.manuallyAnimateOnMount && t.parent) {
           const { parent: ut } = t, xt = yt(ut, I);
           if (ut.enteringChildren && xt) {
             const { delayChildren: Qo } = xt.transition || {};
-            K.delay = Zs(ut.enteringChildren, t, Qo);
+            H.delay = Zs(ut.enteringChildren, t, Qo);
           }
         }
         return {
           animation: I,
-          options: K
+          options: H
         };
       }));
     }
     if (d.size) {
       const y = {};
       if (typeof l.initial != "boolean") {
-        const x = yt(t, Array.isArray(l.initial) ? l.initial[0] : l.initial);
-        x && x.transition && (y.transition = x.transition);
+        const v = yt(t, Array.isArray(l.initial) ? l.initial[0] : l.initial);
+        v && v.transition && (y.transition = v.transition);
       }
-      d.forEach((x) => {
-        const v = t.getBaseTarget(x), T = t.getValue(x);
-        T && (T.liveStyle = !0), y[x] = v ?? null;
+      d.forEach((v) => {
+        const T = t.getBaseTarget(v), b = t.getValue(v);
+        b && (b.liveStyle = !0), y[v] = T ?? null;
       }), f.push({ animation: y });
     }
-    let m = !!f.length;
-    return i && (l.initial === !1 || l.initial === l.animate) && !t.manuallyAnimateOnMount && (m = !1), i = !1, s = !1, m ? e(f) : Promise.resolve();
+    let g = !!f.length;
+    return i && (l.initial === !1 || l.initial === l.animate) && !t.manuallyAnimateOnMount && (g = !1), i = !1, s = !1, g ? e(f) : Promise.resolve();
   }
   function c(u, l) {
     if (n[u].isActive === l)
@@ -3242,7 +3244,7 @@ function Ai() {
 function hn(t, e) {
   t.min = e.min, t.max = e.max;
 }
-function _(t, e) {
+function Y(t, e) {
   hn(t.x, e.x), hn(t.y, e.y);
 }
 function Vi(t, e) {
@@ -3279,7 +3281,7 @@ function Ei(t, e, n, i, s) {
   return t -= e, t = pe(t, 1 / n, i), s !== void 0 && (t = pe(t, 1 / s, i)), t;
 }
 function Tc(t, e = 0, n = 1, i = 0.5, s, r = t, o = t) {
-  if (tt.test(e) && (e = parseFloat(e), e = D(o.min, o.max, e / 100) - o.min), typeof e != "number")
+  if (et.test(e) && (e = parseFloat(e), e = D(o.min, o.max, e / 100) - o.min), typeof e != "number")
     return;
   let a = D(r.min, r.max, i);
   t === r && (a -= e), t.min = Ei(t.min, e, n, a, s), t.max = Ei(t.max, e, n, a, s);
@@ -3315,15 +3317,15 @@ function Ii(t) {
 function Oi(t, e) {
   return t.translate === e.translate && t.scale === e.scale && t.originPoint === e.originPoint;
 }
-function J(t) {
+function Q(t) {
   return [t("x"), t("y")];
 }
 function Sc(t, e, n) {
   let i = "";
   const s = t.x.translate / e.x, r = t.y.translate / e.y, o = n?.z || 0;
   if ((s || r || o) && (i = `translate3d(${s}px, ${r}px, ${o}px) `), (e.x !== 1 || e.y !== 1) && (i += `scale(${1 / e.x}, ${1 / e.y}) `), n) {
-    const { transformPerspective: u, rotate: l, pathRotation: h, rotateX: f, rotateY: d, skewX: p, skewY: g } = n;
-    u && (i = `perspective(${u}px) ${i}`), l && (i += `rotate(${l}deg) `), h && (i += `rotate(${h}deg) `), f && (i += `rotateX(${f}deg) `), d && (i += `rotateY(${d}deg) `), p && (i += `skewX(${p}deg) `), g && (i += `skewY(${g}deg) `);
+    const { transformPerspective: u, rotate: l, pathRotation: h, rotateX: f, rotateY: d, skewX: p, skewY: m } = n;
+    u && (i = `perspective(${u}px) ${i}`), l && (i += `rotate(${l}deg) `), h && (i += `rotate(${h}deg) `), f && (i += `rotateX(${f}deg) `), d && (i += `rotateY(${d}deg) `), p && (i += `skewX(${p}deg) `), m && (i += `skewY(${m}deg) `);
   }
   const a = t.x.scale * e.x, c = t.y.scale * e.y;
   return (a !== 1 || c !== 1) && (i += `scale(${a}, ${c})`), i || "none";
@@ -3341,14 +3343,14 @@ function Vc(t, e, n, i, s, r) {
     let c = Ui(e, a), u = Ui(n, a);
     if (c === void 0 && u === void 0)
       continue;
-    c || (c = 0), u || (u = 0), c === 0 || u === 0 || Ni(c) === Ni(u) ? (t[a] = Math.max(D(ji(c), ji(u), i), 0), (tt.test(u) || tt.test(c)) && (t[a] += "%")) : t[a] = u;
+    c || (c = 0), u || (u = 0), c === 0 || u === 0 || Ni(c) === Ni(u) ? (t[a] = Math.max(D(ji(c), ji(u), i), 0), (et.test(u) || et.test(c)) && (t[a] += "%")) : t[a] = u;
   }
   (e.rotate || n.rotate) && (t.rotate = D(e.rotate || 0, n.rotate || 0, i));
 }
 function Ui(t, e) {
   return t[e] !== void 0 ? t[e] : t.borderRadius;
 }
-const Cc = /* @__PURE__ */ Fo(0, 0.5, As), Mc = /* @__PURE__ */ Fo(0.5, 0.95, G);
+const Cc = /* @__PURE__ */ Fo(0, 0.5, As), Mc = /* @__PURE__ */ Fo(0.5, 0.95, _);
 function Fo(t, e, n) {
   return (i) => i < t ? 0 : i > e ? 1 : n(/* @__PURE__ */ jt(t, e, i));
 }
@@ -3509,15 +3511,15 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
           this.target = void 0, this.relativeTarget = void 0;
           return;
         }
-        const p = this.options.transition || u.getDefaultTransition() || qc, { onLayoutAnimationStart: g, onLayoutAnimationComplete: m } = u.getProps(), y = !this.targetLayout || !Lo(this.targetLayout, d), x = !h && f;
-        if (this.options.layoutRoot || this.resumeFrom || x || h && (y || !this.currentAnimation)) {
+        const p = this.options.transition || u.getDefaultTransition() || qc, { onLayoutAnimationStart: m, onLayoutAnimationComplete: g } = u.getProps(), y = !this.targetLayout || !Lo(this.targetLayout, d), v = !h && f;
+        if (this.options.layoutRoot || this.resumeFrom || v || h && (y || !this.currentAnimation)) {
           this.resumeFrom && (this.resumingFrom = this.resumeFrom, this.resumingFrom.resumingFrom = void 0);
-          const v = {
+          const T = {
             ...En(p, "layout"),
-            onPlay: g,
-            onComplete: m
+            onPlay: m,
+            onComplete: g
           };
-          (u.shouldReduceMotion || this.options.layoutRoot) && (v.delay = 0, v.type = !1), this.startAnimation(v), this.setAnimationOrigin(l, x, v.path);
+          (u.shouldReduceMotion || this.options.layoutRoot) && (T.delay = 0, T.type = !1), this.startAnimation(T), this.setAnimationOrigin(l, v, T.path);
         } else
           h || zi(this), this.isLead() && this.options.onExitComplete && this.options.onExitComplete();
         this.targetLayout = d;
@@ -3579,7 +3581,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
       }
       this.animationCommitId = this.animationId, this.isUpdating ? (this.isUpdating = !1, this.nodes.forEach($c), this.nodes.forEach(zc), this.nodes.forEach(Ic), this.nodes.forEach(Oc)) : this.nodes.forEach($i), this.clearAllSnapshots();
       const a = U.now();
-      O.delta = et(0, 1e3 / 60, a - O.timestamp), O.timestamp = a, O.isProcessing = !0, Se.update.process(O), Se.preRender.process(O), Se.render.process(O), O.isProcessing = !1;
+      O.delta = nt(0, 1e3 / 60, a - O.timestamp), O.timestamp = a, O.isProcessing = !0, Se.update.process(O), Se.preRender.process(O), Se.render.process(O), O.isProcessing = !1;
     }
     didUpdate() {
       this.updateScheduled || (this.updateScheduled = !0, Bn.read(this.scheduleUpdate));
@@ -3649,38 +3651,38 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
       const a = o.measureViewportBox();
       if (!(this.scroll?.wasRoot || this.path.some(Jc))) {
         const { scroll: u } = this.root;
-        u && (Q(a.x, u.offset.x), Q(a.y, u.offset.y));
+        u && (tt(a.x, u.offset.x), tt(a.y, u.offset.y));
       }
       return a;
     }
     removeElementScroll(o) {
       const a = F();
-      if (_(a, o), this.scroll?.wasRoot)
+      if (Y(a, o), this.scroll?.wasRoot)
         return a;
       for (let c = 0; c < this.path.length; c++) {
         const u = this.path[c], { scroll: l, options: h } = u;
-        u !== this.root && l && h.layoutScroll && (l.wasRoot && _(a, o), Q(a.x, l.offset.x), Q(a.y, l.offset.y));
+        u !== this.root && l && h.layoutScroll && (l.wasRoot && Y(a, o), tt(a.x, l.offset.x), tt(a.y, l.offset.y));
       }
       return a;
     }
     applyTransform(o, a = !1, c) {
       const u = c || F();
-      _(u, o);
+      Y(u, o);
       for (let l = 0; l < this.path.length; l++) {
         const h = this.path[l];
-        !a && h.options.layoutScroll && h.scroll && h !== h.root && (Q(u.x, -h.scroll.offset.x), Q(u.y, -h.scroll.offset.y)), ft(h.latestValues) && ie(u, h.latestValues, h.layout?.layoutBox);
+        !a && h.options.layoutScroll && h.scroll && h !== h.root && (tt(u.x, -h.scroll.offset.x), tt(u.y, -h.scroll.offset.y)), ft(h.latestValues) && ie(u, h.latestValues, h.layout?.layoutBox);
       }
       return ft(this.latestValues) && ie(u, this.latestValues, this.layout?.layoutBox), u;
     }
     removeTransform(o) {
       const a = F();
-      _(a, o);
+      Y(a, o);
       for (let c = 0; c < this.path.length; c++) {
         const u = this.path[c];
         if (!ft(u.latestValues))
           continue;
         let l;
-        u.instance && (ln(u.latestValues) && u.updateSnapshot(), l = F(), _(l, u.measurePageBox())), Ri(a, u.latestValues, u.snapshot?.layoutBox, l);
+        u.instance && (ln(u.latestValues) && u.updateSnapshot(), l = F(), Y(l, u.measurePageBox())), Ri(a, u.latestValues, u.snapshot?.layoutBox, l);
       }
       return ft(this.latestValues) && Ri(a, this.latestValues), a;
     }
@@ -3711,7 +3713,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
         return;
       this.resolvedRelativeTargetAt = O.timestamp;
       const f = this.getClosestProjectingParent();
-      f && this.linkedParentVersion !== f.layoutVersion && !f.options.layoutRoot && this.removeRelativeTarget(), !this.targetDelta && !this.relativeTarget && (this.options.layoutAnchor !== !1 && f && f.layout ? this.createRelativeTarget(f, this.layout.layoutBox, f.layout.layoutBox) : this.removeRelativeTarget()), !(!this.relativeTarget && !this.targetDelta) && (this.target || (this.target = F(), this.targetWithTransforms = F()), this.relativeTarget && this.relativeTargetOrigin && this.relativeParent && this.relativeParent.target ? (this.forceRelativeParentToResolveTarget(), xc(this.target, this.relativeTarget, this.relativeParent.target, this.options.layoutAnchor || void 0)) : this.targetDelta ? (this.resumingFrom ? this.applyTransform(this.layout.layoutBox, !1, this.target) : _(this.target, this.layout.layoutBox), To(this.target, this.targetDelta)) : _(this.target, this.layout.layoutBox), this.attemptToResolveRelativeTarget && (this.attemptToResolveRelativeTarget = !1, this.options.layoutAnchor !== !1 && f && !!f.resumingFrom == !!this.resumingFrom && !f.options.layoutScroll && f.target && this.animationProgress !== 1 ? this.createRelativeTarget(f, this.target, f.target) : this.relativeParent = this.relativeTarget = void 0));
+      f && this.linkedParentVersion !== f.layoutVersion && !f.options.layoutRoot && this.removeRelativeTarget(), !this.targetDelta && !this.relativeTarget && (this.options.layoutAnchor !== !1 && f && f.layout ? this.createRelativeTarget(f, this.layout.layoutBox, f.layout.layoutBox) : this.removeRelativeTarget()), !(!this.relativeTarget && !this.targetDelta) && (this.target || (this.target = F(), this.targetWithTransforms = F()), this.relativeTarget && this.relativeTargetOrigin && this.relativeParent && this.relativeParent.target ? (this.forceRelativeParentToResolveTarget(), xc(this.target, this.relativeTarget, this.relativeParent.target, this.options.layoutAnchor || void 0)) : this.targetDelta ? (this.resumingFrom ? this.applyTransform(this.layout.layoutBox, !1, this.target) : Y(this.target, this.layout.layoutBox), To(this.target, this.targetDelta)) : Y(this.target, this.layout.layoutBox), this.attemptToResolveRelativeTarget && (this.attemptToResolveRelativeTarget = !1, this.options.layoutAnchor !== !1 && f && !!f.resumingFrom == !!this.resumingFrom && !f.options.layoutScroll && f.target && this.animationProgress !== 1 ? this.createRelativeTarget(f, this.target, f.target) : this.relativeParent = this.relativeTarget = void 0));
     }
     getClosestProjectingParent() {
       if (!(!this.parent || ln(this.parent.latestValues) || xo(this.parent.latestValues)))
@@ -3721,7 +3723,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
       return !!((this.relativeTarget || this.targetDelta || this.options.layoutRoot) && this.layout);
     }
     createRelativeTarget(o, a, c) {
-      this.relativeParent = o, this.linkedParentVersion = o.layoutVersion, this.forceRelativeParentToResolveTarget(), this.relativeTarget = F(), this.relativeTargetOrigin = F(), me(this.relativeTargetOrigin, a, c, this.options.layoutAnchor || void 0), _(this.relativeTarget, this.relativeTargetOrigin);
+      this.relativeParent = o, this.linkedParentVersion = o.layoutVersion, this.forceRelativeParentToResolveTarget(), this.relativeTarget = F(), this.relativeTargetOrigin = F(), me(this.relativeTargetOrigin, a, c, this.options.layoutAnchor || void 0), Y(this.relativeTarget, this.relativeTargetOrigin);
     }
     removeRelativeTarget() {
       this.relativeParent = this.relativeTarget = void 0;
@@ -3734,7 +3736,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
       const { layout: u, layoutId: l } = this.options;
       if (this.isTreeAnimating = !!(this.parent && this.parent.isTreeAnimating || this.currentAnimation || this.pendingAnimation), this.isTreeAnimating || (this.targetDelta = this.relativeTarget = void 0), !this.layout || !(u || l))
         return;
-      _(this.layoutCorrected, this.layout.layoutBox);
+      Y(this.layoutCorrected, this.layout.layoutBox);
       const h = this.treeScale.x, f = this.treeScale.y;
       Yl(this.layoutCorrected, this.treeScale, this.path, a), o.layout && !o.target && (this.treeScale.x !== 1 || this.treeScale.y !== 1) && (o.target = o.layout.layoutBox, o.targetWithTransforms = F());
       const { target: d } = o;
@@ -3763,13 +3765,13 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
     setAnimationOrigin(o, a = !1, c) {
       const u = this.snapshot, l = u ? u.latestValues : {}, h = { ...this.latestValues }, f = St();
       (!this.relativeParent || !this.relativeParent.options.layoutRoot) && (this.relativeTarget = this.relativeTargetOrigin = void 0), this.attemptToResolveRelativeTarget = !a;
-      const d = F(), p = u ? u.source : void 0, g = this.layout ? this.layout.source : void 0, m = p !== g, y = this.getStack(), x = !y || y.members.length <= 1, v = !!(m && !x && this.options.crossfade === !0 && !this.path.some(Xc));
+      const d = F(), p = u ? u.source : void 0, m = this.layout ? this.layout.source : void 0, g = p !== m, y = this.getStack(), v = !y || y.members.length <= 1, T = !!(g && !v && this.options.crossfade === !0 && !this.path.some(Xc));
       this.animationProgress = 0;
-      let T;
-      const A = c?.interpolateProjection(o);
-      this.mixTargetDelta = (C) => {
-        const b = C / 1e3, P = A?.(b);
-        P ? (f.x.translate = P.x, f.x.scale = D(o.x.scale, 1, b), f.x.origin = o.x.origin, f.x.originPoint = o.x.originPoint, f.y.translate = P.y, f.y.scale = D(o.y.scale, 1, b), f.y.origin = o.y.origin, f.y.originPoint = o.y.originPoint) : (Ki(f.x, o.x, b), Ki(f.y, o.y, b)), this.setTargetDelta(f), this.relativeTarget && this.relativeTargetOrigin && this.layout && this.relativeParent && this.relativeParent.layout && (me(d, this.layout.layoutBox, this.relativeParent.layout.layoutBox, this.options.layoutAnchor || void 0), Yc(this.relativeTarget, this.relativeTargetOrigin, d, b), T && Pc(this.relativeTarget, T) && (this.isProjectionDirty = !1), T || (T = F()), _(T, this.relativeTarget)), m && (this.animationValues = h, Vc(h, l, this.latestValues, b, v, x)), P && P.rotate !== void 0 && (this.animationValues || (this.animationValues = h), this.animationValues.pathRotation = P.rotate), this.root.scheduleUpdateProjection(), this.scheduleRender(), this.animationProgress = b;
+      let b;
+      const S = c?.interpolateProjection(o);
+      this.mixTargetDelta = (A) => {
+        const V = A / 1e3, x = S?.(V);
+        x ? (f.x.translate = x.x, f.x.scale = D(o.x.scale, 1, V), f.x.origin = o.x.origin, f.x.originPoint = o.x.originPoint, f.y.translate = x.y, f.y.scale = D(o.y.scale, 1, V), f.y.origin = o.y.origin, f.y.originPoint = o.y.originPoint) : (Ki(f.x, o.x, V), Ki(f.y, o.y, V)), this.setTargetDelta(f), this.relativeTarget && this.relativeTargetOrigin && this.layout && this.relativeParent && this.relativeParent.layout && (me(d, this.layout.layoutBox, this.relativeParent.layout.layoutBox, this.options.layoutAnchor || void 0), Yc(this.relativeTarget, this.relativeTargetOrigin, d, V), b && Pc(this.relativeTarget, b) && (this.isProjectionDirty = !1), b || (b = F()), Y(b, this.relativeTarget)), g && (this.animationValues = h, Vc(h, l, this.latestValues, V, T, v)), x && x.rotate !== void 0 && (this.animationValues || (this.animationValues = h), this.animationValues.pathRotation = x.rotate), this.root.scheduleUpdateProjection(), this.scheduleRender(), this.animationProgress = V;
       }, this.mixTargetDelta(this.options.layoutRoot ? 1e3 : 0);
     }
     startAnimation(o) {
@@ -3808,7 +3810,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
           const f = W(this.layout.layoutBox.y);
           c.y.min = o.target.y.min, c.y.max = c.y.min + f;
         }
-        _(a, c), ie(a, l), It(this.projectionDeltaWithTransform, this.layoutCorrected, a, l);
+        Y(a, c), ie(a, l), It(this.projectionDeltaWithTransform, this.layoutCorrected, a, l);
       }
     }
     registerSharedNode(o, a) {
@@ -3888,13 +3890,13 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
       for (const p in un) {
         if (l[p] === void 0)
           continue;
-        const { correct: g, applyTo: m, isCSSVariable: y } = un[p], x = h === "none" ? l[p] : g(l[p], u);
-        if (m) {
-          const v = m.length;
-          for (let T = 0; T < v; T++)
-            o[m[T]] = x;
+        const { correct: m, applyTo: g, isCSSVariable: y } = un[p], v = h === "none" ? l[p] : m(l[p], u);
+        if (g) {
+          const T = g.length;
+          for (let b = 0; b < T; b++)
+            o[g[b]] = v;
         } else
-          y ? this.options.visualElement.renderState.vars[p] = x : o[p] = x;
+          y ? this.options.visualElement.renderState.vars[p] = v : o[p] = v;
       }
       this.options.layoutId && (o.pointerEvents = u === this ? se(a?.pointerEvents) || "" : "none");
     }
@@ -3915,14 +3917,14 @@ function Oc(t) {
   if (t.isLead() && t.layout && e && t.hasListeners("didUpdate")) {
     const { layoutBox: n, measuredBox: i } = t.layout, { animationType: s } = t.options, r = e.source !== t.layout.source;
     if (s === "size")
-      J((l) => {
+      Q((l) => {
         const h = r ? e.measuredBox[l] : e.layoutBox[l], f = W(h);
         h.min = n[l].min, h.max = h.min + f;
       });
     else if (s === "x" || s === "y") {
       const l = s === "x" ? "y" : "x";
       hn(r ? e.measuredBox[l] : e.layoutBox[l], n[l]);
-    } else jo(s, e.layoutBox, n) && J((l) => {
+    } else jo(s, e.layoutBox, n) && Q((l) => {
       const h = r ? e.measuredBox[l] : e.layoutBox[l], f = W(n[l]);
       h.max = h.min + f, t.relativeTarget && !t.currentAnimation && (t.isProjectionDirty = !0, t.relativeTarget[l].max = t.relativeTarget[l].min + f);
     });
@@ -3939,8 +3941,8 @@ function Oc(t) {
         if (h && f) {
           const d = t.options.layoutAnchor || void 0, p = F();
           me(p, e.layoutBox, h.layoutBox, d);
-          const g = F();
-          me(g, n, f.layoutBox, d), Lo(p, g) || (u = !0), l.options.layoutRoot && (t.relativeTarget = g, t.relativeTargetOrigin = p, t.relativeParent = l);
+          const m = F();
+          me(m, n, f.layoutBox, d), Lo(p, m) || (u = !0), l.options.layoutRoot && (t.relativeTarget = m, t.relativeTargetOrigin = p, t.relativeParent = l);
         }
       }
     }
@@ -4013,7 +4015,7 @@ function Xc(t) {
 const qc = {
   duration: 0.45,
   ease: [0.4, 0, 0.1, 1]
-}, Gi = (t) => typeof navigator < "u" && navigator.userAgent && navigator.userAgent.toLowerCase().includes(t), _i = Gi("applewebkit/") && !Gi("chrome/") ? Math.round : G;
+}, Gi = (t) => typeof navigator < "u" && navigator.userAgent && navigator.userAgent.toLowerCase().includes(t), _i = Gi("applewebkit/") && !Gi("chrome/") ? Math.round : _;
 function Yi(t) {
   t.min = _i(t.min), t.max = _i(t.max);
 }
@@ -4099,7 +4101,7 @@ class nu extends ye.Component {
   }
 }
 function iu({ children: t, isPresent: e, anchorX: n, anchorY: i, root: s, pop: r }) {
-  const o = pn(), a = z(null), c = z({
+  const o = pn(), a = K(null), c = K({
     width: 0,
     height: 0,
     top: 0,
@@ -4109,24 +4111,24 @@ function iu({ children: t, isPresent: e, anchorX: n, anchorY: i, root: s, pop: r
     direction: "ltr"
   }), { nonce: u } = N(Wn), l = t.props?.ref ?? t?.ref, h = eu(a, l);
   return mn(() => {
-    const { width: f, height: d, top: p, left: g, right: m, bottom: y, direction: x } = c.current;
+    const { width: f, height: d, top: p, left: m, right: g, bottom: y, direction: v } = c.current;
     if (e || r === !1 || !a.current || !f || !d)
       return;
-    const v = x === "rtl", T = n === "left" ? v ? `right: ${m}` : `left: ${g}` : v ? `left: ${g}` : `right: ${m}`, A = i === "bottom" ? `bottom: ${y}` : `top: ${p}`;
+    const T = v === "rtl", b = n === "left" ? T ? `right: ${g}` : `left: ${m}` : T ? `left: ${m}` : `right: ${g}`, S = i === "bottom" ? `bottom: ${y}` : `top: ${p}`;
     a.current.dataset.motionPopId = o;
-    const C = document.createElement("style");
-    u && (C.nonce = u);
-    const b = s ?? document.head;
-    return b.appendChild(C), C.sheet && C.sheet.insertRule(`
+    const A = document.createElement("style");
+    u && (A.nonce = u);
+    const V = s ?? document.head;
+    return V.appendChild(A), A.sheet && A.sheet.insertRule(`
           [data-motion-pop-id="${o}"] {
             position: absolute !important;
             width: ${f}px !important;
             height: ${d}px !important;
-            ${T}px !important;
-            ${A}px !important;
+            ${b}px !important;
+            ${S}px !important;
           }
         `), () => {
-      a.current?.removeAttribute("data-motion-pop-id"), b.contains(C) && b.removeChild(C);
+      a.current?.removeAttribute("data-motion-pop-id"), V.contains(A) && V.removeChild(A);
     };
   }, [e]), L(nu, { isPresent: e, childRef: a, sizeRef: c, pop: r, children: r === !1 ? t : ye.cloneElement(t, { ref: h }) });
 }
@@ -4139,15 +4141,15 @@ const su = ({ children: t, initial: e, isPresent: n, onExitComplete: i, custom: 
     custom: s,
     onExitComplete: (p) => {
       l.set(p, !0);
-      for (const g of l.values())
-        if (!g)
+      for (const m of l.values())
+        if (!m)
           return;
       i && i();
     },
     register: (p) => (l.set(p, !1), () => l.delete(p))
   }), [n, l, i]);
   return r && f && (d = { ...d }), vt(() => {
-    l.forEach((p, g) => l.set(g, !1));
+    l.forEach((p, m) => l.set(m, !1));
   }, [n]), ye.useEffect(() => {
     !n && !l.size && i && i();
   }, [n]), t = L(iu, { pop: o === "popLayout", isPresent: n, anchorX: a, anchorY: c, root: u, children: t }), L(xe.Provider, { value: d, children: t });
@@ -4175,39 +4177,39 @@ function qi(t) {
   }), e;
 }
 const Sh = ({ children: t, custom: e, initial: n = !0, onExitComplete: i, presenceAffectsLayout: s = !0, mode: r = "sync", propagate: o = !1, anchorX: a = "left", anchorY: c = "top", root: u }) => {
-  const [l, h] = Uo(o), f = vt(() => qi(t), [t]), d = o && !l ? [] : f.map(Yt), p = z(!0), g = z(f), m = yn(() => /* @__PURE__ */ new Map()), y = z(/* @__PURE__ */ new Set()), [x, v] = re(f), [T, A] = re(f);
+  const [l, h] = Uo(o), f = vt(() => qi(t), [t]), d = o && !l ? [] : f.map(Yt), p = K(!0), m = K(f), g = yn(() => /* @__PURE__ */ new Map()), y = K(/* @__PURE__ */ new Set()), [v, T] = re(f), [b, S] = re(f);
   ds(() => {
-    p.current = !1, g.current = f;
-    for (let P = 0; P < T.length; P++) {
-      const V = Yt(T[P]);
-      d.includes(V) ? (m.delete(V), y.current.delete(V)) : m.get(V) !== !0 && m.set(V, !1);
+    p.current = !1, m.current = f;
+    for (let x = 0; x < b.length; x++) {
+      const C = Yt(b[x]);
+      d.includes(C) ? (g.delete(C), y.current.delete(C)) : g.get(C) !== !0 && g.set(C, !1);
     }
-  }, [T, d.length, d.join("-")]);
-  const C = [];
-  if (f !== x) {
-    let P = [...f];
-    for (let V = 0; V < T.length; V++) {
-      const S = T[V], M = Yt(S);
-      d.includes(M) || (P.splice(V, 0, S), C.push(S));
+  }, [b, d.length, d.join("-")]);
+  const A = [];
+  if (f !== v) {
+    let x = [...f];
+    for (let C = 0; C < b.length; C++) {
+      const P = b[C], M = Yt(P);
+      d.includes(M) || (x.splice(C, 0, P), A.push(P));
     }
-    return r === "wait" && C.length && (P = C), A(qi(P)), v(f), null;
+    return r === "wait" && A.length && (x = A), S(qi(x)), T(f), null;
   }
-  process.env.NODE_ENV !== "production" && r === "wait" && T.length > 1 && console.warn(`You're attempting to animate multiple children within AnimatePresence, but its mode is set to "wait". This will lead to odd visual behaviour.`);
-  const { forceRender: b } = N(gn);
-  return L(Ue, { children: T.map((P) => {
-    const V = Yt(P), S = o && !l ? !1 : f === T || d.includes(V), M = () => {
-      if (y.current.has(V))
+  process.env.NODE_ENV !== "production" && r === "wait" && b.length > 1 && console.warn(`You're attempting to animate multiple children within AnimatePresence, but its mode is set to "wait". This will lead to odd visual behaviour.`);
+  const { forceRender: V } = N(gn);
+  return L(Ue, { children: b.map((x) => {
+    const C = Yt(x), P = o && !l ? !1 : f === b || d.includes(C), M = () => {
+      if (y.current.has(C))
         return;
-      if (m.has(V))
-        y.current.add(V), m.set(V, !0);
+      if (g.has(C))
+        y.current.add(C), g.set(C, !0);
       else
         return;
       let R = !0;
-      m.forEach((nt) => {
-        nt || (R = !1);
-      }), R && (b?.(), A(g.current), o && h?.(), i && i());
+      g.forEach((z) => {
+        z || (R = !1);
+      }), R && (V?.(), S(m.current), o && h?.(), i && i());
     };
-    return L(su, { isPresent: S, initial: !p.current || n ? void 0 : !1, custom: e, presenceAffectsLayout: s, mode: r, root: u, onExitComplete: S ? void 0 : M, anchorX: a, anchorY: c, children: P }, V);
+    return L(su, { isPresent: P, initial: !p.current || n ? void 0 : !1, custom: e, presenceAffectsLayout: s, mode: r, root: u, onExitComplete: P ? void 0 : M, anchorX: a, anchorY: c, children: x }, C);
   }) });
 }, Wo = Ct({ strict: !1 }), Zi = {
   animation: [
@@ -4438,17 +4440,17 @@ function Tu(t, e, n, i) {
     for (let d = 0; d < f.length; d++) {
       const p = Rn(t, f[d]);
       if (p) {
-        const { transitionEnd: g, transition: m, ...y } = p;
-        for (const x in y) {
-          let v = y[x];
-          if (Array.isArray(v)) {
-            const T = l ? v.length - 1 : 0;
-            v = v[T];
+        const { transitionEnd: m, transition: g, ...y } = p;
+        for (const v in y) {
+          let T = y[v];
+          if (Array.isArray(T)) {
+            const b = l ? T.length - 1 : 0;
+            T = T[b];
           }
-          v !== null && (s[x] = v);
+          T !== null && (s[v] = T);
         }
-        for (const x in g)
-          s[x] = g[x];
+        for (const v in m)
+          s[v] = m[v];
       }
     }
   }
@@ -4465,11 +4467,11 @@ const Go = (t) => (e, n) => {
   createRenderState: Ho
 }), Pu = /* @__PURE__ */ Symbol.for("motionComponentSymbol");
 function Su(t, e, n) {
-  const i = z(n);
+  const i = K(n);
   mn(() => {
     i.current = n;
   });
-  const s = z(null);
+  const s = K(null);
   return us((r) => {
     r && t.onMount?.(r), e && (r ? e.mount(r) : e.unmount());
     const o = i.current;
@@ -4486,7 +4488,7 @@ function Tt(t) {
   return t && typeof t == "object" && Object.prototype.hasOwnProperty.call(t, "current");
 }
 function Au(t, e, n, i, s, r) {
-  const { visualElement: o } = N(Pe), a = N(Wo), c = N(xe), u = N(Wn), l = u.reducedMotion, h = u.skipAnimations, f = z(null), d = z(!1);
+  const { visualElement: o } = N(Pe), a = N(Wo), c = N(xe), u = N(Wn), l = u.reducedMotion, h = u.skipAnimations, f = K(null), d = K(!1);
   i = i || a.renderer, !f.current && i && (f.current = i(t, {
     visualState: e,
     parent: o,
@@ -4497,19 +4499,19 @@ function Au(t, e, n, i, s, r) {
     skipAnimations: h,
     isSVG: r
   }), d.current && f.current && (f.current.manuallyAnimateOnMount = !0));
-  const p = f.current, g = N(_o);
-  p && !p.projection && s && (p.type === "html" || p.type === "svg") && Vu(f.current, n, s, g);
-  const m = z(!1);
+  const p = f.current, m = N(_o);
+  p && !p.projection && s && (p.type === "html" || p.type === "svg") && Vu(f.current, n, s, m);
+  const g = K(!1);
   mn(() => {
-    p && m.current && p.update(n, c);
+    p && g.current && p.update(n, c);
   });
-  const y = n[eo], x = z(!!y && typeof window < "u" && !window.MotionHandoffIsComplete?.(y) && window.MotionHasOptimisedAnimation?.(y));
+  const y = n[eo], v = K(!!y && typeof window < "u" && !window.MotionHandoffIsComplete?.(y) && window.MotionHasOptimisedAnimation?.(y));
   return ds(() => {
-    d.current = !0, p && (m.current = !0, window.MotionIsMounted = !0, p.updateFeatures(), p.scheduleRenderMicrotask(), x.current && p.animationState && p.animationState.animateChanges());
+    d.current = !0, p && (g.current = !0, window.MotionIsMounted = !0, p.updateFeatures(), p.scheduleRenderMicrotask(), v.current && p.animationState && p.animationState.animateChanges());
   }), ve(() => {
-    p && (!x.current && p.animationState && p.animationState.animateChanges(), x.current && (queueMicrotask(() => {
+    p && (!v.current && p.animationState && p.animationState.animateChanges(), v.current && (queueMicrotask(() => {
       window.MotionHandoffMarkAsComplete?.(y);
-    }), x.current = !1), p.enteringChildren = void 0);
+    }), v.current = !1), p.enteringChildren = void 0);
   }), p;
 }
 function Vu(t, e, n, i) {
@@ -4547,13 +4549,13 @@ function Fe(t, { forwardMotionProps: e = !1, type: n } = {}, i, s) {
       ...N(Wn),
       ...u,
       layoutId: Cu(u)
-    }, { isStatic: d } = f, p = fu(u), g = o(u, d);
+    }, { isStatic: d } = f, p = fu(u), m = o(u, d);
     if (!d && typeof window < "u") {
       Mu(f, i);
-      const m = Du(f);
-      h = m.MeasureLayout, p.visualElement = Au(t, g, f, s, m.ProjectionNode, r);
+      const g = Du(f);
+      h = g.MeasureLayout, p.visualElement = Au(t, m, f, s, g.ProjectionNode, r);
     }
-    return dt(Pe.Provider, { value: p, children: [h && p.visualElement ? L(h, { visualElement: p.visualElement, ...f }) : null, vu(t, u, Su(g, p.visualElement, l), g, d, e, r)] });
+    return dt(Pe.Provider, { value: p, children: [h && p.visualElement ? L(h, { visualElement: p.visualElement, ...f }) : null, vu(t, u, Su(m, p.visualElement, l), m, d, e, r)] });
   }
   a.displayName = `motion.${typeof t == "string" ? t : `create(${t.displayName ?? t.name ?? ""})`}`;
   const c = sr(a);
@@ -4699,22 +4701,22 @@ class qo {
       if (!(this.lastMoveEvent && this.lastMoveEventInfo))
         return;
       this.lastRawMoveEventInfo && (this.lastMoveEventInfo = Xt(this.lastRawMoveEventInfo, this.transformPagePoint));
-      const d = Ie(this.lastMoveEventInfo, this.history), p = this.startEvent !== null, g = Ou(d.offset, { x: 0, y: 0 }) >= this.distanceThreshold;
-      if (!p && !g)
+      const d = Ie(this.lastMoveEventInfo, this.history), p = this.startEvent !== null, m = Ou(d.offset, { x: 0, y: 0 }) >= this.distanceThreshold;
+      if (!p && !m)
         return;
-      const { point: m } = d, { timestamp: y } = O;
-      this.history.push({ ...m, timestamp: y });
-      const { onStart: x, onMove: v } = this.handlers;
-      p || (x && x(this.lastMoveEvent, d), this.startEvent = this.lastMoveEvent), v && v(this.lastMoveEvent, d);
+      const { point: g } = d, { timestamp: y } = O;
+      this.history.push({ ...g, timestamp: y });
+      const { onStart: v, onMove: T } = this.handlers;
+      p || (v && v(this.lastMoveEvent, d), this.startEvent = this.lastMoveEvent), T && T(this.lastMoveEvent, d);
     }, this.handlePointerMove = (d, p) => {
       this.lastMoveEvent = d, this.lastRawMoveEventInfo = p, this.lastMoveEventInfo = Xt(p, this.transformPagePoint), E.update(this.updatePoint, !0);
     }, this.handlePointerUp = (d, p) => {
       this.end();
-      const { onEnd: g, onSessionEnd: m, resumeAnimation: y } = this.handlers;
+      const { onEnd: m, onSessionEnd: g, resumeAnimation: y } = this.handlers;
       if ((this.dragSnapToOrigin || !this.startEvent) && y && y(), !(this.lastMoveEvent && this.lastMoveEventInfo))
         return;
-      const x = Ie(d.type === "pointercancel" ? this.lastMoveEventInfo : Xt(p, this.transformPagePoint), this.history);
-      this.startEvent && g && g(d, x), m && m(d, x);
+      const v = Ie(d.type === "pointercancel" ? this.lastMoveEventInfo : Xt(p, this.transformPagePoint), this.history);
+      this.startEvent && m && m(d, v), g && g(d, v);
     }, !Fn(e))
       return;
     this.dragSnapToOrigin = r, this.handlers = n, this.transformPagePoint = i, this.distanceThreshold = o, this.contextWindow = s || window;
@@ -4799,7 +4801,7 @@ function Nu(t, e) {
   if (!i)
     return { x: 0, y: 0 };
   i === t[0] && t.length > 2 && s.timestamp - i.timestamp > /* @__PURE__ */ $(e) * 2 && (i = t[1]);
-  const r = /* @__PURE__ */ H(s.timestamp - i.timestamp);
+  const r = /* @__PURE__ */ G(s.timestamp - i.timestamp);
   if (r === 0)
     return { x: 0, y: 0 };
   const o = {
@@ -4836,7 +4838,7 @@ function $u(t, e) {
 function zu(t, e) {
   let n = 0.5;
   const i = W(t), s = W(e);
-  return s > i ? n = /* @__PURE__ */ jt(e.min, e.max - i, t.min) : i > s && (n = /* @__PURE__ */ jt(t.min, t.max - s, e.min)), et(0, 1, n);
+  return s > i ? n = /* @__PURE__ */ jt(e.min, e.max - i, t.min) : i > s && (n = /* @__PURE__ */ jt(t.min, t.max - s, e.min)), nt(0, 1, n);
 }
 function Ku(t, e) {
   const n = {};
@@ -4870,33 +4872,33 @@ class _u {
     const r = (h) => {
       n && this.snapToCursor(Ht(h).point), this.stopAnimation();
     }, o = (h, f) => {
-      const { drag: d, dragPropagation: p, onDragStart: g } = this.getProps();
+      const { drag: d, dragPropagation: p, onDragStart: m } = this.getProps();
       if (d && !p && (this.openDragLock && this.openDragLock(), this.openDragLock = Tl(d), !this.openDragLock))
         return;
-      this.latestPointerEvent = h, this.latestPanInfo = f, this.isDragging = !0, this.currentDirection = null, this.resolveConstraints(), this.visualElement.projection && (this.visualElement.projection.isAnimationBlocked = !0, this.visualElement.projection.target = void 0), J((y) => {
-        let x = this.getAxisMotionValue(y).get() || 0;
-        if (tt.test(x)) {
-          const { projection: v } = this.visualElement;
-          if (v && v.layout) {
-            const T = v.layout.layoutBox[y];
-            T && (x = W(T) * (parseFloat(x) / 100));
+      this.latestPointerEvent = h, this.latestPanInfo = f, this.isDragging = !0, this.currentDirection = null, this.resolveConstraints(), this.visualElement.projection && (this.visualElement.projection.isAnimationBlocked = !0, this.visualElement.projection.target = void 0), Q((y) => {
+        let v = this.getAxisMotionValue(y).get() || 0;
+        if (et.test(v)) {
+          const { projection: T } = this.visualElement;
+          if (T && T.layout) {
+            const b = T.layout.layoutBox[y];
+            b && (v = W(b) * (parseFloat(v) / 100));
           }
         }
-        this.originPoint[y] = x;
-      }), g && E.update(() => g(h, f), !1, !0), en(this.visualElement, "transform");
-      const { animationState: m } = this.visualElement;
-      m && m.setActive("whileDrag", !0);
+        this.originPoint[y] = v;
+      }), m && E.update(() => m(h, f), !1, !0), en(this.visualElement, "transform");
+      const { animationState: g } = this.visualElement;
+      g && g.setActive("whileDrag", !0);
     }, a = (h, f) => {
       this.latestPointerEvent = h, this.latestPanInfo = f;
-      const { dragPropagation: d, dragDirectionLock: p, onDirectionLock: g, onDrag: m } = this.getProps();
+      const { dragPropagation: d, dragDirectionLock: p, onDirectionLock: m, onDrag: g } = this.getProps();
       if (!d && !this.openDragLock)
         return;
       const { offset: y } = f;
       if (p && this.currentDirection === null) {
-        this.currentDirection = Xu(y), this.currentDirection !== null && g && g(this.currentDirection);
+        this.currentDirection = Xu(y), this.currentDirection !== null && m && m(this.currentDirection);
         return;
       }
-      this.updateAxis("x", f.point, y), this.updateAxis("y", f.point, y), this.visualElement.render(), m && E.update(() => m(h, f), !1, !0);
+      this.updateAxis("x", f.point, y), this.updateAxis("y", f.point, y), this.visualElement.render(), g && E.update(() => g(h, f), !1, !0);
     }, c = (h, f) => {
       this.latestPointerEvent = h, this.latestPanInfo = f, this.stop(h, f), this.latestPointerEvent = null, this.latestPanInfo = null;
     }, u = () => {
@@ -4958,7 +4960,7 @@ class _u {
   }
   resolveConstraints() {
     const { dragConstraints: e, dragElastic: n } = this.getProps(), i = this.visualElement.projection && !this.visualElement.projection.layout ? this.visualElement.projection.measure(!1) : this.visualElement.projection?.layout, s = this.constraints;
-    e && Tt(e) ? this.constraints || (this.constraints = this.resolveRefConstraints()) : e && i ? this.constraints = Wu(i.layoutBox, e) : this.constraints = !1, this.elastic = Hu(n), s !== this.constraints && !Tt(e) && i && this.constraints && !this.hasMutatedConstraints && J((r) => {
+    e && Tt(e) ? this.constraints || (this.constraints = this.resolveRefConstraints()) : e && i ? this.constraints = Wu(i.layoutBox, e) : this.constraints = !1, this.elastic = Hu(n), s !== this.constraints && !Tt(e) && i && this.constraints && !this.hasMutatedConstraints && Q((r) => {
       this.constraints !== !1 && this.getAxisMotionValue(r) && (this.constraints[r] = Ku(i.layoutBox[r], this.constraints[r]));
     });
   }
@@ -4981,7 +4983,7 @@ class _u {
     return o;
   }
   startAnimation(e) {
-    const { drag: n, dragMomentum: i, dragElastic: s, dragTransition: r, dragSnapToOrigin: o, onDragTransitionEnd: a } = this.getProps(), c = this.constraints || {}, u = J((l) => {
+    const { drag: n, dragMomentum: i, dragElastic: s, dragTransition: r, dragSnapToOrigin: o, onDragTransitionEnd: a } = this.getProps(), c = this.constraints || {}, u = Q((l) => {
       if (!qt(l, n, this.currentDirection))
         return;
       let h = c && c[l] || {};
@@ -5006,7 +5008,7 @@ class _u {
     return en(this.visualElement, e), i.start(kn(e, i, 0, n, this.visualElement, !1));
   }
   stopAnimation() {
-    J((e) => this.getAxisMotionValue(e).stop());
+    Q((e) => this.getAxisMotionValue(e).stop());
   }
   /**
    * Drag works differently depending on which props are provided.
@@ -5019,7 +5021,7 @@ class _u {
     return s || this.visualElement.getValue(e, this.visualElement.latestValues[e] ?? 0);
   }
   snapToCursor(e) {
-    J((n) => {
+    Q((n) => {
       const { drag: i } = this.getProps();
       if (!qt(n, i, this.currentDirection))
         return;
@@ -5043,7 +5045,7 @@ class _u {
       return;
     this.stopAnimation();
     const s = { x: 0, y: 0 };
-    J((o) => {
+    Q((o) => {
       const a = this.getAxisMotionValue(o);
       if (a && this.constraints !== !1) {
         const c = a.get();
@@ -5051,7 +5053,7 @@ class _u {
       }
     });
     const { transformTemplate: r } = this.visualElement.getProps();
-    this.visualElement.current.style.transform = r ? r({}, "") : "none", i.root && i.root.updateScroll(), i.updateLayout(), this.constraints = !1, this.resolveConstraints(), J((o) => {
+    this.visualElement.current.style.transform = r ? r({}, "") : "none", i.root && i.root.updateScroll(), i.updateLayout(), this.constraints = !1, this.resolveConstraints(), Q((o) => {
       if (!qt(o, e, null))
         return;
       const a = this.getAxisMotionValue(o), { min: c, max: u } = this.constraints[o];
@@ -5073,7 +5075,7 @@ class _u {
     }, { projection: r } = this.visualElement, o = r.addEventListener("measure", s);
     r && !r.layout && (r.root && r.root.updateScroll(), r.updateLayout()), E.read(s);
     const a = Wt(window, "resize", () => this.scalePositionWithinConstraints()), c = r.addEventListener("didUpdate", (({ delta: u, hasLayoutChanged: l }) => {
-      this.isDragging && l && (J((h) => {
+      this.isDragging && l && (Q((h) => {
         const f = this.getAxisMotionValue(h);
         f && (this.originPoint[h] += u[h].translate, f.set(f.get() + u[h].translate));
       }), this.visualElement.render());
@@ -5120,11 +5122,11 @@ function Xu(t, e = 10) {
 }
 class qu extends ct {
   constructor(e) {
-    super(e), this.removeGroupControls = G, this.removeListeners = G, this.controls = new _u(e);
+    super(e), this.removeGroupControls = _, this.removeListeners = _, this.controls = new _u(e);
   }
   mount() {
     const { dragControls: e } = this.node.getProps();
-    e && (this.removeGroupControls = e.subscribe(this.controls)), this.removeListeners = this.controls.addListeners() || G;
+    e && (this.removeGroupControls = e.subscribe(this.controls)), this.removeListeners = this.controls.addListeners() || _;
   }
   update() {
     const { dragControls: e } = this.node.getProps(), { dragControls: n } = this.node.prevProps || {};
@@ -5139,7 +5141,7 @@ const Oe = (t) => (e, n) => {
 };
 class Zu extends ct {
   constructor() {
-    super(...arguments), this.removePointerDownListener = G;
+    super(...arguments), this.removePointerDownListener = _;
   }
   onPointerDown(e) {
     this.session = new qo(e, this.createPanHandlers(), {
@@ -5368,7 +5370,10 @@ const uh = {
   ...hh
 }, Ah = /* @__PURE__ */ Eu(fh, ku);
 function dh(t, e) {
-  return e ? e.getValue ? e.getValue(t) : t[e.value] : t;
+  return e ? e.getValue ? e.getValue(t) : e.value.split(".").reduce((n, i) => {
+    if (n != null)
+      return n[i];
+  }, t) : t;
 }
 function Vh({
   data: t,
@@ -5382,24 +5387,27 @@ function Vh({
   style: c,
   theme: u
 }) {
-  const [l, h] = re(s ?? ""), [f, d] = re(), p = z(i);
+  const [l, h] = re(s ?? ""), [f, d] = re(), p = K(i);
   p.current = i, ve(() => {
     if (!l) {
       p.current(t);
       return;
     }
-    const y = l.toLowerCase(), x = t.filter((v) => {
+    const v = l.toLowerCase(), T = t.filter((b) => {
       if (f) {
-        const T = e.find((C) => C.value === f);
-        return String(dh(v, T) ?? "").toLowerCase().includes(y);
+        const S = e.find((V) => V.value === f), A = dh(b, S);
+        return m(A, v);
       }
-      return Object.values(v).some(
-        (T) => String(T).toLowerCase().includes(y)
-      );
+      return m(b, v);
     });
-    p.current(x);
+    p.current(T);
   }, [l, f, JSON.stringify(t)]);
-  const g = Hn[u ?? "dark"].classes, m = Hn[u ?? "dark"].colorsFiler;
+  function m(v, T) {
+    return v == null ? !1 : typeof v == "object" ? Object.values(v).some(
+      (b) => m(b, T)
+    ) : String(v).toLowerCase().includes(T);
+  }
+  const g = Hn[u ?? "dark"].classes, y = Hn[u ?? "dark"].colorsFiler;
   return /* @__PURE__ */ dt(
     "div",
     {
@@ -5412,7 +5420,7 @@ function Vh({
           {
             value: l,
             placeholder: n,
-            onIonInput: (y) => h(y.detail.value),
+            onIonInput: (v) => h(v.detail.value),
             clearInput: !0,
             className: `flex-1 ${o}`
           }
@@ -5423,7 +5431,7 @@ function Vh({
             "div",
             {
               className: "self-stretch w-px",
-              style: { backgroundColor: m.border }
+              style: { backgroundColor: y.border }
             }
           ),
           /* @__PURE__ */ L(
@@ -5433,10 +5441,10 @@ function Vh({
               id: "filter-column-button",
               className: `${a} min-w-28! max-w-28!`,
               backgroundColor: "transparent",
-              textColor: m.text,
+              textColor: y.text,
               size: "small",
               children: /* @__PURE__ */ dt("span", { className: "flex items-center gap-1 w-full min-w-0", children: [
-                /* @__PURE__ */ L("span", { className: "truncate min-w-0 flex-1", children: f ? e.find((y) => y.value === f)?.label : "Todas" }),
+                /* @__PURE__ */ L("span", { className: "truncate min-w-0 flex-1", children: f ? e.find((v) => v.value === f)?.label : "Todas" }),
                 /* @__PURE__ */ L(dr, { size: 14, className: "shrink-0 opacity-70" })
               ] })
             }
@@ -5452,7 +5460,7 @@ function Vh({
                 hr,
                 {
                   style: {
-                    background: m.background
+                    background: y.background
                   },
                   children: [
                     /* @__PURE__ */ L(
@@ -5462,25 +5470,25 @@ function Vh({
                         className: "uppercase",
                         onClick: () => d(void 0),
                         style: {
-                          "--background": m.background,
-                          "--color": m.text
+                          "--background": y.background,
+                          "--color": y.text
                         },
                         children: "Todas"
                       }
                     ),
-                    e.map((y) => /* @__PURE__ */ L(
+                    e.map((v) => /* @__PURE__ */ L(
                       Kn,
                       {
                         className: "uppercase",
                         button: !0,
                         style: {
-                          "--background": m.background,
-                          "--color": m.text
+                          "--background": y.background,
+                          "--color": y.text
                         },
-                        onClick: () => d(y.value),
-                        children: y.label
+                        onClick: () => d(v.value),
+                        children: v.label
                       },
-                      y.value
+                      v.value
                     ))
                   ]
                 }

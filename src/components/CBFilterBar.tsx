@@ -7,7 +7,7 @@ import CBButton from "./CBButton";
 /**
  * Opção de coluna para filtragem
  */
-export interface CBFilterOption<T = unknown> {
+export interface CBFilterOption<T> {
   /**
    * Identificador interno do filtro.
    */
@@ -35,7 +35,13 @@ function getFilterValue<T>(item: T, column?: CBFilterOption<T>): unknown {
     return column.getValue(item);
   }
 
-  return (item as Record<string, unknown>)[column.value];
+  return column.value.split(".").reduce<unknown>((current, key) => {
+    if (current == null) {
+      return undefined;
+    }
+
+    return (current as Record<string, unknown>)[key];
+  }, item);
 }
 
 /**
@@ -45,7 +51,7 @@ interface CBFilterBarProps<T> {
   /** Dados originais que serão filtrados */
   data: T[];
   /** Colunas opcionais para filtro específico */
-  columns?: CBFilterOption[];
+  columns?: CBFilterOption<T>[];
   /** Placeholder do campo de pesquisa */
   placeholder?: string;
   /** Valor inicial do input */
@@ -112,19 +118,30 @@ function CBFilterBar<T>({
       if (selectedColumn) {
         const column = columns.find((col) => col.value === selectedColumn);
 
-        const value = String(getFilterValue(item, column) ?? "").toLowerCase();
+        const value = getFilterValue(item, column);
 
-        return value.includes(q);
+        return valueIncludes(value, q);
       }
 
-      return Object.values(item as Record<string, any>).some((v) =>
-        String(v).toLowerCase().includes(q),
-      );
+      return valueIncludes(item, q);
     });
 
     onChangeRef.current(filtered);
   }, [query, selectedColumn, JSON.stringify(data)]); // JSON.stringify estabiliza: só reexecuta quando o conteúdo muda, não a referência
 
+  function valueIncludes(value: unknown, query: string): boolean {
+    if (value == null) {
+      return false;
+    }
+
+    if (typeof value === "object") {
+      return Object.values(value as Record<string, unknown>).some((v) =>
+        valueIncludes(v, query),
+      );
+    }
+
+    return String(value).toLowerCase().includes(query);
+  }
   const classes = DEFAULT_THEMES[theme ?? "dark"].classes;
   const colors = DEFAULT_THEMES[theme ?? "dark"].colorsFiler;
 

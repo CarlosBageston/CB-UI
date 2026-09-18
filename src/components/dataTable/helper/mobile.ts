@@ -78,7 +78,15 @@ export function flattenColumns<T>(
  */
 export function getValue<T>(row: T, field?: string): React.ReactNode {
   if (!field) return "-";
-  const value = (row as Record<string, unknown>)[field];
+
+  const value = field.split(".").reduce<unknown>((current, key) => {
+    if (current === null || current === undefined) {
+      return undefined;
+    }
+
+    return (current as Record<string, unknown>)[key];
+  }, row);
+
   if (value === null || value === undefined || value === "") return "-";
   return String(value);
 }
@@ -114,10 +122,7 @@ export function getInputType(cellEditor?: string): string {
 }
 
 /** Retorna true se a coluna é editável para o row dado */
-export function isColumnEditable<T>(
-  col: FlatColumn<T>,
-  row: T,
-): boolean {
+export function isColumnEditable<T>(col: FlatColumn<T>, row: T): boolean {
   if (!col.editable) return false;
   if (typeof col.editable === "function") {
     return col.editable({ data: row });

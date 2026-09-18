@@ -1,6 +1,7 @@
 import type { ColDef } from "ag-grid-community";
 import type { CSSProperties, ReactNode } from "react";
 import type { CBInputMask, CBInputMaskFn } from "./components";
+import type { CBColorOrString } from "../theme/CBColor";
 /** Base para componentes que aceitam className e style */
 interface CBBaseProps {
     className?: string;
@@ -26,6 +27,18 @@ export interface CBTableColumn<T> extends Pick<ColDef<T>, PassthroughColDefKeys>
 }
 /** Modo de paginação. Default "server". */
 export type PaginationMode = "client" | "server";
+/**
+ * Representa uma ação da tabela.
+ *
+ * @template T Tipo de dado da linha.
+ */
+export interface CBDataTableAction<T> {
+    children: React.ReactNode;
+    icon?: ReactNode;
+    color?: CBColorOrString;
+    onClick: (rows: T[]) => void;
+    disabled?: (rows: T[]) => boolean;
+}
 /**
  * Props do componente CBDataTable
  *
@@ -91,5 +104,6 @@ export interface CBDataTableProps<T> extends CBBaseProps {
     }) => void;
     /** Inicia a edição automaticamente na primeira célula editável da primeira linha ao montar a tabela */
     autoFocusFirstEditableCell?: boolean;
+    actions?: CBDataTableAction<T>[];
 }
 export {};

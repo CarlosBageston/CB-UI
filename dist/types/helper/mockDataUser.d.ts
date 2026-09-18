@@ -5,5 +5,8 @@ export interface User {
     age: number;
     email: string;
     phone: string;
+    object?: {
+        cidade: string;
+    };
 }
 export declare const mockData: User[];

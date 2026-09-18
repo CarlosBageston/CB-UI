@@ -1,6 +1,4 @@
-import CBButton from "../CBButton";
 import { AgGridReact } from "ag-grid-react";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ColDef, ColGroupDef, GetRowIdParams } from "ag-grid-community";
 import {
@@ -25,6 +23,7 @@ import { getThemeTable } from "../../theme/themeTable";
 import type { CBDataTableProps } from "../../datatable";
 import { useDataTableSelection } from "./hook/useDataTableSelection";
 import { CBPaginationFooter } from "./components/CBPaginationFooter";
+import CBDataTableActions from "./components/CBDataTableActions";
 
 ModuleRegistry.registerModules([
   ClientSideRowModelModule,
@@ -104,6 +103,7 @@ function CBDataTableDesktop<T>({
   stopEditingWhenCellsLoseFocus = true,
   onCellValueChanged,
   autoFocusFirstEditableCell = false,
+  actions = [],
 }: CBDataTableProps<T>) {
   const themeTable = useMemo(() => getThemeTable(theme === "dark"), [theme]);
   const [internalPage, setInternalPage] = useState(0);
@@ -271,27 +271,12 @@ function CBDataTableDesktop<T>({
 
       {/* Botões flutuantes */}
       <div className="absolute -top-2 right-2 -translate-y-1/2 flex gap-2 z-10">
-        {onEdit && (
-          <CBButton
-            aria-label="Editar"
-            children=""
-            iconStart={<FiEdit size={18} />}
-            color="primary"
-            // Edição só faz sentido com exatamente 1 linha selecionada.
-            disabled={selectedRows.length !== 1}
-            onClick={() => selectedRows.length === 1 && onEdit(selectedRows[0])}
-          />
-        )}
-        {onDelete && (
-          <CBButton
-            aria-label="Excluir"
-            children=""
-            iconStart={<FiTrash2 size={18} />}
-            color="danger"
-            disabled={selectedRows.length === 0}
-            onClick={handleDelete}
-          />
-        )}
+        <CBDataTableActions
+          selectedRows={selectedRows}
+          onEdit={onEdit}
+          onDelete={handleDelete}
+          actions={actions}
+        />
       </div>
     </div>
   );

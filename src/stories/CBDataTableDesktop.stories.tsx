@@ -10,6 +10,7 @@ import {
 } from "../helper/mockPagination";
 import type { CBTableColumn } from "../datatable";
 import { useFormik } from "formik";
+import { FiCopy, FiPrinter } from "react-icons/fi";
 
 const meta: Meta<typeof CBDataTableDesktop<User>> = {
   title: "Form/CBDataTable/Desktop",
@@ -750,5 +751,59 @@ export const AutoFocusAfterFormik: Story = {
     };
 
     return <AutoFocusAfterFormikDemo />;
+  },
+};
+// 15. Ações customizadas
+// Testa ações customizadas recebendo os registros selecionados.
+export const CustomActions: Story = {
+  render: () => {
+    const [message, setMessage] = useState("Nenhuma ação executada");
+
+    return (
+      <div className="space-y-3">
+        <div className="p-3 rounded-lg border bg-gray-50 dark:bg-gray-800">
+          <p className="text-sm">
+            <strong>Ação:</strong> {message}
+          </p>
+        </div>
+
+        <CBDataTableDesktop<User>
+          getRowId={(user) => String(user.id)}
+          selectionMode="single"
+          columns={[
+            { field: "name", headerName: "Nome", col: 2 },
+            { field: "role", headerName: "Cargo", col: 2 },
+            { field: "age", headerName: "Idade", col: 1 },
+            { field: "email", headerName: "E-mail", col: 3 },
+          ]}
+          data={mockData}
+          pageSize={5}
+          actions={[
+            {
+              icon: <FiCopy size={18} />,
+              color: "primary",
+              children: "",
+              disabled: (rows) => rows.length !== 1,
+              onClick: (rows) => {
+                setMessage(`Copiando: ${rows[0].name}`);
+              },
+            },
+            {
+              icon: <FiPrinter size={18} />,
+              color: "secondary",
+              children: "",
+              disabled: (rows) => rows.length === 0,
+              onClick: (rows) => {
+                setMessage(
+                  `Imprimindo ${rows.length} registro(s): ${rows
+                    .map((row) => row.name)
+                    .join(", ")}`,
+                );
+              },
+            },
+          ]}
+        />
+      </div>
+    );
   },
 };

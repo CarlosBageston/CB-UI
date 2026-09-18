@@ -264,6 +264,7 @@ const CBButton: React.FC<CBButtonProps> = ({
   hoverColor,
   routerLink,
   activeColor,
+  type = "button",
   ...rest
 }) => {
   const { main: mainColorDefault, contrast: contrastColorDefault } =
@@ -373,6 +374,7 @@ const CBButton: React.FC<CBButtonProps> = ({
       style={finalStyle}
       className={className}
       routerLink={routerLink}
+      type={type}
       {...rest}
     >
       {loading ? (

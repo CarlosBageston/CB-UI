@@ -6,7 +6,7 @@ import CBDataTable from "./dataTable";
 import { useTheme } from "../../hooks/useTheme";
 
 interface CBDataTableWithFilterProps<T> extends CBDataTableProps<T> {
-  filterColumns?: CBFilterOption[];
+  filterColumns?: CBFilterOption<T>[];
 
   filterPlaceholder?: string;
 

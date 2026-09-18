@@ -1,7 +1,7 @@
 /**
  * Opção de coluna para filtragem
  */
-export interface CBFilterOption<T = unknown> {
+export interface CBFilterOption<T> {
     /**
      * Identificador interno do filtro.
      */
@@ -24,7 +24,7 @@ interface CBFilterBarProps<T> {
     /** Dados originais que serão filtrados */
     data: T[];
     /** Colunas opcionais para filtro específico */
-    columns?: CBFilterOption[];
+    columns?: CBFilterOption<T>[];
     /** Placeholder do campo de pesquisa */
     placeholder?: string;
     /** Valor inicial do input */
