@@ -9,7 +9,6 @@ interface UseDataTableSelectionProps<T> {
 export function useDataTableSelection<T>({
   selectionMode,
   getRowId,
-  onDelete,
 }: UseDataTableSelectionProps<T>) {
   const [selectedRows, setSelectedRows] = useState<T[]>([]);
 
@@ -69,17 +68,6 @@ export function useDataTableSelection<T>({
   }, []);
 
   /**
-   * Executa a ação de exclusão para todas as linhas selecionadas
-   * e limpa a seleção ao finalizar.
-   */
-  const deleteSelected = useCallback(() => {
-    if (!onDelete) return;
-
-    selectedRows.forEach(onDelete);
-    clearSelection();
-  }, [selectedRows, onDelete, clearSelection]);
-
-  /**
    * Adiciona uma ou mais linhas à seleção.
    * As linhas que já estiverem selecionadas são ignoradas.
    */
@@ -134,7 +122,6 @@ export function useDataTableSelection<T>({
     isSelected,
     toggleRow,
     clearSelection,
-    deleteSelected,
     getKey,
   };
 }

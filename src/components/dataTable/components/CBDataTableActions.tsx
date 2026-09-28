@@ -6,7 +6,7 @@ interface CBDataTableActionsProps<T> {
   selectedRows: T[];
 
   onEdit?: (row: T) => void;
-  onDelete?: () => void;
+  onDelete?: (row: T) => void;
 
   actions?: CBDataTableAction<T>[];
 }
@@ -40,7 +40,9 @@ function CBDataTableActions<T>({
           color="danger"
           iconStart={<FiTrash2 size={18} />}
           disabled={selectedRows.length === 0}
-          onClick={onDelete}
+          onClick={() => {
+            selectedRows.forEach(onDelete);
+          }}
           children=""
         />
       )}

@@ -3,7 +3,7 @@ interface UseDataTableSelectionProps<T> {
     getRowId?: (row: T) => string;
     onDelete?: (row: T) => void;
 }
-export declare function useDataTableSelection<T>({ selectionMode, getRowId, onDelete, }: UseDataTableSelectionProps<T>): {
+export declare function useDataTableSelection<T>({ selectionMode, getRowId, }: UseDataTableSelectionProps<T>): {
     unselectRows: (rows: T[]) => void;
     selectRows: (rows: T[]) => void;
     selectedRows: T[];
@@ -11,7 +11,6 @@ export declare function useDataTableSelection<T>({ selectionMode, getRowId, onDe
     isSelected: (row: T, index: number) => boolean;
     toggleRow: (row: T, index: number) => void;
     clearSelection: () => void;
-    deleteSelected: () => void;
     getKey: (row: T, index: number) => string;
 };
 export {};

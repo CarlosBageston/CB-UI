@@ -118,14 +118,9 @@ function CBDataTableDesktop<T>({
   };
 
   const rowsCount = totalRows || data.length;
-  const {
-    selectedRows,
-    deleteSelected: handleDelete,
-    selectRows,
-  } = useDataTableSelection({
+  const { selectedRows, selectRows } = useDataTableSelection({
     selectionMode,
     getRowId,
-    onDelete,
   });
 
   const gridRef = useRef<AgGridReact<T>>(null);
@@ -274,7 +269,7 @@ function CBDataTableDesktop<T>({
         <CBDataTableActions
           selectedRows={selectedRows}
           onEdit={onEdit}
-          onDelete={handleDelete}
+          onDelete={onDelete}
           actions={actions}
         />
       </div>

@@ -195,7 +195,6 @@ function CBDataTableMobile<T>({
     selectedRows,
     isSelected: isRowSelected,
     toggleRow: toggleSelectRow,
-    deleteSelected: handleDelete,
     clearSelection,
     selectRows,
     unselectRows,
@@ -203,7 +202,6 @@ function CBDataTableMobile<T>({
   } = useDataTableSelection({
     selectionMode,
     getRowId,
-    onDelete,
   });
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -341,7 +339,7 @@ function CBDataTableMobile<T>({
                 <CBDataTableActions
                   selectedRows={selectedRows}
                   onEdit={onEdit}
-                  onDelete={handleDelete}
+                  onDelete={onDelete}
                   actions={actions}
                 />
               </div>
@@ -549,7 +547,7 @@ function CBDataTableMobile<T>({
                           <CBDataTableActions
                             selectedRows={[row]}
                             onEdit={onEdit}
-                            onDelete={handleDelete}
+                            onDelete={onDelete}
                             actions={actions}
                           />
                         </div>
