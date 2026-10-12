@@ -1,29 +1,29 @@
 import React from "react";
 import {
-    IonModal,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
-    IonButton,
-    IonContent,
-    IonFooter
+  IonModal,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonButton,
+  IonContent,
+  IonFooter,
 } from "@ionic/react";
 import { IoClose } from "react-icons/io5";
 import clsx from "clsx";
 
 export interface CBModalProps extends React.ComponentProps<typeof IonModal> {
-    isOpen: boolean;
-    onDismiss: () => void;
-    title?: string;
-    subtitle?: string;
-    children?: React.ReactNode;
-    footer?: React.ReactNode;
-    showCloseButton?: boolean;
-    className?: string;
-    headerClassName?: string;
-    contentClassName?: string;
-    footerClassName?: string;
+  isOpen: boolean;
+  onDismiss: () => void;
+  title?: string;
+  subtitle?: string;
+  children?: React.ReactNode;
+  footer?: React.ReactNode;
+  showCloseButton?: boolean;
+  className?: string;
+  headerClassName?: string;
+  contentClassName?: string;
+  footerClassName?: string;
 }
 
 /**
@@ -74,66 +74,84 @@ export interface CBModalProps extends React.ComponentProps<typeof IonModal> {
  * Pode ser totalmente estilizado através das props `className`, `headerClassName`, `contentClassName` e `footerClassName`.
  */
 const CBModal: React.FC<CBModalProps> = ({
-    isOpen,
-    onDismiss,
-    title,
-    subtitle,
-    children,
-    footer,
-    showCloseButton = true,
-    className,
-    headerClassName,
-    contentClassName,
-    footerClassName,
-    ...props
+  isOpen,
+  onDismiss,
+  title,
+  subtitle,
+  children,
+  footer,
+  showCloseButton = true,
+  className,
+  headerClassName,
+  contentClassName,
+  footerClassName,
+  ...props
 }) => {
-    return (
-        <IonModal
-            isOpen={isOpen}
-            onDidDismiss={onDismiss}
-            className={clsx("rounded-lg overflow-hidden modal-height-full", className)}
-            {...props}
+  return (
+    <IonModal
+      isOpen={isOpen}
+      onDidDismiss={onDismiss}
+      className={clsx(
+        "rounded-lg overflow-hidden modal-height-full",
+        className,
+      )}
+      {...props}
+    >
+      {(title || subtitle || showCloseButton) && (
+        <IonHeader className={clsx("ion-no-border", headerClassName)}>
+          <IonToolbar>
+            <div className="flex flex-col items-center text-center w-full">
+              <div className="w-full flex justify-end">
+                {showCloseButton && (
+                  <IonButtons slot="end">
+                    <IonButton onClick={onDismiss}>
+                      <IoClose size={20} />
+                    </IonButton>
+                  </IonButtons>
+                )}
+              </div>
+              <div className="flex flex-col">
+                {title && (
+                  <IonTitle className="text-lg font-semibold">{title}</IonTitle>
+                )}
+                {subtitle && (
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {subtitle}
+                  </p>
+                )}
+              </div>
+            </div>
+          </IonToolbar>
+        </IonHeader>
+      )}
+
+      <IonContent
+        style={{
+          "--padding-start": "1rem",
+          "--padding-end": "1rem",
+          "--padding-top": "1rem",
+          "--padding-bottom": "1rem",
+        }}
+        className={clsx(
+          "p-4! text-gray-700 dark:text-gray-200",
+          contentClassName,
+        )}
+      >
+        {children}
+      </IonContent>
+
+      {footer && (
+        <IonFooter
+          className={clsx(
+            "border-t border-gray-200 dark:border-gray-700 p-4!",
+            footerClassName,
+          )}
         >
-            {(title || subtitle || showCloseButton) && (
-                <IonHeader className={clsx("ion-no-border", headerClassName)}>
-                    <IonToolbar>
-                        <div className="flex flex-col items-center text-center w-full">
-                            <div className="w-full flex justify-end">
-                                {showCloseButton && (
-                                    <IonButtons slot="end">
-                                        <IonButton onClick={onDismiss}>
-                                            <IoClose size={20} />
-                                        </IonButton>
-                                    </IonButtons>
-                                )}
-                            </div>
-                            <div className="flex flex-col">
-                                {title && <IonTitle className="text-lg font-semibold">{title}</IonTitle>}
-                                {subtitle && <p className="text-sm text-gray-500 dark:text-gray-400">{subtitle}</p>}
-                            </div>
-                        </div>
-                    </IonToolbar>
-                </IonHeader>
-            )}
-
-            <IonContent
-                style={{
-                    '--padding-start': '1rem',
-                    '--padding-end': '1rem',
-                    '--padding-top': '1rem',
-                    '--padding-bottom': '1rem',
-                }}
-                className={clsx("!p-4 text-gray-700 dark:text-gray-200", contentClassName)}>
-                {children}
-            </IonContent>
-
-            {footer && (
-                <IonFooter className={clsx("border-t border-gray-200 dark:border-gray-700 !p-4", footerClassName)}>
-                    {footer}
-                </IonFooter>
-            )}
-        </IonModal>
-    );
+          {footer}
+        </IonFooter>
+      )}
+    </IonModal>
+  );
 };
 
 export default CBModal;

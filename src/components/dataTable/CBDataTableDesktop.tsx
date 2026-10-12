@@ -104,6 +104,7 @@ function CBDataTableDesktop<T>({
   onCellValueChanged,
   autoFocusFirstEditableCell = false,
   actions = [],
+  showFooter = true,
 }: CBDataTableProps<T>) {
   const themeTable = useMemo(() => getThemeTable(theme === "dark"), [theme]);
   const [internalPage, setInternalPage] = useState(0);
@@ -194,8 +195,6 @@ function CBDataTableDesktop<T>({
       }
 
       setTimeout(() => {
-        console.log("gridWrapperRef", gridWrapperRef.current);
-        console.log("colKey", colKey);
         gridRef.current?.api?.startEditingCell({
           rowIndex: 0,
           colKey,
@@ -254,15 +253,17 @@ function CBDataTableDesktop<T>({
           last: "Última",
         }}
       />
-      <CBPaginationFooter
-        page={currentPage}
-        pageSize={pageSize}
-        totalRows={rowsCount}
-        loading={loading}
-        onPageChange={handlePageChange}
-        onPageSizeChange={onPageSizeChange}
-        theme={theme}
-      />
+      {showFooter && (
+        <CBPaginationFooter
+          page={currentPage}
+          pageSize={pageSize}
+          totalRows={rowsCount}
+          loading={loading}
+          onPageChange={handlePageChange}
+          onPageSizeChange={onPageSizeChange}
+          theme={theme}
+        />
+      )}
 
       {/* Botões flutuantes */}
       <div className="absolute -top-2 right-2 -translate-y-1/2 flex gap-2 z-10">

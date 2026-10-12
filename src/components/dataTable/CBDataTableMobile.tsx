@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { CBDataTableProps } from "../../datatable";
 import {
   flattenColumns,
+  getCellClass,
   getDisplayValue,
   getInputType,
   isColumnEditable,
@@ -120,10 +121,10 @@ function EditableCell<T>({
   }
 
   const displayValue = getDisplayValue(row, col);
-
+  const customClass = getCellClass(col, row);
   return (
     <span
-      className={`text-xs font-medium cursor-pointer select-none ${textClass} ${
+      className={`text-xs font-medium cursor-pointer select-none ${textClass}  ${customClass} ${
         col.singleClickEdit ? "" : "cursor-text"
       }`}
       onClick={handleClick}
@@ -157,6 +158,7 @@ function CBDataTableMobile<T>({
   loading = false,
   defaultExpanded = false,
   singleClickEdit = true,
+  showFooter = true,
   onCellValueChanged,
   autoFocusFirstEditableCell = false,
   actions = [],
@@ -561,18 +563,19 @@ function CBDataTableMobile<T>({
         </div>
       </div>
 
-      {/* Paginação */}
-      <CBPaginationFooter
-        page={currentPage}
-        pageSize={pageSize}
-        totalRows={rowsCount}
-        loading={loading}
-        onPageChange={handlePageChange}
-        onPageSizeChange={onPageSizeChange}
-        theme={theme}
-        isMobile
-        themeConfig={themeConfig}
-      />
+      {showFooter && (
+        <CBPaginationFooter
+          page={currentPage}
+          pageSize={pageSize}
+          totalRows={rowsCount}
+          loading={loading}
+          onPageChange={handlePageChange}
+          onPageSizeChange={onPageSizeChange}
+          theme={theme}
+          isMobile
+          themeConfig={themeConfig}
+        />
+      )}
     </>
   );
 }

@@ -29,6 +29,9 @@ export interface FlatColumn<T> {
             headerName?: string;
         };
     }) => void;
+    cellClass?: string | string[] | ((params: {
+        data: T;
+    }) => string | string[] | undefined);
 }
 /**
  * Converte colunas agrupadas em uma lista simples.
@@ -52,3 +55,4 @@ export declare function getDisplayValue<T>(row: T, col: FlatColumn<T>): React.Re
 export declare function getInputType(cellEditor?: string): string;
 /** Retorna true se a coluna é editável para o row dado */
 export declare function isColumnEditable<T>(col: FlatColumn<T>, row: T): boolean;
+export declare function getCellClass<T>(col: FlatColumn<T>, row: T): string;

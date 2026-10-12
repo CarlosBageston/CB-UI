@@ -7,7 +7,7 @@ interface CBBaseProps {
     className?: string;
     style?: CSSProperties;
 }
-type PassthroughColDefKeys = "field" | "headerName" | "valueGetter" | "valueSetter" | "valueFormatter" | "colId" | "sortable" | "comparator" | "filter" | "filterParams" | "editable" | "cellEditor" | "cellEditorParams" | "cellEditorPopup" | "cellEditorPopupPosition" | "onCellValueChanged" | "singleClickEdit" | "pinned" | "width" | "minWidth" | "maxWidth" | "hide";
+type PassthroughColDefKeys = "field" | "headerName" | "valueGetter" | "valueSetter" | "valueFormatter" | "colId" | "sortable" | "comparator" | "filter" | "filterParams" | "editable" | "cellEditor" | "cellEditorParams" | "cellEditorPopup" | "cellEditorPopupPosition" | "onCellValueChanged" | "singleClickEdit" | "pinned" | "width" | "minWidth" | "maxWidth" | "hide" | "cellClass" | "cellStyle" | "valueParser";
 /** ----------------- CBDataTable ----------------- */
 /**
  * Representa uma coluna da tabela personalizada.
@@ -105,5 +105,6 @@ export interface CBDataTableProps<T> extends CBBaseProps {
     /** Inicia a edição automaticamente na primeira célula editável da primeira linha ao montar a tabela */
     autoFocusFirstEditableCell?: boolean;
     actions?: CBDataTableAction<T>[];
+    showFooter?: boolean;
 }
 export {};

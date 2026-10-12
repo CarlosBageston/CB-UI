@@ -1,7 +1,7 @@
 import type { ReactNode, CSSProperties } from "react";
 import type { CBColor, CBColorOrString } from "../theme/CBColor";
 import type { IconType } from "react-icons";
-import type { IonSelect, IonTextarea } from "@ionic/react";
+import type { IonSelect, IonTextarea, IonModal } from "@ionic/react";
 /** Base para componentes que aceitam className e style */
 interface CBBaseProps {
     className?: string;
@@ -146,7 +146,7 @@ export interface CBInputProps {
     label: string;
     placeholder?: string;
     disabled?: boolean;
-    type?: "text" | "password" | "email" | "number";
+    type?: "text" | "password" | "email" | "number" | "tel";
     fill?: "outline" | "solid";
     shape?: "round";
     labelPlacement?: "stacked" | "floating" | "fixed";
@@ -237,6 +237,23 @@ export interface CBModalProps extends CBBaseProps {
     contentClassName?: string;
     footerClassName?: string;
 }
+/** ----------------- CBPopup ----------------- */
+export type CBPopupSize = "sm" | "md" | "lg" | "xl";
+export interface CBPopupProps extends React.ComponentProps<typeof IonModal> {
+    isOpen: boolean;
+    onDismiss: () => void;
+    title?: string;
+    subtitle?: string;
+    children?: ReactNode;
+    footer?: ReactNode;
+    showCloseButton?: boolean;
+    size?: CBPopupSize;
+    color?: CBColorOrString;
+    className?: string;
+    headerClassName?: string;
+    contentClassName?: string;
+    footerClassName?: string;
+}
 /** ----------------- CBMultiView ----------------- */
 export type CBMultiViewVariant = "tabs" | "accordion" | "stepper";
 export interface CBMultiViewStep {
@@ -250,6 +267,25 @@ export interface CBMultiViewIonicProps {
     initialStep?: number;
     orientation?: "horizontal" | "vertical";
     color?: CBColor;
+}
+/** ----------------- CBRadioCardGroup ----------------- */
+export interface CBRadioCardGroupProps<T> extends CBBaseProps {
+    items: T[];
+    value?: T | string | number | null;
+    onValueChange?: (value: T) => void;
+    getLabel: (item: T) => string;
+    getValue: (item: T) => string | number;
+    getDescription?: (item: T) => string | ReactNode | undefined;
+    columns?: 1 | 2 | 3 | 4 | 5 | 6;
+    disabled?: boolean | ((item: T) => boolean);
+    label?: string;
+    error?: string;
+    helperText?: string;
+    color?: CBColorOrString;
+    radioPlacement?: "start" | "end";
+    renderIcon?: (item: T, isSelected: boolean) => ReactNode;
+    renderExtra?: (item: T, isSelected: boolean) => ReactNode;
+    cardClassName?: string | ((item: T, isSelected: boolean) => string);
 }
 /** ----------------- CBSelect ----------------- */
 export interface CBSelectProps<T> extends Omit<React.ComponentProps<typeof IonSelect>, "value" | "onIonChange"> {

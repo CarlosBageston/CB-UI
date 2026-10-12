@@ -1,4 +1,5 @@
 import type {
+  CellClassParams,
   ColDef,
   ColGroupDef,
   ICellRendererParams,
@@ -38,7 +39,18 @@ export function mapColumn<T>(
       : align === "right"
         ? "ag-header-right"
         : "ag-header-left";
+  const userCellClass = colDefRest.cellClass;
+  const mergedCellClass = (params: CellClassParams<T>) => {
+    const extra =
+      typeof userCellClass === "function"
+        ? userCellClass(params)
+        : userCellClass;
 
+    return [
+      headerClass,
+      ...(Array.isArray(extra) ? extra : extra ? [extra] : []),
+    ];
+  };
   return {
     ...colDefRest,
     flex: colSpan ?? 1,
@@ -48,13 +60,8 @@ export function mapColumn<T>(
       : undefined,
     valueFormatter: mask
       ? (params) => applyMask(params.value, mask)
-      : undefined,
-    cellClass:
-      align === "center"
-        ? "ag-cell-center"
-        : align === "right"
-          ? "ag-cell-right"
-          : "ag-cell-left",
+      : colDefRest.valueFormatter,
+    cellClass: mergedCellClass,
     headerClass,
   };
 }

@@ -31,7 +31,10 @@ type PassthroughColDefKeys =
   | "width"
   | "minWidth"
   | "maxWidth"
-  | "hide";
+  | "hide"
+  | "cellClass"
+  | "cellStyle"
+  | "valueParser";
 
 /** ----------------- CBDataTable ----------------- */
 
@@ -140,4 +143,6 @@ export interface CBDataTableProps<T> extends CBBaseProps {
   autoFocusFirstEditableCell?: boolean;
 
   actions?: CBDataTableAction<T>[];
+
+  showFooter?: boolean;
 }

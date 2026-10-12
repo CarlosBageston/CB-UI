@@ -8,7 +8,11 @@ export interface FlatColumn<T> {
   colId?: string;
   align?: "left" | "center" | "right";
   render?: (row: T) => React.ReactNode;
-  valueGetter?: (row: T) => React.ReactNode;
+  /** Mesma assinatura do AG Grid: recebe `{ data, colDef }`, não a linha crua */
+  valueGetter?: (params: {
+    data: T;
+    colDef: { field?: string; colId?: string; headerName?: string };
+  }) => unknown;
   mask?: CBInputMask | CBInputMaskFn;
   /** Se a célula é editável */
   editable?: boolean | ((params: { data: T }) => boolean);
@@ -25,6 +29,10 @@ export interface FlatColumn<T> {
     newValue: unknown;
     colDef: { field?: string; colId?: string; headerName?: string };
   }) => void;
+  cellClass?:
+    | string
+    | string[]
+    | ((params: { data: T }) => string | string[] | undefined);
 }
 
 /**
@@ -64,6 +72,7 @@ export function flattenColumns<T>(
       onCellValueChanged: col.onCellValueChanged as
         | FlatColumn<T>["onCellValueChanged"]
         | undefined,
+      cellClass: col.cellClass as FlatColumn<T>["cellClass"],
     });
   });
 
@@ -98,7 +107,14 @@ export function getDisplayValue<T>(
   if (col.render) return col.render(row);
 
   const rawValue = col.valueGetter
-    ? col.valueGetter(row)
+    ? col.valueGetter({
+        data: row,
+        colDef: {
+          field: col.field,
+          colId: col.colId,
+          headerName: col.headerName,
+        },
+      })
     : getValue(row, col.field);
 
   if (rawValue === null || rawValue === undefined || rawValue === "")
@@ -128,4 +144,13 @@ export function isColumnEditable<T>(col: FlatColumn<T>, row: T): boolean {
     return col.editable({ data: row });
   }
   return col.editable;
+}
+export function getCellClass<T>(col: FlatColumn<T>, row: T): string {
+  const raw =
+    typeof col.cellClass === "function"
+      ? col.cellClass({ data: row })
+      : col.cellClass;
+
+  if (!raw) return "";
+  return Array.isArray(raw) ? raw.join(" ") : raw;
 }

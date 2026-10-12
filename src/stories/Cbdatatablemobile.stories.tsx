@@ -8,7 +8,7 @@ import {
   type MockUser,
   type PaginationDto,
 } from "../helper/mockPagination";
-import { FiCopy, FiPrinter } from "react-icons/fi";
+import { FiCopy, FiLayers, FiPrinter } from "react-icons/fi";
 
 const meta: Meta<typeof CBDataTableMobile<User>> = {
   title: "Form/CBDataTable/Mobile",
@@ -656,8 +656,8 @@ export const EditableCell: Story = {
               {
                 headerName: "Total",
                 col: 2,
-                valueGetter: (row) =>
-                  ((row as any).quantity ?? 0) * ((row as any).price ?? 0),
+                valueGetter: (params) =>
+                  (params.data?.quantity ?? 0) * (params.data?.price ?? 0),
                 mask: "currency",
               },
             ]}
@@ -824,6 +824,141 @@ export const CustomActions: Story = {
             ]}
           />
         </div>
+      </MobileFrame>
+    );
+  },
+};
+
+// 16. valueGetter com params (mesma assinatura do AG Grid)
+// Simula uma lista de insumos com lotes. O valueGetter recebe
+// `{ data }` igual ao desktop, então `row.data?.lots?.length`
+// e `row.data?.available` devem aparecer corretamente no mobile.
+export const ValueGetterParams: Story = {
+  render: () => {
+    type Lot = { lotId: number; code: string; quantity: number };
+    type Line = {
+      productId: number;
+      productName: string;
+      unitMeasureSymbol: string;
+      quantityPerBatch: number;
+      requiredQuantity: number;
+      availableQuantity: number;
+      estimatedUnitCost: number;
+      estimatedTotalCost: number;
+      available: boolean;
+      lots: Lot[];
+    };
+
+    const normalLines: Line[] = [
+      {
+        productId: 1,
+        productName: "Farinha de trigo",
+        unitMeasureSymbol: "kg",
+        quantityPerBatch: 5,
+        requiredQuantity: 50,
+        availableQuantity: 120,
+        estimatedUnitCost: 4.5,
+        estimatedTotalCost: 225,
+        available: true,
+        lots: [
+          { lotId: 1, code: "L-001", quantity: 80 },
+          { lotId: 2, code: "L-002", quantity: 40 },
+        ],
+      },
+      {
+        productId: 2,
+        productName: "Açúcar refinado",
+        unitMeasureSymbol: "kg",
+        quantityPerBatch: 2,
+        requiredQuantity: 20,
+        availableQuantity: 8,
+        estimatedUnitCost: 3.9,
+        estimatedTotalCost: 78,
+        available: false,
+        lots: [{ lotId: 3, code: "L-010", quantity: 8 }],
+      },
+      {
+        productId: 3,
+        productName: "Fermento",
+        unitMeasureSymbol: "g",
+        quantityPerBatch: 100,
+        requiredQuantity: 1000,
+        availableQuantity: 0,
+        estimatedUnitCost: 0.08,
+        estimatedTotalCost: 80,
+        available: false,
+        lots: [],
+      },
+    ];
+
+    const ValueGetterDemo = () => {
+      const [lotsProductId, setLotsProductId] = useState<number | null>(null);
+      const selected = normalLines.find((l) => l.productId === lotsProductId);
+
+      return (
+        <div className="space-y-3">
+          <div className="p-3 bg-slate-800 rounded-xl text-white text-xs">
+            {selected
+              ? `Lotes de ${selected.productName}: ${selected.lots
+                  .map((l) => `${l.code} (${l.quantity})`)
+                  .join(", ")}`
+              : "Selecione um item com lotes e clique na ação"}
+          </div>
+
+          <CBDataTableMobile<Line>
+            columns={[
+              { field: "productName", headerName: "Produto", col: 3 },
+              { field: "unitMeasureSymbol", headerName: "Unidade", col: 1 },
+              { field: "quantityPerBatch", headerName: "Qtd. / lote", col: 1 },
+              { field: "requiredQuantity", headerName: "Necessário", col: 1 },
+              { field: "availableQuantity", headerName: "Disponível", col: 1 },
+              {
+                field: "estimatedUnitCost",
+                headerName: "Custo / unidade",
+                col: 2,
+                mask: "currency",
+              },
+              {
+                field: "estimatedTotalCost",
+                headerName: "Custo total",
+                col: 2,
+                mask: "currency",
+              },
+              {
+                field: "lots",
+                headerName: "Lotes",
+                col: 1,
+                valueGetter: (row) => row.data?.lots?.length,
+              },
+              {
+                field: "available",
+                headerName: "Situação",
+                col: 1,
+                valueGetter: (row) =>
+                  row.data?.available ? "OK" : "Insuficiente",
+              },
+            ]}
+            data={normalLines}
+            getRowId={(row) => String(row.productId)}
+            pageSize={10}
+            showFooter={false}
+            actions={[
+              {
+                icon: <FiLayers size={18} />,
+                color: "secondary",
+                children: "",
+                disabled: (rows) => rows.length !== 1 || !rows[0].lots?.length,
+                onClick: ([row]) => setLotsProductId(row.productId),
+              },
+            ]}
+          />
+        </div>
+      );
+    };
+
+    return (
+      <MobileFrame>
+        <ValueGetterDemo />
       </MobileFrame>
     );
   },
