@@ -6,7 +6,15 @@ export interface FlatColumn<T> {
     colId?: string;
     align?: "left" | "center" | "right";
     render?: (row: T) => React.ReactNode;
-    valueGetter?: (row: T) => React.ReactNode;
+    /** Mesma assinatura do AG Grid: recebe `{ data, colDef }`, não a linha crua */
+    valueGetter?: (params: {
+        data: T;
+        colDef: {
+            field?: string;
+            colId?: string;
+            headerName?: string;
+        };
+    }) => unknown;
     mask?: CBInputMask | CBInputMaskFn;
     /** Se a célula é editável */
     editable?: boolean | ((params: {
