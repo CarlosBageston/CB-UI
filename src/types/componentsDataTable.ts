@@ -56,7 +56,25 @@ export interface CBTableColumn<T> extends Pick<
   /** Alinhamento do texto da célula */
   align?: "left" | "center" | "right";
   mask?: CBInputMask | CBInputMaskFn;
+  /**
+   * Papel da coluna no card mobile. Se omitido, é decidido automaticamente:
+   * 1ª coluna = "title", última coluna com mask "currency" = "trailing",
+   * as próximas 4 = "grid" e o restante = "detail".
+   * - "title": nome principal do card
+   * - "trailing": valor em destaque à direita do título
+   * - "grid": sempre visível, na grade de 2 colunas
+   * - "detail": visível só ao expandir ("Ver mais")
+   * - "hidden": não aparece no mobile
+   */
+  mobile?: CBMobileColumnRole;
 }
+
+export type CBMobileColumnRole =
+  | "title"
+  | "trailing"
+  | "grid"
+  | "detail"
+  | "hidden";
 
 /** Modo de paginação. Default "server". */
 export type PaginationMode = "client" | "server";

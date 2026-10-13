@@ -25,6 +25,8 @@ export interface CBTableMobileTheme {
         checkboxBorder: string;
         /** Selecionar linhas */
         selectPagination: string;
+        /** Fundo do painel de detalhes ("Ver mais") e do skeleton */
+        surfaceMuted?: string;
     };
     /**Usar cores hexadecimal para ionic */
     colorsPagination: {

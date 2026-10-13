@@ -33,6 +33,9 @@ export interface CBTableMobileTheme {
 
     /** Selecionar linhas */
     selectPagination: string;
+
+    /** Fundo do painel de detalhes ("Ver mais") e do skeleton */
+    surfaceMuted?: string;
   };
   /**Usar cores hexadecimal para ionic */
   colorsPagination: {
@@ -60,13 +63,14 @@ export const DEFAULT_THEMES: Record<"dark" | "light", CBTableMobileTheme> = {
   dark: {
     classes: {
       wrapper: "bg-[#1f2836] border-slate-800 text-slate-100",
-      card: "bg-[#0a121d] border-slate-800/80 hover:border-slate-800",
+      card: "bg-[#1f2836] border-slate-700/60 shadow-sm shadow-black/20",
       cardSelected:
-        "ring-1 ring-primary/80 border-primary shadow-lg shadow-primary-950/20",
+        "ring-2 ring-(--cb-color-primary)/70 border-(--cb-color-primary)",
+      surfaceMuted: "bg-[#0a121d]/60",
       textPrimary: "text-slate-100",
       textMuted: "text-slate-400",
       selectPagination: "bg-[#1f2836] border border-slate-700",
-      divider: "border-slate-800/80",
+      divider: "border-slate-700/50",
       badge: "bg-slate-800 text-slate-300",
       checkboxBorder: "border-slate-700",
     },
@@ -82,14 +86,15 @@ export const DEFAULT_THEMES: Record<"dark" | "light", CBTableMobileTheme> = {
   },
   light: {
     classes: {
-      wrapper: "bg-white border-slate-200 text-slate-800",
-      card: "bg-slate-50 border-[#e7e5e4] hover:bg-slate-100",
+      wrapper: "text-slate-800",
+      card: "bg-white border-slate-200 shadow-sm shadow-slate-900/5",
       cardSelected:
-        "ring-1 ring-primary border-primary-200 shadow-md shadow-primary-500/5",
+        "ring-2 ring-(--cb-color-primary)/40 border-(--cb-color-primary)",
       textPrimary: "text-slate-800",
       selectPagination: "bg-white border border-[#31415899]",
       textMuted: "text-slate-500",
-      divider: "border-slate-150",
+      divider: "border-slate-100",
+      surfaceMuted: "bg-slate-50",
       badge: "bg-slate-100 text-slate-700",
       checkboxBorder: "border-slate-300",
     },

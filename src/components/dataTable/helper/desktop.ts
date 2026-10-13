@@ -22,7 +22,17 @@ import { applyMask } from "../../../hooks/useInputMask";
 export function mapColumn<T>(
   col: CBTableColumn<T>,
 ): ColDef<T> | ColGroupDef<T> {
-  const { col: colSpan, render, children, align, mask, ...colDefRest } = col;
+  const {
+    col: colSpan,
+    render,
+    children,
+    align,
+    mask,
+    // Só usado no mobile; removido para não chegar ao AG Grid
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    mobile: _mobile,
+    ...colDefRest
+  } = col;
 
   if (children && children.length > 0) {
     return {

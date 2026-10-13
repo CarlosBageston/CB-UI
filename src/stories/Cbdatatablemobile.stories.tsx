@@ -906,6 +906,7 @@ export const ValueGetterParams: Story = {
           </div>
 
           <CBDataTableMobile<Line>
+            defaultExpanded
             columns={[
               { field: "productName", headerName: "Produto", col: 3 },
               { field: "unitMeasureSymbol", headerName: "Unidade", col: 1 },

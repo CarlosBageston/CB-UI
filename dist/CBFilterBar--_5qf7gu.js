@@ -88,12 +88,13 @@ const fr = ({
   dark: {
     classes: {
       wrapper: "bg-[#1f2836] border-slate-800 text-slate-100",
-      card: "bg-[#0a121d] border-slate-800/80 hover:border-slate-800",
-      cardSelected: "ring-1 ring-primary/80 border-primary shadow-lg shadow-primary-950/20",
+      card: "bg-[#1f2836] border-slate-700/60 shadow-sm shadow-black/20",
+      cardSelected: "ring-2 ring-(--cb-color-primary)/70 border-(--cb-color-primary)",
+      surfaceMuted: "bg-[#0a121d]/60",
       textPrimary: "text-slate-100",
       textMuted: "text-slate-400",
       selectPagination: "bg-[#1f2836] border border-slate-700",
-      divider: "border-slate-800/80",
+      divider: "border-slate-700/50",
       badge: "bg-slate-800 text-slate-300",
       checkboxBorder: "border-slate-700"
     },
@@ -109,13 +110,14 @@ const fr = ({
   },
   light: {
     classes: {
-      wrapper: "bg-white border-slate-200 text-slate-800",
-      card: "bg-slate-50 border-[#e7e5e4] hover:bg-slate-100",
-      cardSelected: "ring-1 ring-primary border-primary-200 shadow-md shadow-primary-500/5",
+      wrapper: "text-slate-800",
+      card: "bg-white border-slate-200 shadow-sm shadow-slate-900/5",
+      cardSelected: "ring-2 ring-(--cb-color-primary)/40 border-(--cb-color-primary)",
       textPrimary: "text-slate-800",
       selectPagination: "bg-white border border-[#31415899]",
       textMuted: "text-slate-500",
-      divider: "border-slate-150",
+      divider: "border-slate-100",
+      surfaceMuted: "bg-slate-50",
       badge: "bg-slate-100 text-slate-700",
       checkboxBorder: "border-slate-300"
     },
@@ -134,13 +136,13 @@ function dr(t) {
   return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "polyline", attr: { points: "6 9 12 15 18 9" } }] })(t);
 }
 function xh(t) {
-  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "polyline", attr: { points: "18 15 12 9 6 15" } }] })(t);
-}
-function Th(t) {
   return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "path", attr: { d: "M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" } }, { tag: "path", attr: { d: "M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" } }] })(t);
 }
 function pr(t) {
   return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "polygon", attr: { points: "22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" } }] })(t);
+}
+function Th(t) {
+  return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "polyline", attr: { points: "22 12 16 12 14 15 10 15 8 12 2 12" } }, { tag: "path", attr: { d: "M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" } }] })(t);
 }
 function mr(t) {
   return Mt({ attr: { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, child: [{ tag: "circle", attr: { cx: "11", cy: "11", r: "8" } }, { tag: "line", attr: { x1: "21", y1: "21", x2: "16.65", y2: "16.65" } }] })(t);
@@ -379,7 +381,7 @@ const Et = {
 }, _t = {
   ...Et,
   default: 1
-}, Ft = (t) => Math.round(t * 1e5) / 1e5, Sn = /-?(?:\d+(?:\.\d+)?|\.\d+)/gu;
+}, It = (t) => Math.round(t * 1e5) / 1e5, Sn = /-?(?:\d+(?:\.\d+)?|\.\d+)/gu;
 function Dr(t) {
   return t == null;
 }
@@ -399,7 +401,7 @@ const Er = /^(?:#[\da-f]{3,8}|(?:rgb|hsl)a?\((?:-?[\d.]+%?[,\s]+){2}-?[\d.]+%?\s
 }, pt = {
   test: /* @__PURE__ */ An("rgb", "red"),
   parse: /* @__PURE__ */ Rs("red", "green", "blue"),
-  transform: ({ red: t, green: e, blue: n, alpha: i = 1 }) => "rgba(" + Ae.transform(t) + ", " + Ae.transform(e) + ", " + Ae.transform(n) + ", " + Ft(Nt.transform(i)) + ")"
+  transform: ({ red: t, green: e, blue: n, alpha: i = 1 }) => "rgba(" + Ae.transform(t) + ", " + Ae.transform(e) + ", " + Ae.transform(n) + ", " + It(Nt.transform(i)) + ")"
 };
 function Rr(t) {
   let e = "", n = "", i = "", s = "";
@@ -425,7 +427,7 @@ const $e = {
 }, bt = {
   test: /* @__PURE__ */ An("hsl", "hue"),
   parse: /* @__PURE__ */ Rs("hue", "saturation", "lightness"),
-  transform: ({ hue: t, saturation: e, lightness: n, alpha: i = 1 }) => "hsla(" + Math.round(t) + ", " + et.transform(Ft(e)) + ", " + et.transform(Ft(n)) + ", " + Ft(Nt.transform(i)) + ")"
+  transform: ({ hue: t, saturation: e, lightness: n, alpha: i = 1 }) => "hsla(" + Math.round(t) + ", " + et.transform(It(e)) + ", " + et.transform(It(n)) + ", " + It(Nt.transform(i)) + ")"
 }, B = {
   test: (t) => pt.test(t) || $e.test(t) || bt.test(t),
   parse: (t) => pt.test(t) ? pt.parse(t) : bt.test(t) ? bt.parse(t) : $e.parse(t),
@@ -434,9 +436,9 @@ const $e = {
     const e = B.parse(t);
     return e.alpha = 0, B.transform(e);
   }
-}, Fr = /(?:#[\da-f]{3,8}|(?:rgb|hsl)a?\((?:-?[\d.]+%?[,\s]+){2}-?[\d.]+%?\s*(?:[,/]\s*)?(?:\b\d+(?:\.\d+)?|\.\d+)?%?\))/giu;
-function Ir(t) {
-  return isNaN(t) && typeof t == "string" && (t.match(Sn)?.length || 0) + (t.match(Fr)?.length || 0) > 0;
+}, Ir = /(?:#[\da-f]{3,8}|(?:rgb|hsl)a?\((?:-?[\d.]+%?[,\s]+){2}-?[\d.]+%?\s*(?:[,/]\s*)?(?:\b\d+(?:\.\d+)?|\.\d+)?%?\))/giu;
+function Fr(t) {
+  return isNaN(t) && typeof t == "string" && (t.match(Sn)?.length || 0) + (t.match(Ir)?.length || 0) > 0;
 }
 const Ls = "number", Bs = "color", Or = "var", jr = "var(", Zn = "${}", Nr = /var\s*\(\s*--(?:[\w-]+\s*|[\w-]+\s*,(?:\s*[^)(\s]|\s*\((?:[^)(]|\([^)(]*\))*\))+\s*)\)|#[\da-f]{3,8}|(?:rgb|hsl)a?\((?:-?[\d.]+%?[,\s]+){2}-?[\d.]+%?\s*(?:[,/]\s*)?(?:\b\d+(?:\.\d+)?|\.\d+)?%?\)|-?(?:\d+(?:\.\d+)?|\.\d+)/giu;
 function At(t) {
@@ -452,28 +454,28 @@ function At(t) {
 function Ur(t) {
   return At(t).values;
 }
-function Fs({ split: t, types: e }) {
+function Is({ split: t, types: e }) {
   const n = t.length;
   return (i) => {
     let s = "";
     for (let r = 0; r < n; r++)
       if (s += t[r], i[r] !== void 0) {
         const o = e[r];
-        o === Ls ? s += Ft(i[r]) : o === Bs ? s += B.transform(i[r]) : s += i[r];
+        o === Ls ? s += It(i[r]) : o === Bs ? s += B.transform(i[r]) : s += i[r];
       }
     return s;
   };
 }
 function Wr(t) {
-  return Fs(At(t));
+  return Is(At(t));
 }
 const $r = (t) => typeof t == "number" ? 0 : B.test(t) ? B.getAnimatableNone(t) : t, zr = (t, e) => typeof t == "number" ? e?.trim().endsWith("/") ? t : 0 : $r(t);
 function Kr(t) {
   const e = At(t);
-  return Fs(e)(e.values.map((i, s) => zr(i, e.split[s])));
+  return Is(e)(e.values.map((i, s) => zr(i, e.split[s])));
 }
 const q = {
-  test: Ir,
+  test: Fr,
   parse: Ur,
   createTransformer: Wr,
   getAnimatableNone: Kr
@@ -525,9 +527,9 @@ function Xr(t, e) {
   return (n) => D(t, e, n);
 }
 function Vn(t) {
-  return typeof t == "number" ? Xr : typeof t == "string" ? Pn(t) ? le : B.test(t) ? Qn : Jr : Array.isArray(t) ? Is : typeof t == "object" ? B.test(t) ? Qn : qr : le;
+  return typeof t == "number" ? Xr : typeof t == "string" ? Pn(t) ? le : B.test(t) ? Qn : Jr : Array.isArray(t) ? Fs : typeof t == "object" ? B.test(t) ? Qn : qr : le;
 }
-function Is(t, e) {
+function Fs(t, e) {
   const n = [...t], i = n.length, s = t.map((r, o) => Vn(r)(r, e[o]));
   return (r) => {
     for (let o = 0; o < i; o++)
@@ -555,7 +557,7 @@ function Zr(t, e) {
 }
 const Jr = (t, e) => {
   const n = q.createTransformer(e), i = At(t), s = At(e);
-  return i.indexes.var.length === s.indexes.var.length && i.indexes.color.length === s.indexes.color.length && i.indexes.number.length >= s.indexes.number.length ? ze.has(t) && !s.values.length || ze.has(e) && !i.values.length ? Yr(t, e) : $t(Is(Zr(i, s), s.values), n) : (Dt(!0, `Complex values '${t}' and '${e}' too different to mix. Ensure all colors are of the same type, and that each contains the same quantity of number and color values. Falling back to instant transition.`, "complex-values-different"), le(t, e));
+  return i.indexes.var.length === s.indexes.var.length && i.indexes.color.length === s.indexes.color.length && i.indexes.number.length >= s.indexes.number.length ? ze.has(t) && !s.values.length || ze.has(e) && !i.values.length ? Yr(t, e) : $t(Fs(Zr(i, s), s.values), n) : (Dt(!0, `Complex values '${t}' and '${e}' too different to mix. Ensure all colors are of the same type, and that each contains the same quantity of number and color values. Falling back to instant transition.`, "complex-values-different"), le(t, e));
 };
 function Os(t, e, n) {
   return typeof t == "number" && typeof e == "number" && typeof n == "number" ? D(t, e, n) : Vn(t)(t, e);
@@ -1407,7 +1409,7 @@ function Ba(t) {
     if (t[n] !== e)
       return !0;
 }
-function Fa(t, e, n, i) {
+function Ia(t, e, n, i) {
   const s = t[0];
   if (s === null)
     return !1;
@@ -1427,10 +1429,10 @@ const qs = /* @__PURE__ */ new Set([
   // TODO: Can be accelerated but currently disabled until https://issues.chromium.org/issues/41491098 is resolved
   // or until we implement support for linear() easing.
   // "background-color"
-]), Ia = /^(?:oklch|oklab|lab|lch|color|color-mix|light-dark)\(/;
+]), Fa = /^(?:oklch|oklab|lab|lch|color|color-mix|light-dark)\(/;
 function Oa(t) {
   for (let e = 0; e < t.length; e++)
-    if (typeof t[e] == "string" && Ia.test(t[e]))
+    if (typeof t[e] == "string" && Fa.test(t[e]))
       return !0;
   return !1;
 }
@@ -1486,7 +1488,7 @@ class $a extends Mn {
     const { name: r, type: o, velocity: a, delay: c, isHandoff: u, onUpdate: l } = i;
     this.resolvedAt = U.now();
     let h = !0;
-    Fa(e, r, o, a) || (h = !1, (at.instantAnimations || !c) && l?.(Te(e, i, n)), e[0] = e[e.length - 1], Qe(i), i.repeat = 0);
+    Ia(e, r, o, a) || (h = !1, (at.instantAnimations || !c) && l?.(Te(e, i, n)), e[0] = e[e.length - 1], Qe(i), i.repeat = 0);
     const d = {
       startTime: s ? this.resolvedAt ? this.resolvedAt - this.createdAt > Wa ? this.resolvedAt : this.createdAt : this.createdAt : void 0,
       finalKeyframe: n,
@@ -2309,7 +2311,7 @@ function wl(t, e, n = {}) {
     o.addEventListener("pointerenter", m, s), o.addEventListener("pointerdown", d, s);
   }), r;
 }
-const ho = (t, e) => e ? t === e ? !0 : ho(t, e.parentElement) : !1, Fn = (t) => t.pointerType === "mouse" ? typeof t.button != "number" || t.button <= 0 : t.isPrimary !== !1, Pl = /* @__PURE__ */ new Set([
+const ho = (t, e) => e ? t === e ? !0 : ho(t, e.parentElement) : !1, In = (t) => t.pointerType === "mouse" ? typeof t.button != "number" || t.button <= 0 : t.isPrimary !== !1, Pl = /* @__PURE__ */ new Set([
   "BUTTON",
   "INPUT",
   "SELECT",
@@ -2348,7 +2350,7 @@ const Cl = (t, e) => {
   n.addEventListener("keydown", i, e), n.addEventListener("blur", () => n.removeEventListener("keydown", i), e);
 };
 function fi(t) {
-  return Fn(t) && !co();
+  return In(t) && !co();
 }
 const di = /* @__PURE__ */ new WeakSet();
 function Ml(t, e, n = {}) {
@@ -2370,12 +2372,12 @@ function Ml(t, e, n = {}) {
     (n.useGlobalTarget ? window : a).addEventListener("pointerdown", o, s), Jt(a) && (a.addEventListener("focus", (u) => Cl(u, s)), !Sl(a) && !a.hasAttribute("tabindex") && (a.tabIndex = 0));
   }), r;
 }
-function In(t) {
+function Fn(t) {
   return ms(t) && "ownerSVGElement" in t;
 }
 const te = /* @__PURE__ */ new WeakMap();
 let ee;
-const fo = (t, e, n) => (i, s) => s && s[0] ? s[0][t + "Size"] : In(i) && "getBBox" in i ? i.getBBox()[e] : i[n], Dl = /* @__PURE__ */ fo("inline", "width", "offsetWidth"), El = /* @__PURE__ */ fo("block", "height", "offsetHeight");
+const fo = (t, e, n) => (i, s) => s && s[0] ? s[0][t + "Size"] : Fn(i) && "getBBox" in i ? i.getBBox()[e] : i[n], Dl = /* @__PURE__ */ fo("inline", "width", "offsetWidth"), El = /* @__PURE__ */ fo("block", "height", "offsetHeight");
 function kl({ target: t, borderBoxSize: e }) {
   te.get(t)?.forEach((n) => {
     n(t, {
@@ -2409,7 +2411,7 @@ function Bl(t, e) {
 }
 const ne = /* @__PURE__ */ new Set();
 let Pt;
-function Fl() {
+function Il() {
   Pt = () => {
     const t = {
       get width() {
@@ -2422,16 +2424,16 @@ function Fl() {
     ne.forEach((e) => e(t));
   }, window.addEventListener("resize", Pt);
 }
-function Il(t) {
-  return ne.add(t), Pt || Fl(), () => {
+function Fl(t) {
+  return ne.add(t), Pt || Il(), () => {
     ne.delete(t), !ne.size && typeof Pt == "function" && (window.removeEventListener("resize", Pt), Pt = void 0);
   };
 }
 function pi(t, e) {
-  return typeof t == "function" ? Il(t) : Bl(t, e);
+  return typeof t == "function" ? Fl(t) : Bl(t, e);
 }
 function Ol(t) {
-  return In(t) && t.tagName === "svg";
+  return Fn(t) && t.tagName === "svg";
 }
 const jl = [...oo, B, q], Nl = (t) => jl.find(so(t)), mi = () => ({
   translate: 0,
@@ -2441,7 +2443,7 @@ const jl = [...oo, B, q], Nl = (t) => jl.find(so(t)), mi = () => ({
 }), St = () => ({
   x: mi(),
   y: mi()
-}), gi = () => ({ min: 0, max: 0 }), F = () => ({
+}), gi = () => ({ min: 0, max: 0 }), I = () => ({
   x: gi(),
   y: gi()
 }), Ul = /* @__PURE__ */ new WeakMap();
@@ -2609,7 +2611,7 @@ class Hl {
    * removed with a re-render to work.
    */
   measureViewportBox() {
-    return this.current ? this.measureInstanceViewportBox(this.current, this.props) : F();
+    return this.current ? this.measureInstanceViewportBox(this.current, this.props) : I();
   }
   getStaticValue(e) {
     return this.latestValues[e];
@@ -3060,7 +3062,7 @@ function Co(t, e, n) {
 }
 class ac extends yo {
   constructor() {
-    super(...arguments), this.type = "svg", this.isSVGTag = !1, this.measureInstanceViewportBox = F;
+    super(...arguments), this.type = "svg", this.isSVGTag = !1, this.measureInstanceViewportBox = I;
   }
   getBaseTargetFromProps(e, n) {
     return e[n];
@@ -3157,31 +3159,31 @@ function fc(t) {
       const { prevResolvedValues: z = {} } = T, Z = {
         ...z,
         ...R
-      }, it = (I) => {
-        C = !0, d.has(I) && (P = !0, d.delete(I)), T.needsAnimating[I] = !0;
-        const H = t.getValue(I);
+      }, it = (F) => {
+        C = !0, d.has(F) && (P = !0, d.delete(F)), T.needsAnimating[F] = !0;
+        const H = t.getValue(F);
         H && (H.liveStyle = !1);
       };
-      for (const I in Z) {
-        const H = R[I], ut = z[I];
-        if (p.hasOwnProperty(I))
+      for (const F in Z) {
+        const H = R[F], ut = z[F];
+        if (p.hasOwnProperty(F))
           continue;
         let xt = !1;
-        tn(H) && tn(ut) ? xt = !Do(H, ut) || x : xt = H !== ut, xt ? H != null ? it(I) : d.add(I) : H !== void 0 && d.has(I) ? it(I) : T.protectedKeys[I] = !0;
+        tn(H) && tn(ut) ? xt = !Do(H, ut) || x : xt = H !== ut, xt ? H != null ? it(F) : d.add(F) : H !== void 0 && d.has(F) ? it(F) : T.protectedKeys[F] = !0;
       }
       T.prevProp = b, T.prevResolvedValues = R, T.isActive && (p = { ...p, ...R }), (i || s) && t.blockInitialAnimation && (C = !1);
       const J = V && x;
-      C && (!J || P) && f.push(...M.map((I) => {
+      C && (!J || P) && f.push(...M.map((F) => {
         const H = { type: v };
-        if (typeof I == "string" && (i || s) && !J && t.manuallyAnimateOnMount && t.parent) {
-          const { parent: ut } = t, xt = yt(ut, I);
+        if (typeof F == "string" && (i || s) && !J && t.manuallyAnimateOnMount && t.parent) {
+          const { parent: ut } = t, xt = yt(ut, F);
           if (ut.enteringChildren && xt) {
             const { delayChildren: Qo } = xt.transition || {};
             H.delay = Zs(ut.enteringChildren, t, Qo);
           }
         }
         return {
-          animation: I,
+          animation: F,
           options: H
         };
       }));
@@ -3260,7 +3262,7 @@ function vc(t, e, n) {
 function Ci(t, e, n, i = 0.5) {
   t.origin = i, t.originPoint = D(e.min, e.max, t.origin), t.scale = W(n) / W(e), t.translate = D(n.min, n.max, t.origin) - t.originPoint, (t.scale >= pc && t.scale <= mc || isNaN(t.scale)) && (t.scale = 1), (t.translate >= gc && t.translate <= yc || isNaN(t.translate)) && (t.translate = 0);
 }
-function It(t, e, n, i) {
+function Ft(t, e, n, i) {
   Ci(t.x, e.x, n.x, i ? i.originX : void 0), Ci(t.y, e.y, n.y, i ? i.originY : void 0);
 }
 function Mi(t, e, n, i = 0) {
@@ -3305,13 +3307,13 @@ function Bi(t, e) {
 function Pc(t, e) {
   return Bi(t.x, e.x) && Bi(t.y, e.y);
 }
-function Fi(t, e) {
+function Ii(t, e) {
   return Math.round(t.min) === Math.round(e.min) && Math.round(t.max) === Math.round(e.max);
 }
 function Lo(t, e) {
-  return Fi(t.x, e.x) && Fi(t.y, e.y);
+  return Ii(t.x, e.x) && Ii(t.y, e.y);
 }
-function Ii(t) {
+function Fi(t) {
   return W(t.x) / W(t.y);
 }
 function Oi(t, e) {
@@ -3350,8 +3352,8 @@ function Vc(t, e, n, i, s, r) {
 function Ui(t, e) {
   return t[e] !== void 0 ? t[e] : t.borderRadius;
 }
-const Cc = /* @__PURE__ */ Fo(0, 0.5, As), Mc = /* @__PURE__ */ Fo(0.5, 0.95, _);
-function Fo(t, e, n) {
+const Cc = /* @__PURE__ */ Io(0, 0.5, As), Mc = /* @__PURE__ */ Io(0.5, 0.95, _);
+function Io(t, e, n) {
   return (i) => i < t ? 0 : i > e ? 1 : n(/* @__PURE__ */ jt(t, e, i));
 }
 function Dc(t, e, n) {
@@ -3447,12 +3449,12 @@ const oe = {
    */
   hasEverUpdated: !1
 }, Re = ["", "X", "Y", "Z"], Bc = 1e3;
-let Fc = 0;
+let Ic = 0;
 function Le(t, e, n, i) {
   const { latestValues: s } = e;
   s[t] && (n[t] = s[t], e.setStaticValue(t, 0), i && (i[t] = 0));
 }
-function Io(t) {
+function Fo(t) {
   if (t.hasCheckedOptimisedAppear = !0, t.root === t)
     return;
   const { visualElement: e } = t.options;
@@ -3464,12 +3466,12 @@ function Io(t) {
     window.MotionCancelOptimisedAnimation(n, "transform", E, !(s || r));
   }
   const { parent: i } = t;
-  i && !i.hasCheckedOptimisedAppear && Io(i);
+  i && !i.hasCheckedOptimisedAppear && Fo(i);
 }
 function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, checkIsScrollRoot: i, resetTransform: s }) {
   return class {
     constructor(o = {}, a = e?.()) {
-      this.id = Fc++, this.animationId = 0, this.animationCommitId = 0, this.children = /* @__PURE__ */ new Set(), this.options = {}, this.isTreeAnimating = !1, this.isAnimationBlocked = !1, this.isLayoutDirty = !1, this.isProjectionDirty = !1, this.isSharedProjectionDirty = !1, this.isTransformDirty = !1, this.updateManuallyBlocked = !1, this.updateBlockedByResize = !1, this.isUpdating = !1, this.isSVG = !1, this.needsReset = !1, this.shouldResetTransform = !1, this.hasCheckedOptimisedAppear = !1, this.treeScale = { x: 1, y: 1 }, this.eventHandlers = /* @__PURE__ */ new Map(), this.hasTreeAnimated = !1, this.layoutVersion = 0, this.updateScheduled = !1, this.scheduleUpdate = () => this.update(), this.projectionUpdateScheduled = !1, this.checkUpdateFailed = () => {
+      this.id = Ic++, this.animationId = 0, this.animationCommitId = 0, this.children = /* @__PURE__ */ new Set(), this.options = {}, this.isTreeAnimating = !1, this.isAnimationBlocked = !1, this.isLayoutDirty = !1, this.isProjectionDirty = !1, this.isSharedProjectionDirty = !1, this.isTransformDirty = !1, this.updateManuallyBlocked = !1, this.updateBlockedByResize = !1, this.isUpdating = !1, this.isSVG = !1, this.needsReset = !1, this.shouldResetTransform = !1, this.hasCheckedOptimisedAppear = !1, this.treeScale = { x: 1, y: 1 }, this.eventHandlers = /* @__PURE__ */ new Map(), this.hasTreeAnimated = !1, this.layoutVersion = 0, this.updateScheduled = !1, this.scheduleUpdate = () => this.update(), this.projectionUpdateScheduled = !1, this.checkUpdateFailed = () => {
         this.isUpdating && (this.isUpdating = !1, this.clearAllSnapshots());
       }, this.updateProjection = () => {
         this.projectionUpdateScheduled = !1, this.nodes.forEach(jc), this.nodes.forEach(Kc), this.nodes.forEach(Hc), this.nodes.forEach(Nc);
@@ -3494,7 +3496,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
     mount(o) {
       if (this.instance)
         return;
-      this.isSVG = In(o) && !Ol(o), this.instance = o;
+      this.isSVG = Fn(o) && !Ol(o), this.instance = o;
       const { layoutId: a, layout: c, visualElement: u } = this.options;
       if (u && !u.current && u.mount(o), this.root.nodes.add(this), this.parent && this.parent.children.add(this), this.root.hasTreeAnimated && (c || a) && (this.isLayoutDirty = !0), t) {
         let l, h = 0;
@@ -3556,7 +3558,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
         this.options.onExitComplete && this.options.onExitComplete();
         return;
       }
-      if (window.MotionCancelOptimisedAnimation && !this.hasCheckedOptimisedAppear && Io(this), !this.root.isUpdating && this.root.startUpdate(), this.isLayoutDirty)
+      if (window.MotionCancelOptimisedAnimation && !this.hasCheckedOptimisedAppear && Fo(this), !this.root.isUpdating && this.root.startUpdate(), this.isLayoutDirty)
         return;
       this.isLayoutDirty = !0;
       for (let l = 0; l < this.path.length; l++) {
@@ -3579,7 +3581,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
         this.nodes.forEach($i);
         return;
       }
-      this.animationCommitId = this.animationId, this.isUpdating ? (this.isUpdating = !1, this.nodes.forEach($c), this.nodes.forEach(zc), this.nodes.forEach(Ic), this.nodes.forEach(Oc)) : this.nodes.forEach($i), this.clearAllSnapshots();
+      this.animationCommitId = this.animationId, this.isUpdating ? (this.isUpdating = !1, this.nodes.forEach($c), this.nodes.forEach(zc), this.nodes.forEach(Fc), this.nodes.forEach(Oc)) : this.nodes.forEach($i), this.clearAllSnapshots();
       const a = U.now();
       O.delta = nt(0, 1e3 / 60, a - O.timestamp), O.timestamp = a, O.isProcessing = !0, Se.update.process(O), Se.preRender.process(O), Se.render.process(O), O.isProcessing = !1;
     }
@@ -3610,7 +3612,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
         for (let c = 0; c < this.path.length; c++)
           this.path[c].updateScroll();
       const o = this.layout;
-      this.layout = this.measure(!1), this.layoutVersion++, this.layoutCorrected || (this.layoutCorrected = F()), this.isLayoutDirty = !1, this.projectionDelta = void 0, this.notifyListeners("measure", this.layout.layoutBox);
+      this.layout = this.measure(!1), this.layoutVersion++, this.layoutCorrected || (this.layoutCorrected = I()), this.isLayoutDirty = !1, this.projectionDelta = void 0, this.notifyListeners("measure", this.layout.layoutBox);
       const { visualElement: a } = this.options;
       a && a.notify("LayoutMeasure", this.layout.layoutBox, o ? o.layoutBox : void 0);
     }
@@ -3647,7 +3649,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
     measurePageBox() {
       const { visualElement: o } = this.options;
       if (!o)
-        return F();
+        return I();
       const a = o.measureViewportBox();
       if (!(this.scroll?.wasRoot || this.path.some(Jc))) {
         const { scroll: u } = this.root;
@@ -3656,7 +3658,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
       return a;
     }
     removeElementScroll(o) {
-      const a = F();
+      const a = I();
       if (Y(a, o), this.scroll?.wasRoot)
         return a;
       for (let c = 0; c < this.path.length; c++) {
@@ -3666,7 +3668,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
       return a;
     }
     applyTransform(o, a = !1, c) {
-      const u = c || F();
+      const u = c || I();
       Y(u, o);
       for (let l = 0; l < this.path.length; l++) {
         const h = this.path[l];
@@ -3675,14 +3677,14 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
       return ft(this.latestValues) && ie(u, this.latestValues, this.layout?.layoutBox), u;
     }
     removeTransform(o) {
-      const a = F();
+      const a = I();
       Y(a, o);
       for (let c = 0; c < this.path.length; c++) {
         const u = this.path[c];
         if (!ft(u.latestValues))
           continue;
         let l;
-        u.instance && (ln(u.latestValues) && u.updateSnapshot(), l = F(), Y(l, u.measurePageBox())), Ri(a, u.latestValues, u.snapshot?.layoutBox, l);
+        u.instance && (ln(u.latestValues) && u.updateSnapshot(), l = I(), Y(l, u.measurePageBox())), Ri(a, u.latestValues, u.snapshot?.layoutBox, l);
       }
       return ft(this.latestValues) && Ri(a, this.latestValues), a;
     }
@@ -3713,7 +3715,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
         return;
       this.resolvedRelativeTargetAt = O.timestamp;
       const f = this.getClosestProjectingParent();
-      f && this.linkedParentVersion !== f.layoutVersion && !f.options.layoutRoot && this.removeRelativeTarget(), !this.targetDelta && !this.relativeTarget && (this.options.layoutAnchor !== !1 && f && f.layout ? this.createRelativeTarget(f, this.layout.layoutBox, f.layout.layoutBox) : this.removeRelativeTarget()), !(!this.relativeTarget && !this.targetDelta) && (this.target || (this.target = F(), this.targetWithTransforms = F()), this.relativeTarget && this.relativeTargetOrigin && this.relativeParent && this.relativeParent.target ? (this.forceRelativeParentToResolveTarget(), xc(this.target, this.relativeTarget, this.relativeParent.target, this.options.layoutAnchor || void 0)) : this.targetDelta ? (this.resumingFrom ? this.applyTransform(this.layout.layoutBox, !1, this.target) : Y(this.target, this.layout.layoutBox), To(this.target, this.targetDelta)) : Y(this.target, this.layout.layoutBox), this.attemptToResolveRelativeTarget && (this.attemptToResolveRelativeTarget = !1, this.options.layoutAnchor !== !1 && f && !!f.resumingFrom == !!this.resumingFrom && !f.options.layoutScroll && f.target && this.animationProgress !== 1 ? this.createRelativeTarget(f, this.target, f.target) : this.relativeParent = this.relativeTarget = void 0));
+      f && this.linkedParentVersion !== f.layoutVersion && !f.options.layoutRoot && this.removeRelativeTarget(), !this.targetDelta && !this.relativeTarget && (this.options.layoutAnchor !== !1 && f && f.layout ? this.createRelativeTarget(f, this.layout.layoutBox, f.layout.layoutBox) : this.removeRelativeTarget()), !(!this.relativeTarget && !this.targetDelta) && (this.target || (this.target = I(), this.targetWithTransforms = I()), this.relativeTarget && this.relativeTargetOrigin && this.relativeParent && this.relativeParent.target ? (this.forceRelativeParentToResolveTarget(), xc(this.target, this.relativeTarget, this.relativeParent.target, this.options.layoutAnchor || void 0)) : this.targetDelta ? (this.resumingFrom ? this.applyTransform(this.layout.layoutBox, !1, this.target) : Y(this.target, this.layout.layoutBox), To(this.target, this.targetDelta)) : Y(this.target, this.layout.layoutBox), this.attemptToResolveRelativeTarget && (this.attemptToResolveRelativeTarget = !1, this.options.layoutAnchor !== !1 && f && !!f.resumingFrom == !!this.resumingFrom && !f.options.layoutScroll && f.target && this.animationProgress !== 1 ? this.createRelativeTarget(f, this.target, f.target) : this.relativeParent = this.relativeTarget = void 0));
     }
     getClosestProjectingParent() {
       if (!(!this.parent || ln(this.parent.latestValues) || xo(this.parent.latestValues)))
@@ -3723,7 +3725,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
       return !!((this.relativeTarget || this.targetDelta || this.options.layoutRoot) && this.layout);
     }
     createRelativeTarget(o, a, c) {
-      this.relativeParent = o, this.linkedParentVersion = o.layoutVersion, this.forceRelativeParentToResolveTarget(), this.relativeTarget = F(), this.relativeTargetOrigin = F(), me(this.relativeTargetOrigin, a, c, this.options.layoutAnchor || void 0), Y(this.relativeTarget, this.relativeTargetOrigin);
+      this.relativeParent = o, this.linkedParentVersion = o.layoutVersion, this.forceRelativeParentToResolveTarget(), this.relativeTarget = I(), this.relativeTargetOrigin = I(), me(this.relativeTargetOrigin, a, c, this.options.layoutAnchor || void 0), Y(this.relativeTarget, this.relativeTargetOrigin);
     }
     removeRelativeTarget() {
       this.relativeParent = this.relativeTarget = void 0;
@@ -3738,13 +3740,13 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
         return;
       Y(this.layoutCorrected, this.layout.layoutBox);
       const h = this.treeScale.x, f = this.treeScale.y;
-      Yl(this.layoutCorrected, this.treeScale, this.path, a), o.layout && !o.target && (this.treeScale.x !== 1 || this.treeScale.y !== 1) && (o.target = o.layout.layoutBox, o.targetWithTransforms = F());
+      Yl(this.layoutCorrected, this.treeScale, this.path, a), o.layout && !o.target && (this.treeScale.x !== 1 || this.treeScale.y !== 1) && (o.target = o.layout.layoutBox, o.targetWithTransforms = I());
       const { target: d } = o;
       if (!d) {
         this.prevProjectionDelta && (this.createProjectionDeltas(), this.scheduleRender());
         return;
       }
-      !this.projectionDelta || !this.prevProjectionDelta ? this.createProjectionDeltas() : (Vi(this.prevProjectionDelta.x, this.projectionDelta.x), Vi(this.prevProjectionDelta.y, this.projectionDelta.y)), It(this.projectionDelta, this.layoutCorrected, d, this.latestValues), (this.treeScale.x !== h || this.treeScale.y !== f || !Oi(this.projectionDelta.x, this.prevProjectionDelta.x) || !Oi(this.projectionDelta.y, this.prevProjectionDelta.y)) && (this.hasProjected = !0, this.scheduleRender(), this.notifyListeners("projectionUpdate", d));
+      !this.projectionDelta || !this.prevProjectionDelta ? this.createProjectionDeltas() : (Vi(this.prevProjectionDelta.x, this.projectionDelta.x), Vi(this.prevProjectionDelta.y, this.projectionDelta.y)), Ft(this.projectionDelta, this.layoutCorrected, d, this.latestValues), (this.treeScale.x !== h || this.treeScale.y !== f || !Oi(this.projectionDelta.x, this.prevProjectionDelta.x) || !Oi(this.projectionDelta.y, this.prevProjectionDelta.y)) && (this.hasProjected = !0, this.scheduleRender(), this.notifyListeners("projectionUpdate", d));
     }
     hide() {
       this.isVisible = !1;
@@ -3765,13 +3767,13 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
     setAnimationOrigin(o, a = !1, c) {
       const u = this.snapshot, l = u ? u.latestValues : {}, h = { ...this.latestValues }, f = St();
       (!this.relativeParent || !this.relativeParent.options.layoutRoot) && (this.relativeTarget = this.relativeTargetOrigin = void 0), this.attemptToResolveRelativeTarget = !a;
-      const d = F(), p = u ? u.source : void 0, m = this.layout ? this.layout.source : void 0, g = p !== m, y = this.getStack(), v = !y || y.members.length <= 1, T = !!(g && !v && this.options.crossfade === !0 && !this.path.some(Xc));
+      const d = I(), p = u ? u.source : void 0, m = this.layout ? this.layout.source : void 0, g = p !== m, y = this.getStack(), v = !y || y.members.length <= 1, T = !!(g && !v && this.options.crossfade === !0 && !this.path.some(Xc));
       this.animationProgress = 0;
       let b;
       const S = c?.interpolateProjection(o);
       this.mixTargetDelta = (A) => {
         const V = A / 1e3, x = S?.(V);
-        x ? (f.x.translate = x.x, f.x.scale = D(o.x.scale, 1, V), f.x.origin = o.x.origin, f.x.originPoint = o.x.originPoint, f.y.translate = x.y, f.y.scale = D(o.y.scale, 1, V), f.y.origin = o.y.origin, f.y.originPoint = o.y.originPoint) : (Ki(f.x, o.x, V), Ki(f.y, o.y, V)), this.setTargetDelta(f), this.relativeTarget && this.relativeTargetOrigin && this.layout && this.relativeParent && this.relativeParent.layout && (me(d, this.layout.layoutBox, this.relativeParent.layout.layoutBox, this.options.layoutAnchor || void 0), Yc(this.relativeTarget, this.relativeTargetOrigin, d, V), b && Pc(this.relativeTarget, b) && (this.isProjectionDirty = !1), b || (b = F()), Y(b, this.relativeTarget)), g && (this.animationValues = h, Vc(h, l, this.latestValues, V, T, v)), x && x.rotate !== void 0 && (this.animationValues || (this.animationValues = h), this.animationValues.pathRotation = x.rotate), this.root.scheduleUpdateProjection(), this.scheduleRender(), this.animationProgress = V;
+        x ? (f.x.translate = x.x, f.x.scale = D(o.x.scale, 1, V), f.x.origin = o.x.origin, f.x.originPoint = o.x.originPoint, f.y.translate = x.y, f.y.scale = D(o.y.scale, 1, V), f.y.origin = o.y.origin, f.y.originPoint = o.y.originPoint) : (Ki(f.x, o.x, V), Ki(f.y, o.y, V)), this.setTargetDelta(f), this.relativeTarget && this.relativeTargetOrigin && this.layout && this.relativeParent && this.relativeParent.layout && (me(d, this.layout.layoutBox, this.relativeParent.layout.layoutBox, this.options.layoutAnchor || void 0), Yc(this.relativeTarget, this.relativeTargetOrigin, d, V), b && Pc(this.relativeTarget, b) && (this.isProjectionDirty = !1), b || (b = I()), Y(b, this.relativeTarget)), g && (this.animationValues = h, Vc(h, l, this.latestValues, V, T, v)), x && x.rotate !== void 0 && (this.animationValues || (this.animationValues = h), this.animationValues.pathRotation = x.rotate), this.root.scheduleUpdateProjection(), this.scheduleRender(), this.animationProgress = V;
       }, this.mixTargetDelta(this.options.layoutRoot ? 1e3 : 0);
     }
     startAnimation(o) {
@@ -3804,13 +3806,13 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
       let { targetWithTransforms: a, target: c, layout: u, latestValues: l } = o;
       if (!(!a || !c || !u)) {
         if (this !== o && this.layout && u && jo(this.options.animationType, this.layout.layoutBox, u.layoutBox)) {
-          c = this.target || F();
+          c = this.target || I();
           const h = W(this.layout.layoutBox.x);
           c.x.min = o.target.x.min, c.x.max = c.x.min + h;
           const f = W(this.layout.layoutBox.y);
           c.y.min = o.target.y.min, c.y.max = c.y.min + f;
         }
-        Y(a, c), ie(a, l), It(this.projectionDeltaWithTransform, this.layoutCorrected, a, l);
+        Y(a, c), ie(a, l), Ft(this.projectionDeltaWithTransform, this.layoutCorrected, a, l);
       }
     }
     registerSharedNode(o, a) {
@@ -3909,7 +3911,7 @@ function Oo({ attachResizeListener: t, defaultParent: e, measureScroll: n, check
     }
   };
 }
-function Ic(t) {
+function Fc(t) {
   t.updateLayout();
 }
 function Oc(t) {
@@ -3929,9 +3931,9 @@ function Oc(t) {
       h.max = h.min + f, t.relativeTarget && !t.currentAnimation && (t.isProjectionDirty = !0, t.relativeTarget[l].max = t.relativeTarget[l].min + f);
     });
     const o = St();
-    It(o, n, e.layoutBox);
+    Ft(o, n, e.layoutBox);
     const a = St();
-    r ? It(a, t.applyTransform(i, !0), e.measuredBox) : It(a, n, e.layoutBox);
+    r ? Ft(a, t.applyTransform(i, !0), e.measuredBox) : Ft(a, n, e.layoutBox);
     const c = !Ro(o);
     let u = !1;
     if (!t.resumeFrom) {
@@ -3939,9 +3941,9 @@ function Oc(t) {
       if (l && !l.resumeFrom) {
         const { snapshot: h, layout: f } = l;
         if (h && f) {
-          const d = t.options.layoutAnchor || void 0, p = F();
+          const d = t.options.layoutAnchor || void 0, p = I();
           me(p, e.layoutBox, h.layoutBox, d);
-          const m = F();
+          const m = I();
           me(m, n, f.layoutBox, d), Lo(p, m) || (u = !0), l.options.layoutRoot && (t.relativeTarget = m, t.relativeTargetOrigin = p, t.relativeParent = l);
         }
       }
@@ -4023,7 +4025,7 @@ function Zc(t) {
   Yi(t.x), Yi(t.y);
 }
 function jo(t, e, n) {
-  return t === "position" || t === "preserve-aspect" && !vc(Ii(e), Ii(n), 0.2);
+  return t === "position" || t === "preserve-aspect" && !vc(Fi(e), Fi(n), 0.2);
 }
 function Jc(t) {
   return t !== t.root && t.scroll?.wasRoot;
@@ -4540,7 +4542,7 @@ function Yo(t) {
   if (t)
     return t.options.allowProjection !== !1 ? t.projection : Yo(t.parent);
 }
-function Fe(t, { forwardMotionProps: e = !1, type: n } = {}, i, s) {
+function Ie(t, { forwardMotionProps: e = !1, type: n } = {}, i, s) {
   i && au(i);
   const r = n ? n === "svg" : zn(t), o = r ? wu : bu;
   function a(u, l) {
@@ -4584,15 +4586,15 @@ function Du(t) {
 }
 function Eu(t, e) {
   if (typeof Proxy > "u")
-    return Fe;
-  const n = /* @__PURE__ */ new Map(), i = (r, o) => Fe(r, o, t, e), s = (r, o) => (process.env.NODE_ENV !== "production" && Tn(!1, "motion() is deprecated. Use motion.create() instead."), i(r, o));
+    return Ie;
+  const n = /* @__PURE__ */ new Map(), i = (r, o) => Ie(r, o, t, e), s = (r, o) => (process.env.NODE_ENV !== "production" && Tn(!1, "motion() is deprecated. Use motion.create() instead."), i(r, o));
   return new Proxy(s, {
     /**
      * Called when `motion` is referenced with a prop: `motion.div`, `motion.input` etc.
      * The prop name is passed through as `key` and we can use that to generate a `motion`
      * DOM component with that name.
      */
-    get: (r, o) => o === "create" ? i : (n.has(o) || n.set(o, Fe(o, void 0, t, e)), n.get(o))
+    get: (r, o) => o === "create" ? i : (n.has(o) || n.set(o, Ie(o, void 0, t, e)), n.get(o))
   });
 }
 const ku = (t, e) => e.isSVG ?? zn(t) ? new ac(e) : new ec(e, {
@@ -4665,7 +4667,7 @@ class Bu extends ct {
   unmount() {
   }
 }
-const Fu = {
+const Iu = {
   animation: {
     Feature: Ru
   },
@@ -4681,9 +4683,9 @@ function Ht(t) {
     }
   };
 }
-const Iu = (t) => (e) => Fn(e) && t(e, Ht(e));
+const Fu = (t) => (e) => In(e) && t(e, Ht(e));
 function Ot(t, e, n, i) {
-  return Wt(t, e, Iu(n), i);
+  return Wt(t, e, Fu(n), i);
 }
 const Xo = ({ current: t }) => t ? t.ownerDocument.defaultView : null, ts = (t, e) => Math.abs(t - e);
 function Ou(t, e) {
@@ -4701,7 +4703,7 @@ class qo {
       if (!(this.lastMoveEvent && this.lastMoveEventInfo))
         return;
       this.lastRawMoveEventInfo && (this.lastMoveEventInfo = Xt(this.lastRawMoveEventInfo, this.transformPagePoint));
-      const d = Ie(this.lastMoveEventInfo, this.history), p = this.startEvent !== null, m = Ou(d.offset, { x: 0, y: 0 }) >= this.distanceThreshold;
+      const d = Fe(this.lastMoveEventInfo, this.history), p = this.startEvent !== null, m = Ou(d.offset, { x: 0, y: 0 }) >= this.distanceThreshold;
       if (!p && !m)
         return;
       const { point: g } = d, { timestamp: y } = O;
@@ -4715,15 +4717,15 @@ class qo {
       const { onEnd: m, onSessionEnd: g, resumeAnimation: y } = this.handlers;
       if ((this.dragSnapToOrigin || !this.startEvent) && y && y(), !(this.lastMoveEvent && this.lastMoveEventInfo))
         return;
-      const v = Ie(d.type === "pointercancel" ? this.lastMoveEventInfo : Xt(p, this.transformPagePoint), this.history);
+      const v = Fe(d.type === "pointercancel" ? this.lastMoveEventInfo : Xt(p, this.transformPagePoint), this.history);
       this.startEvent && m && m(d, v), g && g(d, v);
-    }, !Fn(e))
+    }, !In(e))
       return;
     this.dragSnapToOrigin = r, this.handlers = n, this.transformPagePoint = i, this.distanceThreshold = o, this.contextWindow = s || window;
     const c = Ht(e), u = Xt(c, this.transformPagePoint), { point: l } = u, { timestamp: h } = O;
     this.history = [{ ...l, timestamp: h }];
     const { onSessionStart: f } = n;
-    f && f(e, Ie(u, this.history)), this.removeListeners = $t(Ot(this.contextWindow, "pointermove", this.handlePointerMove), Ot(this.contextWindow, "pointerup", this.handlePointerUp), Ot(this.contextWindow, "pointercancel", this.handlePointerUp)), a && this.startScrollTracking(a);
+    f && f(e, Fe(u, this.history)), this.removeListeners = $t(Ot(this.contextWindow, "pointermove", this.handlePointerMove), Ot(this.contextWindow, "pointerup", this.handlePointerUp), Ot(this.contextWindow, "pointercancel", this.handlePointerUp)), a && this.startScrollTracking(a);
   }
   /**
    * Start tracking scroll on ancestors and window.
@@ -4777,7 +4779,7 @@ function Xt(t, e) {
 function ns(t, e) {
   return { x: t.x - e.x, y: t.y - e.y };
 }
-function Ie({ point: t }, e) {
+function Fe({ point: t }, e) {
   return {
     point: t,
     delta: ns(t, Zo(e)),
@@ -4863,7 +4865,7 @@ function rs(t, e) {
 const Gu = /* @__PURE__ */ new WeakMap();
 class _u {
   constructor(e) {
-    this.openDragLock = null, this.isDragging = !1, this.currentDirection = null, this.originPoint = { x: 0, y: 0 }, this.constraints = !1, this.hasMutatedConstraints = !1, this.elastic = F(), this.latestPointerEvent = null, this.latestPanInfo = null, this.visualElement = e;
+    this.openDragLock = null, this.isDragging = !1, this.currentDirection = null, this.originPoint = { x: 0, y: 0 }, this.constraints = !1, this.hasMutatedConstraints = !1, this.elastic = I(), this.latestPointerEvent = null, this.latestPanInfo = null, this.visualElement = e;
   }
   start(e, { snapToCursor: n = !1, distanceThreshold: i } = {}) {
     const { presenceContext: s } = this.visualElement;
@@ -5364,7 +5366,7 @@ const uh = {
     MeasureLayout: Jo
   }
 }, fh = {
-  ...Fu,
+  ...Iu,
   ...uh,
   ...Qu,
   ...hh
@@ -5504,10 +5506,10 @@ export {
   Sh as A,
   fr as C,
   Hn as D,
-  Th as F,
+  xh as F,
   bh as a,
   wh as b,
-  xh as c,
+  Th as c,
   dr as d,
   Vh as e,
   Ah as m

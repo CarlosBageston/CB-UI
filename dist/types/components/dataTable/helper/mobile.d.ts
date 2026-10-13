@@ -1,4 +1,4 @@
-import type { CBTableColumn } from "../../../datatable";
+import type { CBMobileColumnRole, CBTableColumn } from "../../../datatable";
 import type { CBInputMask, CBInputMaskFn } from "../../../types/components";
 export interface FlatColumn<T> {
     headerName: string;
@@ -16,6 +16,10 @@ export interface FlatColumn<T> {
         };
     }) => unknown;
     mask?: CBInputMask | CBInputMaskFn;
+    /** Papel da coluna no card mobile (ver CBTableColumn.mobile) */
+    mobile?: CBMobileColumnRole;
+    /** Coluna oculta (mesmo `hide` do AG Grid) */
+    hide?: boolean | null;
     /** Se a célula é editável */
     editable?: boolean | ((params: {
         data: T;
@@ -51,6 +55,21 @@ export interface FlatColumn<T> {
  * de card da tabela mobile.
  */
 export declare function flattenColumns<T>(columns: CBTableColumn<T>[]): FlatColumn<T>[];
+export interface MobileLayout<T> {
+    title?: FlatColumn<T>;
+    trailing?: FlatColumn<T>;
+    grid: FlatColumn<T>[];
+    detail: FlatColumn<T>[];
+}
+/**
+ * Distribui as colunas nas áreas do card mobile.
+ *
+ * Papéis definidos via `mobile` têm prioridade. As colunas sem papel
+ * preenchem o que faltar: título (1ª), destaque (última com mask "currency"),
+ * grade (até 4, só se nenhuma coluna pediu "grid") e o resto vai para
+ * os detalhes.
+ */
+export declare function resolveMobileLayout<T>(columns: FlatColumn<T>[]): MobileLayout<T>;
 /**
  * Busca o valor de um campo dentro de um registro.
  *

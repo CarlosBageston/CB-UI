@@ -1,4 +1,4 @@
-import type { CBTableColumn } from "../../../datatable";
+import type { CBMobileColumnRole, CBTableColumn } from "../../../datatable";
 import { applyMask } from "../../../hooks/useInputMask";
 import type { CBInputMask, CBInputMaskFn } from "../../../types/components";
 
@@ -14,6 +14,10 @@ export interface FlatColumn<T> {
     colDef: { field?: string; colId?: string; headerName?: string };
   }) => unknown;
   mask?: CBInputMask | CBInputMaskFn;
+  /** Papel da coluna no card mobile (ver CBTableColumn.mobile) */
+  mobile?: CBMobileColumnRole;
+  /** Coluna oculta (mesmo `hide` do AG Grid) */
+  hide?: boolean | null;
   /** Se a célula é editável */
   editable?: boolean | ((params: { data: T }) => boolean);
   /** Editor AG Grid (usado para derivar o tipo do input HTML) */
@@ -63,6 +67,8 @@ export function flattenColumns<T>(
       render: col.render,
       valueGetter: (col as any).valueGetter,
       mask: col.mask,
+      mobile: col.mobile,
+      hide: col.hide,
       editable: col.editable as FlatColumn<T>["editable"],
       cellEditor: col.cellEditor as string | undefined,
       cellEditorParams: col.cellEditorParams as
@@ -77,6 +83,57 @@ export function flattenColumns<T>(
   });
 
   return flat;
+}
+
+export interface MobileLayout<T> {
+  title?: FlatColumn<T>;
+  trailing?: FlatColumn<T>;
+  grid: FlatColumn<T>[];
+  detail: FlatColumn<T>[];
+}
+
+/** Quantidade de colunas que vão para a grade quando não há `mobile` explícito */
+const AUTO_GRID_SIZE = 4;
+
+/**
+ * Distribui as colunas nas áreas do card mobile.
+ *
+ * Papéis definidos via `mobile` têm prioridade. As colunas sem papel
+ * preenchem o que faltar: título (1ª), destaque (última com mask "currency"),
+ * grade (até 4, só se nenhuma coluna pediu "grid") e o resto vai para
+ * os detalhes.
+ */
+export function resolveMobileLayout<T>(columns: FlatColumn<T>[]): MobileLayout<T> {
+  const visible = columns.filter((c) => !c.hide && c.mobile !== "hidden");
+
+  let title = visible.find((c) => c.mobile === "title");
+  let trailing = visible.find((c) => c.mobile === "trailing");
+  const grid = visible.filter((c) => c.mobile === "grid");
+
+  let auto = visible.filter((c) => !c.mobile);
+
+  if (!title && auto.length > 0) {
+    title = auto[0];
+    auto = auto.slice(1);
+  }
+
+  if (!trailing) {
+    // Última coluna de moeda: costuma ser o total, o valor mais relevante
+    trailing = [...auto].reverse().find((c) => c.mask === "currency");
+    if (trailing) auto = auto.filter((c) => c !== trailing);
+  }
+
+  if (grid.length === 0) {
+    grid.push(...auto.slice(0, AUTO_GRID_SIZE));
+    auto = auto.slice(AUTO_GRID_SIZE);
+  }
+
+  // Mantém a ordem original das colunas nos detalhes
+  const detail = visible.filter(
+    (c) => c.mobile === "detail" || auto.includes(c),
+  );
+
+  return { title, trailing, grid, detail };
 }
 
 /**
