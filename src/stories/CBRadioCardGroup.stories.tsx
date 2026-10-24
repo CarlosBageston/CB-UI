@@ -1,6 +1,9 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { CBRadioCardGroup, type CBRadioCardGroupProps } from "../components/CBRadio/CBRadioCardGroup";
+import {
+  CBRadioCardGroup,
+  type CBRadioCardGroupProps,
+} from "../components/CBRadio/CBRadioCardGroup";
 import { FiLayers, FiSliders, FiCheckCircle } from "react-icons/fi";
 
 enum ProductionType {
@@ -25,7 +28,8 @@ const planOptions: PlanOption[] = [
   {
     id: "pro",
     name: "Profissional",
-    description: "Recursos avançados, automação de lotes e suporte prioritário.",
+    description:
+      "Recursos avançados, automação de lotes e suporte prioritário.",
     price: "R$ 149/mês",
   },
   {
@@ -80,14 +84,18 @@ export const Default: Story = {
 export const ProductionTypeLotRefactor: StoryObj = {
   name: "Caso de Uso: Tipo de Produção (Refatoração)",
   render: () => {
-    const PRODUCTION_TYPE_INFO: Record<ProductionType, { title: string; description: string }> = {
+    const PRODUCTION_TYPE_INFO: Record<
+      ProductionType,
+      { title: string; description: string }
+    > = {
       [ProductionType.FIXED]: {
         title: "Produção Fixa",
         description: "Parâmetros estáticos com padrão pré-definido e rígido.",
       },
       [ProductionType.VARIABLE]: {
         title: "Produção Variável",
-        description: "Composição dinâmica e flexível ajustada por lote composto.",
+        description:
+          "Composição dinâmica e flexível ajustada por lote composto.",
       },
     };
 
@@ -113,7 +121,8 @@ export const ProductionTypeLotRefactor: StoryObj = {
         />
 
         <div className="mt-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-200">
-          Componente selecionado: <strong>{PRODUCTION_TYPE_INFO[type].title}</strong>
+          Componente selecionado:{" "}
+          <strong>{PRODUCTION_TYPE_INFO[type].title}</strong>
         </div>
       </div>
     );
@@ -138,10 +147,18 @@ export const WithExtraFooterAndThreeColumns: Story = {
           columns={3}
           renderExtra={(item, isSelected) => (
             <div className="flex items-center justify-between font-medium">
-              <span className={isSelected ? "text-blue-600 dark:text-blue-400 font-bold" : "text-gray-600 dark:text-gray-400"}>
+              <span
+                className={
+                  isSelected
+                    ? "text-blue-600 dark:text-blue-400 font-bold"
+                    : "text-gray-600 dark:text-gray-400"
+                }
+              >
                 {item.price}
               </span>
-              {isSelected && <FiCheckCircle className="text-blue-600 dark:text-blue-400" />}
+              {isSelected && (
+                <FiCheckCircle className="text-blue-600 dark:text-blue-400" />
+              )}
             </div>
           )}
         />
@@ -178,7 +195,8 @@ export const CustomColorsAndStyling: Story = {
       <div className="p-4 max-w-3xl space-y-8">
         <div>
           <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
-            1. Customização com Classes Dinâmicas (labelClassName, iconClassName, descriptionClassName)
+            1. Customização com Classes Dinâmicas (labelClassName,
+            iconClassName, descriptionClassName)
           </h3>
           <CBRadioCardGroup
             items={planOptions}
@@ -189,21 +207,6 @@ export const CustomColorsAndStyling: Story = {
             getDescription={(item) => item.description}
             columns={3}
             renderIcon={() => <FiSliders />}
-            labelClassName={(item, isSelected) =>
-              isSelected
-                ? "text-emerald-600 dark:text-emerald-400 font-extrabold"
-                : "text-gray-700 dark:text-gray-300"
-            }
-            iconClassName={(item, isSelected) =>
-              isSelected
-                ? "text-emerald-500 scale-110 transition-transform"
-                : "text-gray-400"
-            }
-            descriptionClassName={(item, isSelected) =>
-              isSelected
-                ? "text-emerald-700/80 dark:text-emerald-300/80 font-medium"
-                : "text-gray-500 dark:text-gray-400"
-            }
           />
         </div>
 
@@ -220,12 +223,9 @@ export const CustomColorsAndStyling: Story = {
             getDescription={(item) => item.description}
             columns={3}
             renderIcon={() => <FiLayers />}
-            iconColor="warning"
-            labelClassName="text-amber-600 dark:text-amber-400"
           />
         </div>
       </div>
     );
   },
 };
-

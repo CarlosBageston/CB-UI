@@ -45,7 +45,7 @@ function b(t, r) {
   if (t)
     return typeof t == "function" ? t : r?.[t] ?? p[t];
 }
-function _(t, r, e, n) {
+function N(t, r, e, n) {
   const a = f(
     () => b(t, n),
     [t, n]
@@ -66,7 +66,7 @@ function _(t, r, e, n) {
   }, [t]);
   return { handleChange: l, inputMode: u };
 }
-function N(t, r, e) {
+function x(t, r, e) {
   if (r === "currency") {
     const a = typeof t == "number" ? t : parseFloat(String(t));
     return isNaN(a) ? "" : Intl.NumberFormat("pt-BR", {
@@ -107,9 +107,12 @@ const g = {
   dark: "var(--cb-color-light)"
   // texto claro sobre escuro
 };
-function x(t = "primary", r) {
+function $(t = "primary", r) {
   const e = t in g, n = e ? g[t] : t.startsWith("--") ? `var(${t})` : t, a = e ? w[t] : r ?? "var(--cb-color-light)";
   return { main: n, contrast: a };
+}
+function B(t = "primary", r) {
+  return $(t, r);
 }
 var m = {
   color: void 0,
@@ -125,7 +128,7 @@ var m = {
     }
     return t;
   }, c.apply(this, arguments);
-}, $ = function(t, r) {
+}, C = function(t, r) {
   var e = {};
   for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && r.indexOf(n) < 0 && (e[n] = t[n]);
   if (t != null && typeof Object.getOwnPropertySymbols == "function") for (var a = 0, n = Object.getOwnPropertySymbols(t); a < n.length; a++)
@@ -148,7 +151,7 @@ function j(t) {
 }
 function O(t) {
   var r = function(e) {
-    var n = t.attr, a = t.size, l = t.title, u = $(t, ["attr", "size", "title"]), s = a || e.size || "1em", i;
+    var n = t.attr, a = t.size, l = t.title, u = C(t, ["attr", "size", "title"]), s = a || e.size || "1em", i;
     return e.className && (i = e.className), t.className && (i = (i ? i + " " : "") + t.className), o.createElement("svg", c({
       stroke: "currentColor",
       fill: "currentColor",
@@ -170,9 +173,10 @@ function O(t) {
 export {
   w as C,
   j as G,
-  N as a,
-  g as b,
-  _ as c,
+  x as a,
+  $ as b,
+  g as c,
+  N as d,
   b as r,
-  x as u
+  B as u
 };

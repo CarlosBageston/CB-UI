@@ -28,6 +28,14 @@ export {
   CBRadioCardGroup as CBRadioCards,
 } from "./components/CBRadio/CBRadioCardGroup";
 export type { CBRadioCardGroupProps } from "./components/CBRadio/CBRadioCardGroup";
+export { default as CBSegment } from "./components/CBSegment/CBSegment";
+export type {
+  CBSegmentProps,
+  CBSegmentOption,
+  CBSegmentVariant,
+  CBSegmentSize,
+  CBSegmentRounded,
+} from "./components/CBSegment/CBSegment";
 export { default as CBFabButtonCenter } from "./components/CBFabButtonCenter";
 export { default as CBEmptyState } from "./components/CBStateWrapper/CBEmptyState";
 export { default as CBAutocomplete } from "./components/CBAutoComplete/CBAutocomplete";

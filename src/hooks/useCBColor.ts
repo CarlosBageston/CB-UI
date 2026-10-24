@@ -6,7 +6,11 @@ import {
   type CBColorOrString,
 } from "../theme/CBColor";
 
-export function useCBColor(
+/**
+ * Resolve uma cor CB-UI (token, `--var`, `var(...)` ou HEX/RGB) em `main` e `contrast`.
+ * Versão sem hook, segura para uso dentro de loops/callbacks.
+ */
+export function resolveCBColor(
   color: CBColorOrString = "primary",
   fallbackContrast?: string,
 ) {
@@ -22,4 +26,11 @@ export function useCBColor(
     ? CB_COLOR_CONTRAST_MAP[color as CBColor]
     : (fallbackContrast ?? "var(--cb-color-light)");
   return { main, contrast };
+}
+
+export function useCBColor(
+  color: CBColorOrString = "primary",
+  fallbackContrast?: string,
+) {
+  return resolveCBColor(color, fallbackContrast);
 }
