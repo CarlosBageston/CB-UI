@@ -76,8 +76,72 @@ export type CBMobileColumnRole =
   | "detail"
   | "hidden";
 
-/** Modo de paginação. Default "server". */
+/**
+ * Modo de paginação.
+ * - "client": `data` é a lista completa e a tabela fatia as páginas
+ * - "server": `data` já é a página atual e `totalRows` é o total no backend
+ *
+ * Quando omitido: "server" se `onPageChange` for informado, senão "client".
+ */
 export type PaginationMode = "client" | "server";
+
+/** Direção de ordenação. */
+export type CBSortDirection = "asc" | "desc";
+
+/** Ordenação atual da tabela. `field` é o `colId`/`field` da coluna. */
+export interface CBTableSort {
+  field: string;
+  direction: CBSortDirection;
+}
+
+/** Busca textual vinda do `CBFilterBar`. */
+export interface CBTableSearch {
+  /** Texto digitado (já com debounce). */
+  term: string;
+  /** Coluna escolhida no seletor. `undefined` = "Todas". */
+  column?: string;
+  /** Todas as colunas pesquisáveis (`filterColumns`), útil para buscar em "Todas". */
+  columns: string[];
+}
+
+/**
+ * Consulta montada pela tabela e entregue ao `fetchData`.
+ *
+ * @template F Formato dos filtros externos (`filters`).
+ */
+export interface CBTableQuery<F = Record<string, unknown>> {
+  /** Página atual, começando em 0. */
+  page: number;
+  pageSize: number;
+  search?: CBTableSearch;
+  sort?: CBTableSort;
+  /** Filtros externos informados na prop `filters` (ex: um `CBSegment`). */
+  filters: F;
+}
+
+/** Resultado esperado do `fetchData`. */
+export interface CBTableFetchResult<T> {
+  rows: T[];
+  /** Total de registros no backend (todas as páginas). */
+  total: number;
+}
+
+/**
+ * Função que busca uma página no backend.
+ * Repasse o `signal` para o fetch/axios para que requests antigas sejam canceladas.
+ */
+export type CBTableFetcher<T, F = Record<string, unknown>> = (
+  query: CBTableQuery<F>,
+  signal: AbortSignal,
+) => Promise<CBTableFetchResult<T>>;
+
+/** Métodos expostos via `tableRef` no modo `fetchData`. */
+export interface CBDataTableHandle {
+  /** Busca a página atual de novo (ex: após criar/editar fora da tabela). */
+  reload: () => void;
+  /** Vai para uma página específica. */
+  setPage: (page: number) => void;
+}
 
 /**
  * Representa uma ação da tabela.
@@ -114,8 +178,11 @@ export interface CBDataTableProps<T> extends CBBaseProps {
   getRowId: (item: T) => string;
   /** Callback ao clicar no botão de editar linha */
   onEdit?: (item: T) => void;
-  /** Callback ao clicar no botão de excluir linha */
-  onDelete?: (item: T) => void;
+  /**
+   * Callback ao clicar no botão de excluir linha.
+   * Pode retornar uma Promise: no modo `fetchData`, a tabela espera e recarrega.
+   */
+  onDelete?: (item: T) => void | Promise<unknown>;
   /**
    * "single" (padrão): só uma linha selecionável por vez, sem checkbox.
    * "multiple": exibe checkboxes e permite selecionar várias linhas.
@@ -131,10 +198,13 @@ export interface CBDataTableProps<T> extends CBBaseProps {
    */
   modeTable?: "mobile" | "desktop" | "auto";
 
+  /** Modo de paginação. Veja `PaginationMode`. */
+  paginationMode?: PaginationMode;
+
   /**
    * Props usadas quando paginationMode === "server"
    */
-  /** Número da página atual */
+  /** Número da página atual (controlado). Omitido = a tabela controla. */
   page?: number;
   /** Total de linhas da tabela */
   totalRows?: number;
@@ -144,6 +214,15 @@ export interface CBDataTableProps<T> extends CBBaseProps {
   onPageSizeChange?: (pageSize: number) => void;
   /** Indica se a tabela está carregando dados */
   loading?: boolean;
+  /**
+   * Ordenação atual (controlada). Usado com `onSortChange` para ordenar no servidor.
+   */
+  sort?: CBTableSort | null;
+  /**
+   * Quando informado, o clique no cabeçalho (desktop) não ordena localmente:
+   * apenas notifica a nova ordenação para o servidor ordenar.
+   */
+  onSortChange?: (sort: CBTableSort | null) => void;
   /** Define se os cards já iniciam expandidos (ideal para tabelas com inputs/edição) */
   defaultExpanded?: boolean;
   /** Habilita edição com clique único ao invés de duplo clique */

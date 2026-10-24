@@ -42,5 +42,5 @@ import type { CBDataTableProps } from "../../datatable";
  * />
  * ```
  */
-declare function CBDataTableDesktop<T>({ columns, data, pageSize, emptyMessage, getRowId, onEdit, onDelete, selectionMode, theme, page, totalRows, onPageChange, onPageSizeChange, loading, singleClickEdit, stopEditingWhenCellsLoseFocus, onCellValueChanged, autoFocusFirstEditableCell, actions, showFooter, }: CBDataTableProps<T>): import("react").JSX.Element;
+declare function CBDataTableDesktop<T>({ columns, data, pageSize, emptyMessage, getRowId, onEdit, onDelete, selectionMode, theme, page, totalRows, onPageChange, onPageSizeChange, paginationMode, loading, sort, onSortChange, singleClickEdit, stopEditingWhenCellsLoseFocus, onCellValueChanged, autoFocusFirstEditableCell, actions, showFooter, }: CBDataTableProps<T>): import("react").JSX.Element;
 export default CBDataTableDesktop;

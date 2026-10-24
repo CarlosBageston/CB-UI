@@ -21,16 +21,30 @@ export interface CBFilterOption<T> {
  * Props do CBFilterBar
  */
 interface CBFilterBarProps<T> {
-    /** Dados originais que serão filtrados */
-    data: T[];
+    /** Dados originais que serão filtrados (modo local) */
+    data?: T[];
     /** Colunas opcionais para filtro específico */
     columns?: CBFilterOption<T>[];
     /** Placeholder do campo de pesquisa */
     placeholder?: string;
     /** Valor inicial do input */
     initialQuery?: string;
-    /** Callback que retorna os dados filtrados */
-    onChange: (filteredData: T[]) => void;
+    /** Callback que retorna os dados filtrados (modo local) */
+    onChange?: (filteredData: T[]) => void;
+    /**
+     * Modo servidor: em vez de filtrar `data`, emite o termo e a coluna escolhida
+     * (com debounce) para quem chama montar a busca no backend.
+     */
+    onSearchChange?: (search: {
+        term: string;
+        column?: string;
+        columns: string[];
+    }) => void;
+    /**
+     * Tempo de espera após a digitação antes de emitir `onSearchChange`.
+     * @default 400
+     */
+    debounceMs?: number;
     /** Classes adicionais para o container */
     className?: string;
     /** Classes adicionais para o input */
@@ -61,5 +75,5 @@ interface CBFilterBarProps<T> {
  * />
  * ```
  */
-declare function CBFilterBar<T>({ data, columns, placeholder, onChange, initialQuery, className, inputClassName, selectClassName, style, theme, }: CBFilterBarProps<T>): import("react").JSX.Element;
+declare function CBFilterBar<T>({ data, columns, placeholder, onChange, onSearchChange, debounceMs, initialQuery, className, inputClassName, selectClassName, style, theme, }: CBFilterBarProps<T>): import("react").JSX.Element;
 export default CBFilterBar;

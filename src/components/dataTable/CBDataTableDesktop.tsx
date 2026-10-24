@@ -1,6 +1,11 @@
 import { AgGridReact } from "ag-grid-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { ColDef, ColGroupDef, GetRowIdParams } from "ag-grid-community";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import type {
+  ColDef,
+  ColGroupDef,
+  GetRowIdParams,
+  SortChangedEvent,
+} from "ag-grid-community";
 import {
   ModuleRegistry,
   ClientSideRowModelModule,
@@ -16,12 +21,14 @@ import {
   CheckboxEditorModule,
   CustomEditorModule,
   UndoRedoEditModule,
+  ColumnApiModule,
 } from "ag-grid-community";
 
 import { mapColumn } from "./helper/desktop";
 import { getThemeTable } from "../../theme/themeTable";
 import type { CBDataTableProps } from "../../datatable";
 import { useDataTableSelection } from "./hook/useDataTableSelection";
+import { useTablePagination } from "./hook/useTablePagination";
 import { CBPaginationFooter } from "./components/CBPaginationFooter";
 import CBDataTableActions from "./components/CBDataTableActions";
 
@@ -39,6 +46,7 @@ ModuleRegistry.registerModules([
   CheckboxEditorModule,
   CustomEditorModule,
   UndoRedoEditModule,
+  ColumnApiModule, // getColumnState/applyColumnState (ordenação no servidor)
 ]);
 
 /**
@@ -95,10 +103,13 @@ function CBDataTableDesktop<T>({
   selectionMode = "single",
   theme,
   page,
-  totalRows = 0,
+  totalRows,
   onPageChange,
   onPageSizeChange,
+  paginationMode,
   loading = false,
+  sort,
+  onSortChange,
   singleClickEdit = true,
   stopEditingWhenCellsLoseFocus = true,
   onCellValueChanged,
@@ -107,19 +118,17 @@ function CBDataTableDesktop<T>({
   showFooter = true,
 }: CBDataTableProps<T>) {
   const themeTable = useMemo(() => getThemeTable(theme === "dark"), [theme]);
-  const [internalPage, setInternalPage] = useState(0);
+  const { currentPage, handlePageChange, rowsCount, pagedData } =
+    useTablePagination({
+      data,
+      page,
+      pageSize,
+      totalRows,
+      onPageChange,
+      paginationMode,
+    });
 
-  const currentPage = page ?? internalPage;
-  const handlePageChange = (newPage: number) => {
-    if (onPageChange) {
-      onPageChange(newPage); // modo controlado
-    } else {
-      setInternalPage(newPage); // modo interno
-    }
-  };
-
-  const rowsCount = totalRows || data.length;
-  const { selectedRows, selectRows } = useDataTableSelection({
+  const { selectedRows, setSelectedRows } = useDataTableSelection({
     selectionMode,
     getRowId,
   });
@@ -134,8 +143,10 @@ function CBDataTableDesktop<T>({
       .map((node) => node.data)
       .filter((d): d is T => d != null);
 
-    selectRows(rows);
-  }, [selectRows]);
+    // O grid é a fonte da verdade: substitui (e não soma) a seleção,
+    // senão desmarcar no modo "multiple" nunca removeria a linha
+    setSelectedRows(rows);
+  }, [setSelectedRows]);
   const columnDefs: (ColDef<T> | ColGroupDef<T>)[] = useMemo(
     () => columns.map((col) => mapColumn(col)),
     [columns],
@@ -166,14 +177,45 @@ function CBDataTableDesktop<T>({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const pagedData = useMemo(() => {
-    if (onPageChange) {
-      return data; // server
-    }
+  // ─── Ordenação no servidor ───────────────────────────────────────────────
+  // Com `onSortChange`, o grid não reordena localmente (comparator neutro):
+  // só mostra o indicador no cabeçalho e repassa a ordenação para fora.
+  const serverSort = Boolean(onSortChange);
 
-    const start = currentPage * pageSize;
-    return data.slice(start, start + pageSize);
-  }, [data, currentPage, pageSize, onPageChange]);
+  const defaultColDef = useMemo<ColDef<T>>(
+    () =>
+      serverSort
+        ? { resizable: false, comparator: () => 0 }
+        : { resizable: false },
+    [serverSort],
+  );
+
+  const handleSortChanged = useCallback(
+    (event: SortChangedEvent<T>) => {
+      if (!onSortChange || event.source === "api") return;
+      const sorted = event.api
+        .getColumnState()
+        .find((col) => col.sort === "asc" || col.sort === "desc");
+      onSortChange(
+        sorted
+          ? { field: sorted.colId, direction: sorted.sort as "asc" | "desc" }
+          : null,
+      );
+    },
+    [onSortChange],
+  );
+
+  // Reflete a ordenação controlada no indicador do cabeçalho
+  const applySortToGrid = useCallback(() => {
+    const api = gridRef.current?.api;
+    if (!api || sort === undefined) return;
+    api.applyColumnState({
+      state: sort ? [{ colId: sort.field, sort: sort.direction }] : [],
+      defaultState: { sort: null },
+    });
+  }, [sort?.field, sort?.direction]);
+
+  useEffect(applySortToGrid, [applySortToGrid]);
 
   const focusFirstEditableCell = useCallback(() => {
     if (!autoFocusFirstEditableCell) return;
@@ -214,7 +256,9 @@ function CBDataTableDesktop<T>({
         ref={gridRef}
         rowData={pagedData}
         getRowId={getRowIdCallback}
-        defaultColDef={{ resizable: false }}
+        defaultColDef={defaultColDef}
+        onSortChanged={handleSortChanged}
+        onGridReady={applySortToGrid}
         columnDefs={columnDefs}
         singleClickEdit={singleClickEdit}
         stopEditingWhenCellsLoseFocus={stopEditingWhenCellsLoseFocus}

@@ -6,7 +6,7 @@ interface CBDataTableActionsProps<T> {
   selectedRows: T[];
 
   onEdit?: (row: T) => void;
-  onDelete?: (row: T) => void;
+  onDelete?: (row: T) => void | Promise<unknown>;
 
   actions?: CBDataTableAction<T>[];
 }

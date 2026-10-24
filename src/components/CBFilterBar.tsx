@@ -48,16 +48,30 @@ function getFilterValue<T>(item: T, column?: CBFilterOption<T>): unknown {
  * Props do CBFilterBar
  */
 interface CBFilterBarProps<T> {
-  /** Dados originais que serão filtrados */
-  data: T[];
+  /** Dados originais que serão filtrados (modo local) */
+  data?: T[];
   /** Colunas opcionais para filtro específico */
   columns?: CBFilterOption<T>[];
   /** Placeholder do campo de pesquisa */
   placeholder?: string;
   /** Valor inicial do input */
   initialQuery?: string;
-  /** Callback que retorna os dados filtrados */
-  onChange: (filteredData: T[]) => void;
+  /** Callback que retorna os dados filtrados (modo local) */
+  onChange?: (filteredData: T[]) => void;
+  /**
+   * Modo servidor: em vez de filtrar `data`, emite o termo e a coluna escolhida
+   * (com debounce) para quem chama montar a busca no backend.
+   */
+  onSearchChange?: (search: {
+    term: string;
+    column?: string;
+    columns: string[];
+  }) => void;
+  /**
+   * Tempo de espera após a digitação antes de emitir `onSearchChange`.
+   * @default 400
+   */
+  debounceMs?: number;
   /** Classes adicionais para o container */
   className?: string;
   /** Classes adicionais para o input */
@@ -94,6 +108,8 @@ function CBFilterBar<T>({
   columns = [],
   placeholder = "Filtrar...",
   onChange,
+  onSearchChange,
+  debounceMs = 400,
   initialQuery,
   className = "",
   inputClassName = "",
@@ -105,10 +121,40 @@ function CBFilterBar<T>({
   const [selectedColumn, setSelectedColumn] = useState<string | undefined>();
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
+  const onSearchChangeRef = useRef(onSearchChange);
+  onSearchChangeRef.current = onSearchChange;
+  const isServerMode = Boolean(onSearchChange);
+
+  // Modo servidor: emite a busca com debounce (pula a montagem para não
+  // disparar uma busca vazia sem o usuário ter digitado nada)
+  const isFirstSearchRef = useRef(true);
+  const columnValues = columns.map((col) => col.value);
+  const columnsKey = columnValues.join("|");
 
   useEffect(() => {
+    if (!isServerMode) return;
+    if (isFirstSearchRef.current) {
+      isFirstSearchRef.current = false;
+      if (!query) return;
+    }
+
+    const timer = setTimeout(
+      () =>
+        onSearchChangeRef.current?.({
+          term: query.trim(),
+          column: selectedColumn,
+          columns: columnValues,
+        }),
+      query ? debounceMs : 0,
+    );
+    return () => clearTimeout(timer);
+  }, [isServerMode, query, selectedColumn, columnsKey, debounceMs]);
+
+  useEffect(() => {
+    if (isServerMode || !data || !onChangeRef.current) return;
+
     if (!query) {
-      onChangeRef.current(data);
+      onChangeRef.current?.(data);
       return;
     }
 
@@ -126,8 +172,8 @@ function CBFilterBar<T>({
       return valueIncludes(item, q);
     });
 
-    onChangeRef.current(filtered);
-  }, [query, selectedColumn, JSON.stringify(data)]); // JSON.stringify estabiliza: só reexecuta quando o conteúdo muda, não a referência
+    onChangeRef.current?.(filtered);
+  }, [isServerMode, query, selectedColumn, JSON.stringify(data)]); // JSON.stringify estabiliza: só reexecuta quando o conteúdo muda, não a referência
 
   function valueIncludes(value: unknown, query: string): boolean {
     if (value == null) {

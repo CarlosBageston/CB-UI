@@ -19,6 +19,7 @@ import {
   type CBTableMobileTheme,
 } from "./theme/themeDataTable";
 import CBDataTableActions from "./components/CBDataTableActions";
+import { useTablePagination } from "./hook/useTablePagination";
 
 interface CBDataTableMobileProps<T> extends CBDataTableProps<T> {
   themeConfig?: Partial<CBTableMobileTheme>;
@@ -183,9 +184,10 @@ function CBDataTableMobile<T>({
   theme,
   themeConfig,
   page,
-  totalRows = 0,
+  totalRows,
   onPageChange,
   onPageSizeChange,
+  paginationMode,
   loading = false,
   defaultExpanded = false,
   singleClickEdit = true,
@@ -197,32 +199,25 @@ function CBDataTableMobile<T>({
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>(
     {},
   );
-  const [internalPage, setInternalPage] = useState(0);
-
   /** { rowKey: string; field: string } | null */
   const [editingCell, setEditingCell] = useState<{
     rowKey: string;
     field: string;
   } | null>(null);
 
-  const currentPage = page ?? internalPage;
-  const handlePageChange = (newPage: number) => {
-    if (onPageChange) {
-      onPageChange(newPage);
-    } else {
-      setInternalPage(newPage);
-    }
-  };
-  const rowsCount = totalRows || data.length;
-
-  const paginatedData = useMemo(() => {
-    if (onPageChange) {
-      return data;
-    }
-
-    const start = currentPage * pageSize;
-    return data.slice(start, start + pageSize);
-  }, [data, currentPage, pageSize, onPageChange]);
+  const {
+    currentPage,
+    handlePageChange,
+    rowsCount,
+    pagedData: paginatedData,
+  } = useTablePagination({
+    data,
+    page,
+    pageSize,
+    totalRows,
+    onPageChange,
+    paginationMode,
+  });
 
   const {
     selectedRows,
@@ -257,16 +252,6 @@ function CBDataTableMobile<T>({
   }, [columns, singleClickEdit]);
 
   const layout = useMemo(() => resolveMobileLayout(flatColumns), [flatColumns]);
-
-  const totalPages = Math.max(1, Math.ceil(rowsCount / pageSize));
-
-  useEffect(() => {
-    const maxPage = Math.max(totalPages - 1, 0);
-
-    if (internalPage > maxPage) {
-      setInternalPage(maxPage);
-    }
-  }, [totalPages, internalPage]);
 
   const allPageSelected =
     paginatedData.length > 0 &&
