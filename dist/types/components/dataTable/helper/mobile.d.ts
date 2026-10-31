@@ -64,10 +64,10 @@ export interface MobileLayout<T> {
 /**
  * Distribui as colunas nas áreas do card mobile.
  *
- * Papéis definidos via `mobile` têm prioridade. As colunas sem papel
- * preenchem o que faltar: título (1ª), destaque (última com mask "currency"),
- * grade (até 4, só se nenhuma coluna pediu "grid") e o resto vai para
- * os detalhes.
+ * Fechado, o card mostra só uma linha: título + destaque. Papéis definidos
+ * via `mobile` têm prioridade. As colunas sem papel preenchem o que faltar:
+ * título (1ª), destaque (última com mask "currency", senão a próxima coluna)
+ * e o resto vai para os detalhes. A grade é só explícita (`mobile: "grid"`).
  */
 export declare function resolveMobileLayout<T>(columns: FlatColumn<T>[]): MobileLayout<T>;
 /**

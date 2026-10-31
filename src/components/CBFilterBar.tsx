@@ -193,7 +193,7 @@ function CBFilterBar<T>({
 
   return (
     <div
-      className={`flex items-center max-w-lg gap-3 ${classes.wrapper} rounded-lg shadow-sm p-2! ${className}`}
+      className={`flex items-center max-w-lg gap-3 ${classes.filterBar ?? ""} rounded-lg shadow-sm p-2! ${className}`}
       style={style}
     >
       <FiSearch className={classes.textPrimary} />

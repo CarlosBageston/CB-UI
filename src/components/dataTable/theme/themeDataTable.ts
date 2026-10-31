@@ -34,7 +34,7 @@ export interface CBTableMobileTheme {
     /** Selecionar linhas */
     selectPagination: string;
 
-    /** Fundo do painel de detalhes ("Ver mais") e do skeleton */
+    /** Fundo do skeleton de carregamento */
     surfaceMuted?: string;
   };
   /**Usar cores hexadecimal para ionic */
@@ -62,7 +62,7 @@ export interface CBTableMobileTheme {
 export const DEFAULT_THEMES: Record<"dark" | "light", CBTableMobileTheme> = {
   dark: {
     classes: {
-      wrapper: "bg-[#1f2836] border-slate-800 text-slate-100",
+      wrapper: "text-slate-100",
       card: "bg-[#1f2836] border-slate-700/60 shadow-sm shadow-black/20",
       cardSelected:
         "ring-2 ring-(--cb-color-primary)/70 border-(--cb-color-primary)",

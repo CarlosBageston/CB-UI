@@ -151,20 +151,10 @@ function EditableCell<T>({
 function CardSkeleton({ theme }: { theme: CBTableMobileTheme }) {
   const surface = theme.classes.surfaceMuted ?? "bg-slate-400/15";
   return (
-    <div className={`rounded-2xl border p-4 ${theme.classes.card}`}>
-      <div className="flex items-center justify-between gap-6 animate-pulse">
-        <div className={`h-4 w-1/2 rounded ${surface}`} />
-        <div className={`h-4 w-16 rounded ${surface}`} />
-      </div>
-      <div
-        className={`mt-4 pt-4 border-t grid grid-cols-2 gap-4 animate-pulse ${theme.classes.divider}`}
-      >
-        {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="space-y-1.5">
-            <div className={`h-2.5 w-14 rounded ${surface}`} />
-            <div className={`h-3.5 w-20 rounded ${surface}`} />
-          </div>
-        ))}
+    <div className={`rounded-xl border px-3.5 py-1.5 ${theme.classes.card}`}>
+      <div className="flex items-center justify-between gap-6 min-h-11 animate-pulse">
+        <div className={`h-3.5 w-1/2 rounded ${surface}`} />
+        <div className={`h-3.5 w-16 rounded ${surface}`} />
       </div>
     </div>
   );
@@ -189,7 +179,7 @@ function CBDataTableMobile<T>({
   onPageSizeChange,
   paginationMode,
   loading = false,
-  defaultExpanded = false,
+  defaultExpanded,
   singleClickEdit = true,
   showFooter = true,
   onCellValueChanged,
@@ -237,10 +227,6 @@ function CBDataTableMobile<T>({
     return { ...baseTheme, ...themeConfig };
   }, [theme, themeConfig]);
 
-  const surfaceMuted =
-    activeTheme.classes.surfaceMuted ??
-    DEFAULT_THEMES[theme ?? "dark"].classes.surfaceMuted;
-
   // Garante que singleClickEdit da prop global seja propagado para colunas
   // que não definem o próprio singleClickEdit
   const flatColumns = useMemo(() => {
@@ -252,6 +238,10 @@ function CBDataTableMobile<T>({
   }, [columns, singleClickEdit]);
 
   const layout = useMemo(() => resolveMobileLayout(flatColumns), [flatColumns]);
+
+  // Tabela editável começa aberta: os inputs não podem ficar escondidos no collapse
+  const startExpanded =
+    defaultExpanded ?? flatColumns.some((col) => Boolean(col.editable));
 
   const allPageSelected =
     paginatedData.length > 0 &&
@@ -269,8 +259,8 @@ function CBDataTableMobile<T>({
 
   const toggleExpandCard = (key: string) => {
     setExpandedCards((prev) => {
-      // Se tiver defaultExpanded e a chave ainda não estiver no objeto, considera que ela estava 'true'
-      const currentState = prev[key] ?? defaultExpanded;
+      // Se a chave ainda não estiver no objeto, vale o estado inicial da tabela
+      const currentState = prev[key] ?? startExpanded;
       return { ...prev, [key]: !currentState };
     });
   };
@@ -424,9 +414,11 @@ function CBDataTableMobile<T>({
         )}
 
         {/* Lista de cards */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           {showSkeleton ? (
-            [0, 1, 2].map((i) => <CardSkeleton key={i} theme={activeTheme} />)
+            [0, 1, 2, 3, 4].map((i) => (
+              <CardSkeleton key={i} theme={activeTheme} />
+            ))
           ) : paginatedData.length === 0 ? (
             <div
               className={`flex flex-col items-center justify-center gap-2 py-12 rounded-2xl border border-dashed text-center ${activeTheme.classes.divider}`}
@@ -442,27 +434,35 @@ function CBDataTableMobile<T>({
             paginatedData.map((row, index) => {
               const key = getKey(row, index);
               const isSelected = isRowSelected(row, index);
-              // Considera a prop defaultExpanded caso a chave individual ainda não tenha sido alterada
-              const isExpanded = expandedCards[key] ?? defaultExpanded;
+              // Considera o estado inicial caso a chave individual ainda não tenha sido alterada
+              const isExpanded = expandedCards[key] ?? startExpanded;
               const hasDetail = layout.detail.length > 0;
-              const showCardFooter = hasDetail || hasActions;
+              const isExpandable = hasDetail || hasActions;
+              const stopIfEditable =
+                (col: FlatColumn<T>) => (e: React.MouseEvent) => {
+                  if (isColumnEditable(col, row)) e.stopPropagation();
+                };
 
               return (
                 <div
                   key={key}
-                  className={`rounded-2xl border p-4 transition-all duration-200 ${
+                  className={`rounded-xl border px-3.5 py-1.5 transition-all duration-200 ${
                     activeTheme.classes.card
                   } ${isSelected && isMultiple ? activeTheme.classes.cardSelected : ""}`}
                 >
-                  {/* Cabeçalho: título + valor em destaque */}
+                  {/* Linha do card: título + segunda informação + seta */}
                   <div
-                    className={`flex items-start gap-3 ${isMultiple ? "cursor-pointer" : ""}`}
-                    onClick={() => isMultiple && toggleSelectRow(row, index)}
+                    className={`flex items-center gap-2.5 min-h-11 ${isExpandable ? "cursor-pointer" : ""}`}
+                    onClick={() => isExpandable && toggleExpandCard(key)}
                   >
                     {isMultiple && (
                       <div
                         aria-label="Selecionar registro"
-                        className="pt-0.5 shrink-0"
+                        className="shrink-0 cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSelectRow(row, index);
+                        }}
                       >
                         <CBCheckbox
                           checked={isSelected}
@@ -473,28 +473,60 @@ function CBDataTableMobile<T>({
                       </div>
                     )}
 
-                    <div className="flex-1 min-w-0 text-[15px] font-semibold leading-snug wrap-break-word">
+                    <div
+                      className={`flex-1 min-w-0 text-sm font-semibold leading-snug ${
+                        isExpanded ? "wrap-break-word" : "truncate"
+                      }`}
+                      onClick={
+                        layout.title ? stopIfEditable(layout.title) : undefined
+                      }
+                    >
                       {layout.title
                         ? renderValue(row, key, layout.title, "")
                         : "-"}
                     </div>
 
                     {layout.trailing && (
-                      <div className="shrink-0 text-right">
+                      <div
+                        className={`shrink-0 max-w-[50%] text-right ${
+                          isExpanded ? "wrap-break-word" : "truncate"
+                        }`}
+                        onClick={stopIfEditable(layout.trailing)}
+                      >
                         {renderValue(
                           row,
                           key,
                           layout.trailing,
-                          "text-[15px] font-semibold tabular-nums whitespace-nowrap",
+                          "text-sm font-semibold tabular-nums",
                         )}
                       </div>
                     )}
+
+                    {isExpandable && (
+                      <button
+                        type="button"
+                        aria-expanded={isExpanded}
+                        aria-label={
+                          isExpanded ? "Ocultar detalhes" : "Ver detalhes"
+                        }
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleExpandCard(key);
+                        }}
+                        className={`inline-flex items-center justify-center shrink-0 w-7 h-7 -mr-1.5 bg-transparent border-0 cursor-pointer rounded-md active:opacity-70 ${activeTheme.classes.textMuted}`}
+                      >
+                        <FiChevronDown
+                          size={18}
+                          className={`transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
+                        />
+                      </button>
+                    )}
                   </div>
 
-                  {/* Grade de campos principais (sempre visível) */}
+                  {/* Campos fixados com mobile: "grid" (sempre visíveis) */}
                   {layout.grid.length > 0 && (
                     <div
-                      className={`mt-3 pt-3 border-t grid grid-cols-2 gap-x-4 gap-y-3 ${activeTheme.classes.divider}`}
+                      className={`mb-1.5 pt-2 border-t grid grid-cols-2 gap-x-4 gap-y-2 ${activeTheme.classes.divider}`}
                     >
                       {layout.grid.map((col, colIndex) => (
                         <div key={colIndex} className="min-w-0">
@@ -516,9 +548,9 @@ function CBDataTableMobile<T>({
                     </div>
                   )}
 
-                  {/* Detalhes (Ver mais) */}
+                  {/* Restante das informações e ações */}
                   <AnimatePresence initial={false}>
-                    {isExpanded && hasDetail && (
+                    {isExpanded && isExpandable && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
@@ -526,66 +558,48 @@ function CBDataTableMobile<T>({
                         transition={{ duration: 0.2, ease: "easeInOut" }}
                         className="overflow-hidden"
                       >
-                        <div
-                          className={`mt-3 rounded-xl px-3 py-1 divide-y ${surfaceMuted} ${activeTheme.classes.divider}`}
-                        >
-                          {layout.detail.map((col, colIndex) => (
-                            <div
-                              key={colIndex}
-                              className={`flex items-center justify-between gap-3 py-2 ${activeTheme.classes.divider}`}
-                            >
+                        {hasDetail && (
+                          <div
+                            className={`border-t divide-y ${activeTheme.classes.divider}`}
+                          >
+                            {layout.detail.map((col, colIndex) => (
                               <div
-                                className={`text-xs font-medium shrink-0 ${activeTheme.classes.textMuted}`}
+                                key={colIndex}
+                                className={`flex items-center justify-between gap-3 py-2 ${activeTheme.classes.divider}`}
                               >
-                                {col.headerName}
+                                <div
+                                  className={`text-xs font-medium shrink-0 ${activeTheme.classes.textMuted}`}
+                                >
+                                  {col.headerName}
+                                </div>
+                                <div className="min-w-0 text-right">
+                                  {renderValue(
+                                    row,
+                                    key,
+                                    col,
+                                    "text-sm font-medium tabular-nums wrap-break-word",
+                                  )}
+                                </div>
                               </div>
-                              <div className="min-w-0 text-right">
-                                {renderValue(
-                                  row,
-                                  key,
-                                  col,
-                                  "text-sm font-medium tabular-nums wrap-break-word",
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {hasActions && (
+                          <div
+                            className={`flex justify-end border-t py-2 ${activeTheme.classes.divider}`}
+                          >
+                            <CBDataTableActions
+                              selectedRows={[row]}
+                              onEdit={onEdit}
+                              onDelete={onDelete}
+                              actions={actions}
+                            />
+                          </div>
+                        )}
                       </motion.div>
                     )}
                   </AnimatePresence>
-
-                  {/* Rodapé: ver mais + ações da linha */}
-                  {showCardFooter && (
-                    <div className="mt-3 flex items-center justify-between gap-2">
-                      {hasDetail ? (
-                        <button
-                          type="button"
-                          onClick={() => toggleExpandCard(key)}
-                          aria-expanded={isExpanded}
-                          className="inline-flex items-center gap-1 shrink-0 whitespace-nowrap px-0 py-1 m-0 bg-transparent border-0 cursor-pointer text-xs font-semibold text-(--cb-text-primary) rounded-md active:opacity-70"
-                        >
-                          {isExpanded
-                            ? "Ver menos"
-                            : `Ver mais (${layout.detail.length})`}
-                          <FiChevronDown
-                            size={14}
-                            className={`transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
-                          />
-                        </button>
-                      ) : (
-                        <span />
-                      )}
-
-                      {hasActions && (
-                        <CBDataTableActions
-                          selectedRows={[row]}
-                          onEdit={onEdit}
-                          onDelete={onDelete}
-                          actions={actions}
-                        />
-                      )}
-                    </div>
-                  )}
                 </div>
               );
             })

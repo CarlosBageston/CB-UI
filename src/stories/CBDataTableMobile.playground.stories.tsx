@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 import { FiCopy, FiLayers, FiPrinter, FiSend } from "react-icons/fi";
 import {
   CBDataTableMobile,
@@ -433,9 +434,8 @@ export const Playground: Story = {
 /**
  * Sem `mobile` em nenhuma coluna:
  * - 1ª coluna (Cliente) = título
- * - última coluna com mask "currency" (Total) = destaque
- * - as 4 seguintes = grade
- * - o resto = "Ver mais"
+ * - última coluna com mask "currency" (Total) = segunda informação da linha
+ * - o resto = detalhes, ao expandir
  */
 export const LayoutAutomatico: Story = {
   parameters: noControls,
@@ -456,7 +456,7 @@ export const LayoutAutomatico: Story = {
 
 /**
  * Papéis definidos via `mobile`, incluindo "hidden" e `hide`.
- * Como alguma coluna usa "grid", só as marcadas entram na grade.
+ * Só as colunas marcadas com "grid" ficam sempre visíveis abaixo da linha.
  */
 export const LayoutComPropMobile: Story = {
   parameters: noControls,
@@ -737,7 +737,7 @@ export const SelecaoEAcoes: Story = {
 
 /**
  * - Quantidade: número (min 1, max 99), editável só se não estiver cancelado
- * - Observações: texto, fica nos detalhes ("Ver mais")
+ * - Observações: texto, fica nos detalhes
  * - Esquerda: clique único + autoFocusFirstEditableCell
  * - Direita: clique duplo (singleClickEdit=false) + defaultExpanded
  * Enter confirma, Esc cancela, sair do campo confirma.
@@ -948,6 +948,44 @@ export const RecursosDeColuna: Story = {
           getRowId={(r) => String(r.id)}
           theme="light"
           defaultExpanded
+        />
+      </MobileFrame>
+    </Page>
+  ),
+};
+
+/** Fechado mostra só a linha; a seta abre o restante e as ações. */
+export const LinhaCompacta: Story = {
+  parameters: noControls,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const [firstToggle] = canvas.getAllByRole("button", { name: "Ver detalhes" });
+    const card = firstToggle.closest<HTMLElement>(".rounded-xl")!;
+    // Depois de hidratar, o Ionic move o aria-label para o shadow DOM
+    const actionCount = () => card.querySelectorAll("ion-button").length;
+
+    expect(canvas.queryByText("Telefone")).toBeNull();
+    expect(actionCount()).toBe(0);
+
+    await userEvent.click(firstToggle);
+    await waitFor(() => expect(canvas.getByText("Telefone")).toBeVisible());
+    expect(actionCount()).toBe(2);
+
+    await userEvent.click(canvas.getByRole("button", { name: "Ocultar detalhes" }));
+    await waitFor(() => expect(canvas.queryByText("Telefone")).toBeNull());
+    expect(actionCount()).toBe(0);
+  },
+  render: () => (
+    <Page>
+      <MobileFrame label="Linha compacta">
+        <CBDataTableMobile<Order>
+          columns={autoColumns}
+          data={ALL_ORDERS.slice(0, 8)}
+          getRowId={(r) => String(r.id)}
+          theme="light"
+          pageSize={8}
+          onEdit={() => {}}
+          onDelete={() => {}}
         />
       </MobileFrame>
     </Page>

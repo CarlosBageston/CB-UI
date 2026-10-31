@@ -58,12 +58,12 @@ export interface CBTableColumn<T> extends Pick<
   mask?: CBInputMask | CBInputMaskFn;
   /**
    * Papel da coluna no card mobile. Se omitido, é decidido automaticamente:
-   * 1ª coluna = "title", última coluna com mask "currency" = "trailing",
-   * as próximas 4 = "grid" e o restante = "detail".
-   * - "title": nome principal do card
-   * - "trailing": valor em destaque à direita do título
-   * - "grid": sempre visível, na grade de 2 colunas
-   * - "detail": visível só ao expandir ("Ver mais")
+   * 1ª coluna = "title", última coluna com mask "currency" (ou a 2ª coluna)
+   * = "trailing" e o restante = "detail".
+   * - "title": nome principal, na linha do card
+   * - "trailing": segunda informação, à direita do título
+   * - "grid": sempre visível, em grade de 2 colunas abaixo da linha (só explícito)
+   * - "detail": visível só ao expandir
    * - "hidden": não aparece no mobile
    */
   mobile?: CBMobileColumnRole;
@@ -223,7 +223,10 @@ export interface CBDataTableProps<T> extends CBBaseProps {
    * apenas notifica a nova ordenação para o servidor ordenar.
    */
   onSortChange?: (sort: CBTableSort | null) => void;
-  /** Define se os cards já iniciam expandidos (ideal para tabelas com inputs/edição) */
+  /**
+   * Define se os cards já iniciam expandidos.
+   * Quando omitido, inicia fechado, exceto se houver coluna editável.
+   */
   defaultExpanded?: boolean;
   /** Habilita edição com clique único ao invés de duplo clique */
   singleClickEdit?: boolean;
